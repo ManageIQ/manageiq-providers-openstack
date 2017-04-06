@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::InfraManager::MetricsCapture do
-  require File.expand_path(File.join(File.dirname(__FILE__),
-                                     %w(.. .. .. .. .. tools openstack_data openstack_data_test_helper)))
+  # FIXME: move this helper over here
+  require Rails.root.join *%w(spec tools openstack_data openstack_data_test_helper)
 
   before :each do
     _guid, _server, @zone = EvmSpecHelper.create_guid_miq_server_zone
