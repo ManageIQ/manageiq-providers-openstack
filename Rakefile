@@ -1,5 +1,4 @@
 require 'bundler/setup'
-require 'manageiq-providers-openstack'
 
 begin
   require 'rspec/core/rake_task'
@@ -10,6 +9,7 @@ begin
 rescue LoadError
 end
 
+require 'manageiq-providers-openstack'
 require 'bundler/gem_tasks'
 
 FileList['lib/tasks_private/**/*.rake'].each { |r| load r }
