@@ -349,7 +349,7 @@ module ManageIQ::Providers
       disks = new_result[:hardware][:disks]
       dev = "vda"
 
-      unless flavor.nil?
+      if flavor
         if (sz = flavor[:root_disk_size]) == 0
           sz = 1.gigabytes
         end
