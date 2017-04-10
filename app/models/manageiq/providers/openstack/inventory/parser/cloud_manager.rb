@@ -59,7 +59,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       tenant.name = t.name
       tenant.description = t.description
       tenant.enabled = t.enabled
-      # tenant.ems_ref = t.id
+      tenant.ems_ref = t.id
       tenant.parent = persister.cloud_tenants.lazy_find(t.try(:parent_id))
     end
   end
@@ -106,7 +106,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       end
       host_aggregate = persister.host_aggregates.find_or_build(ha.id)
       host_aggregate.type = "ManageIQ::Providers::Openstack::CloudManager::HostAggregate"
-      # host_aggregate[:ems_ref] = ha.id.to_s
+      host_aggregate.ems_ref = ha.id.to_s
       host_aggregate.name = ha.name
       host_aggregate.metadata = ha.metadata
       host_aggregate.hosts = hosts
@@ -191,8 +191,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   end
 
   def orchestration_stack_parameters(stack)
-    raw_parameters = collector.orchestration_parameters(stack)
-    raw_parameters.each do |param_key, param_val|
+    collector.orchestration_parameters(stack).each do |param_key, param_val|
       uid = compose_ems_ref(stack.id, param_key)
       o = persister.orchestration_stacks_parameters.find_or_build(uid)
       o.ems_ref = uid
@@ -203,8 +202,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   end
 
   def orchestration_stack_outputs(stack)
-    raw_outputs = collector.orchestration_outputs(stack)
-    raw_outputs.each do |output|
+    collector.orchestration_outputs(stack).each do |output|
       uid = compose_ems_ref(stack.id, output['output_key'])
       o = persister.orchestration_stacks_outputs.find_or_build(uid)
       o.ems_ref = uid

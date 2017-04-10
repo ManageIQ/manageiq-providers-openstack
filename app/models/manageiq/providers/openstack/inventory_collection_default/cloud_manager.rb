@@ -15,7 +15,6 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
       attributes = {
         :model_class                 => CloudResourceQuota,
         :association                 => :cloud_resource_quotas,
-        :manager_ref                 => [:ems_ref],
         :inventory_object_attributes => [
           :ems_ref,
           :type,
@@ -32,7 +31,6 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
       attributes = {
         :model_class                 => CloudService,
         :association                 => :cloud_services,
-        :manager_ref                 => [:ems_ref],
         :inventory_object_attributes => [
           :ems_ref,
           :source,
@@ -53,13 +51,13 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
       attributes = {
         :model_class                 => ManageIQ::Providers::Openstack::CloudManager::CloudTenant,
         :association                 => :cloud_tenants,
-        :manager_ref                 => [:ems_ref],
         :inventory_object_attributes => [
           :type,
           :name,
           :description,
           :enabled,
-          :parent
+          :parent,
+          :ems_ref
         ]
       }
       attributes.merge!(extra_attributes)
@@ -121,7 +119,6 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
       attributes = {
         :model_class                 => ManageIQ::Providers::Openstack::CloudManager::HostAggregate,
         :association                 => :host_aggregates,
-        :manager_ref                 => [:ems_ref],
         :inventory_object_attributes => [
           :type,
           :name,
