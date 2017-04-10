@@ -318,12 +318,12 @@ module ManageIQ::Providers
         :connection_state    => "connected",
 
         :hardware            => {
-          :cpu_sockets          => flavor.nil? ? nil : flavor[:cpus],
+          :cpu_sockets          => flavor && flavor[:cpus],
           :cpu_cores_per_socket => 1,
-          :cpu_total_cores      => flavor.nil? ? nil : flavor[:cpus],
+          :cpu_total_cores      => flavor && flavor[:cpus],
           :cpu_speed            => parent_host.try(:hardware).try(:cpu_speed),
-          :memory_mb            => flavor.nil? ? nil : flavor[:memory] / 1.megabyte,
-          :disk_capacity        => flavor.nil? ? nil : flavor[:root_disk_size] + flavor[:ephemeral_disk_size] + flavor[:swap_disk_size],
+          :memory_mb            => flavor && flavor[:memory] / 1.megabyte,
+          :disk_capacity        => flavor && flavor[:root_disk_size] + flavor[:ephemeral_disk_size] + flavor[:swap_disk_size],
           :disks                => [], # Filled in later conditionally on flavor
           # TODO(lsmola) keeping for backwards compatibility, replaced with new networking models using network_ports
           # for connections, delete when not needed.
