@@ -19,7 +19,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   def availability_zones
     collector.availability_zones.each do |az|
       availability_zone = persister.availability_zones.find_or_build(az.zoneName)
-      availability_zone.type = "ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone"
       availability_zone.ems_ref = az.zoneName
       availability_zone.name = az.zoneName
     end
@@ -55,7 +54,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   def cloud_tenants
     collector.tenants.each do |t|
       tenant = persister.cloud_tenants.find_or_build(t.id)
-      tenant.type = "ManageIQ::Providers::Openstack::CloudManager::CloudTenant"
       tenant.name = t.name
       tenant.description = t.description
       tenant.enabled = t.enabled
@@ -72,7 +70,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
 
   def make_flavor(f)
     flavor = persister.flavors.find_or_build(f.id)
-    flavor.type = "ManageIQ::Providers::Openstack::CloudManager::Flavor"
     flavor.name = f.name
     flavor.enabled = !f.disabled
     flavor.cpus = f.vcpus
@@ -105,7 +102,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
         ems_hosts.try(:find) { |h| h.hypervisor_hostname == fog_host.split('.').first }
       end
       host_aggregate = persister.host_aggregates.find_or_build(ha.id)
-      host_aggregate.type = "ManageIQ::Providers::Openstack::CloudManager::HostAggregate"
       host_aggregate.ems_ref = ha.id.to_s
       host_aggregate.name = ha.name
       host_aggregate.metadata = ha.metadata
@@ -116,7 +112,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   def key_pairs
     collector.key_pairs.each do |kp|
       key_pair = persister.key_pairs.find_or_build(kp.name)
-      key_pair.type = "ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair"
       key_pair.name = kp.name
       key_pair.fingerprint = kp.fingerprint
     end
@@ -131,7 +126,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
           value = 0
         end
         quota = persister.cloud_resource_quotas.find_or_build([q["id"], key])
-        quota.type = "ManageIQ::Providers::Openstack::CloudManager::CloudResourceQuota"
         quota.service_name = q["service_name"]
         quota.ems_ref = q["id"]
         quota.name = key
@@ -145,9 +139,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     collector.images.each do |i|
       parent_server_uid = parse_image_parent_id(i)
       image = persister.miq_templates.find_or_build(i.id)
-      image.type = "ManageIQ::Providers::Openstack::CloudManager::Template"
       image.uid_ems = i.id
-      image.name = i.name
+      image.name = i.name || i.id
       image.vendor = "openstack"
       image.raw_power_state = "never"
       image.template = true
@@ -229,7 +222,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   def orchestration_stacks
     collector.orchestration_stacks.each do |stack|
       o = persister.orchestration_stacks.find_or_build(stack.id.to_s)
-      o.type = "ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack"
       o.name = stack.stack_name
       o.description = stack.description
       o.status = stack.stack_status
@@ -260,7 +252,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       availability_zone = s.availability_zone.blank? ? "null_az" : s.availability_zone
 
       server = persister.vms.find_or_build(s.id.to_s)
-      server.type = "ManageIQ::Providers::Openstack::CloudManager::Vm"
       server.uid_ems = s.id
       # server.ems_ref = s.id
       server.name = s.name

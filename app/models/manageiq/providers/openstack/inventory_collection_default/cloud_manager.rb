@@ -2,6 +2,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
   class << self
     def availability_zones(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone,
         :inventory_object_attributes => [
           :type,
           :ems_ref,
@@ -13,7 +14,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def cloud_resource_quotas(extra_attributes = {})
       attributes = {
-        :model_class                 => CloudResourceQuota,
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::CloudResourceQuota,
         :association                 => :cloud_resource_quotas,
         :inventory_object_attributes => [
           :ems_ref,
@@ -78,6 +79,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def flavors(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::Flavor,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -131,6 +133,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def key_pairs(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -142,6 +145,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def miq_templates(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::Template,
         :inventory_object_attributes => [
           :type,
           :uid_ems,
@@ -213,6 +217,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def orchestration_stacks(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -242,6 +247,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def vms(extra_attributes = {})
       attributes = {
+        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::Vm,
         :inventory_object_attributes => [
           :type,
           :uid_ems,
