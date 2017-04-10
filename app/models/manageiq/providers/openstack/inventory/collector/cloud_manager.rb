@@ -69,9 +69,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def tenant_ids_with_flavor_access(flavor_id)
-    unparsed_tenants = safe_list { connection.list_tenants_with_flavor_access(flavor_id) }
+    unparsed_tenants = safe_get { connection.list_tenants_with_flavor_access(flavor_id) }
     flavor_access = unparsed_tenants.data[:body]["flavor_access"]
-    flavor_access.map { |t| t['tenant_id'] }
+    flavor_access.map! { |t| t['tenant_id'] }
+  rescue
+    []
+  else
+    flavor_access
   end
 
   def flavors_by_id
@@ -100,6 +104,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def servers
     @servers ||= compute_service.handled_list(:servers)
+  end
+
+  def servers_by_id
+    @servers_by_id ||= Hash[servers.collect { |s| [ s.id, s ] }]
   end
 
   def tenants

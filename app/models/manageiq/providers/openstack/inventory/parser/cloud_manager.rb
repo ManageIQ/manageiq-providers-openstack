@@ -178,8 +178,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       o.last_updated = resource.updated_time
       o.stack = persister.orchestration_stacks.lazy_find(stack.id)
 
-      s = persister.vms.find_or_build(uid)
-      s.orchestration_stack = persister.orchestration_stacks.lazy_find(stack.id)
+      # in some cases, a stack resource may refer to a physical resource
+      # that doesn't exist. check that the physical resource actually exists
+      # so that find_or_build doesn't produce an "empty" vm.
+      if collector.servers_by_id.key?(uid)
+        s = persister.vms.find_or_build(uid)
+        s.orchestration_stack = persister.orchestration_stacks.lazy_find(stack.id)
+      end
     end
   end
 
@@ -253,7 +258,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
 
       server = persister.vms.find_or_build(s.id.to_s)
       server.uid_ems = s.id
-      # server.ems_ref = s.id
       server.name = s.name
       server.vendor = "openstack"
       server.raw_power_state = s.state || "UNKNOWN"
