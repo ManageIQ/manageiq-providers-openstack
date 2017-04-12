@@ -40,5 +40,14 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::CloudManager < Manag
         orchestration_stacks_parameters
       )
     )
+
+    add_inventory_collection(
+      cloud.vm_and_miq_template_ancestry(
+        :dependency_attributes => {
+          :vms           => [collections[:vms]],
+          :miq_templates => [collections[:miq_templates]]
+        }
+      )
+    )
   end
 end

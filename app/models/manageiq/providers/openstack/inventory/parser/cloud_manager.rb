@@ -140,7 +140,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       parent_server_uid = parse_image_parent_id(i)
       image = persister.miq_templates.find_or_build(i.id)
       image.uid_ems = i.id
-      image.name = i.name || i.id
+      image.name = i.name || i.id.to_s
       image.vendor = "openstack"
       image.raw_power_state = "never"
       image.template = true
@@ -268,7 +268,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
       server.key_pairs = [persister.key_pairs.lazy_find(s.key_name)].compact
       server.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id.to_s)
-      server.parent = persister.miq_templates.lazy_find(s.image["id"]) unless s.image["id"].nil?
+      server.genealogy_parent = persister.miq_templates.lazy_find(s.image["id"]) unless s.image["id"].nil?
 
       # to populate the hardware, we need some fields from the flavor object
       # that we don't already have from the flavor field on the server details

@@ -261,7 +261,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
           :availability_zone,
           :key_pairs,
           :cloud_tenant,
-          :parent,
+          :genealogy_parent,
           :flavor,
           :orchestration_stack
         ]
