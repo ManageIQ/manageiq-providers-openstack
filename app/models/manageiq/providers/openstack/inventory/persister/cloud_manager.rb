@@ -49,5 +49,13 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::CloudManager < Manag
         }
       )
     )
+
+    add_inventory_collection(
+      cloud.orchestration_stack_ancestry(
+        :dependency_attributes => {
+          :orchestration_stacks => [collections[:orchestration_stacks]],
+        }
+      )
+    )
   end
 end
