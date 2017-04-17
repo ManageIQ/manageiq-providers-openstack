@@ -125,4 +125,8 @@ class ManageIQ::Providers::Openstack::InfraManager::MetricsCapture < ManageIQ::P
     perf_capture_data_openstack_base(self.class, start_time, end_time, resource_filter,
                                      metadata_filter)
   end
+
+  def add_gnocchi_meter_counters(_counters, _resource_filter)
+    # NOOP, gnocchi not used in undercloud
+  end
 end
