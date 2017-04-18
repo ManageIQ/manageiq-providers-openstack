@@ -107,7 +107,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def servers_by_id
-    @servers_by_id ||= Hash[servers.collect { |s| [ s.id, s ] }]
+    @servers_by_id ||= Hash[servers.collect { |s| [s.id, s] }]
   end
 
   def tenants

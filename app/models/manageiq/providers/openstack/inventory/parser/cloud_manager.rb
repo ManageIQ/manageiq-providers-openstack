@@ -227,6 +227,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   def orchestration_stacks
     collector.orchestration_stacks.each do |stack|
       o = persister.orchestration_stacks.find_or_build(stack.id.to_s)
+      o.type = "ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack"
       o.name = stack.stack_name
       o.description = stack.description
       o.status = stack.stack_status
