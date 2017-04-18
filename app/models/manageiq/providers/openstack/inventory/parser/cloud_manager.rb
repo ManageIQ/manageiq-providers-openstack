@@ -161,7 +161,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     end
   end
 
-  def orchestration_stack_resources(stack)
+  def orchestration_stack_resources(stack, stack_inventory_object)
     raw_resources = collector.orchestration_resources(stack)
     # reject resources that don't have a physical resource id, because that
     # means they failed to be successfully created
@@ -176,7 +176,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       o.resource_status = resource.resource_status
       o.resource_status_reason = resource.resource_status_reason
       o.last_updated = resource.updated_time
-      o.stack = persister.orchestration_stacks.lazy_find(stack.id)
+      o.stack = stack_inventory_object
 
       # in some cases, a stack resource may refer to a physical resource
       # that doesn't exist. check that the physical resource actually exists
@@ -188,18 +188,18 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     end
   end
 
-  def orchestration_stack_parameters(stack)
+  def orchestration_stack_parameters(stack, stack_inventory_object)
     collector.orchestration_parameters(stack).each do |param_key, param_val|
       uid = compose_ems_ref(stack.id, param_key)
       o = persister.orchestration_stacks_parameters.find_or_build(uid)
       o.ems_ref = uid
       o.name = param_key
       o.value = param_val
-      o.stack = persister.orchestration_stacks.lazy_find(stack.id)
+      o.stack = stack_inventory_object
     end
   end
 
-  def orchestration_stack_outputs(stack)
+  def orchestration_stack_outputs(stack, stack_inventory_object)
     collector.orchestration_outputs(stack).each do |output|
       uid = compose_ems_ref(stack.id, output['output_key'])
       o = persister.orchestration_stacks_outputs.find_or_build(uid)
@@ -207,7 +207,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       o.key = output['output_key']
       o.value = output['output_value']
       o.description = output['description']
-      o.stack = persister.orchestration_stacks.lazy_find(stack.id)
+      o.stack = stack_inventory_object
     end
   end
 
@@ -235,9 +235,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       o.orchestration_template = orchestration_template(stack)
       o.cloud_tenant = persister.cloud_tenants.lazy_find(stack.service.current_tenant["id"])
 
-      orchestration_stack_resources(stack)
-      orchestration_stack_outputs(stack)
-      orchestration_stack_parameters(stack)
+      orchestration_stack_resources(stack, o)
+      orchestration_stack_outputs(stack, o)
+      orchestration_stack_parameters(stack, o)
     end
   end
 
@@ -279,7 +279,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       server.flavor = persister.flavors.lazy_find(s.flavor["id"].to_s)
 
       hardware = persister.hardwares.find_or_build(s.id)
-      hardware.vm_or_template = persister.vms.lazy_find(s.id)
+      hardware.vm_or_template = server
       hardware.cpu_sockets = flavor.try(:vcpus)
       hardware.cpu_total_cores = flavor.try(:vcpus)
       hardware.cpu_speed = parent_host.try(:hardware).try(:cpu_speed)
@@ -309,20 +309,20 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
         root_size = 1.gigabytes
       end
-      make_instance_disk(s.id, root_size, disk_location.dup, "Root disk")
+      make_instance_disk(hardware, root_size, disk_location.dup, "Root disk")
       ephemeral_size = flavor.try(:ephemeral).to_i.gigabytes
       unless ephemeral_size.zero?
-        make_instance_disk(s.id, ephemeral_size, disk_location.succ!.dup, "Ephemeral disk")
+        make_instance_disk(hardware, ephemeral_size, disk_location.succ!.dup, "Ephemeral disk")
       end
       swap_size = flavor.try(:swap).to_i.megabytes
       unless swap_size.zero?
-        make_instance_disk(s.id, swap_size, disk_location.succ!.dup, "Swap disk")
+        make_instance_disk(hardware, swap_size, disk_location.succ!.dup, "Swap disk")
       end
     end
   end
 
   def vnfs
-    collector.vnfs.each do |vnf|
+    collector.vnfs.each do |v|
       vnf = persister.orchestration_stacks.find_or_build(v.id)
       vnf.type = "ManageIQ::Providers::Openstack::CloudManager::Vnf"
       vnf.name = v.name
@@ -330,7 +330,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       vnf.status = v.status
       vnf.cloud_tenant = persister.cloud_tenants.lazy_find(v.tenant_id)
 
-      output = persister.orchestration_stacks_outputs.find_or_build(v.id + 'mgmt_url')
+      output = persister.orchestration_stacks_outputs.find_or_build("#{v.id}mgmt_url")
       output.key = 'mgmt_url'
       output.value = v.mgmt_url
       output.stack = vnf
@@ -348,9 +348,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     end
   end
 
-  def make_instance_disk(server_id, size, location, name)
+  def make_instance_disk(hardware, size, location, name)
     disk = persister.disks.find_or_build_by(
-      :hardware    => persister.hardwares.lazy_find(server_id),
+      :hardware    => hardware,
       :device_name => name
     )
     disk.device_name = name

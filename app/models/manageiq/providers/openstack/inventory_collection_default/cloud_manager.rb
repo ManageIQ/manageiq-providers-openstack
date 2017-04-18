@@ -217,7 +217,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def orchestration_stacks(extra_attributes = {})
       attributes = {
-        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack,
+        :model_class                 => ManageIQ::Providers::CloudManager::OrchestrationStack,
         :inventory_object_attributes => [
           :type,
           :name,
