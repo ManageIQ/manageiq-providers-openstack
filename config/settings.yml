@@ -3,9 +3,66 @@
   :ems_openstack:
     :event_handling:
       :event_groups:
+    :excon:
+      :omit_default_port: true
+      :read_timeout: 60
 :http_proxy:
   :openstack:
     :host:
     :password:
     :port:
     :user:
+:workers:
+  :worker_base:
+    :event_catcher:
+      :event_catcher_openstack:
+        :poll: 15.seconds
+        :topics:
+          :nova: notifications.*
+          :cinder: notifications.*
+          :glance: notifications.*
+          :heat: notifications.*
+        :duration: 10.seconds
+        :capacity: 50
+        :amqp_port: 5672
+        :amqp_heartbeat: 30
+        :amqp_recovery_attempts: 4
+        :ceilometer:
+          :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+      :event_catcher_openstack_infra:
+        :poll: 15.seconds
+        :topics:
+          :nova: notifications.*
+          :cinder: notifications.*
+          :glance: notifications.*
+          :heat: notifications.*
+          :ironic: notifications.*
+        :duration: 10.seconds
+        :capacity: 50
+        :amqp_port: 5672
+        :amqp_heartbeat: 30
+        :amqp_recovery_attempts: 4
+        :ceilometer:
+          :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+      :event_catcher_openstack_network:
+        :poll: 15.seconds
+        :topics:
+          :neutron: "notifications.*"
+        :duration: 10.seconds
+        :capacity: 50
+        :amqp_port: 5672
+        :amqp_heartbeat: 30
+        :amqp_recovery_attempts: 4
+        :ceilometer:
+          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+      :event_catcher_openstack_service: "auto"
+    :queue_worker_base:
+      :ems_metrics_collector_worker:
+        :ems_metrics_collector_worker_openstack: {}
+        :ems_metrics_collector_worker_openstack_infra: {}
+        :ems_metrics_collector_worker_openstack_network: {}
+        :ems_metrics_openstack_default_service: "auto"
+      :ems_refresh_worker:
+        :ems_refresh_worker_openstack: {}
+        :ems_refresh_worker_openstack_infra: {}
+        :ems_refresh_worker_openstack_network: {}
