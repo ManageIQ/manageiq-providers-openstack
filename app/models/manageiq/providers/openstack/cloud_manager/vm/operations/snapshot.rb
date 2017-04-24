@@ -2,7 +2,15 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Snapshot
   extend ActiveSupport::Concern
 
   included do
-    supports :snapshot_create
+    supports :snapshot_create do
+      if supports_snapshots?
+        unless supports_control?
+          unsupported_reason_add(:snapshot_create, unsupported_reason(:control))
+        end
+      else
+        unsupported_reason_add(:snapshot_create, _("Operation not supported"))
+      end
+    end
 
     supports :remove_snapshot do
       if supports_snapshots?
