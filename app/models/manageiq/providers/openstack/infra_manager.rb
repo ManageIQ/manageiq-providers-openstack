@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::InfraManager < ::EmsInfra
+class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraManager
   require_nested :AuthKeyPair
   require_nested :EmsCluster
   require_nested :EventCatcher
