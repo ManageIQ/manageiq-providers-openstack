@@ -787,21 +787,24 @@ module Openstack
       # TODO(lsmola) the flavor disk data should be stored in Flavor model, getting it from test data now
       flavor_expected = compute_data.flavors.detect { |x| x[:name] == vm.flavor.name }
 
-      disk = vm.hardware.disks.find_by_device_name("Root disk")
+      disk = vm.hardware.disks.find_by(:device_name => "vda")
       expect(disk).to have_attributes(
-        :device_name => "Root disk",
+        :device_name => "vda",
+        :location    => "vda",
         :device_type => "disk",
         :size        => flavor_expected[:disk].gigabyte
       )
-      disk = vm.hardware.disks.find_by_device_name("Ephemeral disk")
+      disk = vm.hardware.disks.find_by(:device_name => "vdb")
       expect(disk).to have_attributes(
-        :device_name => "Ephemeral disk",
+        :device_name => "vdb",
+        :location    => "vdb",
         :device_type => "disk",
         :size        => flavor_expected[:ephemeral].gigabyte
       )
-      disk = vm.hardware.disks.find_by_device_name("Swap disk")
+      disk = vm.hardware.disks.find_by(:device_name => "vdc")
       expect(disk).to have_attributes(
-        :device_name => "Swap disk",
+        :device_name => "vdc",
+        :location    => "vdc",
         :device_type => "disk",
         :size        => flavor_expected[:swap].megabytes
       )
