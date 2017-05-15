@@ -103,7 +103,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
   def raw_create_security_group_rule(security_group_id, direction, options)
     options.delete_if { |_k, v| v.nil? || v.empty? }
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      service.create_security_group_rule(security_group_id, direction, options)
+      service.create_security_group_rule(security_group_id, parse_direction(direction), options)
     end
   rescue => e
     _log.error "security_group=[#{name}], error: #{e}"
@@ -152,6 +152,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
   end
 
   private
+
+  def parse_direction(val)
+    val == "outbound" ? "egress" : "ingress"
+  end
 
   def connection_options(cloud_tenant = nil)
     self.class.connection_options(cloud_tenant)
