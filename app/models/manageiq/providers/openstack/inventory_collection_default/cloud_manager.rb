@@ -122,6 +122,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
         :model_class                 => ManageIQ::Providers::Openstack::CloudManager::HostAggregate,
         :association                 => :host_aggregates,
         :inventory_object_attributes => [
+          :ems_ref,
           :type,
           :name,
           :metadata,

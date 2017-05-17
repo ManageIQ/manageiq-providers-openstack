@@ -14,6 +14,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     cloud_tenants
     vnfs
     vnfds
+    host_aggregates
   end
 
   def availability_zones
