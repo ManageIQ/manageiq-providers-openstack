@@ -295,7 +295,7 @@ module ManageIQ::Providers
         :network_protocol      => rule.ethertype.to_s.upcase,
         :port                  => rule.port_range_min,
         :end_port              => rule.port_range_max,
-        :source_security_group => rule.remote_group_id,
+        :source_security_group => @data_index.fetch_path(:security_groups, rule.remote_group_id),
         :source_ip_range       => rule.remote_ip_prefix,
       }
     end
