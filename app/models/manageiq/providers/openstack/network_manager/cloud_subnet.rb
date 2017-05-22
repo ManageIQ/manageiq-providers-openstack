@@ -53,7 +53,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     }
     queue_opts = {
       :class_name  => self.class.name,
-      :method_name => 'raw_delete_cloud_subnet',
+      :method_name => 'delete_cloud_subnet',
       :instance_id => id,
       :priority    => MiqQueue::HIGH_PRIORITY,
       :role        => 'ems_operations',
