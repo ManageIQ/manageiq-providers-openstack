@@ -29,6 +29,14 @@ namespace :manageiq do
             Rake::Task['spec'].invoke
           end
         end
+
+        desc 'Rerecord all of VCR cassettes'
+        task :rerecord => [] do
+          Rake::Task['app:manageiq:providers:openstack:vcr:cassettes:delete'].invoke
+          Rake::Task['app:manageiq:providers:openstack:vcr:credentials:load'].invoke
+          Rake::Task['app:manageiq:providers:openstack:vcr:spec:run'].invoke
+          Rake::Task['app:manageiq:providers:openstack:vcr:credentials:obfuscate'].invoke
+        end
       end
     end
   end
