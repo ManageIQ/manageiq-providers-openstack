@@ -21,6 +21,14 @@ namespace :manageiq do
             VcrRecorder.new.delete_cassettes
           end
         end
+
+        namespace :spec do
+          desc 'Run specs needed for rerecording of VCRs'
+          task :run do
+            ENV['SPEC'] = VcrRecorder.new.test_files.join(' ')
+            Rake::Task['spec'].invoke
+          end
+        end
       end
     end
   end

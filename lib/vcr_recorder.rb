@@ -18,6 +18,10 @@ class VcrRecorder
     File.join(base_dir, 'spec/models/manageiq/providers/openstack/cloud_manager')
   end
 
+  def test_files
+    Dir.glob(File.join(test_base_dir, 'refresher_*_spec.rb'))
+  end
+
   def openstack_environment_file
     File.join(base_dir, "openstack_environments.yml")
   end
