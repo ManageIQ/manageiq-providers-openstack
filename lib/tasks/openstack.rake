@@ -14,6 +14,13 @@ namespace :manageiq do
             VcrRecorder.new.obfuscate_credentials
           end
         end
+
+        namespace :cassettes do
+          desc 'Deletes VCR cassettes for OpenStack Cloud Provider'
+          task :delete do
+            VcrRecorder.new.delete_cassettes
+          end
+        end
       end
     end
   end

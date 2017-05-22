@@ -10,6 +10,10 @@ class VcrRecorder
     File.join(base_dir, 'spec/vcr_cassettes/manageiq/providers/openstack/cloud_manager')
   end
 
+  def vcr_files
+    Dir.glob(File.join(vcr_base_dir, 'refresher_rhos_*.yml'))
+  end
+
   def test_base_dir
     File.join(base_dir, 'spec/models/manageiq/providers/openstack/cloud_manager')
   end
@@ -69,4 +73,11 @@ class VcrRecorder
       out << file
     end
   end
+
+  def delete_cassettes
+    vcr_files.each do |file|
+      File.delete(file)
+    end
+  end
+
 end
