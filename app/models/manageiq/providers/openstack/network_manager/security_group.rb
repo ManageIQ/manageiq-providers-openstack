@@ -34,7 +34,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       security_group = service.create_security_group(options).body
     end
-    {:ems_ref => security_group['id'], :name => options[:name]}
   rescue => e
     _log.error "security_group=[#{options[:name]}], error: #{e}"
     raise MiqException::MiqSecurityGroupCreateError, e.to_s, e.backtrace
