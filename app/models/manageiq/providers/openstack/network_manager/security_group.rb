@@ -18,12 +18,15 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
   end
 
   def self.parse_security_group_rule(rule)
+    if rule["source_security_group_id"] && !rule["source_security_group_id"].empty?
+      sg = SecurityGroup.find(rule["source_security_group_id"])
+    end
     {
       :ethertype        => rule["network_protocol"].to_s.downcase,
       :port_range_min   => rule["port"],
       :port_range_max   => rule["end_port"],
       :protocol         => rule["host_protocol"].to_s.downcase,
-      :remote_group_id  => rule["source_security_group_id"],
+      :remote_group_id  => sg.try(:ems_ref),
       :remote_ip_prefix => rule["source_ip_range"]
     }
   end
