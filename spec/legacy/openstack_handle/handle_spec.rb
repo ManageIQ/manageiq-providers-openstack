@@ -1,4 +1,4 @@
-require 'openstack/openstack_handle/handle'
+require 'manageiq/providers/openstack/legacy/openstack_handle/handle'
 require 'fog/openstack'
 
 describe OpenstackHandle::Handle do

@@ -2,8 +2,7 @@
 # Usage:
 # bundle exec rails r gems/pending/openstack/test/event_monitor_example.rb
 
-require 'manageiq-gems-pending'
-require 'openstack/openstack_event_monitor'
+require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 
 def event_to_hash(event)
   hash = {}

@@ -1,4 +1,4 @@
-require 'openstack/openstack_handle/pagination/base'
+require 'manageiq/providers/openstack/legacy/openstack_handle/pagination/base'
 
 module OpenstackHandle
   module Pagination

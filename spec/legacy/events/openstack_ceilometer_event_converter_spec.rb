@@ -1,4 +1,4 @@
-require 'openstack/events/openstack_ceilometer_event_converter'
+require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_converter'
 
 describe OpenstackCeilometerEventConverter do
   let(:fog_event) do

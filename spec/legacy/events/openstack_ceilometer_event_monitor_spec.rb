@@ -1,4 +1,4 @@
-require 'openstack/events/openstack_ceilometer_event_monitor'
+require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_monitor'
 
 describe OpenstackCeilometerEventMonitor do
   context "collecting events" do

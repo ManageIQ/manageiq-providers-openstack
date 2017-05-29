@@ -1,4 +1,4 @@
-require 'openstack/openstack_event_monitor'
+require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 
 class OpenstackNullEventMonitor < OpenstackEventMonitor
   def self.available?(_options)

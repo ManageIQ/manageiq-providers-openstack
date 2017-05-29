@@ -1,4 +1,4 @@
-require 'openstack/openstack_configuration_parser'
+require 'manageiq/providers/openstack/legacy/openstack_configuration_parser'
 
 class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   include HostOperationsMixin

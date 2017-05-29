@@ -1,8 +1,8 @@
-require 'openstack/openstack_handle/pagination/marker'
-require 'openstack/openstack_handle/pagination/page_number'
-require 'openstack/openstack_handle/pagination/none'
+require 'manageiq/providers/openstack/legacy/openstack_handle/pagination/marker'
+require 'manageiq/providers/openstack/legacy/openstack_handle/pagination/none'
+require 'manageiq/providers/openstack/legacy/openstack_handle/pagination/page_number'
 
-require 'openstack/openstack_handle/multi_tenancy/loop'
+require 'manageiq/providers/openstack/legacy/openstack_handle/multi_tenancy/loop'
 
 module OpenstackHandle
   module HandledList

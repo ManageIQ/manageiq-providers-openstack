@@ -1,4 +1,4 @@
-require 'openstack/openstack_handle/multi_tenancy/base'
+require 'manageiq/providers/openstack/legacy/openstack_handle/multi_tenancy/base'
 
 module OpenstackHandle
   module MultiTenancy

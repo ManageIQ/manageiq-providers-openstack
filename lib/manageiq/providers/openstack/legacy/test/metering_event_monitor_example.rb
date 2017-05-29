@@ -3,9 +3,8 @@ EMS_USERNAME.freeze = ""
 EMS_PASSWORD.freeze = ""
 
 # Following lines with require seem to be broken, copy code to rails console...
-# require 'manageiq-gems-pending'
-require 'openstack/openstack_handle'
-# require 'openstack/events/openstack_ceilometer_event_monitor'
+require 'manageiq/providers/openstack/legacy/openstack_handle'
+# require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_monitor'
 
 def dump_attrs(obj, pref = "")
   unless obj.respond_to?(:attributes)

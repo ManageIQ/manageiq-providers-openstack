@@ -30,8 +30,7 @@ ACCESSORS = [
   ['Storage', 'directories',                            nil],
 ]
 
-require 'manageiq-gems-pending'
-require 'openstack/openstack_handle'
+require 'manageiq/providers/openstack/legacy/openstack_handle'
 
 begin
   CREDS.each do |cred|

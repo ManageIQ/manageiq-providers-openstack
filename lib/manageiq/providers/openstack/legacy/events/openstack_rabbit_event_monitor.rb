@@ -1,5 +1,5 @@
-require 'openstack/openstack_event_monitor'
-require 'openstack/events/openstack_event'
+require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
+require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'bunny'
 require 'thread'
 

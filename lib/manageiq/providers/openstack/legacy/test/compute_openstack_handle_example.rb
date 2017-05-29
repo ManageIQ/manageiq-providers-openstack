@@ -2,8 +2,7 @@ EMS_IP       = ""
 EMS_USERNAME = ""
 EMS_PASSWORD = ""
 
-require 'manageiq-gems-pending'
-require 'openstack/openstack_handle'
+require 'manageiq/providers/openstack/legacy/openstack_handle'
 
 def dump_attrs(obj, pref = "")
   unless obj.respond_to?(:attributes)
