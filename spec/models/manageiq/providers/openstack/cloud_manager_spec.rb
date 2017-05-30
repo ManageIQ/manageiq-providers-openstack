@@ -56,7 +56,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
   context "validation" do
     before :each do
       @ems = FactoryGirl.create(:ems_openstack_with_authentication)
-      require 'openstack/openstack_event_monitor'
+      require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     end
 
     it "verifies AMQP credentials" do
@@ -120,7 +120,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
     @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
     @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
-    require 'openstack/openstack_event_monitor'
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 
     expect(@ems.event_monitor_options[:hostname]).to eq("amqp_hostname")
     expect(@ems.event_monitor_options[:port]).to eq(5672)

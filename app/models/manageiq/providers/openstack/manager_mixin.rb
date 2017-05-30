@@ -12,12 +12,12 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   #
   module ClassMethods
     def raw_connect(username, password, auth_url, service = "Compute")
-      require 'openstack/openstack_handle'
+      require 'manageiq/providers/openstack/legacy/openstack_handle'
       OpenstackHandle::Handle.raw_connect(username, password, auth_url, service)
     end
 
     def auth_url(address, port = nil)
-      require 'openstack/openstack_handle'
+      require 'manageiq/providers/openstack/legacy/openstack_handle'
       OpenstackHandle::Handle.auth_url(address, port)
     end
   end
@@ -31,7 +31,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def openstack_handle(options = {})
-    require 'openstack/openstack_handle'
+    require 'manageiq/providers/openstack/legacy/openstack_handle'
     @openstack_handle ||= begin
       raise MiqException::MiqInvalidCredentialsError, "No credentials defined" if self.missing_credentials?(options[:auth_type])
 
@@ -96,7 +96,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def event_monitor_available?
-    require 'openstack/openstack_event_monitor'
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     OpenstackEventMonitor.available?(event_monitor_options)
   rescue => e
     _log.error("Exception trying to find openstack event monitor for #{name}(#{hostname}). #{e.message}")
@@ -154,7 +154,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   private :verify_api_credentials
 
   def verify_amqp_credentials(_options = {})
-    require 'openstack/openstack_event_monitor'
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     OpenstackEventMonitor.test_amqp_connection(event_monitor_options)
   rescue => err
     miq_exception = translate_exception(err)

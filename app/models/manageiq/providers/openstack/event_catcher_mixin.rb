@@ -1,7 +1,7 @@
 module ManageIQ::Providers::Openstack::EventCatcherMixin
   # seems like most of this class could be boilerplate when compared against EventCatcherRhevm
   def event_monitor_handle
-    require 'openstack/openstack_event_monitor'
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     unless @event_monitor_handle
       options = @ems.event_monitor_options
       options[:topics]                        = worker_settings[:topics]

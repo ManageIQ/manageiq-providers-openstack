@@ -47,7 +47,7 @@ describe ManageIQ::Providers::Openstack::InfraManager do
   context "validation" do
     before :each do
       @ems = FactoryGirl.create(:ems_openstack_infra_with_authentication)
-      require 'openstack/openstack_event_monitor'
+      require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     end
 
     it "verifies AMQP credentials" do
