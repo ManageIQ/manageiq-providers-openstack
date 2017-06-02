@@ -1,6 +1,10 @@
 require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_monitor'
 
+class Fog::Event::OpenStack::Event; end
+
 describe OpenstackCeilometerEventMonitor do
+  subject { OpenstackCeilometerEventMonitor.new(:ems => double(:connect => double)) }
+
   context "collecting events" do
     it 'query ceilometer nothing new' do
       connection = double

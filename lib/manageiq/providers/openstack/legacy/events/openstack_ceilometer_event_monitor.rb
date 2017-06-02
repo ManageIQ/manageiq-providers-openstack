@@ -1,10 +1,15 @@
 require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_converter'
+require 'fog/openstack'
 
 class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   def self.available?(options = {})
-    return connect_service_from_settings(options[:ems]) if event_services.keys.include? event_service_settings
+    if event_services.keys.include? event_service_settings
+      $log.debug "#{_log.prefix} Using events provided by \"#{event_service_settings}\" service, which was set in settings.yml."
+      options[:ems].connect(:service => event_services[event_service_settings])
+      return true
+    end
     begin
       options[:ems].connect(:service => "Event")
       return true
@@ -19,9 +24,11 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   end
 
   def initialize(options = {})
-    @options = options
-    @ems = options[:ems]
-    @config = options.fetch(:ceilometer, {})
+    @options                              = options
+    @ems                                  = options[:ems]
+    @config                               = options.fetch(:ceilometer, {})
+    @events_service, @provider_connection = initialize_events_service
+    @events_class                         = "Fog::#{@events_service}::OpenStack::Event".constantize
   end
 
   def start
@@ -34,13 +41,7 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   end
 
   def provider_connection
-    return @provider_connection ||= self.class.connect_service_from_settings(@ems) if self.class.event_services.keys.include? self.class.event_service_settings
-    begin
-      @provider_connection ||= @ems.connect(:service => "Event")
-    rescue MiqException::ServiceNotAvailable => ex
-      $log.debug("Panko is not available, trying access events using Ceilometer (#{ex.inspect})") if $log
-      @provider_connection = @ems.connect(:service => "Metering")
-    end
+    @provider_connection ||= @ems.connect(:service => @events_service)
   end
 
   def each_batch
@@ -65,15 +66,10 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
     end
   end
 
-  def self.connect_service_from_settings(ems)
-    $log.debug "#{_log.prefix} Using events provided by \"#{event_service_settings}\" service, which was set in settings.yml."
-    ems.connect(:service => event_services[event_service_settings])
-  end
-
   def self.event_service_settings
     Settings[:workers][:worker_base][:event_catcher][:event_catcher_openstack_service]
   rescue StandardError => err
-    $log.warn "#{_log.prefix} Settings key :event_catcher_openstack_service is missing, #{err}."
+    $log.warn "Settings key :event_catcher_openstack_service is missing, #{err}."
     nil
   end
 
@@ -100,15 +96,21 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
 
   def list_events(query_options)
     provider_connection.list_events(query_options).body.map do |event_hash|
-      begin
-        Fog::Event::OpenStack::Event.new(event_hash)
-      rescue NameError
-        Fog::Metering::OpenStack::Event.new(event_hash)
-      end
+      @events_class.new(event_hash)
     end
   end
 
   def latest_event_timestamp
     @since ||= @ems.ems_events.maximum(:timestamp)
+  end
+
+  def initialize_events_service
+    return self.class.event_services[self.class.event_service_settings], @ems.connect(:service => self.class.event_services[self.class.event_service_settings]) if self.class.event_services.keys.include? self.class.event_service_settings
+    begin
+      return "Event", @ems.connect(:service => "Event")
+    rescue MiqException::ServiceNotAvailable => ex
+      $log.debug("Panko is not available, trying access events using Ceilometer (#{ex.inspect})") if $log
+      return "Metering", @ems.connect(:service => "Metering")
+    end
   end
 end
