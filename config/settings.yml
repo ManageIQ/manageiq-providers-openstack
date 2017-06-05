@@ -1,109 +1,107 @@
 ---
 :ems:
   :ems_openstack:
-    :event_handling:
-      :event_groups:
     :excon:
       :omit_default_port: true
       :read_timeout: 60
-:event_handling:
-  :event_groups:
-    :addition:
-      :critical:
-      - aggregate.addhost.end
-      - aggregate.create.end
-      - aggregate.removehost.end
-      - aggregate.updateprop.end
-      - aggregate.updatemetadata.end
-      - identity.project.created
-      - identity.project.deleted
-      - identity.project.updated
-      - image.update
-      - image.create
-      - image.upload
-      - orchestration.stack.create.end
-      - orchestration.stack.create.error
-      - servergroup.create
-    :configuration:
-      :critical:
-      - compute.instance.rebuild.end
-      - compute.instance.resize.end
-      - orchestration.stack.update.end
-      - orchestration.stack.update.error
-      - orchestration.stack.suspend.end
-      - orchestration.stack.suspend.error
-      - orchestration.stack.resume.end
-      - orchestration.stack.resume.error
-      - orchestration.autoscaling.end
-      - orchestration.autoscaling.error
-      - servergroup.update
-      - servergroup.addmemeber
-    :deletion:
-      :critical:
-      - aggregate.delete.end
-      - image.delete
-      - orchestration.stack.delete.end
-      - orchestration.stack.delete.error
-      - servergroup.delete
-    :general:
-      :critical:
-      - hardware.ipmi.metrics.update
-    :network:
-      :critical:
-      - floatingip.create.end
-      - floatingip.delete.end
-      - floatingip.update.end
-      - network.create.end
-      - network.delete.end
-      - network.floating_ip.allocate
-      - network.floating_ip.deallocate
-      - network.floating_ip.associate
-      - network.floating_ip.disassociate
-      - network.update.end
-      - router.create.end
-      - router.delete.end
-      - router.interface.create
-      - router.interface.delete
-      - router.update.end
-      - security_group.create.end
-      - security_group.delete.end
-      - security_group.update.end
-      - subnet.create.end
-      - subnet.delete.end
-      - subnet.update.end
-    :power:
-      :critical:
-      - compute.instance.create.end
-      - compute.instance.create.error
-      - compute.instance.shutdown.end
-      - compute.instance.shutdown.error
-      - compute.instance.delete.end
-      - compute.instance.power_off.end
-      - compute.instance.power_on.end
-      - compute.instance.soft_delete.end
-      - compute.instance.reboot.end
-      - compute.instance.suspend
-      - compute.instance.resume
-      - compute.instance.pause.end
-      - compute.instance.unpause.end
-      - compute.instance.shelve.end
-      - compute.instance.unshelve.end
-      - compute.instance.shelve_offload.end
-    :snapshot:
-      :critical:
-      - compute.instance.snapshot.end
-    :storage:
-      :critical:
-      - backup.create.start
-      - backup.create.end
-      - backup.restore.start
-      - backup.restore.end
-      - snapshot.create.start
-      - snapshot.create.end
-      - snapshot.delete.end
-      - snapshot.update.end
-      - volume.create.end
-      - volume.delete.end
+    :event_handling:
+      :event_groups:
+        :addition:
+          :critical:
+          - aggregate.addhost.end
+          - aggregate.create.end
+          - aggregate.removehost.end
+          - aggregate.updateprop.end
+          - aggregate.updatemetadata.end
+          - identity.project.created
+          - identity.project.deleted
+          - identity.project.updated
+          - image.update
+          - image.create
+          - image.upload
+          - orchestration.stack.create.end
+          - orchestration.stack.create.error
+          - servergroup.create
+        :configuration:
+          :critical:
+          - compute.instance.rebuild.end
+          - compute.instance.resize.end
+          - orchestration.stack.update.end
+          - orchestration.stack.update.error
+          - orchestration.stack.suspend.end
+          - orchestration.stack.suspend.error
+          - orchestration.stack.resume.end
+          - orchestration.stack.resume.error
+          - orchestration.autoscaling.end
+          - orchestration.autoscaling.error
+          - servergroup.update
+          - servergroup.addmemeber
+        :deletion:
+          :critical:
+          - aggregate.delete.end
+          - image.delete
+          - orchestration.stack.delete.end
+          - orchestration.stack.delete.error
+          - servergroup.delete
+        :general:
+          :critical:
+          - hardware.ipmi.metrics.update
+        :network:
+          :critical:
+          - floatingip.create.end
+          - floatingip.delete.end
+          - floatingip.update.end
+          - network.create.end
+          - network.delete.end
+          - network.floating_ip.allocate
+          - network.floating_ip.deallocate
+          - network.floating_ip.associate
+          - network.floating_ip.disassociate
+          - network.update.end
+          - router.create.end
+          - router.delete.end
+          - router.interface.create
+          - router.interface.delete
+          - router.update.end
+          - security_group.create.end
+          - security_group.delete.end
+          - security_group.update.end
+          - subnet.create.end
+          - subnet.delete.end
+          - subnet.update.end
+        :power:
+          :critical:
+          - compute.instance.create.end
+          - compute.instance.create.error
+          - compute.instance.shutdown.end
+          - compute.instance.shutdown.error
+          - compute.instance.delete.end
+          - compute.instance.power_off.end
+          - compute.instance.power_on.end
+          - compute.instance.soft_delete.end
+          - compute.instance.reboot.end
+          - compute.instance.suspend
+          - compute.instance.resume
+          - compute.instance.pause.end
+          - compute.instance.unpause.end
+          - compute.instance.shelve.end
+          - compute.instance.unshelve.end
+          - compute.instance.shelve_offload.end
+        :snapshot:
+          :critical:
+          - compute.instance.snapshot.end
+        :storage:
+          :critical:
+          - backup.create.start
+          - backup.create.end
+          - backup.restore.start
+          - backup.restore.end
+          - snapshot.create.start
+          - snapshot.create.end
+          - snapshot.delete.end
+          - snapshot.update.end
+          - volume.create.end
+          - volume.delete.end
 :http_proxy:
   :openstack:
     :host:
