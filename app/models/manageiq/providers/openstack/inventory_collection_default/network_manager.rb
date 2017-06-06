@@ -2,8 +2,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
   class << self
     def network_ports(extra_attributes = {})
       attributes = {
-        :model_class => ::ManageIQ::Providers::Openstack::NetworkManager::NetworkPort,
-        :association => :network_ports,
+        :model_class                 => ::ManageIQ::Providers::Openstack::NetworkManager::NetworkPort,
+        :association                 => :network_ports,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -30,8 +30,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def network_routers(extra_attributes = {})
       attributes = {
-        :model_class => ::ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter,
-        :association => :network_routers,
+        :model_class                 => ::ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter,
+        :association                 => :network_routers,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -51,8 +51,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def floating_ips(extra_attributes = {})
       attributes = {
-        :model_class => ManageIQ::Providers::Openstack::NetworkManager::FloatingIp,
-        :association => :floating_ips,
+        :model_class                 => ManageIQ::Providers::Openstack::NetworkManager::FloatingIp,
+        :association                 => :floating_ips,
         :inventory_object_attributes => [
           :type,
           :address,
@@ -70,8 +70,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def cloud_subnets(extra_attributes = {})
       attributes = {
-        :model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet,
-        :association => :cloud_subnets,
+        :model_class                 => ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet,
+        :association                 => :cloud_subnets,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -98,8 +98,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def cloud_networks(extra_attributes = {})
       attributes = {
-        :model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork,
-        :association => :cloud_networks,
+        :model_class                 => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork,
+        :association                 => :cloud_networks,
         :inventory_object_attributes => [
           :type,
           :name,
@@ -124,7 +124,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def firewall_rules(extra_attributes = {})
       attributes = {
-        :manager_ref => [:ems_ref],
+        :manager_ref                 => [:ems_ref],
         :inventory_object_attributes => [
           :resource,
           :source_security_group,
@@ -142,8 +142,8 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
     def security_groups(extra_attributes = {})
       attributes = {
-        :model_class => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup,
-        :association => :security_groups,
+        :model_class                 => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup,
+        :association                 => :security_groups,
         :inventory_object_attributes => [
           :type,
           :name,

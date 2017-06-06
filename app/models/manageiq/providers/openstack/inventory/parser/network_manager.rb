@@ -11,7 +11,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def cloud_networks
     collector.cloud_networks.each do |n|
-      status = status = (n.status.to_s.downcase == "active") ? "active" : "inactive"
+      status = status = n.status.to_s.downcase == "active" ? "active" : "inactive"
       network_type_suffix = n.router_external ? "::Public" : "::Private"
 
       network = persister.cloud_networks.find_or_build(n.id)
@@ -95,7 +95,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
       np.fixed_ips.each do |address|
         persister.cloud_subnet_network_ports.find_or_build_by(
-          :address => address["ip_address"],
+          :address      => address["ip_address"],
           :cloud_subnet => persister.cloud_subnets.lazy_find(address["subnet_id"]),
           :network_port => network_port
         )
@@ -105,7 +105,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def network_routers
     collector.network_routers.each do |nr|
-      network_id = network_id = nr.try(:external_gateway_info).try(:fetch_path, "network_id")
+      network_id = nr.try(:external_gateway_info).try(:fetch_path, "network_id")
       network_router = persister.network_routers.find_or_build(nr.id)
       network_router.type = "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter"
       network_router.name = nr.name
@@ -141,7 +141,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   end
 
   def firewall_rule_neutron(rule, security_group)
-    direction = (rule.direction == "egress") ? "outbound" : "inbound"
+    direction = rule.direction == "egress" ? "outbound" : "inbound"
     firewall_rule = persister.firewall_rules.find_or_build(rule.id)
     firewall_rule.resource = security_group
     firewall_rule.source_security_group = persister.security_groups.lazy_find(rule.remote_group_id)
@@ -156,11 +156,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   def firewall_rule_nova(rule, security_group)
     firewall_rule = persister.firewall_rules.find_or_build(rule.id)
     firewall_rule.resource = security_group
-    firewall_rule.source_security_group = persister.security_groups.lazy_find(collector.security_groups_by_name[rule.group["name"]]),
-    firewall_rule.direction = "inbound",
-    firewall_rule.host_protocol = rule.ip_protocol.to_s.upcase,
-    firewall_rule.port = rule.from_port,
-    firewall_rule.end_port = rule.to_port,
+    firewall_rule.source_security_group = persister.security_groups.lazy_find(collector.security_groups_by_name[rule.group["name"]])
+    firewall_rule.direction = "inbound"
+    firewall_rule.host_protocol = rule.ip_protocol.to_s.upcase
+    firewall_rule.port = rule.from_port
+    firewall_rule.end_port = rule.to_port
     firewall_rule.source_ip_range = rule.ip_range["cidr"]
   end
 
@@ -171,12 +171,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       # TODO(slucidi): replace this query for hosts once the infra manager uses the graph inventory system
       host = collector.manager.hosts.where(Host.arel_table[:ems_ref_obj].matches("%#{network_port.device_id}%")).first
       return host || persister.vms.lazy_find(network_port.device_id)
-    when "network:router_gateway"
-      # TODO(lsmola) the gateway here is public network, we model it directly now, that will probably change
-    when "network:dhcp"
-      # TODO(lsmola) we need to represent dhcp as object
-    when "network:floatingip"
-      # We don't need this association, floating ip has a direct link to subnet and network in it
     when "network:router_interface", "network:router_ha_interface", "network:ha_router_replicated_interface"
       subnet_id = network_port.fixed_ips.try(:first).try(:[], "subnet_id")
       if subnet_id
