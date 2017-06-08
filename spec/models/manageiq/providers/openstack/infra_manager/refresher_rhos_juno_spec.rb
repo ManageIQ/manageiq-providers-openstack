@@ -3,8 +3,8 @@ require 'fog/openstack'
 describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
-                              :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
+    @ems = FactoryGirl.create(:ems_openstack_infra, :zone => zone, :hostname => "127.0.0.1",
+                              :ipaddress => "127.0.0.1", :port => 5002, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
       :default => {:userid => "admin", :password => "b83387e3b93a015a57f23a9262e799db5d0a22f6"})
@@ -165,9 +165,9 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       #:manufacturer         => "Red Hat",
       #:model                => "KVM",
       #:bios                 => "seabios-1.7.5-11.el7",
-      :memory_mb            => 8192,
+      :memory_mb            => 6144,
       :memory_console       => nil,
-      :disk_capacity        => 49,
+      :disk_capacity        => 40,
       :cpu_sockets          => 1,
       :cpu_total_cores      => 1,
       :cpu_cores_per_socket => 1,
