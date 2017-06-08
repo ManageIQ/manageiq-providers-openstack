@@ -311,14 +311,14 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
         root_size = 1.gigabytes
       end
-      make_instance_disk(hardware, root_size, disk_location.dup, "Root disk")
+      make_instance_disk(hardware, root_size, disk_location.dup)
       ephemeral_size = flavor.try(:ephemeral).to_i.gigabytes
       unless ephemeral_size.zero?
-        make_instance_disk(hardware, ephemeral_size, disk_location.succ!.dup, "Ephemeral disk")
+        make_instance_disk(hardware, ephemeral_size, disk_location.succ!.dup)
       end
       swap_size = flavor.try(:swap).to_i.megabytes
       unless swap_size.zero?
-        make_instance_disk(hardware, swap_size, disk_location.succ!.dup, "Swap disk")
+        make_instance_disk(hardware, swap_size, disk_location.succ!.dup)
       end
     end
   end
@@ -350,12 +350,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     end
   end
 
-  def make_instance_disk(hardware, size, location, name)
+  def make_instance_disk(hardware, size, location)
     disk = persister.disks.find_or_build_by(
       :hardware    => hardware,
-      :device_name => name
+      :device_name => location
     )
-    disk.device_name = name
+    disk.device_name = location
     disk.device_type = "disk"
     disk.controller_type = "openstack"
     disk.size = size
