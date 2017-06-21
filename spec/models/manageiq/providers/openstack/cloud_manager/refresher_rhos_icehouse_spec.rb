@@ -50,5 +50,22 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       end
       ::Settings.ems.ems_openstack.refresh.is_admin = false
     end
+
+    it "will perform a fast full legacy refresh against RHOS #{@environment}" do
+      ::Settings.ems.ems_openstack.refresh.is_admin = true
+      ::Settings.ems.ems_openstack.refresh.inventory_object_refresh = false
+      2.times do
+        with_cassette("#{@environment}_legacy_fast_refresh", @ems) do
+          EmsRefresh.refresh(@ems)
+          EmsRefresh.refresh(@ems.network_manager)
+          EmsRefresh.refresh(@ems.cinder_manager)
+          EmsRefresh.refresh(@ems.swift_manager)
+        end
+
+        assert_common
+      end
+      ::Settings.ems.ems_openstack.refresh.is_admin = false
+      ::Settings.ems.ems_openstack.refresh.inventory_object_refresh = true
+    end
   end
 end

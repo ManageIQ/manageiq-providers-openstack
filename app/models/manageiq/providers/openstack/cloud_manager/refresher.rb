@@ -15,6 +15,14 @@ module ManageIQ::Providers
       EmsRefresh.queue_refresh(ems.swift_manager)
     end
 
+    def parse_targeted_inventory(ems, target, collector)
+      if ::Settings.ems.ems_openstack.refresh.inventory_object_refresh
+        super(ems, target, collector)
+      else
+        super(ems, target, nil)
+      end
+    end
+
     def post_process_refresh_classes
       [Vm, CloudTenant]
     end
