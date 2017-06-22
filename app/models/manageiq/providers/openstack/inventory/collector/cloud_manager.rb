@@ -52,11 +52,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def flavors
-    if ::Settings.ems.ems_openstack.refresh.is_admin
-      @flavors ||= connection.handled_list(:flavors, {'is_public' => 'None'}, true)
-    else
-      @flavors ||= connection.handled_list(:flavors)
-    end
+    @flavors ||= if ::Settings.ems.ems_openstack.refresh.is_admin
+                   connection.handled_list(:flavors, {'is_public' => 'None'}, true)
+                 else
+                   connection.handled_list(:flavors)
+                 end
   end
 
   def find_flavor(flavor_id)
@@ -95,11 +95,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def images
-    if ::Settings.ems.ems_openstack.refresh.is_admin
-      @images ||= image_service.handled_list(:images, {}, true).all
-    else
-      @images ||= image_service.handled_list(:images)
-    end
+    @images ||= if ::Settings.ems.ems_openstack.refresh.is_admin
+                  image_service.handled_list(:images, {}, true).all
+                else
+                  image_service.handled_list(:images)
+                end
   end
 
   def key_pairs
@@ -123,17 +123,17 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def tenants
-    if ::Settings.ems.ems_openstack.refresh.is_admin
-      @tenants ||= identity_service.visible_tenants.select do |t|
-        # avoid 401 Unauth errors when checking for accessible tenants
-        # the "services" tenant is a special tenant in openstack reserved
-        # specifically for the various services
-        next if t.name == "services"
-        true
-      end
-    else
-      @tenants ||= manager.openstack_handle.accessible_tenants
-    end
+    @tenants ||= if ::Settings.ems.ems_openstack.refresh.is_admin
+                   identity_service.visible_tenants.select do |t|
+                     # avoid 401 Unauth errors when checking for accessible tenants
+                     # the "services" tenant is a special tenant in openstack reserved
+                     # specifically for the various services
+                     next if t.name == "services"
+                     true
+                   end
+                 else
+                   manager.openstack_handle.accessible_tenants
+                 end
   end
 
   def vnfs
@@ -151,11 +151,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
-    if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
-      @orchestration_stacks ||= orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
-    else
-      @orchestration_stacks ||= orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
-    end
+    @orchestration_stacks ||= if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
+                                orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
+                              else
+                                orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
+                              end
   rescue Excon::Errors::Forbidden
     # Orchestration service is detected but not open to the user
     $log.warn("Skip refreshing stacks because the user cannot access the orchestration service")

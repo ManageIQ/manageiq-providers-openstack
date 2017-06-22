@@ -17,10 +17,10 @@ module OpenstackHandle
       # By default, it calls :all method on the Fog collection, that has unified interface in all list methods in Fog
       # and always returns detailed list.
       multi_tenancy_class = if all_tenants
-                               OpenstackHandle::MultiTenancy::Option
-                             else
-                               default_multi_tenancy_class
-                             end
+                              OpenstackHandle::MultiTenancy::Option
+                            else
+                              default_multi_tenancy_class
+                            end
       multi_tenancy_class.new(self, @os_handle, self.class::SERVICE_NAME, collection_type, options,
                               :all).list
     rescue Excon::Errors::Forbidden => err

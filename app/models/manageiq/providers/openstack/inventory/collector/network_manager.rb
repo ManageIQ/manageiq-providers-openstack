@@ -44,11 +44,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
-    if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
-      @orchestration_stacks ||= orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
-    else
-      @orchestration_stacks ||= orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
-    end
+    @orchestration_stacks ||= if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
+                                orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
+                              else
+                                orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
+                              end
   rescue Excon::Errors::Forbidden
     # Orchestration service is detected but not open to the user
     $log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
