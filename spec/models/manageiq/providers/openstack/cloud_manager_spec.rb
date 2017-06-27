@@ -53,6 +53,34 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
   end
 
+  describe ".raw_connect" do
+    before do
+      require 'manageiq/providers/openstack/legacy/openstack_handle/handle'
+    end
+
+    it "accepts and decrypts encrypted passwords" do
+      expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
+        "dummy",
+        "dummy",
+        "http://address:5000/v2.0/tokens",
+        "Compute"
+      )
+
+      described_class.raw_connect("dummy", MiqPassword.encrypt("dummy"), "http://address:5000/v2.0/tokens", "Compute")
+    end
+
+    it "works with unencrypted passwords" do
+      expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
+        "dummy",
+        "dummy",
+        "http://address:5000/v2.0/tokens",
+        "Compute"
+      )
+
+      described_class.raw_connect("dummy", "dummy", "http://address:5000/v2.0/tokens", "Compute")
+    end
+  end
+
   context "validation" do
     before :each do
       @ems = FactoryGirl.create(:ems_openstack_with_authentication)

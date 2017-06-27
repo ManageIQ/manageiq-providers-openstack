@@ -13,7 +13,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   module ClassMethods
     def raw_connect(username, password, auth_url, service = "Compute")
       require 'manageiq/providers/openstack/legacy/openstack_handle'
-      OpenstackHandle::Handle.raw_connect(username, password, auth_url, service)
+      OpenstackHandle::Handle.raw_connect(username, MiqPassword.try_decrypt(password), auth_url, service)
     end
 
     def auth_url(address, port = nil)
