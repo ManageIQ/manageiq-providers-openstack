@@ -141,7 +141,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def verify_api_credentials(options = {})
-    options[:service] = "Compute"
+    options[:service] = "Identity"
     with_provider_connection(options) {}
     true
   rescue => err
