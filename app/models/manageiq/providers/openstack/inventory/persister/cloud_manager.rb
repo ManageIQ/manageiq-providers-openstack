@@ -1,8 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Persister::CloudManager < ManagerRefresh::Inventory::Persister
-  def cloud
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager
-  end
-
+class ManageIQ::Providers::Openstack::Inventory::Persister::CloudManager < ManageIQ::Providers::Openstack::Inventory::Persister
   def initialize_inventory_collections
     add_inventory_collections(
       cloud,

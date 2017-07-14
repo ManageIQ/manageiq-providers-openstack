@@ -1,38 +1,27 @@
-class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < ManagerRefresh::Inventory::Collector
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
-  include Vmdb::Logging
-
-  def connection
-    @os_handle ||= manager.openstack_handle
-    @connection ||= manager.connect
-  end
-
-  def network_service
-    @network_service ||= manager.openstack_handle.detect_network_service
-  end
-
-  def orchestration_service
-    @orchestration_service ||= manager.openstack_handle.detect_orchestration_service
-  end
-
+class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Collector
   def floating_ips
-    @floating_ips ||= network_service.handled_list(:floating_ips, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @floating_ips if @floating_ips.any?
+    @floating_ips = network_service.handled_list(:floating_ips, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def cloud_networks
-    @cloud_networks ||= network_service.handled_list(:networks, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @cloud_networks if @cloud_networks.any?
+    @cloud_networks = network_service.handled_list(:networks, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def network_ports
-    @network_ports ||= network_service.handled_list(:ports, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @network_ports if @network_ports.any?
+    @network_ports = network_service.handled_list(:ports, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def network_routers
-    @network_routers ||= network_service.handled_list(:routers, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @network_routers if @network_routers.any?
+    @network_routers = network_service.handled_list(:routers, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def security_groups
-    @security_groups ||= network_service.handled_list(:security_groups, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @security_groups if @security_groups.any?
+    @security_groups = network_service.handled_list(:security_groups, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def security_groups_by_name
@@ -44,7 +33,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
-    @orchestration_stacks ||= if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
+    return @orchestration_stacks if @orchestration_stacks.any?
+    @orchestration_stacks = if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
                                 orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
                               else
                                 orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)

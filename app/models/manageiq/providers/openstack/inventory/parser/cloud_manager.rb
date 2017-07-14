@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerRefresh::Inventory::Parser
+class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ::Providers::Openstack::Inventory::Parser
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
   include ManageIQ::Providers::Openstack::RefreshParserCommon::Images
 
@@ -59,7 +59,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       tenant.description = t.description
       tenant.enabled = t.enabled
       tenant.ems_ref = t.id
-      tenant.parent = persister.cloud_tenants.lazy_find(t.try(:parent_id))
+      tenant.parent = if t.try(:parent_id).blank?
+                        nil
+                      else
+                        persister.cloud_tenants.lazy_find(t.try(:parent_id))
+                      end
     end
   end
 
@@ -182,7 +186,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       # in some cases, a stack resource may refer to a physical resource
       # that doesn't exist. check that the physical resource actually exists
       # so that find_or_build doesn't produce an "empty" vm.
-      if collector.servers_by_id.key?(uid)
+      if collector.vms_by_id.key?(uid)
         s = persister.vms.find_or_build(uid)
         s.orchestration_stack = persister.orchestration_stacks.lazy_find(stack.id)
       end
@@ -247,7 +251,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
     related_infra_ems = collector.manager.provider.try(:infra_ems)
     hosts = related_infra_ems.try(:hosts)
 
-    collector.servers.each do |s|
+    collector.vms.each do |s|
       if hosts && !s.os_ext_srv_attr_host.blank?
         parent_host = hosts.find_by('lower(hypervisor_hostname) = ?', s.os_ext_srv_attr_host.downcase)
         parent_cluster = parent_host.try(:ems_cluster)
@@ -371,9 +375,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
   # Identify whether the given image is publicly available
   def public_image?(image)
     # Glance v1
-    return image.is_public if image.respond_to? :is_public
+    return image.is_public if image.respond_to?(:is_public)
     # Glance v2
-    image.visibility != 'private' if image.respond_to? :visibility
+    image.visibility != 'private' if image.respond_to?(:visibility)
   end
 
   # Identify whether the given image has a 32 or 64 bit architecture
@@ -391,7 +395,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       # What version of openstack is this glance v1 on some old openstack version?
       return image.copy_from["id"] if image.respond_to?(:copy_from) && image.copy_from
       # Glance V2
-      return image.instance_uuid if image.respond_to? :instance_uuid
+      return image.instance_uuid if image.respond_to?(:instance_uuid)
       # Glance V1
       image.properties.try(:[], 'instance_uuid')
     elsif image.server

@@ -66,7 +66,7 @@ module Openstack
       expect(AvailabilityZone.count).to            eq 1 # just NoZone
 
       # We have broken flavor list, but there is fallback for private flavors using get, which will collect used flavors
-      expect(Flavor.count).to              eq 2
+      expect(Flavor.count).to eq 2
 
       expect(ExtManagementSystem.count).to               eq 4 # Can this be not hardcoded?
       expect(security_groups_without_defaults.count).to  eq security_groups_count
@@ -90,7 +90,6 @@ module Openstack
       expect(Relationship.count).to        be > 0
       # Just check that queue is not empty
       expect(MiqQueue.count).to            be > 0
-
     end
 
     def assert_with_skips
@@ -265,7 +264,6 @@ module Openstack
       expect(MiqQueue.count).to            be > 0
       expect(CloudService.count).to        be > 0
       expect(CloudResourceQuota.count).to  be > 0
-
     end
 
     def assert_table_counts_orchestration
@@ -280,7 +278,7 @@ module Openstack
 
     def assert_table_counts_storage
       if storage_supported?
-        volumes_backup = CloudObjectStoreContainer.where({ key: "volumes_backup" })
+        volumes_backup = CloudObjectStoreContainer.where(:key => "volumes_backup")
         expect(CloudObjectStoreContainer.count).to eq storage_data.directories.count + volumes_backup.count
         expect(CloudObjectStoreObject.count).to    eq storage_data.files.count
       end
@@ -310,7 +308,7 @@ module Openstack
     end
 
     def assert_flavors
-      gigabyte_transformation = -> (x) { x.gigabyte }
+      gigabyte_transformation = ->(x) { x.gigabyte }
       blacklisted_attributes = [:is_public] # TODO(lsmola) model blacklisted attrs
       # Disks are supported from havana and above apparently
       blacklisted_attributes += [:disk, :ephemeral, :swap] if environment_release_number < 4
@@ -318,10 +316,10 @@ module Openstack
       assert_objects_with_hashes(ManageIQ::Providers::Openstack::CloudManager::Flavor.all,
                                  compute_data.flavors,
                                  compute_data.flavor_translate_table,
-                                 {:ram       => -> (x) { x * 1_024 * 1_024 },
+                                 {:ram       => ->(x) { x * 1_024 * 1_024 },
                                   :disk      => gigabyte_transformation,
                                   :ephemeral => gigabyte_transformation,
-                                  :swap      => -> (x) { x.megabyte }},
+                                  :swap      => ->(x) { x.megabyte }},
                                  blacklisted_attributes)
 
       ManageIQ::Providers::Openstack::CloudManager::Flavor.all.each do |flavor|
@@ -358,7 +356,8 @@ module Openstack
     def assert_specific_az
       # This tests OpenStack functionality more than ManageIQ
       @nova_az = ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone.where(
-        :type => ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone.name, :ems_id => @ems.id).first
+        :type => ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone.name, :ems_id => @ems.id
+      ).first
       # standard openstack AZs have their ems_ref set to their name ("nova" in the test case)...
       # the "null" openstack AZ has a unique ems_ref and name
       expect(@nova_az).to have_attributes(
@@ -444,7 +443,7 @@ module Openstack
       assert_objects_with_hashes(security_group.firewall_rules,
                                  test_data,
                                  network_data.security_groups_rule_translate_table,
-                                 {:ip_range => -> (x) { x ? x[:cidr] : x }},
+                                 {:ip_range => ->(x) { x ? x[:cidr] : x }},
                                  [:group])
     end
 
@@ -481,7 +480,7 @@ module Openstack
         assert_objects_with_hashes(network.cloud_subnets,
                                    network_data.subnets(network.name),
                                    network_data.subnet_translate_table,
-                                   {:ip_version => -> (x) { "ipv#{x}" }},
+                                   {:ip_version => ->(x) { "ipv#{x}" }},
                                    [:allocation_pools]) # TODO(lsmola) model blacklisted attrs
 
         if network.external_facing?
@@ -489,7 +488,7 @@ module Openstack
           expect(network.public_network_vms.count).to eq vms.count
 
           non_stack_vms          = network.public_network_vms.select { |x| x.orchestration_stack.blank? }
-          non_stack_expected_vms = network.private_networks.map { |x| (network_vms(x)) }.flatten.uniq
+          non_stack_expected_vms = network.private_networks.map { |x| network_vms(x) }.flatten.uniq
           expect(non_stack_vms.map(&:name)).to match_array(non_stack_expected_vms.map { |x| x[:name] })
         else
           vms = network_vms(network) + network_stacks(network)
@@ -551,9 +550,9 @@ module Openstack
       assert_objects_with_hashes(subnets,
                                  network_data.subnets,
                                  network_data.subnet_translate_table,
-                                 {:ip_version      => -> (x) { "ipv#{x}" },
-                                  :dns_nameservers => -> (x) { x.nil? ? [] : x },
-                                  :enable_dhcp     => -> (x) { x.nil? ? true : x }},
+                                 {:ip_version      => ->(x) { "ipv#{x}" },
+                                  :dns_nameservers => ->(x) { x.nil? ? [] : x },
+                                  :enable_dhcp     => ->(x) { x.nil? ? true : x }},
                                  [:allocation_pools]) # TODO(lsmola) model blacklisted attrs
 
       subnets.each do |subnet|
@@ -595,7 +594,6 @@ module Openstack
       # assert_objects_with_hashes(volumes, volume_data.volumes)
     end
 
-
     def assert_specific_directories
       return unless storage_supported?
 
@@ -621,7 +619,7 @@ module Openstack
       assert_objects_with_hashes(templates,
                                  image_data.images + image_data.servers_snapshots,
                                  image_data.images_translate_table,
-                                 :is_public => -> (x) { x.nil? ? false : x })
+                                 :is_public => ->(x) { x.nil? ? false : x })
     end
 
     def assert_specific_templates
@@ -787,19 +785,19 @@ module Openstack
       # TODO(lsmola) the flavor disk data should be stored in Flavor model, getting it from test data now
       flavor_expected = compute_data.flavors.detect { |x| x[:name] == vm.flavor.name }
 
-      disk = vm.hardware.disks.find_by_device_name("Root disk")
+      disk = vm.hardware.disks.find_by(:device_name => "Root disk")
       expect(disk).to have_attributes(
         :device_name => "Root disk",
         :device_type => "disk",
         :size        => flavor_expected[:disk].gigabyte
       )
-      disk = vm.hardware.disks.find_by_device_name("Ephemeral disk")
+      disk = vm.hardware.disks.find_by(:device_name => "Ephemeral disk")
       expect(disk).to have_attributes(
         :device_name => "Ephemeral disk",
         :device_type => "disk",
         :size        => flavor_expected[:ephemeral].gigabyte
       )
-      disk = vm.hardware.disks.find_by_device_name("Swap disk")
+      disk = vm.hardware.disks.find_by(:device_name => "Swap disk")
       expect(disk).to have_attributes(
         :device_name => "Swap disk",
         :device_type => "disk",
@@ -823,7 +821,8 @@ module Openstack
     # TODO(lsmola) specific checks below, do we need them?
     def assert_specific_template_created_from_vm
       @snap = ManageIQ::Providers::Openstack::CloudManager::Template.where(
-        :name => "EmsRefreshSpec-PoweredOn-SnapShot").first
+        :name => "EmsRefreshSpec-PoweredOn-SnapShot"
+      ).first
       expect(@snap).not_to be_nil
       # FIXME: @snap.parent.should == @vm
     end
@@ -862,6 +861,108 @@ module Openstack
 
       expect(sync_cloud_tenant.method_name).to eq("sync_cloud_tenants_with_tenants")
       expect(sync_cloud_tenant.state).to eq(MiqQueue::STATE_READY)
+    end
+
+    def assert_targeted_vm(vm_name, attributes)
+      # asserts for a VM that was subject to a targeted refresh
+      vm = ManageIQ::Providers::Openstack::CloudManager::Vm.where(:name => vm_name).first
+      vm_expected = compute_data.servers.detect { |x| x[:name] == vm_name }
+
+      expect(vm).to have_attributes({
+        :template              => false,
+        :cloud                 => true,
+        :ems_ref_obj           => nil,
+        :vendor                => "openstack",
+        :power_state           => "on",
+        :location              => "unknown",
+        :tools_status          => nil,
+        :boot_time             => nil,
+        :standby_action        => nil,
+        :connection_state      => "connected",
+        :cpu_affinity          => nil,
+        :memory_reserve        => nil,
+        :memory_reserve_expand => nil,
+        :memory_limit          => nil,
+        :memory_shares         => nil,
+        :memory_shares_level   => nil,
+        :cpu_reserve           => nil,
+        :cpu_reserve_expand    => nil,
+        :cpu_limit             => nil,
+        :cpu_shares            => nil,
+        :cpu_shares_level      => nil
+      }.merge(attributes))
+
+      expect(vm.ext_management_system).to  eq @ems
+      # TODO(lsmola) expose to Builder's data
+      expect(vm.availability_zone).to      be_kind_of(ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone)
+      expect(vm.flavor.name).to            eq "m1.ems_refresh_spec"
+      expect(vm.key_pairs.map(&:name)).to  eq ["EmsRefreshSpec-KeyPair"]
+      expect(vm.genealogy_parent.name).to  eq "EmsRefreshSpec-Image"
+      expect(vm.operating_system).to       be_nil # TODO: This should probably not be nil
+      expect(vm.custom_attributes.size).to eq 0
+      expect(vm.snapshots.size).to         eq 0
+
+      if neutron_networking?
+        expect(vm.network_ports.count).to   be > 0
+        expect(vm.network_ports.first).to   be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
+        expect(vm.cloud_networks.count).to  be > 0
+        expect(vm.cloud_networks).to match_array vm.private_networks
+        expect(vm.cloud_networks.first).to  be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private)
+        expect(vm.cloud_subnets.count).to   be > 0
+        expect(vm.cloud_subnets.first).to   be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet)
+
+        expect(vm.fixed_ip_addresses.count).to be > 0
+        expect(vm.private_networks.map(&:name)).to match_array vm_expected[:__network_names]
+      end
+
+      if vm_expected[:security_groups].kind_of?(Array)
+        expect(vm.security_groups.map(&:name)).to match_array vm_expected[:security_groups]
+      else
+        expect(vm.security_groups.map(&:name)).to eq [vm_expected[:security_groups]]
+      end
+
+      expect(vm.hardware).to have_attributes(
+        :cpu_sockets   => vm.flavor.cpus,
+        :memory_mb     => vm.flavor.memory / 1.megabyte,
+        :disk_capacity => 2.5.gigabytes # TODO(lsmola) Where is this coming from?
+      )
+
+      expect(vm.hardware.disks.size).to eq disks_count_for_vm(vm_expected, false)
+
+      # TODO(lsmola) the flavor disk data should be stored in Flavor model, getting it from test data now
+      flavor_expected = compute_data.flavors.detect { |x| x[:name] == vm.flavor.name }
+
+      disk = vm.hardware.disks.find_by(:device_name => "Root disk")
+      expect(disk).to have_attributes(
+        :device_name => "Root disk",
+        :device_type => "disk",
+        :size        => flavor_expected[:disk].gigabyte
+      )
+      disk = vm.hardware.disks.find_by(:device_name => "Ephemeral disk")
+      expect(disk).to have_attributes(
+        :device_name => "Ephemeral disk",
+        :device_type => "disk",
+        :size        => flavor_expected[:ephemeral].gigabyte
+      )
+      disk = vm.hardware.disks.find_by(:device_name => "Swap disk")
+      expect(disk).to have_attributes(
+        :device_name => "Swap disk",
+        :device_type => "disk",
+        :size        => flavor_expected[:swap].megabytes
+      )
+
+      # TODO(lsmola) this is all bad, it should be done accoring to Builder's data, will change
+      # when cloud network models are merged in and used for refresh
+      expect(vm.hardware.networks.size).to eq 2
+      network_public = vm.hardware.networks.where(:description => "public").first
+      expect(network_public).to have_attributes(
+        :description => "public",
+      )
+
+      network_private = vm.hardware.networks.where(:description => "private").first
+      expect(network_private).to have_attributes(
+        :description => "private",
+      )
     end
   end
 end
