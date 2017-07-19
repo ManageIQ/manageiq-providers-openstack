@@ -9,6 +9,7 @@ VCR.configure do |config|
 end
 
 Dir[Rails.root.join("spec/shared/**/*.rb")].each { |f| require f }
+Dir[ManageIQ::Providers::Openstack::Engine.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 module EvmSpecHelper
   def self.stub_amqp_support
