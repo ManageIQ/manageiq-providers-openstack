@@ -33,7 +33,7 @@ You will need testing OpenStack environment(s) and `openstack_environments.yml` 
     user: admin_2
 ```
 
-Then you can run `bundle exec rake app:manageiq:providers:openstack:vcr:rerecord` and following will happen:
+Then you can run `bundle exec rake vcr:rerecord` and following will happen:
 * Current VCR cassettes files will be deleted
 * Credentials from `openstack_environments.yml` file will be injected into spec files
 * Specs needed for re-recording of VCR cassettes will be run. During this step manageiq will call OpenStack APIs at specified endpoints
