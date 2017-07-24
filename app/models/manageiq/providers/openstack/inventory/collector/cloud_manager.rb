@@ -78,7 +78,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def tenant_ids_with_flavor_access(flavor_id)
     unparsed_tenants = safe_get { connection.list_tenants_with_flavor_access(flavor_id) }
-    flavor_access = unparsed_tenants.data[:body]["flavor_access"]
+    flavor_access = unparsed_tenants.try(:data).try(:[], :body).try(:[], "flavor_access") || []
     flavor_access.map! { |t| t['tenant_id'] }
   rescue
     []
