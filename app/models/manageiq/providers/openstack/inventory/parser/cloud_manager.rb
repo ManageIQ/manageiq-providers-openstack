@@ -106,7 +106,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManagerR
       host_aggregate.ems_ref = ha.id.to_s
       host_aggregate.name = ha.name
       host_aggregate.metadata = ha.metadata
-      host_aggregate.hosts = hosts
+      host_aggregate.hosts = hosts.compact.uniq
     end
   end
 
