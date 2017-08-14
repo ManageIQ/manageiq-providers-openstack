@@ -2,7 +2,7 @@
 # subclass as a plugin based on the #available? class method implemented in each
 # subclass
 require 'more_core_extensions/core_ext/hash'
-require 'util/extensions/miq-module'
+require 'more_core_extensions/core_ext/module'
 require 'active_support/core_ext/class/subclasses'
 
 class OpenstackEventMonitor

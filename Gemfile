@@ -8,7 +8,7 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 
-# We are using 'miq-module' and 'miq-password' from gems-pending
+# We are using 'miq-password' from gems-pending
 gem "manageiq-gems-pending", ">0", :require => 'manageiq-gems-pending', :git => "https://github.com/ManageIQ/manageiq-gems-pending.git", :branch => "master"
 
 # Load Gemfile with dependencies from manageiq
