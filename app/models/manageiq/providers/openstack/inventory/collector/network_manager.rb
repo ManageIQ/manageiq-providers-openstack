@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Collector
+  include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
+
   def floating_ips
     return @floating_ips if @floating_ips.any?
     @floating_ips = network_service.handled_list(:floating_ips, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
@@ -48,18 +50,5 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
   def orchestration_resources(stack)
     @os_handle ||= manager.openstack_handle
     safe_list { stack.resources }
-  end
-
-  def orchestration_stack_by_resource_id(resource_id)
-    @resources ||= {}
-    if @resources.empty?
-      orchestration_stacks.each do |stack|
-        resources = orchestration_resources(stack)
-        resources.each do |r|
-          @resources[r.physical_resource_id] = r
-        end
-      end
-    end
-    @resources[resource_id]
   end
 end

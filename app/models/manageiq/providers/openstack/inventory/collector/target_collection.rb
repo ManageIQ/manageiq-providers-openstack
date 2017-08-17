@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < ManageIQ::Providers::Openstack::Inventory::Collector
+  include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
+
   def initialize(_manager, _target)
     super
     parse_targets!
@@ -94,16 +96,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     end.compact
   end
 
-  def tenant_ids_with_flavor_access(flavor_id)
-    unparsed_tenants = safe_get { connection.list_tenants_with_flavor_access(flavor_id) }
-    flavor_access = unparsed_tenants.try(:data).try(:[], :body).try(:[], "flavor_access") || []
-    flavor_access.map! { |t| t['tenant_id'] }
-  rescue
-    []
-  else
-    flavor_access
-  end
-
   def key_pairs
     return [] if references(:key_pairs).blank?
     @key_pairs = references(:key_pairs).collect do |key_pair_id|
@@ -135,19 +127,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def orchestration_resources(stack)
     @os_handle ||= manager.openstack_handle
     safe_list { stack.resources }
-  end
-
-  def orchestration_stack_by_resource_id(resource_id)
-    @resources ||= {}
-    if @resources.empty?
-      orchestration_stacks.each do |stack|
-        resources = orchestration_resources(stack)
-        resources.each do |r|
-          @resources[r.physical_resource_id] = r
-        end
-      end
-    end
-    @resources[resource_id]
   end
 
   private

@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < ManageIQ::Providers::Openstack::Inventory::Collector
+  include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
+
   def availability_zones_compute
     @availability_zones_compute ||= safe_list { compute_service.availability_zones.summary }
   end
@@ -41,16 +43,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     if flavor
       flavors_by_id[flavor_id] = flavor
     end
-  end
-
-  def tenant_ids_with_flavor_access(flavor_id)
-    unparsed_tenants = safe_get { connection.list_tenants_with_flavor_access(flavor_id) }
-    flavor_access = unparsed_tenants.try(:data).try(:[], :body).try(:[], "flavor_access") || []
-    flavor_access.map! { |t| t['tenant_id'] }
-  rescue
-    []
-  else
-    flavor_access
   end
 
   def flavors_by_id
