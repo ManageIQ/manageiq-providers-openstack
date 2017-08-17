@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < ManagerRefresh::Inventory::Parser
+class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Parser
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
 
   def parse

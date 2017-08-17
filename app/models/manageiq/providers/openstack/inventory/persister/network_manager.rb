@@ -1,12 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager < ManagerRefresh::Inventory::Persister
-  def cloud
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager
-  end
-
-  def network
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
-  end
-
+class ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Persister
   def initialize_inventory_collections
     add_inventory_collections(
       network,

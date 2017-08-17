@@ -165,5 +165,23 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
 
       attributes.merge!(extra_attributes)
     end
+
+    def cloud_subnet_network_ports(extra_attributes = {})
+      attributes = {
+        :model_class                  => CloudSubnetNetworkPort,
+        :manager_ref                  => [:address, :cloud_subnet, :network_port],
+        :association                  => :cloud_subnet_network_ports,
+        :parent_inventory_collections => [:vms, :network_ports],
+      }
+
+      extra_attributes[:targeted_arel] = lambda do |inventory_collection|
+        manager_uuids = inventory_collection.parent_inventory_collections.flat_map { |c| c.manager_uuids.to_a }
+        inventory_collection.parent.cloud_subnet_network_ports.references(:network_ports).where(
+          :network_ports => {:ems_ref => manager_uuids}
+        )
+      end
+
+      attributes.merge!(extra_attributes)
+    end
   end
 end
