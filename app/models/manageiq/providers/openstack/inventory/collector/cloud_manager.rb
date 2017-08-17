@@ -102,12 +102,14 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def vnfs
     return [] unless nfv_service
-    nfv_service.handled_list(:vnfs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @vnfs if @vnfs.any?
+    @vnfs = nfv_service.handled_list(:vnfs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def vnfds
     return [] unless nfv_service
-    nfv_service.handled_list(:vnfds, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    return @vnfds if @vnfds.any?
+    @vnfds = nfv_service.handled_list(:vnfds, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 
   def orchestration_stacks
