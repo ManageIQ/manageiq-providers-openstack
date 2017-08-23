@@ -12,7 +12,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::ManageSecurityGroups
       end
     end
     supports :remove_security_group do
-      if floating_ips.empty?
+      if security_groups.empty?
         unsupported_reason_add(:remove_security_group,
                                _("This %{instance} does not have any associated %{security_groups}") % {
                                  :instance        => ui_lookup(:table => 'vm_cloud'),
