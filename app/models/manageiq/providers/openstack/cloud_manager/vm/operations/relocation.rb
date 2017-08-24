@@ -1,8 +1,6 @@
 module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Relocation
   extend ActiveSupport::Concern
 
-  include ManageIQ::Providers::Openstack::HelperMethods
-
   included do
     supports :live_migrate do
       unsupported_reason_add(:live_migrate, unsupported_reason(:control)) unless supports_control?
