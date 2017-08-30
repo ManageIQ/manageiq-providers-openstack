@@ -15,6 +15,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
   end
 
+  def orchestration_stack_references
+    @orchestration_stack_references ||= target.targets.select { |x| x.kind_of?(ManagerRefresh::Target) && x.association == :orchestration_stacks }
+  end
+
   def name_references(collection)
     target.manager_refs_by_association.try(:[], collection).try(:[], :name).try(:to_a) || []
   end
@@ -69,15 +73,20 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def orchestration_stacks
-    return [] if references(:orchestration_stacks).blank?
+    return [] if orchestration_stack_references.blank?
     return @orchestration_stacks if @orchestration_stacks.any?
-    @orchestration_stacks = orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details).select do |s|
-      references(:orchestration_stacks).include?(s.id)
+    @orchestration_stacks = orchestration_stack_references.collect do |target|
+      get_orchestration_stack(target.manager_ref[:ems_ref], target.options[:tenant_id])
     end.compact
   rescue Excon::Errors::Forbidden
     # Orchestration service is detected but not open to the user
     $log.warn("Skip collecting stack references during targeted refresh because the user cannot access the orchestration service.")
     []
+  end
+
+  def get_orchestration_stack(stack_id, tenant_id)
+    tenant = memoized_get_tenant(tenant_id)
+    safe_get { @os_handle.detect_orchestration_service(tenant.try(:name)).stacks.get(stack_id) }
   end
 
   def vms
@@ -108,8 +117,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     return [] if references(:cloud_tenants).blank?
     return @tenants if @tenants.any?
     @tenants = references(:cloud_tenants).collect do |cloud_tenant_id|
-      safe_get { identity_service.tenants.find_by_id(cloud_tenant_id) }
+      memoized_get_tenant(cloud_tenant_id)
     end.compact
+  end
+
+  def memoized_get_tenant(tenant_id)
+    return nil if tenant_id.blank?
+    @tenant_memo ||= Hash.new do |h, key|
+      h[key] = safe_get { identity_service.tenants.find_by_id(key) }
+    end
+    @tenant_memo[tenant_id]
   end
 
   def key_pairs
@@ -180,19 +197,19 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     target.targets.each do |t|
       case t
       when Vm
-        parse_vm_target!(t)
+        add_simple_target!(:vms, t.ems_ref)
+      when CloudTenant
+        add_simple_target!(:cloud_tenants, t.ems_ref)
+      when OrchestrationStack
+        add_simple_target!(:orchestration_stacks, t.ems_ref)
       end
     end
   end
 
-  def parse_vm_target!(t)
-    add_simple_target!(:vms, t.ems_ref)
-  end
-
-  def add_simple_target!(association, ems_ref)
+  def add_simple_target!(association, ems_ref, options = {})
     return if ems_ref.blank?
 
-    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref})
+    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref}, :options => options)
   end
 
   def infer_related_ems_refs!
@@ -203,6 +220,42 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       infer_related_vm_ems_refs_db!
       infer_related_vm_ems_refs_api!
     end
+    unless references(:cloud_tenants).blank?
+      infer_related_cloud_tenant_ems_refs_db!
+      infer_related_cloud_tenant_ems_refs_api!
+    end
+    unless references(:orchestration_stacks).blank?
+      infer_related_orchestration_stacks_ems_refs_db!
+      infer_related_orchestration_stacks_ems_refs_api!
+    end
+  end
+
+  def infer_related_orchestration_stacks_ems_refs_db!
+    changed_stacks = manager.orchestration_stacks.where(:ems_ref => references(:orchestration_stacks))
+    changed_stacks.each do |stack|
+      add_simple_target!(:cloud_tenants, stack.cloud_tenant.ems_ref) unless stack.cloud_tenant.nil?
+      add_simple_target!(:orchestration_stacks, stack.parent.ems_ref, :tenant_id => stack.parent.cloud_tenant.ems_ref) unless stack.parent.nil?
+    end
+  end
+
+  def infer_related_orchestration_stacks_ems_refs_api!
+    orchestration_stacks.each do |stack|
+      add_simple_target!(:orchestration_stacks, stack.parent, :tenant_id => stack.service.current_tenant["id"]) unless stack.parent.blank?
+      add_simple_target!(:cloud_tenants, stack.service.current_tenant["id"]) unless stack.service.current_tenant["id"].blank?
+    end
+  end
+
+  def infer_related_cloud_tenant_ems_refs_db!
+    changed_tenants = manager.cloud_tenants.where(:ems_ref => references(:cloud_tenants))
+    changed_tenants.each do |tenant|
+      add_simple_target!(:cloud_tenants, tenant.parent.ems_ref) unless tenant.parent.nil?
+    end
+  end
+
+  def infer_related_cloud_tenant_ems_refs_api!
+    tenants.each do |tenant|
+      add_simple_target(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
+    end
   end
 
   def infer_related_vm_ems_refs_db!
@@ -212,7 +265,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       stack      = vm.orchestration_stack
       all_stacks = ([stack] + (stack.try(:ancestors) || [])).compact
 
-      all_stacks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:orchestration_stacks, ems_ref) }
+      all_stacks.each { |s| add_simple_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.id) }
       vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:cloud_networks, ems_ref) }
       vm.floating_ips.collect(&:address).compact.each { |address| add_simple_target!(:floating_ips, address) }
       vm.network_ports.collect(&:ems_ref).compact.each do |ems_ref|

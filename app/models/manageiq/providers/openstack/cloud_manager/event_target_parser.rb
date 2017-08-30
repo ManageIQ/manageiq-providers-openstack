@@ -22,6 +22,10 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
     target_collection = ManagerRefresh::TargetCollection.new(:manager => ems_event.ext_management_system, :event => ems_event)
     if ems_event.event_type.start_with?("compute.instance")
       collect_compute_instance_references!(target_collection, ems_event)
+    elsif ems_event.event_type.start_with?("identity.project")
+      collect_identity_tenant_references!(target_collection, ems_event)
+    elsif ems_event.event_type.start_with?("orchestration.stack")
+      collect_orchestration_stack_references!(target_collection, ems_event)
     end
 
     target_collection.targets
@@ -38,5 +42,16 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   def collect_compute_instance_references!(target_collection, ems_event)
     instance_id = ems_event.full_data.fetch_path(:payload, 'instance_id')
     add_target(target_collection, :vms, instance_id) if instance_id
+  end
+
+  def collect_identity_tenant_references!(target_collection, ems_event)
+    tenant_id = ems_event.full_data.fetch_path(:payload, 'project_id') || ems_event.full_data.fetch_path(:payload, 'initiator', 'project_id')
+    add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
+  end
+
+  def collect_orchestration_stack_references!(target_collection, ems_event)
+    stack_id = ems_event.full_data.fetch_path(:payload, 'stack_id')
+    tenant_id = ems_event.full_data.fetch_path(:payload, 'tenant_id')
+    target_collection.add_target(:association => :orchestration_stacks, :manager_ref => {:ems_ref => stack_id}, :options => {:tenant_id => tenant_id})
   end
 end

@@ -4,7 +4,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
     # Top level models with direct references for Cloud
     add_inventory_collections_with_references(
       cloud,
-      %i(vms miq_templates availability_zones orchestration_stacks cloud_tenants flavors)
+      %i(vms miq_templates availability_zones orchestration_stacks cloud_tenants flavors),
+      :builder_params => {:ext_management_system => manager}
     )
 
     add_inventory_collection_with_references(
