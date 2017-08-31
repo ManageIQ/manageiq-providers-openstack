@@ -76,4 +76,67 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     raise MiqException::MiqQueueRetryLater.new(:deliver_on => Time.now.utc + 1.minute) unless raw_status.first == 'UPDATE_COMPLETE'
     services.each(&:delete_service)
   end
+
+  def scale_down_queue(userid, hosts)
+    host_uuids_to_remove = hosts.map { |n| Host.find(n).ems_ref_obj }
+    scale_queue('scale_down', userid, host_uuids_to_remove)
+  end
+
+  def scale_down(host_uuids_to_remove)
+    ext_management_system.with_provider_connection(:service => "Workflow") do |service|
+      input = { :container => name, :nodes => host_uuids_to_remove }
+      info = service.execute_workflow("tripleo.scale.v1.delete_node", input)
+      if info[1] == "SUCCESS"
+        EmsRefresh.queue_refresh(ext_management_system)
+      else
+        raise MiqException::MiqOrchestrationUpdateError, info[3].body
+      end
+    end
+  rescue => err
+    log_and_raise_update_error(__method__, err)
+  end
+
+  def scale_up_queue(userid, stack_parameters)
+    scale_queue('scale_up', userid, stack_parameters)
+  end
+
+  def scale_up(stack_parameters)
+    ext_management_system.with_provider_connection(:service => "Workflow") do |service|
+      info = service.execute_action("tripleo.parameters.update", :parameters => stack_parameters)
+      raise MiqException::MiqOrchestrationUpdateError, info[3].body if info[1] != "SUCCESS"
+      info = service.execute_workflow("tripleo.deployment.v1.deploy_plan", :container => name)
+      if info[1] == "SUCCESS"
+        EmsRefresh.queue_refresh(ext_management_system)
+      else
+        raise MiqException::MiqOrchestrationUpdateError, info[3].body
+      end
+    end
+  rescue => err
+    log_and_raise_update_error(__method__, err)
+  end
+
+  private
+
+  def scale_queue(method_name, userid, parameters)
+    task_opts = {
+      :action => "#{method_name} orchestration stack #{name} for user #{userid}",
+      :userid => userid
+    }
+    queue_opts = {
+      :class_name  => self.class.name,
+      :method_name => method_name,
+      :instance_id => id,
+      :role        => 'ems_operations',
+      :zone        => ext_management_system.my_zone,
+      :args        => [parameters]
+    }
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+  end
+
+  def log_and_raise_update_error(method_name, err)
+    _log.error "MIQ(#{self}.#{method_name}) stack=[#{name}], error: #{err}"
+    raise MiqException::MiqOrchestrationUpdateError, err.to_s, err.backtrace
+  end
+
+  private :log_and_raise_update_error
 end
