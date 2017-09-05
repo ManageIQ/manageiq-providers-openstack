@@ -72,4 +72,21 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   def requires_storage_for_scan?
     false
   end
+
+  def raw_delete_image
+    ext_management_system.with_provider_connection(:service => 'Compute') do |service|
+      service.delete_image(ems_ref)
+    end
+  rescue => err
+    _log.error("image=[#{name}], error: #{err}")
+    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+  end
+
+  def validate_delete_image
+    {:available => true, :message => nil}
+  end
+
+  def delete_image
+    raw_delete_image
+  end
 end
