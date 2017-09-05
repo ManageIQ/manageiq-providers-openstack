@@ -68,7 +68,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def network_ports
     collector.network_ports.each do |np|
-      mac_address = np.attributes["mac_address"]
+      mac_address = np.mac_address
 
       network_port = persister.network_ports.find_or_build(np.id)
       network_port.type = "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort"
