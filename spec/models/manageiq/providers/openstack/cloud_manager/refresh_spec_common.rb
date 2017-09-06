@@ -333,10 +333,14 @@ module Openstack
             0
           end
 
+        ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
+        disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
+        descr = "#{flavor.cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk"
+
         expect(flavor.ext_management_system).to eq @ems
         expect(flavor.enabled).to               eq true
         expect(flavor.cpu_cores).to             eq nil
-        expect(flavor.description).to           eq nil
+        expect(flavor.description).to           eq descr
         expect(flavor.ephemeral_disk_count).to  eq expected_ephemeral_disk_count
       end
     end

@@ -186,7 +186,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
             provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.megabyte) # Disk too small
             provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
 
-            expect(workflow.allowed_instance_types).to eq(flavor.id => flavor.name)
+            ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
+            disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
+            descr = "#{flavor.cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk"
+
+            expect(workflow.allowed_instance_types).to eq(flavor.id => "#{flavor.name}: #{descr}")
           end
         end
 
@@ -198,7 +202,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
             provider.flavors << flavor
             provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
 
-            expect(workflow.allowed_instance_types).to eq(flavor.id => flavor.name)
+            ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
+            disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
+            descr = "#{flavor.cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk"
+
+            expect(workflow.allowed_instance_types).to eq(flavor.id => "#{flavor.name}: #{descr}")
           end
         end
       end
@@ -249,13 +257,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       context "#display_name_for_name_description" do
         let(:flavor) { FactoryGirl.create(:flavor_openstack) }
 
-        it "with name only" do
-          expect(workflow.display_name_for_name_description(flavor)).to eq(flavor.name)
-        end
-
         it "with name and description" do
-          flavor.description = "Small"
-          expect(workflow.display_name_for_name_description(flavor)).to eq("#{flavor.name}: Small")
+          ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
+          disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
+          descr = "#{flavor.cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk"
+          expect(workflow.display_name_for_name_description(flavor)).to eq("#{flavor.name}: #{descr}")
         end
       end
 
