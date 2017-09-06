@@ -30,4 +30,10 @@ class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
   def validate_delete_flavor
     {:available => true, :message => nil}
   end
+
+  def description
+    ram = ActionController::Base.helpers.number_to_human_size(memory)
+    disk_size = ActionController::Base.helpers.number_to_human_size(root_disk_size)
+    _("#{cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk")
+  end
 end
