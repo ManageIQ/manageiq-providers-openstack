@@ -15,6 +15,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   require_nested :MetricsCollectorWorker
   require_nested :OrchestrationServiceOptionConverter
   require_nested :OrchestrationStack
+  require_nested :OrchestrationTemplate
+  require_nested :VnfdTemplate
   require_nested :Provision
   require_nested :ProvisionWorkflow
   require_nested :Refresher
