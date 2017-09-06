@@ -7,7 +7,9 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
     end
   end
 
-  let(:valid_template) { FactoryGirl.create(:orchestration_template_hot_with_content) }
+  let(:yml_file) { File.read(Rails.root.join(*%w(spec fixtures orchestration_templates hot_parameters.yml))) }
+
+  let(:valid_template) { described_class.new(:content => yml_file) }
 
   context "when a raw template in YAML format is given" do
     it "parses parameters from a template" do
@@ -169,8 +171,18 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
       expect(valid_template.validate_format).to be_nil
     end
 
+    it 'passes validation with correct JSON content' do
+      json_file = YAML.safe_load(yml_file, [Date]).to_json
+      expect(described_class.new(:content => json_file).validate_format).to be_nil
+    end
+
     it 'fails validations with incorrect YAML content' do
       template = described_class.new(:content => ":-Invalid:\n-String")
+      expect(template.validate_format).not_to be_nil
+    end
+
+    it 'fails validations with incorrect JSON content' do
+      template = described_class.new(:content => '{"Invalid:String')
       expect(template.validate_format).not_to be_nil
     end
   end

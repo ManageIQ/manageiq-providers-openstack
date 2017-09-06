@@ -1,7 +1,7 @@
 class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::OrchestrationTemplate
   def parameter_groups
-    content_hash = YAML.load(content)
-    raw_groups = content_hash["parameter_groups"]
+    content_hash = parse
+    raw_groups = content_hash["parameter_groups"] || content_hash["ParameterGroups"]
 
     if raw_groups
       indexed_parameters = parameters(content_hash).index_by(&:name)
@@ -23,8 +23,8 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
   end
 
   def parameters(content_hash = nil)
-    content_hash = YAML.load(content) unless content_hash
-    (content_hash["parameters"] || {}).collect do |key, val|
+    content_hash ||= parse
+    (content_hash["parameters"] || content_hash["Parameters"] || {}).collect do |key, val|
       OrchestrationTemplate::OrchestrationParameter.new(
         :name          => key,
         :label         => val.key?('label') ? val['label'] : key.titleize,
@@ -65,14 +65,37 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     [ManageIQ::Providers::Openstack::CloudManager]
   end
 
-  # return the parsing error message if not valid JSON; otherwise nil
+  # return the parsing error message if not valid JSON or YAML; otherwise nil
   def validate_format
+    return unless content
+    return validate_format_json if format == 'json'
+    validate_format_yaml
+  end
+
+  # quickly guess the format without full validation
+  # returns either json or yaml
+  def format
+    content.strip.start_with?('{') ? 'json'.freeze : 'yaml'.freeze
+  end
+
+  private
+
+  def parse
+    return JSON.parse(content) if format == 'json'
+    YAML.safe_load(content, [Date])
+  end
+
+  def validate_format_yaml
     YAML.parse(content) && nil if content
   rescue Psych::SyntaxError => err
     err.message
   end
 
-  private
+  def validate_format_json
+    JSON.parse(content) && nil if content
+  rescue JSON::ParserError => err
+    err.message
+  end
 
   def parse_constraints(raw_constraints)
     raw_constraints.collect do |raw_constraint|
