@@ -220,7 +220,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     template = collector.orchestration_template(stack)
     if template
       o = persister.orchestration_templates.find_or_build(stack.id)
-      o.type = stack.template.format == "HOT" ? "OrchestrationTemplateHot" : "OrchestrationTemplateCfn"
+      o.type = "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate"
       o.name = stack.stack_name
       o.description = stack.template.description
       o.content = stack.template.content
@@ -346,7 +346,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
   def vnfds
     collector.vnfds.each do |v|
       vnfd = persister.orchestration_templates.find_or_build(v.id)
-      vnfd.type = "OrchestrationTemplateVnfd"
+      vnfd.type = "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate"
       vnfd.name = v.name.blank? ? v.id : v.name
       vnfd.description = v.description
       vnfd.content = v.vnf_attributes["vnfd"]

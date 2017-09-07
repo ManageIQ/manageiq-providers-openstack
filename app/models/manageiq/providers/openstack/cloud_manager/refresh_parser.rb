@@ -391,7 +391,7 @@ module ManageIQ::Providers
       uid = vnfd.id
 
       new_result = {
-        :type        => "OrchestrationTemplateVnfd",
+        :type        => "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate",
         :ems_ref     => uid,
         :name        => vnfd.name.blank? ? uid : vnfd.name,
         :description => vnfd.description,
