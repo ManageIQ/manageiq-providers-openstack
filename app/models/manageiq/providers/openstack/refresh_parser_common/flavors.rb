@@ -1,8 +1,10 @@
 module ManageIQ::Providers::Openstack
   module RefreshParserCommon
     module Flavors
+      include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
+
       def get_flavors
-        flavors = if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && ::Settings.ems.ems_openstack.refresh.is_admin
+        flavors = if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && openstack_admin?
                     @connection.handled_list(:flavors, {'is_public' => 'None'}, true)
                   else
                     @connection.handled_list(:flavors)

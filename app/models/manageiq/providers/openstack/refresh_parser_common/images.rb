@@ -1,8 +1,10 @@
 module ManageIQ::Providers::Openstack
   module RefreshParserCommon
     module Images
+      include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
+
       def get_images
-        images = if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && ::Settings.ems.ems_openstack.refresh.is_admin
+        images = if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && openstack_admin?
                    @image_service.handled_list(:images, {}, true).all
                  else
                    @image_service.handled_list(:images)

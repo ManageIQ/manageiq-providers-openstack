@@ -7,7 +7,7 @@ module ManageIQ::Providers
         target_name = target.try(:name) || target.try(:event_type)
 
         _log.info("Filtering inventory for #{target.class} [#{target_name}] id: [#{target.id}]...")
-        if ::Settings.ems.ems_openstack.try(:refresh).try(:inventory_object_refresh)
+        if ::Settings.ems.ems_refresh.openstack.try(:inventory_object_refresh)
           inventory = ManageIQ::Providers::Openstack::Builder.build_inventory(ems, target)
         end
 
@@ -33,7 +33,7 @@ module ManageIQ::Providers
       log_header = format_ems_for_logging(ems)
       _log.debug("#{log_header} Parsing inventory...")
       hashes, = Benchmark.realtime_block(:parse_inventory) do
-        if ::Settings.ems.ems_openstack.try(:refresh).try(:inventory_object_refresh)
+        if ::Settings.ems.ems_refresh.openstack.try(:inventory_object_refresh)
           inventory.inventory_collections
         else
           ManageIQ::Providers::Openstack::CloudManager::RefreshParser.ems_inv_to_hashes(ems, refresher_options)
@@ -58,7 +58,7 @@ module ManageIQ::Providers
         all_targets, sub_ems_targets = targets.partition { |x| x.kind_of?(ExtManagementSystem) }
 
         unless sub_ems_targets.blank?
-          if ::Settings.ems.ems_openstack.try(:refresh).try(:event_targeted_refresh)
+          if ::Settings.ems.ems_refresh.openstack.try(:allow_targeted_refresh)
             # We can disable targeted refresh with a setting, then we will just do full ems refresh on any event
             ems_event_collection = ManagerRefresh::TargetCollection.new(:targets    => sub_ems_targets,
                                                                         :manager_id => ems_id)

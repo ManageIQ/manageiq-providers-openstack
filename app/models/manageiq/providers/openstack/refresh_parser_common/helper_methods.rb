@@ -2,6 +2,18 @@ module ManageIQ::Providers
   module Openstack
     module RefreshParserCommon
       module HelperMethods
+        def openstack_admin?
+          ::Settings.ems.ems_refresh.openstack.try(:is_admin)
+        end
+
+        def openstack_network_admin?
+          ::Settings.ems.ems_refresh.openstack_network.try(:is_admin)
+        end
+
+        def openstack_heat_global_admin?
+          ::Settings.ems.ems_refresh.openstack.try(:heat).try(:is_global_admin)
+        end
+
         def process_collection(collection, key, &block)
           @data[key] ||= []
           return if @options && @options[:inventory_ignore] && @options[:inventory_ignore].include?(key)

@@ -1,12 +1,22 @@
 ---
 :ems:
+  :ems_refresh:
+    :openstack:
+      :is_admin: false
+      :heat:
+        :is_global_admin: false
+      :inventory_object_refresh: true
+      :allow_targeted_refresh: true
+    :openstack_network:
+      :is_admin: false
+      :inventory_object_refresh: true
   :ems_openstack:
     :refresh:
       :is_admin: false
       :heat:
         :is_global_admin: false
       :inventory_object_refresh: true
-      :event_targeted_refresh: true
+      :allow_targeted_refresh: true
     :excon:
       :omit_default_port: true
       :read_timeout: 60

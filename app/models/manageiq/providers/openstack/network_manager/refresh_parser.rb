@@ -47,14 +47,6 @@ module ManageIQ::Providers
 
     private
 
-    def get_inventory_collection(collection_type)
-      if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && ::Settings.ems.ems_openstack.refresh.is_admin
-        @network_service.handled_list(collection_type, {}, true)
-      else
-        @network_service.handled_list(collection_type)
-      end
-    end
-
     def parent_manager_fetch_path(collection, ems_ref)
       @parent_manager_data ||= {}
       return @parent_manager_data.fetch_path(collection, ems_ref) if @parent_manager_data.has_key_path?(collection, ems_ref)
@@ -72,23 +64,23 @@ module ManageIQ::Providers
     end
 
     def security_groups
-      @security_groups ||= get_inventory_collection(:security_groups)
+      @security_groups ||= @network_service.handled_list(:security_groups, {}, openstack_network_admin?)
     end
 
     def networks
-      @networks ||= get_inventory_collection(:networks)
+      @networks ||= @network_service.handled_list(:networks, {}, openstack_network_admin?)
     end
 
     def network_ports
-      @network_ports ||= get_inventory_collection(:ports)
+      @network_ports ||= @network_service.handled_list(:ports, {}, openstack_network_admin?)
     end
 
     def network_routers
-      @network_routers ||= get_inventory_collection(:routers)
+      @network_routers ||= @network_service.handled_list(:routers, {}, openstack_network_admin?)
     end
 
     def floating_ips
-      @floating_ips ||= get_inventory_collection(:floating_ips)
+      @floating_ips ||= @network_service.handled_list(:floating_ips, {}, openstack_network_admin?)
     end
 
     def get_networks
