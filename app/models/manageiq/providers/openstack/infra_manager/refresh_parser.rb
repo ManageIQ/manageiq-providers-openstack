@@ -172,7 +172,7 @@ module ManageIQ
         host_name           = identify_host_name(indexed_resources, host.instance_uuid, uid)
         hypervisor_hostname = identify_hypervisor_hostname(host, indexed_servers)
         ip_address          = identify_primary_ip_address(host, indexed_servers)
-        hostname            = ip_address
+        hostname            = hypervisor_hostname
 
         introspection_details = get_introspection_details(host)
         extra_attributes = get_extra_attributes(introspection_details)
