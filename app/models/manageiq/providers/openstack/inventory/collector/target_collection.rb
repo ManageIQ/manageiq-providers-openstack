@@ -3,6 +3,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def initialize(_manager, _target)
     super
+    @os_handle ||= manager.openstack_handle
     parse_targets!
     infer_related_ems_refs!
 
@@ -27,6 +28,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def cloud_networks
     return [] if references(:cloud_networks).blank?
+    return @cloud_networks if @cloud_networks.any?
     @cloud_networks = references(:cloud_networks).collect do |network_id|
       safe_get { network_service.networks.get(network_id) }
     end.compact
@@ -34,13 +36,17 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def network_ports
     return [] if references(:network_ports).blank?
-    @network_ports = references(:network_ports).collect do |port_id|
+    return @network_ports if @network_ports.any?
+    @network_ports = (references(:network_ports).collect do |port_id|
       safe_get { network_service.ports.get(port_id) }
-    end.compact
+    end + references(:network_routers).collect do |router_id|
+      network_service.handled_list(:ports, :device_id => router_id)
+    end.flatten).compact
   end
 
   def network_routers
     return [] if references(:network_routers).blank?
+    return @network_routers if @network_routers.any?
     @network_routers = references(:network_routers).collect do |router_id|
       safe_get { network_service.routers.get(router_id) }
     end.compact
@@ -48,6 +54,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def security_groups
     return [] if references(:security_groups).blank?
+    return @security_groups if @security_groups.any?
     @security_groups = references(:security_groups).collect do |security_group_id|
       safe_get { network_service.security_groups.get(security_group_id) }
     end.compact
@@ -55,16 +62,22 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def floating_ips
     return [] if references(:floating_ips).blank?
-    @floating_ips = references(:floating_ips).collect do |floating_ip_id|
-      safe_get { network_service.floating_ips.get(floating_ip_id) }
+    return @floating_ips if @floating_ips.any?
+    @floating_ips = references(:floating_ips).collect do |floating_ip|
+      safe_get { network_service.floating_ips.all(:floating_ip_address => floating_ip).first }
     end.compact
   end
 
   def orchestration_stacks
     return [] if references(:orchestration_stacks).blank?
-    @orchestration_stacks = references(:orchestration_stacks).collect do |stack_id|
-      safe_get { orchestration_service.stacks.get(stack_id) }
+    return @orchestration_stacks if @orchestration_stacks.any?
+    @orchestration_stacks = orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details).select do |s|
+      references(:orchestration_stacks).include?(s.id)
     end.compact
+  rescue Excon::Errors::Forbidden
+    # Orchestration service is detected but not open to the user
+    $log.warn("Skip collecting stack references during targeted refresh because the user cannot access the orchestration service.")
+    []
   end
 
   def vms
@@ -77,6 +90,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def flavors
     return [] if references(:flavors).blank?
+    return @flavors if @flavors.any?
     @flavors = references(:flavors).collect do |flavor_id|
       safe_get { compute_service.flavors.get(flavor_id) }
     end.compact
@@ -84,6 +98,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def images
     return [] if references(:images).blank?
+    return @images if @images.any?
     @images = references(:images).collect do |image_id|
       safe_get { image_service.images.get(image_id) }
     end.compact
@@ -91,13 +106,15 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def tenants
     return [] if references(:cloud_tenants).blank?
-    @cloud_tenants = references(:cloud_tenants).collect do |cloud_tenant_id|
+    return @tenants if @tenants.any?
+    @tenants = references(:cloud_tenants).collect do |cloud_tenant_id|
       safe_get { identity_service.tenants.find_by_id(cloud_tenant_id) }
     end.compact
   end
 
   def key_pairs
     return [] if references(:key_pairs).blank?
+    return @key_pairs if @key_pairs.any?
     @key_pairs = references(:key_pairs).collect do |key_pair_id|
       safe_get { compute_service.key_pairs.get(key_pair_id) }
     end.compact
@@ -124,9 +141,37 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     end
   end
 
+  def orchestration_stack_by_resource_id(resource_id)
+    @resources ||= {}
+    if @resources.empty?
+      orchestration_stacks.each do |stack|
+        resources = orchestration_resources(stack)
+        resources.each do |r|
+          @resources[r.physical_resource_id] = r
+        end
+      end
+    end
+    @resources[resource_id]
+  end
+
+  def orchestration_outputs(stack)
+    safe_list { stack.outputs }
+  end
+
+  def orchestration_parameters(stack)
+    safe_list { stack.parameters }
+  end
+
   def orchestration_resources(stack)
-    @os_handle ||= manager.openstack_handle
     safe_list { stack.resources }
+  end
+
+  def orchestration_template(stack)
+    safe_call { stack.template }
+  end
+
+  def vms_by_id
+    @vms_by_id ||= Hash[vms.collect { |s| [s.id, s] }]
   end
 
   private
@@ -169,7 +214,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
       all_stacks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:orchestration_stacks, ems_ref) }
       vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:cloud_networks, ems_ref) }
-      vm.floating_ips.collect(&:ems_ref).compact.each { |_address| add_simple_target!(:floating_ips, ems_ref) }
+      vm.floating_ips.collect(&:address).compact.each { |address| add_simple_target!(:floating_ips, address) }
       vm.network_ports.collect(&:ems_ref).compact.each do |ems_ref|
         add_simple_target!(:network_ports, ems_ref)
       end
@@ -196,6 +241,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       vm.security_groups.each do |sg|
         add_simple_target!(:security_groups, sg.id)
       end
+      add_simple_target!(:floating_ips, vm.public_ip_address) unless vm.public_ip_address.blank?
+    end
+    target.manager_refs_by_association_reset
+    floating_ips.each do |floating_ip|
+      add_simple_target!(:network_routers, floating_ip.router_id)
+      add_simple_target!(:network_ports, floating_ip.port_id)
+      add_simple_target!(:cloud_networks, floating_ip.floating_network_id)
     end
   end
 end

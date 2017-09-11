@@ -899,6 +899,7 @@ module Openstack
       expect(vm.ext_management_system).to  eq @ems
       # TODO(lsmola) expose to Builder's data
       expect(vm.availability_zone).to      be_kind_of(ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone)
+      expect(vm.floating_ip).to            be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::FloatingIp)
       expect(vm.flavor.name).to            eq "m1.ems_refresh_spec"
       expect(vm.key_pairs.map(&:name)).to  eq ["EmsRefreshSpec-KeyPair"]
       expect(vm.genealogy_parent.name).to  eq "EmsRefreshSpec-Image"
@@ -907,6 +908,8 @@ module Openstack
       expect(vm.snapshots.size).to         eq 0
 
       if neutron_networking?
+        expect(vm.floating_ips.count).to    be > 0
+        expect(vm.floating_ips.first).to    be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::FloatingIp)
         expect(vm.network_ports.count).to   be > 0
         expect(vm.network_ports.first).to   be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
         expect(vm.cloud_networks.count).to  be > 0
@@ -914,9 +917,20 @@ module Openstack
         expect(vm.cloud_networks.first).to  be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private)
         expect(vm.cloud_subnets.count).to   be > 0
         expect(vm.cloud_subnets.first).to   be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet)
+        expect(vm.network_routers.count).to be > 0
+        expect(vm.network_routers.first).to be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter)
+        expect(vm.public_networks.count).to be > 0
+        expect(vm.public_networks.first).to be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public)
 
         expect(vm.fixed_ip_addresses.count).to be > 0
         expect(vm.private_networks.map(&:name)).to match_array vm_expected[:__network_names]
+        expect(vm.public_networks.first.floating_ips).to include vm.floating_ips.first
+        vm.network_ports.each do |network_port|
+          if network_port.public_networks.first.floating_ips.count > 0
+            expect(network_port.public_networks.first.floating_ips).to include network_port.floating_ip
+            expect(network_port.public_networks.first.floating_ips).to include network_port.floating_ips.first
+          end
+        end
       end
 
       if vm_expected[:security_groups].kind_of?(Array)
