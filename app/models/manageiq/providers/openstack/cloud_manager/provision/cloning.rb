@@ -7,7 +7,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
                  else
                    openstack.handled_list(:servers).detect { |s| s.id == clone_task_ref }
                  end
-      status   = instance.state.downcase.to_sym
+      status   = instance.state.downcase.to_sym if instance.present?
 
       if status == :error
         raise MiqException::MiqProvisionError, "An error occurred while provisioning Instance #{instance.name}"
