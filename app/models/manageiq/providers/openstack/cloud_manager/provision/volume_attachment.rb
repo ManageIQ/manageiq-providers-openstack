@@ -3,7 +3,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
     volumes_attrs_list = [default_volume_attributes]
 
     connection_options = {:service => "volume"}
-    connection_options[:tenant_name] = options[:cloud_tenant][1] if options[:cloud_tenant].kind_of? Array
+    connection_options[:tenant_name] = options[:cloud_tenant][1] if options[:cloud_tenant].kind_of?(Array)
     source.ext_management_system.with_provider_connection(connection_options) do |service|
       requested_volumes.each do |volume_attrs|
         new_volume_id = service.volumes.create(volume_attrs).id
@@ -22,7 +22,9 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
   end
 
   def do_volume_creation_check(volumes_refs)
-    source.ext_management_system.with_provider_connection(:service => "volume") do |service|
+    connection_options = {:service => "volume"}
+    connection_options[:tenant_name] = options[:cloud_tenant][1] if options[:cloud_tenant].kind_of?(Array)
+    source.ext_management_system.with_provider_connection(connection_options) do |service|
       volumes_refs.each do |volume_attrs|
         next unless volume_attrs[:source_type] == "volume"
         status = service.volumes.get(volume_attrs[:uuid]).try(:status)
