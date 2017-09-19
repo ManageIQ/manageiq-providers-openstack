@@ -7,15 +7,28 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
     end
   end
 
-  let(:valid_template) { FactoryGirl.create(:orchestration_template_hot_with_content) }
+  let(:yaml_template) { FactoryGirl.create(:orchestration_template_openstack_in_yaml) }
+  let(:json_template) { FactoryGirl.create(:orchestration_template_openstack_in_json) }
 
-  context "when a raw template in YAML format is given" do
+  shared_examples_for "a template with content" do
     it "parses parameters from a template" do
-      groups = valid_template.parameter_groups
+      groups = template.parameter_groups
       expect(groups.size).to eq(2)
 
       assert_general_group(groups[0])
       assert_db_group(groups[1])
+    end
+  end
+
+  describe "JSON template" do
+    it_should_behave_like "a template with content" do
+      let(:template) { json_template }
+    end
+  end
+
+  describe "YAML template" do
+    it_should_behave_like "a template with content" do
+      let(:template) { yaml_template }
     end
   end
 
@@ -166,11 +179,20 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
     end
 
     it 'passes validation with correct YAML content' do
-      expect(valid_template.validate_format).to be_nil
+      expect(yaml_template.validate_format).to be_nil
+    end
+
+    it 'passes validation with correct JSON content' do
+      expect(json_template.validate_format).to be_nil
     end
 
     it 'fails validations with incorrect YAML content' do
       template = described_class.new(:content => ":-Invalid:\n-String")
+      expect(template.validate_format).not_to be_nil
+    end
+
+    it 'fails validations with incorrect JSON content' do
+      template = described_class.new(:content => '{"Invalid:String')
       expect(template.validate_format).not_to be_nil
     end
   end

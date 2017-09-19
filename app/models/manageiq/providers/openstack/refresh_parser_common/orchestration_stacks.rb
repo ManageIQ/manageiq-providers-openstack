@@ -69,7 +69,7 @@ module ManageIQ::Providers
           # Only need a temporary unique identifier for the template. Using the stack id is the cheapest way.
           uid = stack.id
           template = stack.template
-          template_type = template.format == "HOT" ? "OrchestrationTemplateHot" : "OrchestrationTemplateCfn"
+          template_type = "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate"
 
           new_result = {
             :type        => template_type,
