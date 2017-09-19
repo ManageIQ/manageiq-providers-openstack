@@ -1,8 +1,13 @@
 module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
   def do_clone_task_check(clone_task_ref)
-    source.with_provider_connection do |openstack|
-      instance = openstack.handled_list(:servers).detect { |s| s.id == clone_task_ref }
-      status   = instance.state.downcase.to_sym
+    connection_options = {:tenant_name => options[:cloud_tenant][1]} if options[:cloud_tenant].kind_of?(Array)
+    source.with_provider_connection(connection_options) do |openstack|
+      instance = if connection_options
+                   openstack.servers.get(clone_task_ref)
+                 else
+                   openstack.handled_list(:servers).detect { |s| s.id == clone_task_ref }
+                 end
+      status   = instance.state.downcase.to_sym if instance.present?
 
       if status == :error
         raise MiqException::MiqProvisionError, "An error occurred while provisioning Instance #{instance.name}"
@@ -20,9 +25,9 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
     clone_options[:flavor_ref]        = instance_type.ems_ref
     clone_options[:availability_zone] = nil if dest_availability_zone.kind_of?(ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull)
     clone_options[:security_groups]   = security_groups.collect(&:ems_ref)
-    clone_options[:nics]              = configure_network_adapters unless configure_network_adapters.blank?
+    clone_options[:nics]              = configure_network_adapters if configure_network_adapters.present?
 
-    clone_options[:block_device_mapping_v2] = configure_volumes unless configure_volumes.blank?
+    clone_options[:block_device_mapping_v2] = configure_volumes if configure_volumes.present?
 
     clone_options
   end
@@ -41,7 +46,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
   end
 
   def start_clone(clone_options)
-    connection_options = {:tenant_name => options[:cloud_tenant][1]} if options[:cloud_tenant].kind_of? Array
+    connection_options = {:tenant_name => options[:cloud_tenant][1]} if options[:cloud_tenant].kind_of?(Array)
     source.with_provider_connection(connection_options) do |openstack|
       instance = openstack.servers.create(clone_options)
       return instance.id
