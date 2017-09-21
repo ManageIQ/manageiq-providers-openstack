@@ -26,7 +26,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
     "ERROR"             => "non_operational",
     "BUILD"             => "wait_for_launch",
     "REBUILD"           => "wait_for_launch",
-    "DELETED"           => "archived",
+    "DELETED"           => "terminated",
     "MIGRATING"         => "migrating",
   }.freeze
 

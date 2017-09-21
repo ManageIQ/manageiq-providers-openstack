@@ -9,7 +9,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
                        :cloud_tenant          => tenant)
   end
 
-  let(:archived_vm) { FactoryGirl.create(:vm_openstack) }
+  let(:terminated_vm) { FactoryGirl.create(:vm_openstack) }
 
   let(:handle) do
     double.tap do |handle|
@@ -142,8 +142,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
         expect(vm.supports_snapshot_create?).to eq true
       end
 
-      it "does not support snapshot_create on archived VM" do
-        expect(archived_vm.supports_snapshot_create?).to be_falsy
+      it "does not support snapshot_create on terminated VM" do
+        expect(terminated_vm.supports_snapshot_create?).to be_falsy
       end
 
       it "checks remove_snapshot is_available? when snapshots are associated with the instance" do
@@ -224,7 +224,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       expect(vm).to receive(:with_provider_object).and_yield(provider_object)
       vm.raw_destroy
       expect(vm.raw_power_state).to eq("DELETED")
-      expect(vm.state).to eq("archived")
+      expect(vm.state).to eq("terminated")
     end
   end
 
