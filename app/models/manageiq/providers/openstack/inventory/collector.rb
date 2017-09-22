@@ -23,6 +23,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
   attr_reader :network_ports
   attr_reader :network_routers
   attr_reader :security_groups
+  attr_reader :volume_templates
 
   def initialize(_manager, _target)
     super
@@ -44,6 +45,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
     @vms                  = []
     @vnfs                 = []
     @vnfds                = []
+    @volume_templates     = []
     # network
     @cloud_networks       = []
     @floating_ips         = []

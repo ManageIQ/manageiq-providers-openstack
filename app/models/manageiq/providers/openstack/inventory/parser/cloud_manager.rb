@@ -15,6 +15,19 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     vnfs
     vnfds
     host_aggregates
+    volume_templates
+  end
+
+  def volume_templates
+    collector.volume_templates.each do |vt|
+      next if !vt.attributes["bootable"]
+      volume_template = persister.miq_templates.find_or_build(vt.id)
+      volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate"
+      volume_template.name = vt.name
+      volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt.tenant_id) if vt.tenant_id
+      volume_template.location = "N/A"
+      volume_template.vendor = "openstack"
+    end
   end
 
   def availability_zones
@@ -144,6 +157,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     collector.images.each do |i|
       parent_server_uid = parse_image_parent_id(i)
       image = persister.miq_templates.find_or_build(i.id)
+      image.type = "ManageIQ::Providers::Openstack::CloudManager::Template"
       image.uid_ems = i.id
       image.name = i.name || i.id.to_s
       image.vendor = "openstack"

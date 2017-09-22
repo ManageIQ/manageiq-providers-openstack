@@ -47,6 +47,17 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
 
   def start_clone(clone_options)
     connection_options = {:tenant_name => options[:cloud_tenant][1]} if options[:cloud_tenant].kind_of?(Array)
+    if source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate)
+      # remove the image_ref parameter from the options since it actually refers
+      # to a volume, and then overwrite the default root volume with the volume
+      # we are trying to boot the instance from
+      clone_options.delete(:image_ref)
+      clone_options[:block_device_mapping_v2][0][:source_type] = "volume"
+      clone_options[:block_device_mapping_v2][0][:size] = nil
+      clone_options[:block_device_mapping_v2][0][:delete_on_termination] = false
+      clone_options[:block_device_mapping_v2][0][:destination_type] = "volume"
+      # adjust the parameters to make booting from a volume work.
+    end
     source.with_provider_connection(connection_options) do |openstack|
       instance = openstack.servers.create(clone_options)
       return instance.id
