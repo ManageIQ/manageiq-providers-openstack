@@ -21,7 +21,8 @@ module OpenstackStubs
       :orchestration_stacks_count => scaling * 10,
       :vnfs_count                 => scaling * 10,
       :vnfds_count                => scaling * 10,
-      :vms_count                  => scaling * 10
+      :vms_count                  => scaling * 10,
+      :volume_templates_count     => scaling * 10,
     }
   end
 
@@ -235,5 +236,18 @@ module OpenstackStubs
       )
     end
     mocked_vms
+  end
+
+  def mocked_volume_templates
+    mocked_volume_templates = []
+    test_counts[:volume_templates_count].times do |i|
+      mocked_volume_templates << OpenStruct.new(
+        :id          => "volume_template_#{i}",
+        :name        => "volume_template_#{i}",
+        :status      => "available",
+        :attributes  => {:bootable => true}
+      )
+    end
+    mocked_miq_templates
   end
 end

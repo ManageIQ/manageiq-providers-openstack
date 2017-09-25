@@ -132,6 +132,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:vnfds).and_return(mocked_vnfds)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:tenants).and_return(mocked_cloud_tenants)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:private_flavor).and_return(nil)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_templates).and_return(mocked_volume_templates)
     end
 
     def assert_ems

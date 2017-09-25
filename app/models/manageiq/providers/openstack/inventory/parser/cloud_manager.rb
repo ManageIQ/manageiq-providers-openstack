@@ -20,7 +20,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
   def volume_templates
     collector.volume_templates.each do |vt|
-      next if !vt.attributes["bootable"]
+      next if vt.attributes["bootable"].to_s != "true"
       volume_template = persister.miq_templates.find_or_build(vt.id)
       volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate"
       volume_template.name = vt.name

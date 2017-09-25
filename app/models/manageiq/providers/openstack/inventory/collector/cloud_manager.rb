@@ -148,6 +148,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   def volume_templates
     return [] unless volume_service
     return @volume_templates if @volume_templates.any?
-    @volume_templates = volume_service.handled_list(:volumes, {:status => "available", :bootable => "true"}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @volume_templates = volume_service.handled_list(:volumes, {:status => "available"}, ::Settings.ems.ems_openstack.refresh.is_admin)
   end
 end
