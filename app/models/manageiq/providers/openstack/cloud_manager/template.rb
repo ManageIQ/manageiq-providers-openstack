@@ -73,6 +73,29 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     false
   end
 
+  def self.raw_create_image(ext_management_system, create_options)
+    ext_management_system.with_provider_connection(:service => 'Image') do |service|
+      service.create_image(create_options)
+    end
+  rescue => err
+    _log.error("image=[#{name}], error=[#{err}]")
+    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+  end
+
+  def self.validate_create_image(ext_management_system, _options = {})
+    if ext_management_system
+      {:available => true, :message => nil}
+    else
+      {:available => false,
+       :message   => _("The Image is not connected to an active %{table}") %
+         {:table => ui_lookup(:table => "ext_management_system")}}
+    end
+  end
+
+  def self.create_image(ext_management_system, create_options)
+    raw_create_image(ext_management_system, create_options)
+  end
+
   def raw_delete_image
     ext_management_system.with_provider_connection(:service => 'Compute') do |service|
       service.delete_image(ems_ref)
