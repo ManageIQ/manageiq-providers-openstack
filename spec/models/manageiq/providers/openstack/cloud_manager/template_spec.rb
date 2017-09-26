@@ -6,7 +6,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Template do
   context 'when raw_delete_image' do
     before do
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-      allow(ems).to receive(:with_provider_connection).with(:service => 'Compute').and_yield(service)
+      allow(ems).to receive(:with_provider_connection).with(:service => 'Image').and_yield(service)
     end
 
     subject { template_openstack }

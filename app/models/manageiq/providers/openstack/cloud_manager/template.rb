@@ -74,7 +74,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   end
 
   def raw_delete_image
-    ext_management_system.with_provider_connection(:service => 'Compute') do |service|
+    ext_management_system.with_provider_connection(:service => 'Image') do |service|
       service.delete_image(ems_ref)
     end
   rescue => err
