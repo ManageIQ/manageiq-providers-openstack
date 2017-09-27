@@ -5,7 +5,7 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     source                  = load_ar_obj(get_source_vm)
     flavors                 = get_targets_for_ems(source, :cloud_filter, Flavor, 'flavors')
     return {} if flavors.blank?
-    if source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate)
+    if source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate) || source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate)
       # no flavor requirements for booting from a volume
       minimum_disk_required = 0
       minimum_memory_required = 0

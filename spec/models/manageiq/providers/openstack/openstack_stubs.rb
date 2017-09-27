@@ -11,18 +11,19 @@ module OpenstackStubs
   def test_counts(scaling = nil)
     scaling ||= scaling_factor
     {
-      :cloud_services_count       => scaling * 10,
-      :cloud_tenants_count        => scaling * 10,
-      :flavors_count              => scaling * 10,
-      :host_aggregates_count      => scaling * 10,
-      :key_pairs_count            => scaling * 5,
-      :quotas_count               => scaling * 10,
-      :miq_templates_count        => scaling * 10,
-      :orchestration_stacks_count => scaling * 10,
-      :vnfs_count                 => scaling * 10,
-      :vnfds_count                => scaling * 10,
-      :vms_count                  => scaling * 10,
-      :volume_templates_count     => scaling * 10,
+      :cloud_services_count            => scaling * 10,
+      :cloud_tenants_count             => scaling * 10,
+      :flavors_count                   => scaling * 10,
+      :host_aggregates_count           => scaling * 10,
+      :key_pairs_count                 => scaling * 5,
+      :quotas_count                    => scaling * 10,
+      :miq_templates_count             => scaling * 10,
+      :orchestration_stacks_count      => scaling * 10,
+      :vnfs_count                      => scaling * 10,
+      :vnfds_count                     => scaling * 10,
+      :vms_count                       => scaling * 10,
+      :volume_templates_count          => scaling * 10,
+      :volume_snapshot_templates_count => scaling * 10,
     }
   end
 
@@ -245,9 +246,21 @@ module OpenstackStubs
         :id          => "volume_template_#{i}",
         :name        => "volume_template_#{i}",
         :status      => "available",
-        :attributes  => {:bootable => true}
+        :attributes  => {"bootable" => true}
       )
     end
-    mocked_miq_templates
+    mocked_volume_templates
+  end
+
+  def mocked_volume_snapshot_templates
+    mocked_volume_snapshot_templates = []
+    test_counts[:volume_snapshot_templates_count].times do |i|
+      mocked_volume_snapshot_templates << OpenStruct.new(
+        :id          => "volume_snapshot_template_#{i}",
+        :name        => "volume_snapshot_template_#{i}",
+        :status      => "available",
+      )
+    end
+    mocked_volume_snapshot_templates
   end
 end

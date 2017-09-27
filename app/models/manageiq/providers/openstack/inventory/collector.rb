@@ -24,6 +24,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
   attr_reader :network_routers
   attr_reader :security_groups
   attr_reader :volume_templates
+  attr_reader :volume_snapshot_templates
 
   def initialize(_manager, _target)
     super
@@ -33,25 +34,26 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
 
   def initialize_inventory_sources
     # cloud
-    @availability_zones   = []
-    @cloud_services       = []
-    @tenants              = []
-    @flavors              = []
-    @host_aggregates      = []
-    @key_pairs            = []
-    @images               = []
-    @orchestration_stacks = []
-    @quotas               = []
-    @vms                  = []
-    @vnfs                 = []
-    @vnfds                = []
-    @volume_templates     = []
+    @availability_zones        = []
+    @cloud_services            = []
+    @tenants                   = []
+    @flavors                   = []
+    @host_aggregates           = []
+    @key_pairs                 = []
+    @images                    = []
+    @orchestration_stacks      = []
+    @quotas                    = []
+    @vms                       = []
+    @vnfs                      = []
+    @vnfds                     = []
+    @volume_templates          = []
+    @volume_snapshot_templates = []
     # network
-    @cloud_networks       = []
-    @floating_ips         = []
-    @network_ports        = []
-    @network_routers      = []
-    @security_groups      = []
+    @cloud_networks            = []
+    @floating_ips              = []
+    @network_ports             = []
+    @network_routers           = []
+    @security_groups           = []
   end
 
   def connection

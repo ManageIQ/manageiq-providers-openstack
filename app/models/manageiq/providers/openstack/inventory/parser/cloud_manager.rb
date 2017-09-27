@@ -16,6 +16,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     vnfds
     host_aggregates
     volume_templates
+    volume_snapshot_templates
   end
 
   def volume_templates
@@ -25,6 +26,18 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate"
       volume_template.name = vt.name
       volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt.tenant_id) if vt.tenant_id
+      volume_template.location = "N/A"
+      volume_template.vendor = "openstack"
+    end
+  end
+
+  def volume_snapshot_templates
+    collector.volume_snapshot_templates.each do |vt|
+      # next if vt["attributes"].["bootable"].to_s != "true"
+      volume_template = persister.miq_templates.find_or_build(vt["id"])
+      volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate"
+      volume_template.name = vt['display_name'] || vt['name']
+      volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt["tenant_id"]) if vt["tenant_id"]
       volume_template.location = "N/A"
       volume_template.vendor = "openstack"
     end

@@ -66,22 +66,24 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     def expected_table_counts(disconnect = nil)
       disconnect ||= disconnect_inv_factor
 
-      vm_count     = test_counts(@data_scaling)[:vms_count]
-      image_count  = test_counts(@data_scaling)[:miq_templates_count]
+      vm_count                    = test_counts(@data_scaling)[:vms_count]
+      image_count                 = test_counts(@data_scaling)[:miq_templates_count]
+      volumes_and_snapshots_count = test_counts(@data_scaling)[:volume_templates_count] + test_counts(@data_scaling)[:volume_snapshot_templates_count]
 
       # Disconnect_inv count, when these objects are not found in the API, they are not deleted in DB, but just marked
       # as disconnected
-      vm_count_plus_disconnect_inv    = vm_count + test_counts(disconnect)[:vms_count]
-      image_count_plus_disconnect_inv = image_count + test_counts(disconnect)[:miq_templates_count]
+      vm_count_plus_disconnect_inv              = vm_count + test_counts(disconnect)[:vms_count]
+      image_count_plus_disconnect_inv           = image_count + test_counts(disconnect)[:miq_templates_count]
+      volumes_and_snapshots_plus_disconnect_inv = volumes_and_snapshots_count + test_counts(disconnect)[:volume_templates_count] + test_counts(disconnect)[:volume_snapshot_templates_count]
       {
         :auth_private_key              => test_counts(@data_scaling)[:key_pairs_count],
         :ext_management_system         => 4,
         :flavor                        => test_counts(@data_scaling)[:flavors_count],
         :host_aggregate                => test_counts(@data_scaling)[:host_aggregates_count],
         :availability_zone             => 2,
-        :vm_or_template                => vm_count_plus_disconnect_inv + image_count_plus_disconnect_inv,
+        :vm_or_template                => vm_count_plus_disconnect_inv + image_count_plus_disconnect_inv + volumes_and_snapshots_plus_disconnect_inv,
         :vm                            => vm_count_plus_disconnect_inv,
-        :miq_template                  => image_count_plus_disconnect_inv,
+        :miq_template                  => image_count_plus_disconnect_inv + volumes_and_snapshots_plus_disconnect_inv,
         :disk                          => vm_count_plus_disconnect_inv,
         :hardware                      => vm_count_plus_disconnect_inv + image_count_plus_disconnect_inv,
         :network                       => vm_count_plus_disconnect_inv * 2,
@@ -133,6 +135,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:tenants).and_return(mocked_cloud_tenants)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:private_flavor).and_return(nil)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_templates).and_return(mocked_volume_templates)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_snapshot_templates).and_return(mocked_volume_snapshot_templates)
     end
 
     def assert_ems
