@@ -243,10 +243,10 @@ module OpenstackStubs
     mocked_volume_templates = []
     test_counts[:volume_templates_count].times do |i|
       mocked_volume_templates << OpenStruct.new(
-        :id          => "volume_template_#{i}",
-        :name        => "volume_template_#{i}",
-        :status      => "available",
-        :attributes  => {"bootable" => true}
+        :id         => "volume_template_#{i}",
+        :name       => "volume_template_#{i}",
+        :status     => "available",
+        :attributes => {"bootable" => true}
       )
     end
     mocked_volume_templates
@@ -256,10 +256,10 @@ module OpenstackStubs
     mocked_volume_snapshot_templates = []
     test_counts[:volume_snapshot_templates_count].times do |i|
       mocked_volume_snapshot_templates << OpenStruct.new(
-        :id          => "volume_snapshot_template_#{i}",
-        :name        => "volume_snapshot_template_#{i}",
-        :status      => "available",
-        :volume_id   => "volume_template_#{i}"
+        :id        => "volume_snapshot_template_#{i}",
+        :name      => "volume_snapshot_template_#{i}",
+        :status    => "available",
+        :volume_id => "volume_template_#{i}"
       )
     end
     mocked_volume_snapshot_templates
