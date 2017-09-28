@@ -13,6 +13,9 @@ parameter_groups:
   - admin_pass
   - db_port
   - metadata
+  - skip_failed
+  - subnets
+  - my_key_pair
 
 parameters:
   admin_pass:
@@ -20,45 +23,69 @@ parameters:
     description: Admin password
     hidden: true
     constraints:
-      - length: { min: 6, max: 8 }
-        description: >
-          Admin password must be between 6 and 8 characters long.
-      - allowed_pattern: "[a-zA-Z0-9]+"
-        description: Password must consist of characters and numbers only
-      - allowed_pattern: "[A-Z]+[a-zA-Z0-9]*"
-        description: Password must start with an uppercase character
+    - length: { min: 6, max: 8 }
+      description: >
+        Admin password must be between 6 and 8 characters long.
+    - allowed_pattern: "[a-zA-Z0-9]+"
+      description: Password must consist of characters and numbers only
 
   flavor:
     type: string
     description: Flavor for the instances to be created
     default: m1.small
     constraints:
-      - custom_constraint: nova.flavor
-        description: Must be a flavor known to Nova
+    - custom_constraint: nova.flavor
+      description: Must be a flavor known to Nova
 
   cartridges:
     description: >
       Cartridges to install. "all" for all cartridges; "standard" for all cartridges except for JBossEWS or JBossEAP
-    type: string
-    default: "cron,diy,haproxy,mysql,nodejs,perl,php,postgresql,python,ruby"
+    type: comma_delimited_list
+    default:
+    - cron
+    - diy
+    - haproxy
+    - mysql
+    - nodejs
+    - perl
+    - php
+    - postgresql
+    - python
+    - ruby
 
   db_port:
     type: number
     label: Port Number
     description: Database port number
-    default: 50000
+    default: "50000"
     constraints:
-      - range: { min: 40000, max: 60000 }
-        description: Port number must be between 40000 and 60000
+    - range: { min: 40000, max: 60000 }
+      description: Port number must be between 40000 and 60000
 
   image_id:
     type: string
     description: ID of the image to use for the instance to be created.
     default: F18-x86_64-cfntools
     constraints:
-      - allowed_values: [ F18-i386-cfntools, F18-x86_64-cfntools ]
-        description:
-          Image ID must be either F18-i386-cfntools or F18-x86_64-cfntools.
+    - allowed_values: [ F18-i386-cfntools, F18-x86_64-cfntools ]
+      description:
+        Image ID must be either F18-i386-cfntools or F18-x86_64-cfntools.
 
   metadata:
     type: json
+    default:
+      ver: test
+
+  skip_failed:
+    type: boolean
+    default: t
+
+  subnets:
+    Description: Subnet IDs
+    Type: List<AWS::EC2::Subnet::Id>
+    Default: [subnet-123a351e, subnet-123a351f]
+
+  my_key_pair:
+    Description: Amazon EC2 key pair
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: my-key

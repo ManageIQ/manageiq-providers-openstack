@@ -107,4 +107,14 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack do
       end
     end
   end
+
+  describe '.transform_parameters' do
+    let(:template) { FactoryGirl.create(:orchestration_template_openstack_in_yaml) }
+    it 'converts multiline text into one comma delimitered string' do
+      parameters = {'cartridges' => "test1\ntest2\n\n"}
+
+      described_class.transform_parameters(template, parameters)
+      expect(parameters).to eq('cartridges' => "test1,test2")
+    end
+  end
 end
