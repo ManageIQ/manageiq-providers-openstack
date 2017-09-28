@@ -259,6 +259,7 @@ module OpenstackStubs
         :id          => "volume_snapshot_template_#{i}",
         :name        => "volume_snapshot_template_#{i}",
         :status      => "available",
+        :volume_id   => "volume_template_#{i}"
       )
     end
     mocked_volume_snapshot_templates

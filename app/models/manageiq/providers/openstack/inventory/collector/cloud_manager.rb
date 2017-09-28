@@ -159,7 +159,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     return [] unless volume_service
     return @volume_snapshot_templates if @volume_snapshot_templates.any?
     @volume_snapshot_templates = volume_service.handled_list(:list_snapshots_detailed, {:status => "available", :__request_body_index => "snapshots"}).select do |s|
-      volumes_by_id[s["volume_id"]].attributes["bootable"].to_s == "true"
+      volumes_by_id[s["volume_id"]] && (volumes_by_id[s["volume_id"]].attributes["bootable"].to_s == "true")
     end
   end
 end

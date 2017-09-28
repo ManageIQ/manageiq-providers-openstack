@@ -194,7 +194,8 @@ module Openstack
     end
 
     def volume_and_snapshot_templates_count
-      CloudVolume.where(:status => "available", :bootable => true).count + CloudVolumeSnapshot.where(:status => "available").count
+      # none of the snapshots on the VCR instances are bootable, so they are not included
+      CloudVolume.where(:status => "available", :bootable => true).count
     end
 
     def all_vms_and_stacks
