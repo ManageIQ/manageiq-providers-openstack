@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Template do
-  let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
-  let(:image_attributes) { {:name => "image", :ram => "1"} }
+  let(:ems) { FactoryGirl.create(:ems_openstack) }
+  let(:image_attributes) { {:name => 'image', :ram => '1'} }
   let(:template_openstack) { FactoryGirl.create :template_openstack, :ext_management_system => ems, :ems_ref => 'one_id' }
   let(:service) { double }
 
@@ -34,6 +34,23 @@ describe ManageIQ::Providers::Openstack::CloudManager::Template do
       end
     end
   end
+
+  context 'when update_image' do
+    let(:fog_image) { double }
+    let(:service) { double("Service", :images => double("Images", :find_by_id => fog_image)) }
+    before do
+      allow(ems).to receive(:with_provider_connection).with(:service => 'Image').and_yield(service)
+      allow(template_openstack).to receive(:ext_management_system).and_return(ems)
+    end
+
+    subject { template_openstack }
+
+    it 'should update image' do
+      expect(fog_image).to receive(:update).with(image_attributes).once
+      subject.update_image(image_attributes)
+    end
+  end
+
   context 'when raw_delete_image' do
     before do
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
