@@ -48,6 +48,9 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
     assert_hidden_length_patterns(group.parameters[0])
     assert_min_max_value(group.parameters[1])
     assert_json_type(group.parameters[2])
+    assert_boolean_type(group.parameters[3])
+    assert_list_type(group.parameters[4])
+    assert_aws_type(group.parameters[5])
   end
 
   def assert_custom_constraint(parameter)
@@ -75,12 +78,15 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
       :name          => "cartridges",
       :label         => "Cartridges",
       :description   => "Cartridges to install. \"all\" for all cartridges; \"standard\" for all cartridges except for JBossEWS or JBossEAP\n",
-      :data_type     => "string",  # HOT has type comma_delimited_list, but all examples use type string. Why?
-      :default_value => "cron,diy,haproxy,mysql,nodejs,perl,php,postgresql,python,ruby",
+      :data_type     => match(/comma_delimited_list|CommaDelimitedList/),
+      :default_value => %w(cron diy haproxy mysql nodejs perl php postgresql python ruby).join("\n"),
       :hidden        => false,
       :required      => true,
-      :constraints   => [],
     )
+    constraints = parameter.constraints
+    expect(constraints.size).to eq(1)
+    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterMultiline
+    expect(constraints[0]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
   end
 
   def assert_allowed_values(parameter)
@@ -88,7 +94,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
       :name          => "image_id",
       :label         => "Image", # String#titleize removes trailing id
       :description   => "ID of the image to use for the instance to be created.",
-      :data_type     => "string",
+      :data_type     => match(/[sS]tring/),
       :default_value => "F18-x86_64-cfntools",
       :hidden        => false,
       :required      => true
@@ -108,16 +114,17 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
       :name          => "db_port",
       :label         => "Port Number",  # provided by template
       :description   => "Database port number",
-      :data_type     => "number",
-      :default_value => 50_000,
+      :data_type     => match(/[nN]umber/),
+      :default_value => "50000",
       :hidden        => false,
       :required      => true
     )
     constraints = parameter.constraints
-    expect(constraints.size).to eq(1)
-    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterRange
-    expect(constraints[0]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
-    expect(constraints[0]).to have_attributes(
+    expect(constraints.size).to eq(2)
+    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterPattern
+    expect(constraints[1]).to be_a ::OrchestrationTemplate::OrchestrationParameterRange
+    expect(constraints[1]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
+    expect(constraints[1]).to have_attributes(
       :description => "Port number must be between 40000 and 60000",
       :min_value   => 40_000,
       :max_value   => 60_000
@@ -129,46 +136,82 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate do
       :name          => "admin_pass",
       :label         => "Admin Pass",
       :description   => "Admin password",
-      :data_type     => "string",
+      :data_type     => match(/[sS]tring/),
       :default_value => nil,
       :hidden        => true,
       :required      => true
     )
     constraints = parameter.constraints
-    expect(constraints.size).to eq(3)
+    expect(constraints.size).to eq(2)
 
-    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterLength
-    expect(constraints[0]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
-    expect(constraints[0]).to have_attributes(
-      :description => "Admin password must be between 6 and 8 characters long.\n",
-      :min_length  => 6,
-      :max_length  => 8
-    )
-
-    expect(constraints[1]).to be_a ::OrchestrationTemplate::OrchestrationParameterPattern
-    expect(constraints[1]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
-    expect(constraints[1]).to have_attributes(
-      :description => "Password must consist of characters and numbers only",
-      :pattern     => "[a-zA-Z0-9]+"
-    )
-
-    expect(constraints[2]).to be_a ::OrchestrationTemplate::OrchestrationParameterPattern
-    expect(constraints[2]).to have_attributes(
-      :description => "Password must start with an uppercase character",
-      :pattern     => "[A-Z]+[a-zA-Z0-9]*"
-    )
+    constraints.each do |constraint|
+      expect(constraint).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
+      if constraint.kind_of?(::OrchestrationTemplate::OrchestrationParameterLength)
+        expect(constraint).to have_attributes(
+          :description => match(/Admin password must be between 6 and 8 characters long./),
+          :min_length  => 6,
+          :max_length  => 8
+        )
+      elsif constraint.kind_of?(::OrchestrationTemplate::OrchestrationParameterPattern)
+        expect(constraint).to have_attributes(
+          :description => match(/Password must consist of characters and numbers only/),
+          :pattern     => "[a-zA-Z0-9]+"
+        )
+      else
+        raise "unexpected constraint type #{constraint.class.name}"
+      end
+    end
   end
 
   def assert_json_type(parameter)
     expect(parameter).to have_attributes(
-      :name          => "metadata",
-      :label         => "Metadata",
+      :name        => "metadata",
+      :label       => "Metadata",
+      :description => nil,
+      :data_type   => "json",
+      :hidden      => false,
+      :required    => true,
+    )
+    expect(JSON.parse(parameter.default_value)).to eq('ver' => 'test')
+    constraints = parameter.constraints
+    expect(constraints.size).to eq(1)
+    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterMultiline
+    expect(constraints[0]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
+  end
+
+  def assert_boolean_type(parameter)
+    expect(parameter).to have_attributes(
+      :name          => "skip_failed",
+      :label         => "Skip Failed",
       :description   => nil,
-      :data_type     => "json",
-      :default_value => nil,
+      :data_type     => "boolean",
+      :default_value => true,
       :hidden        => false,
       :required      => true,
-      :constraints   => [],
+    )
+    constraints = parameter.constraints
+    expect(constraints.size).to eq(1)
+    expect(constraints[0]).to be_a ::OrchestrationTemplate::OrchestrationParameterBoolean
+    expect(constraints[0]).to be_kind_of ::OrchestrationTemplate::OrchestrationParameterConstraint
+  end
+
+  def assert_list_type(parameter)
+    expect(parameter).to have_attributes(
+      :name          => 'subnets',
+      :description   => 'Subnet IDs',
+      :data_type     => 'List<AWS::EC2::Subnet::Id>',
+      :default_value => "subnet-123a351e\nsubnet-123a351f",
+      :required      => true
+    )
+  end
+
+  def assert_aws_type(parameter)
+    expect(parameter).to have_attributes(
+      :name          => 'my_key_pair',
+      :description   => 'Amazon EC2 key pair',
+      :data_type     => 'AWS::EC2::KeyPair::KeyName',
+      :default_value => 'my-key',
+      :required      => true
     )
   end
 

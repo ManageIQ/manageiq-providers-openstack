@@ -22,17 +22,22 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     end
   end
 
+  # Parsing parameters for both Hot and Cloudformation formats
+  # Keys in Hot are lower case snake style,
+  #   label, json, boolean, constraints are Hot only
+  # Keys in Cloudformation are upper case camel style
+  #   List<> is Cloudformation only
   def parameters(content_hash = nil)
     content_hash ||= parse
     (content_hash["parameters"] || content_hash["Parameters"] || {}).collect do |key, val|
       OrchestrationTemplate::OrchestrationParameter.new(
         :name          => key,
         :label         => val.key?('label') ? val['label'] : key.titleize,
-        :data_type     => val['type'],
-        :default_value => val['default'],
-        :description   => val['description'],
-        :hidden        => val['hidden'] == true,
-        :constraints   => val.key?('constraints') ? parse_constraints(val['constraints']) : nil,
+        :data_type     => val['type'] || val['Type'],
+        :default_value => parse_default_value(val),
+        :description   => val['description'] || val['Description'],
+        :hidden        => parse_hidden(val),
+        :constraints   => ([constraint_from_type(val)] + parse_constraints(val)).compact,
         :required      => true
       )
     end
@@ -97,39 +102,90 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     err.message
   end
 
-  def parse_constraints(raw_constraints)
-    raw_constraints.collect do |raw_constraint|
+  def parse_default_value(parameter)
+    raw_default = parameter['default'] || parameter['Default']
+    case parameter['type'] || parameter['Type']
+    when 'json'
+      JSON.pretty_generate(raw_default || {'sample(please delete)' => 'JSON format'})
+    when 'comma_delimited_list', 'CommaDelimitedList', /^List<.+>$/
+      multiline_value_for_list(raw_default)
+    when 'boolean'
+      ([true, 1] + %w(t T y Y yes Yes YES true True TRUE 1)).include?(raw_default)
+    else
+      raw_default
+    end
+  end
+
+  def multiline_value_for_list(val)
+    return val.join("\n") if val.kind_of?(Array)
+    return val.tr!(",", "\n") if val.kind_of?(String)
+    "sample1(please delete)\nsample2(please delete)"
+  end
+
+  def parse_hidden(parameter)
+    val = parameter.key?('hidden') ? parameter['hidden'] : parameter['NoEcho']
+    return true if val == true || val == 'true'
+    false
+  end
+
+  def constraint_from_type(parameter)
+    case parameter['type'] || parameter['Type']
+    when 'json'
+      OrchestrationTemplate::OrchestrationParameterMultiline.new(
+        :description => 'Parameter in JSON format'
+      )
+    when 'comma_delimited_list', 'CommaDelimitedList', /^List<.*>$/
+      OrchestrationTemplate::OrchestrationParameterMultiline.new(
+        :description => 'Parameter in list format'
+      )
+    when 'boolean'
+      OrchestrationTemplate::OrchestrationParameterBoolean.new
+    when 'number', 'Number'
+      OrchestrationTemplate::OrchestrationParameterPattern.new(
+        :pattern     => '^[+-]?([1-9]\d*|0)(\.\d+)?$',
+        :description => 'Numeric parameter'
+      )
+    end
+  end
+
+  def parse_constraints(parameter)
+    return parse_constraints_hot(parameter['constraints']) if parameter.key?('constraints')
+    parse_constraints_cfn(parameter)
+  end
+
+  def parse_constraints_hot(raw_constraints)
+    (raw_constraints || []).collect do |raw_constraint|
       if raw_constraint.key?('allowed_values')
-        parse_allowed_values(raw_constraint)
+        parse_allowed_values_hot(raw_constraint)
       elsif raw_constraint.key?('allowed_pattern')
-        parse_pattern(raw_constraint)
+        parse_pattern_hot(raw_constraint)
       elsif raw_constraint.key?('length')
-        parse_length_constraint(raw_constraint)
+        parse_length_constraint_hot(raw_constraint)
       elsif raw_constraint.key?('range')
-        parse_value_constraint(raw_constraint)
+        parse_value_constraint_hot(raw_constraint)
       elsif raw_constraint.key?('custom_constraint')
-        parse_custom_constraint(raw_constraint)
+        parse_custom_constraint_hot(raw_constraint)
       else
         raise MiqException::MiqParsingError, _("Unknown constraint %{constraint}") % {:constraint => raw_constraint}
       end
     end
   end
 
-  def parse_allowed_values(hash)
+  def parse_allowed_values_hot(hash)
     OrchestrationTemplate::OrchestrationParameterAllowed.new(
       :allowed_values => hash['allowed_values'],
       :description    => hash['description']
     )
   end
 
-  def parse_pattern(hash)
+  def parse_pattern_hot(hash)
     OrchestrationTemplate::OrchestrationParameterPattern.new(
       :pattern     => hash['allowed_pattern'],
       :description => hash['description']
     )
   end
 
-  def parse_length_constraint(hash)
+  def parse_length_constraint_hot(hash)
     OrchestrationTemplate::OrchestrationParameterLength.new(
       :min_length  => hash['length']['min'],
       :max_length  => hash['length']['max'],
@@ -137,7 +193,7 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     )
   end
 
-  def parse_value_constraint(hash)
+  def parse_value_constraint_hot(hash)
     OrchestrationTemplate::OrchestrationParameterRange.new(
       :min_value   => hash['range']['min'],
       :max_value   => hash['range']['max'],
@@ -145,10 +201,57 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     )
   end
 
-  def parse_custom_constraint(hash)
+  def parse_custom_constraint_hot(hash)
     OrchestrationTemplate::OrchestrationParameterCustom.new(
       :custom_constraint => hash['custom_constraint'],
       :description       => hash['description']
+    )
+  end
+
+  def parse_constraints_cfn(raw_constraints)
+    constraints = []
+    if raw_constraints.key?('AllowedValues')
+      constraints << parse_allowed_values_cfn(raw_constraints)
+    end
+    if raw_constraints.key?('AllowedPattern')
+      constraints << parse_pattern_cfn(raw_constraints)
+    end
+    if raw_constraints.key?('MinLength') || raw_constraints.key?('MaxLength')
+      constraints << parse_length_constraint_cfn(raw_constraints)
+    end
+    if raw_constraints.key?('MinValue') || raw_constraints.key?('MaxValue')
+      constraints << parse_value_constraint_cfn(raw_constraints)
+    end
+    constraints
+  end
+
+  def parse_allowed_values_cfn(hash)
+    OrchestrationTemplate::OrchestrationParameterAllowed.new(
+      :allowed_values => hash['AllowedValues'],
+      :description    => hash['ConstraintDescription']
+    )
+  end
+
+  def parse_pattern_cfn(hash)
+    OrchestrationTemplate::OrchestrationParameterPattern.new(
+      :pattern     => hash['AllowedPattern'],
+      :description => hash['ConstraintDescription']
+    )
+  end
+
+  def parse_length_constraint_cfn(hash)
+    OrchestrationTemplate::OrchestrationParameterLength.new(
+      :min_length  => hash['MinLength'].to_i,
+      :max_length  => hash['MaxLength'].to_i,
+      :description => hash['ConstraintDescription']
+    )
+  end
+
+  def parse_value_constraint_cfn(hash)
+    OrchestrationTemplate::OrchestrationParameterRange.new(
+      :min_value   => hash['MinValue'].to_r,
+      :max_value   => hash['MaxValue'].to_r,
+      :description => hash['ConstraintDescription']
     )
   end
 end
