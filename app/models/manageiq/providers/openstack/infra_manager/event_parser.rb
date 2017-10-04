@@ -16,6 +16,9 @@ module ManageIQ::Providers::Openstack::InfraManager::EventParser
     }
 
     payload = event[:content]["payload"]
+    if payload.key? "instance_id"
+      event_hash[:host_id] = Host.find_by("ems_ref_obj" => YAML.dump(payload["instance_id"])).try(:id)
+    end
     event_hash[:message]                   = payload["message"]           if payload.key? "message"
     event_hash[:host_ems_ref]              = payload["node"]              if payload.key? "node"
     event_hash[:availability_zone_ems_ref] = payload["availability_zone"] if payload.key? "availability_zone"
