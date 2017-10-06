@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubnet
+  include ManageIQ::Providers::Openstack::HelperMethods
   include ProviderObjectMixin
   include SupportsFeatureMixin
 
@@ -34,7 +35,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     {:ems_ref => subnet.id, :name => options[:name]}
   rescue => e
     _log.error "subnet=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqCloudSubnetCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudSubnetCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_delete_cloud_subnet
@@ -43,7 +44,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     end
   rescue => e
     _log.error "subnet=[#{name}], error: #{e}"
-    raise MiqException::MiqCloudSubnetDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudSubnetDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def delete_cloud_subnet_queue(userid)
@@ -69,7 +70,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     end
   rescue => e
     _log.error "subnet=[#{name}], error: #{e}"
-    raise MiqException::MiqCloudSubnetUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudSubnetUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def update_cloud_subnet_queue(userid, options = {})

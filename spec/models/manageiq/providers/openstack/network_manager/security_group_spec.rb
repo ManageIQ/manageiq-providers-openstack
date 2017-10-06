@@ -31,6 +31,13 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
     raw_security_groups
   end
 
+  let(:bad_request) do
+    response = Excon::Response.new
+    response.status = 400
+    response.body = '{"NeutronError": {"message": "bad request"}}'
+    bad_request = Excon::Errors.status_error({:expects => 200}, response)
+  end
+
   before do
     raw_security_groups
   end
@@ -54,7 +61,8 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
       end
 
       it 'catches errors from provider' do
-        expect(service).to receive(:create_security_group).and_raise('bad request')
+
+        expect(service).to receive(:create_security_group).and_raise(bad_request)
         expect do
           ems_network.create_security_group(security_group_options)
         end.to raise_error(MiqException::MiqSecurityGroupCreateError)
@@ -70,7 +78,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
       end
 
       it 'catches errors from provider' do
-        expect(service).to receive(:update_security_group).and_raise('bad request')
+        expect(service).to receive(:update_security_group).and_raise(bad_request)
         expect { security_group.raw_update_security_group({}) }.to raise_error(MiqException::MiqSecurityGroupUpdateError)
       end
 
@@ -92,7 +100,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
       end
 
       it 'catches errors from provider' do
-        expect(service).to receive(:delete_security_group).and_raise('bad request')
+        expect(service).to receive(:delete_security_group).and_raise(bad_request)
         expect { security_group.raw_delete_security_group }.to raise_error(MiqException::MiqSecurityGroupDeleteError)
       end
     end

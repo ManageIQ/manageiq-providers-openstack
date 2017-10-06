@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkRouter
+  include ManageIQ::Providers::Openstack::HelperMethods
   include ProviderObjectMixin
   include AsyncDeleteMixin
 
@@ -35,7 +36,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     {:ems_ref => router['id'], :name => options[:name]}
   rescue => e
     _log.error "router=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqNetworkRouterCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkRouterCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_delete_network_router
@@ -44,7 +45,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     end
   rescue => e
     _log.error "router=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkRouterDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkRouterDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def delete_network_router_queue(userid)
@@ -70,7 +71,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     end
   rescue => e
     _log.error "router=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkRouterUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkRouterUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def update_network_router_queue(userid, options = {})
@@ -100,7 +101,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     end
   rescue => e
     _log.error "router=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkRouterAddInterfaceError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkRouterAddInterfaceError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def add_interface_queue(userid, cloud_subnet)
@@ -130,7 +131,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     end
   rescue => e
     _log.error "router=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkRouterRemoveInterfaceError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkRouterRemoveInterfaceError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def remove_interface_queue(userid, cloud_subnet)
