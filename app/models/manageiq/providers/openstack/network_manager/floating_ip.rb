@@ -30,9 +30,9 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       floating_ip = service.create_floating_ip(floating_network_id, raw_options)
     end
-    {:ems_ref => floating_ip['id'], :name => options[:name]}
+    {:ems_ref => floating_ip['id'], :name => options[:floating_ip_address]}
   rescue => e
-    _log.error "floating_ip=[#{options[:name]}], error: #{e}"
+    _log.error "floating_ip=[#{options[:floating_ip_address]}], error: #{e}"
     raise MiqException::MiqFloatingIpCreateError, e.to_s, e.backtrace
   end
 
