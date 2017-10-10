@@ -51,7 +51,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
 
       expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to eq(nil)
+      expect(@host.maintenance_reason).to be nil
 
       @host.set_node_maintenance
       EmsRefresh.refresh(@ems)
@@ -65,7 +65,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       @ems.reload
       @host.reload
       expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to eq(nil)
+      expect(@host.maintenance_reason).to be nil
     end
   end
 
@@ -135,17 +135,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(@host.mac_address).not_to be nil
     expect(@host.ipaddress).not_to be nil
     expect(@host.ems_cluster).not_to be nil
+    expect(@host.maintenance_reason).not_to be nil
 
     expect(@host).to have_attributes(
       :ipmi_address       => "10.0.1.7",
       :vmm_vendor         => "redhat",
       :vmm_version        => nil,
       :vmm_product        => "rhel (No hypervisor, Host Type is Controller)",
-      :power_state        => "on",
-      :connection_state   => "connected",
+      :power_state        => "unknown",
+      :connection_state   => "disconnected",
       :service_tag        => "1fdaea0b-6281-5917-edf6-a61151e93387",
-      :maintenance        => false,
-      :maintenance_reason => nil,
+      :maintenance        => true,
     )
 
     expect(@host.private_networks.count).to be > 0
