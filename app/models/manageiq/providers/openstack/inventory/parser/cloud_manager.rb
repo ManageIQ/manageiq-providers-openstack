@@ -173,6 +173,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     raw_resources.reject! { |r| r.physical_resource_id.nil? }
     raw_resources.each do |resource|
       uid = resource.physical_resource_id
+
+      next unless uid
       o = persister.orchestration_stacks_resources.find_or_build(uid)
       o.ems_ref = uid
       o.logical_resource = resource.logical_resource_id
