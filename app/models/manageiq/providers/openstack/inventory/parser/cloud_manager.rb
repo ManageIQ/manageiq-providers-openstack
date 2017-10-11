@@ -170,7 +170,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     raw_resources = collector.orchestration_resources(stack)
     # reject resources that don't have a physical resource id, because that
     # means they failed to be successfully created
-    raw_resources.reject! { |r| r.physical_resource_id.nil? }
+    raw_resources.reject! { |r| r.physical_resource_id.blank? }
     raw_resources.each do |resource|
       uid = resource.physical_resource_id
       o = persister.orchestration_stacks_resources.find_or_build(uid)
