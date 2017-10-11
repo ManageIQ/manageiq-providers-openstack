@@ -60,14 +60,6 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     raise MiqException::MiqOrchestrationStatusError, err.to_s, err.backtrace
   end
 
-  def queue_post_scaledown_task(services, task_id = nil)
-    MiqQueue.put(:class_name  => self.class.name,
-                 :expires_on  => Time.now.utc + 2.hours,
-                 :args        => [services, task_id],
-                 :instance_id => id,
-                 :method_name => "post_scaledown_task")
-  end
-
   def post_scaledown_task(services, task_id = nil)
     task = MiqTask.find(task_id) unless task_id.nil?
     if task && task.state == MiqTask::STATE_FINISHED && !MiqTask.status_ok?(task.status)
@@ -77,12 +69,31 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     services.each(&:delete_service)
   end
 
-  def scale_down_queue(userid, hosts)
-    host_uuids_to_remove = hosts.map { |n| Host.find(n).ems_ref_obj }
-    scale_queue('scale_down', userid, host_uuids_to_remove)
+  def raise_exception_if_stack_not_ready
+    unless update_ready?
+      raise MiqException::MiqQueueError, _("Provider stack is not ready to be updated, another operation is in progress.")
+    end
   end
 
-  def scale_down(host_uuids_to_remove)
+  def scale_down_queue(userid, stack_parameters, hosts)
+    scale_queue('scale_down', userid, [stack_parameters, hosts])
+  end
+
+  def scale_down(stack_parameters, hosts)
+    raise_exception_if_stack_not_ready
+    if can_use_scale_down_workflow?
+      # OSP >= 10 use workflows
+      host_uuids_to_remove = hosts.map { |n| Host.find(n).ems_ref_obj }
+      scale_down_using_workflows(host_uuids_to_remove)
+    else
+      # OSP < 10 use heat stack update
+      services = hosts.collect(&:cloud_services).flatten
+      task_id = update_stack(nil, stack_parameters)
+      post_scaledown_task(services, task_id)
+    end
+  end
+
+  def scale_down_using_workflows(host_uuids_to_remove)
     ext_management_system.with_provider_connection(:service => "Workflow") do |service|
       input = { :container => name, :nodes => host_uuids_to_remove }
       info = service.execute_workflow("tripleo.scale.v1.delete_node", input)
@@ -97,10 +108,21 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
   end
 
   def scale_up_queue(userid, stack_parameters)
-    scale_queue('scale_up', userid, stack_parameters)
+    scale_queue('scale_up', userid, [stack_parameters])
   end
 
   def scale_up(stack_parameters)
+    raise_exception_if_stack_not_ready
+    if can_use_scale_up_workflow?
+      # OSP >= 10 use workflows
+      scale_up_using_workflows(stack_parameters)
+    else
+      # OSP < 10 use heat stack update
+      update_stack(nil, stack_parameters)
+    end
+  end
+
+  def scale_up_using_workflows(stack_parameters)
     ext_management_system.with_provider_connection(:service => "Workflow") do |service|
       info = service.execute_action("tripleo.parameters.update", :parameters => stack_parameters)
       raise MiqException::MiqOrchestrationUpdateError, info[3].body if info[1] != "SUCCESS"
@@ -128,7 +150,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
       :instance_id => id,
       :role        => 'ems_operations',
       :zone        => ext_management_system.my_zone,
-      :args        => [parameters]
+      :args        => parameters
     }
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
@@ -136,6 +158,18 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
   def log_and_raise_update_error(method_name, err)
     _log.error "MIQ(#{self}.#{method_name}) stack=[#{name}], error: #{err}"
     raise MiqException::MiqOrchestrationUpdateError, err.to_s, err.backtrace
+  end
+
+  def workflow_service
+    ext_management_system.workflow_service
+  end
+
+  def can_use_scale_up_workflow?
+    !workflow_service.nil? && workflow_service.has_action?("tripleo.parameters.update") && workflow_service.has_workflow?("tripleo.deployment.v1.deploy_plan")
+  end
+
+  def can_use_scale_down_workflow?
+    !workflow_service.nil? && workflow_service.has_workflow?("tripleo.scale.v1.delete_node")
   end
 
   private :log_and_raise_update_error
