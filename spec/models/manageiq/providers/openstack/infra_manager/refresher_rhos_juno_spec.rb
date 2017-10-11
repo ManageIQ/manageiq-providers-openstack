@@ -7,7 +7,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
-      :default => {:userid => "admin", :password => "password_2WpEraURh"})
+      :default => {:userid => "admin", :password => "7ad8192740977a6f0bcbfd34eaebef9d33048a8b"})
   end
 
   it "will perform a full refresh" do
@@ -135,17 +135,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(@host.mac_address).not_to be nil
     expect(@host.ipaddress).not_to be nil
     expect(@host.ems_cluster).not_to be nil
-    expect(@host.maintenance_reason).not_to be nil
 
     expect(@host).to have_attributes(
       :ipmi_address       => "10.0.1.7",
       :vmm_vendor         => "redhat",
       :vmm_version        => nil,
       :vmm_product        => "rhel (No hypervisor, Host Type is Controller)",
-      :power_state        => "unknown",
-      :connection_state   => "disconnected",
+      :power_state        => "on",
+      :connection_state   => "connected",
       :service_tag        => "1fdaea0b-6281-5917-edf6-a61151e93387",
-      :maintenance        => true,
+      :maintenance        => false,
+      :maintenance_reason => nil,
     )
 
     expect(@host.private_networks.count).to be > 0
