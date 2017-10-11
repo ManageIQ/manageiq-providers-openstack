@@ -82,7 +82,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def vms_by_id
-    @vms_by_id ||= Hash[vms.collect { |s| [s.id, s] }]
+    @vms_by_id ||= vms.index_by(&:id)
   end
 
   def tenants
@@ -152,7 +152,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def volumes_by_id
-    @volumes_by_id ||= Hash[volume_templates.collect { |f| [f.id, f] }]
+    @volumes_by_id ||= volume_templates.index_by(&:id)
   end
 
   def volume_snapshot_templates
