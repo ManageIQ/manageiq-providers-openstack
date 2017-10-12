@@ -7,7 +7,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
-      :default => {:userid => "admin", :password => "password_2WpEraURh"})
+      :default => {:userid => "admin", :password => "7ad8192740977a6f0bcbfd34eaebef9d33048a8b"})
   end
 
   it "will perform a full refresh" do
@@ -51,7 +51,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
 
       expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to eq(nil)
+      expect(@host.maintenance_reason).to be nil
 
       @host.set_node_maintenance
       EmsRefresh.refresh(@ems)
@@ -65,7 +65,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       @ems.reload
       @host.reload
       expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to eq(nil)
+      expect(@host.maintenance_reason).to be nil
     end
   end
 
