@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
+  extend ManageIQ::Providers::Openstack::HelperMethods
   has_and_belongs_to_many :miq_templates,
                           :foreign_key             => "cloud_tenant_id",
                           :join_table              => "cloud_tenants_vms",
@@ -16,7 +17,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     {:ems_ref => tenant.id, :name => options[:name]}
   rescue => e
     _log.error "tenant=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqCloudTenantCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudTenantCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def raw_update_cloud_tenant(options)
@@ -25,7 +26,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     end
   rescue => e
     _log.error "tenant=[#{name}], error: #{e}"
-    raise MiqException::MiqCloudTenantUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudTenantUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def raw_delete_cloud_tenant
@@ -34,7 +35,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     end
   rescue => e
     _log.error "tenant=[#{name}], error: #{e}"
-    raise MiqException::MiqCloudTenantDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqCloudTenantDeleteError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def self.connection_options
