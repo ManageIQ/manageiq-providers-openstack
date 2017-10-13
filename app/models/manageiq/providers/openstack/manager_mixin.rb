@@ -12,7 +12,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   #
   module ClassMethods
     def raw_connect(password, params, service = "Compute")
-      ems = self.new
+      ems = new
       ems.name                   = params[:name].strip
       ems.provider_region        = params[:provider_region]
       ems.api_version            = params[:api_version].strip
@@ -24,7 +24,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       authentication = {:userid => user, :password => password, :save => false, :role => 'default', :authtype => 'default'}
       ems.connection_configurations = [{:endpoint       => endpoint,
-                                        :authentication => authentication}]      
+                                        :authentication => authentication}]
       ems.connect(:service => service)
     end
   end
