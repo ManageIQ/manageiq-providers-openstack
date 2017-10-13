@@ -60,13 +60,13 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
     it "accepts and decrypts encrypted passwords" do
       params = {
-        :name => 'dummy',
-        :provider_region => '',
-        :api_version => 'v2.0',
+        :name                      => 'dummy',
+        :provider_region           => '',
+        :api_version               => 'v2.0',
         :default_security_protocol => 'non-ssl',
-        :default_userid => 'admin',
-        :default_hostname => 'address',
-        :default_api_port => '5000'
+        :default_userid            => 'admin',
+        :default_hostname          => 'address',
+        :default_api_port          => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
@@ -81,13 +81,13 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
     it "works with unencrypted passwords" do
       params = {
-        :name => 'dummy',
-        :provider_region => '',
-        :api_version => 'v2.0',
+        :name                      => 'dummy',
+        :provider_region           => '',
+        :api_version               => 'v2.0',
         :default_security_protocol => 'non-ssl',
-        :default_userid => 'admin',
-        :default_hostname => 'address',
-        :default_api_port => '5000'
+        :default_userid            => 'admin',
+        :default_hostname          => 'address',
+        :default_api_port          => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
