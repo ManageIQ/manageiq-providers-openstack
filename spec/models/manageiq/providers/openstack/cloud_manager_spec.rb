@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager do
   context "Class Methods" do
-    it("from mixin") { expect(described_class.methods).to include(:auth_url, :raw_connect) }
+    it("from mixin") { expect(described_class.methods).to include(:raw_connect) }
   end
 
   it ".ems_type" do
@@ -59,25 +59,45 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
 
     it "accepts and decrypts encrypted passwords" do
+      params = {
+        :name => 'dummy',
+        :provider_region => '',
+        :api_version => 'v2.0',
+        :default_security_protocol => 'non-ssl',
+        :default_userid => 'admin',
+        :default_hostname => 'address',
+        :default_api_port => '5000'
+      }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
+        "admin",
         "dummy",
-        "dummy",
-        "http://address:5000/v2.0/tokens",
-        "Compute"
+        "http://address:5000",
+        "Compute",
+        instance_of(Hash)
       )
 
-      described_class.raw_connect("dummy", MiqPassword.encrypt("dummy"), "http://address:5000/v2.0/tokens", "Compute")
+      described_class.raw_connect(MiqPassword.encrypt("dummy"), params, "Compute")
     end
 
     it "works with unencrypted passwords" do
+      params = {
+        :name => 'dummy',
+        :provider_region => '',
+        :api_version => 'v2.0',
+        :default_security_protocol => 'non-ssl',
+        :default_userid => 'admin',
+        :default_hostname => 'address',
+        :default_api_port => '5000'
+      }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
+        "admin",
         "dummy",
-        "dummy",
-        "http://address:5000/v2.0/tokens",
-        "Compute"
+        "http://address:5000",
+        "Compute",
+        instance_of(Hash)
       )
 
-      described_class.raw_connect("dummy", "dummy", "http://address:5000/v2.0/tokens", "Compute")
+      described_class.raw_connect("dummy", params, "Compute")
     end
   end
 
