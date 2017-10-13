@@ -22,7 +22,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
 
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
-      authentication = {:userid => user, :password => password, :save => false, :role => 'default', :authtype => 'default'}
+      authentication = {:userid => user, :password => MiqPassword.decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
       ems.connection_configurations = [{:endpoint       => endpoint,
                                         :authentication => authentication}]
       ems.connect(:service => service)
