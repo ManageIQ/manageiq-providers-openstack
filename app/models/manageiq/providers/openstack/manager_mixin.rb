@@ -11,14 +11,21 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   # OpenStack interactions
   #
   module ClassMethods
-    def raw_connect(username, password, auth_url, service = "Compute")
-      require 'manageiq/providers/openstack/legacy/openstack_handle'
-      OpenstackHandle::Handle.raw_connect(username, MiqPassword.try_decrypt(password), auth_url, service)
-    end
+    def raw_connect(password, params, service = "Compute")
+      ems = self.new
+      ems.name                   = params[:name].strip
+      ems.provider_region        = params[:provider_region]
+      ems.api_version            = params[:api_version].strip
+      ems.security_protocol      = params[:default_security_protocol].strip
+      ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
 
-    def auth_url(address, port = nil)
-      require 'manageiq/providers/openstack/legacy/openstack_handle'
-      OpenstackHandle::Handle.auth_url(address, port)
+      user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
+
+      endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
+      authentication = {:userid => user, :password => password, :save => false, :role => 'default', :authtype => 'default'}
+      ems.connection_configurations = [{:endpoint       => endpoint,
+                                        :authentication => authentication}]      
+      ems.connect(:service => service)
     end
   end
 
