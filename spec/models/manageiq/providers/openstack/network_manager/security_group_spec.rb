@@ -35,7 +35,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
     response = Excon::Response.new
     response.status = 400
     response.body = '{"NeutronError": {"message": "bad request"}}'
-    bad_request = Excon::Errors.status_error({:expects => 200}, response)
+    Excon::Errors.status_error({:expects => 200}, response)
   end
 
   before do
@@ -61,7 +61,6 @@ describe ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup do
       end
 
       it 'catches errors from provider' do
-
         expect(service).to receive(:create_security_group).and_raise(bad_request)
         expect do
           ems_network.create_security_group(security_group_options)

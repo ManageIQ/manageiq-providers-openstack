@@ -36,7 +36,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     response = Excon::Response.new
     response.status = 400
     response.body = '{"NeutronError": {"message": "bad request"}}'
-    bad_request = Excon::Errors.status_error({:expects => 200}, response)
+    Excon::Errors.status_error({:expects => 200}, response)
   end
 
   before do
@@ -48,7 +48,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       it 'catches errors from provider' do
         expect(service).to receive(:create_floating_ip).and_raise(bad_request)
         expect do
-          ems_network.create_floating_ip({:cloud_tenant => tenant, :cloud_network_id => cloud_network.id})
+          ems_network.create_floating_ip(:cloud_tenant => tenant, :cloud_network_id => cloud_network.id)
         end.to raise_error(MiqException::MiqFloatingIpCreateError)
       end
     end
@@ -56,7 +56,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     context "#update_floating_ip" do
       it 'catches errors from provider' do
         expect(service).to receive(:disassociate_floating_ip).and_raise(bad_request)
-        expect { floating_ip.raw_update_floating_ip({:network_port_ems_ref => ""}) }.to raise_error(MiqException::MiqFloatingIpUpdateError)
+        expect { floating_ip.raw_update_floating_ip(:network_port_ems_ref => "") }.to raise_error(MiqException::MiqFloatingIpUpdateError)
       end
     end
 

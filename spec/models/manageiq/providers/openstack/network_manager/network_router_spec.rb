@@ -36,7 +36,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     response = Excon::Response.new
     response.status = 400
     response.body = '{"NeutronError": {"message": "bad request"}}'
-    bad_request = Excon::Errors.status_error({:expects => 200}, response)
+    Excon::Errors.status_error({:expects => 200}, response)
   end
 
   before do
@@ -48,7 +48,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       it 'catches errors from provider' do
         expect(service).to receive(:create_router).and_raise(bad_request)
         expect do
-          ems_network.create_network_router({:cloud_tenant => tenant, :name => "network"})
+          ems_network.create_network_router(:cloud_tenant => tenant, :name => "network")
         end.to raise_error(MiqException::MiqNetworkRouterCreateError)
       end
     end
