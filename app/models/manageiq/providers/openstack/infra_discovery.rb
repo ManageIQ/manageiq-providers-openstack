@@ -4,7 +4,7 @@ module ManageIQ::Providers::Openstack
   class InfraDiscovery
     def self.probe(ost)
       res = ""
-      if PortScanner.portOpen(ost, 6385)
+      if ManageIQ::NetworkDiscovery::PortScanner.portOpen(ost, 6385)
         Socket.tcp(ost.ipaddr, 6385) do |s|
           s.print("GET / HTTP/1.0")
           s.close_write
