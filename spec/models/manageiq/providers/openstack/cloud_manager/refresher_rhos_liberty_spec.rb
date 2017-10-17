@@ -22,7 +22,6 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   end
 
   context "when configured with skips" do
-
     it "will not parse the ignored items" do
       with_cassette(@environment, @ems) do
         EmsRefresh.refresh(@ems)
@@ -77,6 +76,34 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         with_cassette("#{@environment}_vm_targeted_refresh", @ems) do
           EmsRefresh.refresh(vm_target)
           assert_targeted_vm("EmsRefreshSpec-PoweredOn", :power_state => "on",)
+        end
+      end
+    end
+
+    it "will perform a targeted stack refresh against RHOS #{@environment}" do
+      # stack1
+      stack_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                :association => :orchestration_stacks,
+                                                :manager_ref => {:ems_ref => "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"},
+                                                :options     => {:tenant_id => "69f8f7205ade4aa59084c32c83e60b5a"})
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_stack_targeted_refresh", @ems) do
+          EmsRefresh.refresh(stack_target)
+          assert_targeted_stack
+        end
+      end
+    end
+
+    it "will perform a targeted tenant refresh against RHOS #{@environment}" do
+      # EmsRefreshSpec-Project
+      stack_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                :association => :cloud_tenants,
+                                                :manager_ref => {:ems_ref => "69f8f7205ade4aa59084c32c83e60b5a"})
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_tenant_targeted_refresh", @ems) do
+          EmsRefresh.refresh(stack_target)
+          expect(CloudTenant.count).to eq(1)
+          assert_targeted_tenant
         end
       end
     end

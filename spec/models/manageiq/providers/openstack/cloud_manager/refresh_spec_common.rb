@@ -394,6 +394,23 @@ module Openstack
       end
     end
 
+    def assert_targeted_tenant
+      assert_objects_with_hashes([CloudTenant.find_by(:name => "EmsRefreshSpec-Project")], [identity_data.projects[1]])
+
+      identity_data.projects.each do |project|
+        next unless project[:__parent_name]
+
+        parent_id = CloudTenant.find_by(:name => project[:__parent_name]).try(:id)
+        cloud_tenant = CloudTenant.find_by(:name => project[:name])
+        expect(cloud_tenant.parent_id).to eq(parent_id)
+      end
+
+      CloudTenant.all.each do |tenant|
+        expect(tenant).to be_kind_of(CloudTenant)
+        expect(tenant.ext_management_system).to eq(@ems)
+      end
+    end
+
     def assert_key_pairs
       assert_objects_with_hashes(ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.all, compute_data.key_pairs)
     end
@@ -674,6 +691,15 @@ module Openstack
 
       assert_objects_with_hashes(stacks,
                                  orchestration_data.stacks,
+                                 orchestration_data.stack_translate_table,
+                                 {},
+                                 [:template, :parameters])
+    end
+
+    def assert_targeted_stack
+      stack_target = OrchestrationStack.find_by(:name => "stack1")
+      assert_objects_with_hashes([stack_target],
+                                 [orchestration_data.stacks[0]],
                                  orchestration_data.stack_translate_table,
                                  {},
                                  [:template, :parameters])

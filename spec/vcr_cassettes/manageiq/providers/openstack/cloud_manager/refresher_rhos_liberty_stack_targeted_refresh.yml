@@ -1,0 +1,479 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":""}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Sep 2017 20:33:52 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-0630da72-4b1e-4c3f-88e7-cc24672e9afc
+      Content-Length:
+      - '370'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2017-09-11T20:33:52.515837", "expires":
+        "2017-09-11T21:33:52Z", "id": "df5819dec51943dca683e092ccf8deac", "audit_ids":
+        ["imDDPhxpQ5O79OL7pmlTrA"]}, "serviceCatalog": [], "user": {"username": "admin",
+        "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
+        "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:52 GMT
+- request:
+    method: get
+    uri: http://11.22.33.44:5000/v2.0/tenants
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - df5819dec51943dca683e092ccf8deac
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Sep 2017 20:33:52 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-236b171c-e147-42d3-bf35-8940730340f0
+      Content-Length:
+      - '500'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"tenants_links": [], "tenants": [{"description": "", "enabled": true,
+        "id": "69f8f7205ade4aa59084c32c83e60b5a", "name": "EmsRefreshSpec-Project"},
+        {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, {"description": "admin tenant",
+        "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a", "name": "admin"},
+        {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
+        "name": "EmsRefreshSpec-Project2"}]}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:52 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"token":{"id":"df5819dec51943dca683e092ccf8deac"},"tenantName":"EmsRefreshSpec-Project"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Sep 2017 20:33:52 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-3a874473-e971-41fa-9ab9-0ff16b3145fd
+      Content-Length:
+      - '4143'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2017-09-11T20:33:52.838079", "expires":
+        "2017-09-11T21:33:52Z", "id": "0951cdd18a8d4450a5509f025438c5a4", "tenant":
+        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["XHi4axseRh2i4Xiz8TESWg",
+        "imDDPhxpQ5O79OL7pmlTrA"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+        "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
+        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:52 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:5000/v2.0/tenants
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - '0951cdd18a8d4450a5509f025438c5a4'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Sep 2017 20:33:53 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-fc11f83f-f653-4d74-aac0-212f4a85f8d6
+      Content-Length:
+      - '500'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"tenants_links": [], "tenants": [{"description": "", "enabled": true,
+        "id": "69f8f7205ade4aa59084c32c83e60b5a", "name": "EmsRefreshSpec-Project"},
+        {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, {"description": "admin tenant",
+        "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a", "name": "admin"},
+        {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
+        "name": "EmsRefreshSpec-Project2"}]}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:53 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Sep 2017 20:33:54 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-816bac33-4ac7-4d36-80e4-18fe0eebd0c1
+      Content-Length:
+      - '4117'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2017-09-11T20:33:54.130759", "expires":
+        "2017-09-11T21:33:54Z", "id": "2cb09d546da743d8b4450d0a6c09f073", "tenant":
+        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["pCZgSjgfSoWjJe5l8ztTcw"]},
+        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
+        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:54 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 2cb09d546da743d8b4450d0a6c09f073
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '2559'
+      X-Openstack-Request-Id:
+      - req-51fc77aa-05f2-475c-9ef7-f20a46dc0c7a
+      Date:
+      - Mon, 11 Sep 2017 20:33:54 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"stacks": [{"description": "Heat WordPress template to support F20,
+        using only Heat OpenStack-native resource types, and without the requirement
+        for heat-cfntools in the image. WordPress is web software you can use to create
+        a beautiful website or blog. This template installs a single-instance WordPress
+        deployment using a local MySQL database to store the data.\n", "parent": null,
+        "stack_status_reason": "Stack CREATE completed successfully", "stack_name":
+        "stack3", "stack_user_project_id": "334baf07bb9d466e8b5868dc1a1ffb5b", "tags":
+        null, "creation_time": "2016-11-11T13:50:12", "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack3/45d2af82-eff9-4483-a1f0-f19c44d96146",
+        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
+        "CREATE_COMPLETE", "id": "45d2af82-eff9-4483-a1f0-f19c44d96146"}, {"description":
+        "Heat WordPress template to support F20, using only Heat OpenStack-native
+        resource types, and without the requirement for heat-cfntools in the image.
+        WordPress is web software you can use to create a beautiful website or blog.
+        This template installs a single-instance WordPress deployment using a local
+        MySQL database to store the data.\n", "parent": null, "stack_status_reason":
+        "Stack CREATE completed successfully", "stack_name": "stack2", "stack_user_project_id":
+        "5a0ed3f20bb741dbbd70b957fd6b462b", "tags": null, "creation_time": "2016-11-11T13:50:10",
+        "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack2/4cf24b12-29fc-4529-a8ed-6b079dea7c17",
+        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
+        "CREATE_COMPLETE", "id": "4cf24b12-29fc-4529-a8ed-6b079dea7c17"}, {"description":
+        "Heat WordPress template to support F20, using only Heat OpenStack-native
+        resource types, and without the requirement for heat-cfntools in the image.
+        WordPress is web software you can use to create a beautiful website or blog.
+        This template installs a single-instance WordPress deployment using a local
+        MySQL database to store the data.\n", "parent": null, "stack_status_reason":
+        "Stack CREATE completed successfully", "stack_name": "stack1", "stack_user_project_id":
+        "8aa9524c3bfa41669b9e0837fc091e22", "tags": null, "creation_time": "2016-11-11T13:50:09",
+        "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c",
+        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
+        "CREATE_COMPLETE", "id": "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"}]}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:54 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/template
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 2cb09d546da743d8b4450d0a6c09f073
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '4249'
+      X-Openstack-Request-Id:
+      - req-0c3c1e2b-0706-4c47-9fe2-4f82a780ac28
+      Date:
+      - Mon, 11 Sep 2017 20:33:54 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"outputs": {"WebsiteURL": {"description": "URL for Wordpress wiki",
+        "value": {"str_replace": {"params": {"host": {"get_attr": ["wordpress_instance",
+        "first_address"]}}, "template": "http://host/wordpress"}}}}, "heat_template_version":
+        "2013-05-23", "description": "Heat WordPress template to support F20, using
+        only Heat OpenStack-native resource types, and without the requirement for
+        heat-cfntools in the image. WordPress is web software you can use to create
+        a beautiful website or blog. This template installs a single-instance WordPress
+        deployment using a local MySQL database to store the data.\n", "parameters":
+        {"instance_type": {"default": "m1.small", "type": "string", "description":
+        "Instance type for WordPress server", "constraints": [{"description": "instance_type
+        must be one of m1.small, m1.medium or m1.large", "allowed_values": ["m1.tiny",
+        "m1.small", "m1.medium", "m1.large"]}]}, "network_id": {"type": "string",
+        "description": "Name or ID of the network to use"}, "db_password": {"default":
+        "admin", "hidden": true, "type": "string", "description": "The WordPress database
+        admin account password", "constraints": [{"length": {"max": 41, "min": 1},
+        "description": "db_password must be between 1 and 41 characters"}, {"allowed_pattern":
+        "[a-zA-Z0-9]*", "description": "db_password must contain only alphanumeric
+        characters"}]}, "image_id": {"default": "fedora-20.x86_64", "type": "string",
+        "description": "Name or ID of the image to use for the WordPress server. Recommended
+        values are fedora-20.i386 or fedora-20.x86_64; get them from http://cloud.fedoraproject.org/fedora-20.i386.qcow2
+        or http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2 .\n"}, "db_name":
+        {"default": "wordpress", "type": "string", "description": "WordPress database
+        name", "constraints": [{"length": {"max": 64, "min": 1}, "description": "db_name
+        must be between 1 and 64 characters"}, {"allowed_pattern": "[a-zA-Z][a-zA-Z0-9]*",
+        "description": "db_name must begin with a letter and contain only alphanumeric
+        characters\n"}]}, "db_username": {"default": "admin", "hidden": true, "type":
+        "string", "description": "The WordPress database admin account username",
+        "constraints": [{"length": {"max": 16, "min": 1}, "description": "db_username
+        must be between 1 and 16 characters"}, {"allowed_pattern": "[a-zA-Z][a-zA-Z0-9]*",
+        "description": "db_username must begin with a letter and contain only alphanumeric
+        characters\n"}]}, "db_root_password": {"default": "admin", "hidden": true,
+        "type": "string", "description": "Root password for MySQLMultiple possible",
+        "constraints": [{"length": {"max": 41, "min": 1}, "description": "db_root_password
+        must be between 1 and 41 characters"}, {"allowed_pattern": "[a-zA-Z0-9]*",
+        "description": "db_root_password must contain only alphanumeric characters"}]},
+        "key_name": {"type": "string", "description": "Name of a KeyPair to enable
+        SSH access to the instance"}}, "resources": {"wordpress_instance": {"type":
+        "OS::Nova::Server", "properties": {"key_name": {"get_param": "key_name"},
+        "image": {"get_param": "image_id"}, "user_data": {"str_replace": {"params":
+        {"db_password": {"get_param": "db_password"}, "db_name": {"get_param": "db_name"},
+        "db_rootpassword": {"get_param": "db_root_password"}, "db_user": {"get_param":
+        "db_username"}}, "template": "#!/bin/bash -v\n\nyum -y install mariadb mariadb-server
+        httpd wordpress\ntouch /var/log/mariadb/mariadb.log\nchown mysql.mysql /var/log/mariadb/mariadb.log\nsystemctl
+        start mariadb.service\n\n# Setup MySQL root password and create a user\nmysqladmin
+        -u root password db_rootpassword\ncat << EOF | mysql -u root --password=db_rootpassword\nCREATE
+        DATABASE db_name;\nGRANT ALL PRIVILEGES ON db_name.* TO \"db_user\"@\"localhost\"\nIDENTIFIED
+        BY \"db_password\";\nFLUSH PRIVILEGES;\nEXIT\nEOF\n\nsed -i \"/Deny from All/d\"
+        /etc/httpd/conf.d/wordpress.conf\nsed -i \"s/Require local/Require all granted/\"
+        /etc/httpd/conf.d/wordpress.conf\nsed -i s/database_name_here/db_name/ /etc/wordpress/wp-config.php\nsed
+        -i s/username_here/db_user/ /etc/wordpress/wp-config.php\nsed -i s/password_here/db_password/
+        /etc/wordpress/wp-config.php\n\nsystemctl start httpd.service\n"}}, "flavor":
+        {"get_param": "instance_type"}, "networks": [{"uuid": {"get_param": "network_id"}}]}}}}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:54 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/resources
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 2cb09d546da743d8b4450d0a6c09f073
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '700'
+      X-Openstack-Request-Id:
+      - req-90008217-ab23-4caa-98af-7d27ab6e02e3
+      Date:
+      - Mon, 11 Sep 2017 20:33:55 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"resources": [{"resource_name": "wordpress_instance", "links": [{"href":
+        "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/resources/wordpress_instance",
+        "rel": "self"}, {"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c",
+        "rel": "stack"}], "logical_resource_id": "wordpress_instance", "creation_time":
+        "2016-11-11T13:50:09", "resource_status": "CREATE_COMPLETE", "updated_time":
+        "2016-11-11T13:50:09", "required_by": [], "resource_status_reason": "state
+        changed", "physical_resource_id": "b686353f-0da0-48bf-bc35-8ea411a67dfd",
+        "resource_type": "OS::Nova::Server"}]}'
+    http_version: 
+  recorded_at: Mon, 11 Sep 2017 20:33:55 GMT
+recorded_with: VCR 3.0.3
