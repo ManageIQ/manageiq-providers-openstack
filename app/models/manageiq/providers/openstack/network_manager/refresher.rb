@@ -8,7 +8,7 @@ module ManageIQ::Providers
 
         _log.info("Filtering inventory for #{target.class} [#{target_name}] id: [#{target.id}]...")
 
-        if ::Settings.ems.ems_openstack.try(:refresh).try(:inventory_object_refresh)
+        if ::Settings.ems.ems_refresh.openstack_network.try(:inventory_object_refresh)
           inventory = ManageIQ::Providers::Openstack::Builder.build_inventory(ems, target)
         end
 
@@ -27,7 +27,7 @@ module ManageIQ::Providers
       log_header = format_ems_for_logging(ems)
       _log.debug("#{log_header} Parsing inventory...")
       hashes, = Benchmark.realtime_block(:parse_inventory) do
-        if ::Settings.ems.ems_openstack.try(:refresh).try(:inventory_object_refresh)
+        if ::Settings.ems.ems_refresh.openstack_network.try(:inventory_object_refresh)
           inventory.inventory_collections
         else
           ManageIQ::Providers::Openstack::NetworkManager::RefreshParser.ems_inv_to_hashes(ems, refresher_options)

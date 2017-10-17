@@ -86,11 +86,11 @@ module ManageIQ::Providers
     end
 
     def servers
-      @servers ||= @connection.handled_list(:servers, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+      @servers ||= @connection.handled_list(:servers, {}, openstack_admin?)
     end
 
     def vnfs
-      @vnfs ||= @nfv_service.handled_list(:vnfs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+      @vnfs ||= @nfv_service.handled_list(:vnfs, {}, openstack_admin?)
     end
 
     def availability_zones_compute
@@ -137,7 +137,7 @@ module ManageIQ::Providers
     end
 
     def get_key_pairs
-      kps = @connection.handled_list(:key_pairs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+      kps = @connection.handled_list(:key_pairs, {}, openstack_admin?)
       process_collection(kps, :key_pairs) { |kp| parse_key_pair(kp) }
     end
 
@@ -149,7 +149,7 @@ module ManageIQ::Providers
     def get_vnfds
       return unless @nfv_service
 
-      process_collection(@nfv_service.handled_list(:vnfds, {}, ::Settings.ems.ems_openstack.refresh.is_admin), :orchestration_templates_catalog) { |vnfd| parse_vnfd(vnfd) }
+      process_collection(@nfv_service.handled_list(:vnfds, {}, openstack_admin?), :orchestration_templates_catalog) { |vnfd| parse_vnfd(vnfd) }
     end
 
     def get_vnfs
@@ -415,7 +415,7 @@ module ManageIQ::Providers
     def get_cloud_services
       # TODO(pblaho): repeat for each posible service (compute, identity, ...)
       source = 'compute'
-      services = @compute_service.handled_list(:services, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+      services = @compute_service.handled_list(:services, {}, openstack_admin?)
       process_collection(services, :cloud_services) { |service| parse_cloud_service(service, source) }
     end
 

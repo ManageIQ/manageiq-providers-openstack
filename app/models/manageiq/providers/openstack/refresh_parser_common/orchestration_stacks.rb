@@ -2,6 +2,8 @@ module ManageIQ::Providers
   module Openstack
     module RefreshParserCommon
       module OrchestrationStacks
+        include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
+
         def stack_resources(stack)
           return @resources[stack.id] if @resources && !@resources.fetch_path(stack.id).blank?
           @resources = {} unless @resources
@@ -28,7 +30,7 @@ module ManageIQ::Providers
           # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
           # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
           # can't get list of detailed stacks in one API call.
-          if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
+          if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && openstack_heat_global_admin?
             @orchestration_service.handled_list(:stacks, {:show_nested => show_nested, :global_tenant => true}, true).collect(&:details)
           else
             @orchestration_service.handled_list(:stacks, :show_nested => show_nested).collect(&:details)

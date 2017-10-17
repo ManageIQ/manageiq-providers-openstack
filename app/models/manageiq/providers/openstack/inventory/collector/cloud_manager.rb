@@ -15,12 +15,12 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def cloud_services
     return @cloud_services if @cloud_services.any?
-    @cloud_services = compute_service.handled_list(:services, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @cloud_services = compute_service.handled_list(:services, {}, openstack_admin?)
   end
 
   def flavors
     return @flavors if @flavors.any?
-    flavors = if ::Settings.ems.ems_openstack.refresh.is_admin
+    flavors = if openstack_admin?
                    connection.handled_list(:flavors, {'is_public' => 'None'}, true)
                  else
                    connection.handled_list(:flavors)
@@ -56,7 +56,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def images
     return @images if @images.any?
-    @images = if ::Settings.ems.ems_openstack.refresh.is_admin
+    @images = if openstack_admin?
                 image_service.handled_list(:images, {}, true).all
               else
                 image_service.handled_list(:images)
@@ -65,7 +65,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def key_pairs
     return @key_pairs if @key_pairs.any?
-    @key_pairs = compute_service.handled_list(:key_pairs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
   end
 
   def quotas
@@ -78,7 +78,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def vms
     return @vms if @vms.any?
-    @vms = compute_service.handled_list(:servers, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @vms = compute_service.handled_list(:servers, {}, openstack_admin?)
   end
 
   def vms_by_id
@@ -87,7 +87,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def tenants
     return @tenants if @tenants.any?
-    @tenants = if ::Settings.ems.ems_openstack.refresh.is_admin
+    @tenants = if openstack_admin?
                  identity_service.visible_tenants.select do |t|
                    # avoid 401 Unauth errors when checking for accessible tenants
                    # the "services" tenant is a special tenant in openstack reserved
@@ -103,13 +103,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   def vnfs
     return [] unless nfv_service
     return @vnfs if @vnfs.any?
-    @vnfs = nfv_service.handled_list(:vnfs, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @vnfs = nfv_service.handled_list(:vnfs, {}, openstack_admin?)
   end
 
   def vnfds
     return [] unless nfv_service
     return @vnfds if @vnfds.any?
-    @vnfds = nfv_service.handled_list(:vnfds, {}, ::Settings.ems.ems_openstack.refresh.is_admin)
+    @vnfds = nfv_service.handled_list(:vnfds, {}, openstack_admin?)
   end
 
   def orchestration_stacks
@@ -118,7 +118,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
     return @orchestration_stacks if @orchestration_stacks.any?
-    @orchestration_stacks = if ::Settings.ems.ems_openstack.refresh.heat.is_global_admin
+    @orchestration_stacks = if openstack_heat_global_admin?
                                 orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
                               else
                                 orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
