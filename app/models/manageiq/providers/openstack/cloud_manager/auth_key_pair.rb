@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Providers::CloudManager::AuthKeyPair
+  include ManageIQ::Providers::Openstack::HelperMethods
+
   def self.raw_create_key_pair(ext_management_system, create_options)
     connection_options = {:service => 'Compute'}
     ext_management_system.with_provider_connection(connection_options) do |service|
@@ -6,7 +8,7 @@ class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Prov
     end
   rescue => err
     _log.error "keypair=[#{name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def self.validate_create_key_pair(ext_management_system, _options = {})
@@ -26,7 +28,7 @@ class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Prov
     end
   rescue => err
     _log.error "keypair=[#{name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def validate_delete_key_pair
