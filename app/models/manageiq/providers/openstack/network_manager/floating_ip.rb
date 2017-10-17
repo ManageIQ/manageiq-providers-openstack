@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
+  include ManageIQ::Providers::Openstack::HelperMethods
   include ProviderObjectMixin
   include AsyncDeleteMixin
 
@@ -33,7 +34,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     {:ems_ref => floating_ip['id'], :name => options[:floating_ip_address]}
   rescue => e
     _log.error "floating_ip=[#{options[:floating_ip_address]}], error: #{e}"
-    raise MiqException::MiqFloatingIpCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqFloatingIpCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def self.remapping(options)
@@ -54,7 +55,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     end
   rescue => e
     _log.error "floating_ip=[#{name}], error: #{e}"
-    raise MiqException::MiqFloatingIpDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqFloatingIpDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def delete_floating_ip_queue(userid)
@@ -84,7 +85,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     end
   rescue => e
     _log.error "floating_ip=[#{name}], error: #{e}"
-    raise MiqException::MiqFloatingIpUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqFloatingIpUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def update_floating_ip_queue(userid, options = {})

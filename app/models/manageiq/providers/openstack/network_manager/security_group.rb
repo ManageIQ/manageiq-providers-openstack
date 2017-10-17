@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::SecurityGroup
+  include ManageIQ::Providers::Openstack::HelperMethods
+
   supports :create
 
   supports :delete do
@@ -39,7 +41,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   rescue => e
     _log.error "security_group=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqSecurityGroupCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqSecurityGroupCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_delete_security_group
@@ -48,7 +50,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   rescue => e
     _log.error "security_group=[#{name}], error: #{e}"
-    raise MiqException::MiqSecurityGroupDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqSecurityGroupDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def create_security_group_rule_queue(userid, security_group_id, direction, options = {})
@@ -109,7 +111,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   rescue => e
     _log.error "security_group=[#{name}], error: #{e}"
-    raise MiqException::MiqSecurityGroupCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqSecurityGroupCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_delete_security_group_rule(key)
@@ -118,7 +120,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   rescue => e
     _log.error "security_group=[#{name}], error: #{e}"
-    raise MiqException::MiqSecurityGroupDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqSecurityGroupDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_update_security_group(options)
@@ -127,7 +129,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   rescue => e
     _log.error "security_group=[#{name}], error: #{e}"
-    raise MiqException::MiqSecurityGroupUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqSecurityGroupUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def update_security_group_queue(userid, options = {})

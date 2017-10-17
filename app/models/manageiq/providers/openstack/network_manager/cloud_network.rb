@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetwork
+  include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
 
   supports :create
@@ -49,7 +50,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     {:ems_ref => network.id, :name => options[:name]}
   rescue => e
     _log.error "network=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqNetworkCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkCreateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def raw_delete_cloud_network
@@ -58,7 +59,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     end
   rescue => e
     _log.error "network=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def delete_cloud_network_queue(userid)
@@ -84,7 +85,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     end
   rescue => e
     _log.error "network=[#{name}], error: #{e}"
-    raise MiqException::MiqNetworkUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqNetworkUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
   def update_cloud_network_queue(userid, options = {})
