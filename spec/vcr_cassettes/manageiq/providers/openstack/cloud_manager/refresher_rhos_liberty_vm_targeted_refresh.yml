@@ -17,13 +17,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:49 GMT
+      - Thu, 19 Oct 2017 11:37:12 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-de8315ce-74b5-4526-8b8e-a42702c797e1
+      - req-deca67a4-2b7f-4d68-8470-a1508378a4a0
       Content-Length:
       - '4170'
       Connection:
@@ -32,10 +32,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:49.578586", "expires":
-        "2017-10-17T20:00:49Z", "id": "2736b01998b64459a43ee69fe18d5eaa", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:12.669482", "expires":
+        "2017-10-19T12:37:12Z", "id": "3b3755fc579f46c5b1469e2547d145fb", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["-HHFAgbsTpiIZnvgkRpTyQ"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["6sh4-p4wQhmL-hyUpFHbmw"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -80,10 +80,10 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:49 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:12 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b
     body:
       encoding: US-ASCII
       string: ''
@@ -95,7 +95,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -106,9 +106,9 @@ http_interactions:
       Content-Length:
       - '2088'
       X-Compute-Request-Id:
-      - req-cf21e22a-e468-4732-99ad-30ef7d130514
+      - req-0034e5db-85eb-4ef3-9254-f9b216e84319
       Date:
-      - Tue, 17 Oct 2017 19:00:50 GMT
+      - Thu, 19 Oct 2017 11:37:13 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"server": {"status": "ACTIVE", "updated": "2016-11-11T13:51:18Z",
@@ -135,7 +135,7 @@ http_interactions:
         "", "progress": 0, "OS-EXT-STS:power_state": 1, "config_drive": "", "metadata":
         {}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:50 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:13 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b/os-interface
@@ -150,7 +150,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -161,9 +161,9 @@ http_interactions:
       Content-Length:
       - '285'
       X-Compute-Request-Id:
-      - req-67a231c2-6791-49e3-8c3d-a20dab239a63
+      - req-bc7dbca6-f994-493c-95e0-22a33a265ebf
       Date:
-      - Tue, 17 Oct 2017 19:00:51 GMT
+      - Thu, 19 Oct 2017 11:37:14 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"interfaceAttachments": [{"port_state": "ACTIVE", "fixed_ips": [{"subnet_id":
@@ -171,10 +171,10 @@ http_interactions:
         "dda2ebad-f144-4f63-9a75-cbd4fe25e3e9", "net_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
         "mac_addr": "fa:16:3e:e1:0b:2c"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:51 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:14 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b/os-security-groups.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b/os-security-groups
     body:
       encoding: US-ASCII
       string: ''
@@ -186,7 +186,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -197,9 +197,9 @@ http_interactions:
       Content-Length:
       - '3931'
       X-Compute-Request-Id:
-      - req-b1104d0c-c220-43fb-a89e-7c56d923538d
+      - req-36080985-8aeb-460c-9cd0-af991c42b6e7
       Date:
-      - Tue, 17 Oct 2017 19:00:51 GMT
+      - Thu, 19 Oct 2017 11:37:15 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": [{"rules": [{"from_port": 3, "group": {"tenant_id":
@@ -251,10 +251,10 @@ http_interactions:
         "name": "EmsRefreshSpec-SecurityGroup2", "description": "EmsRefreshSpec-SecurityGroup2
         description"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:51 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:15 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/os-floating-ips.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/os-floating-ips
     body:
       encoding: US-ASCII
       string: ''
@@ -266,7 +266,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -277,14 +277,14 @@ http_interactions:
       Content-Length:
       - '20'
       X-Compute-Request-Id:
-      - req-b2dd8fdd-5b07-44f8-96d4-b1352a8ff686
+      - req-329e889f-ee41-4df9-8f51-e34e3e70348d
       Date:
-      - Tue, 17 Oct 2017 19:00:52 GMT
+      - Thu, 19 Oct 2017 11:37:15 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"floating_ips": []}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:52 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:15 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -302,13 +302,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:52 GMT
+      - Thu, 19 Oct 2017 11:37:15 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-43cd1c42-6016-49fe-ad94-7cdc3af6373c
+      - req-a6a13af2-3eaa-4d72-b92f-34ac573e3ff7
       Content-Length:
       - '4170'
       Connection:
@@ -317,10 +317,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:52.356078", "expires":
-        "2017-10-17T20:00:52Z", "id": "cea891813d0c4325a49654b87c36e823", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:15.843637", "expires":
+        "2017-10-19T12:37:15Z", "id": "347123f46aa94f7b91e2b8fd991840f5", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["tCmfldGFT62i_YKsKWb5MA"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["4_3qeycvTpeInS__MeDgvg"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -365,7 +365,7 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:53 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:15 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/
@@ -380,7 +380,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -391,13 +391,13 @@ http_interactions:
       Content-Length:
       - '119'
       Date:
-      - Tue, 17 Oct 2017 19:00:53 GMT
+      - Thu, 19 Oct 2017 11:37:16 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "CURRENT", "id": "v2.0", "links": [{"href":
         "http://10.8.99.233:9696/v2.0", "rel": "self"}]}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:53 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:16 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/floatingips?floating_ip_address=172.16.17.4
@@ -412,7 +412,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -423,9 +423,9 @@ http_interactions:
       Content-Length:
       - '374'
       X-Openstack-Request-Id:
-      - req-0b22bfb5-9b61-40b6-8ee4-c95f94f74f48
+      - req-2765e5d6-f87a-415e-91af-3fdb4385d753
       Date:
-      - Tue, 17 Oct 2017 19:00:53 GMT
+      - Thu, 19 Oct 2017 11:37:16 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": [{"floating_network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
@@ -434,7 +434,7 @@ http_interactions:
         "status": "ACTIVE", "port_id": "dda2ebad-f144-4f63-9a75-cbd4fe25e3e9", "id":
         "855b23e7-1ace-4c22-8c02-2160d3cde900"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:53 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:16 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -452,13 +452,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:53 GMT
+      - Thu, 19 Oct 2017 11:37:16 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-42cf9ccf-be32-4c40-b643-1ada357df1f1
+      - req-6780f124-355a-40fd-b366-cadb4fa2d9c5
       Content-Length:
       - '370'
       Connection:
@@ -467,13 +467,13 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:53.615355", "expires":
-        "2017-10-17T20:00:53Z", "id": "8aabeb28e1df4aff83c76b3d2c5bca41", "audit_ids":
-        ["IDTkAr1kRTaNjQF5P8qT5Q"]}, "serviceCatalog": [], "user": {"username": "admin",
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:16.880523", "expires":
+        "2017-10-19T12:37:16Z", "id": "1f7d575641524b05ae94b251f7eb6cae", "audit_ids":
+        ["tqP9HWUNQOyP7vpkXnPGRA"]}, "serviceCatalog": [], "user": {"username": "admin",
         "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
         "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:53 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:16 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -488,20 +488,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8aabeb28e1df4aff83c76b3d2c5bca41
+      - 1f7d575641524b05ae94b251f7eb6cae
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:53 GMT
+      - Thu, 19 Oct 2017 11:37:17 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-f8e4447c-fd64-459b-a61e-bb06b468d97b
+      - req-51557e29-0dfd-477c-a413-49b5d48f99d2
       Content-Length:
       - '500'
       Connection:
@@ -518,13 +518,13 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:53 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:17 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"8aabeb28e1df4aff83c76b3d2c5bca41"},"tenantName":"EmsRefreshSpec-Project"}}'
+      string: '{"auth":{"token":{"id":"1f7d575641524b05ae94b251f7eb6cae"},"tenantName":"EmsRefreshSpec-Project"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -536,13 +536,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:53 GMT
+      - Thu, 19 Oct 2017 11:37:17 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-da1f2417-1e2f-4166-9204-7bf1b2e5596c
+      - req-9ee3006f-e49f-40c8-b39e-728086f08094
       Content-Length:
       - '4143'
       Connection:
@@ -551,11 +551,11 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:54.053065", "expires":
-        "2017-10-17T20:00:53Z", "id": "6052e18301d843de9a5ec33daf5716e8", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:17.442591", "expires":
+        "2017-10-19T12:37:16Z", "id": "61e077b7c9214b959e1a0b498b01126b", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["W9KYj42oQf6PuG0fG-qnsg",
-        "IDTkAr1kRTaNjQF5P8qT5Q"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["sf9Wm9eXRxaljEK7Ise9Kw",
+        "tqP9HWUNQOyP7vpkXnPGRA"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
         "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -599,7 +599,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:54 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:17 GMT
 - request:
     method: get
     uri: http://10.8.99.233:5000/v2.0/tenants
@@ -614,20 +614,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 6052e18301d843de9a5ec33daf5716e8
+      - 61e077b7c9214b959e1a0b498b01126b
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:54 GMT
+      - Thu, 19 Oct 2017 11:37:17 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-6b80e1ca-f256-4502-9ad7-3b239d81bff5
+      - req-379472a3-300c-4000-bd3a-533cc738f88a
       Content-Length:
       - '500'
       Connection:
@@ -644,10 +644,10 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:54 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:17 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6
     body:
       encoding: US-ASCII
       string: ''
@@ -659,7 +659,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -670,9 +670,9 @@ http_interactions:
       Content-Length:
       - '433'
       X-Compute-Request-Id:
-      - req-a3d9112c-c46b-42e6-a91b-2df17841bd47
+      - req-053c40a5-86c9-4a2d-aa6f-4f236f4023d2
       Date:
-      - Tue, 17 Oct 2017 19:00:54 GMT
+      - Thu, 19 Oct 2017 11:37:18 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"flavor": {"name": "m1.ems_refresh_spec", "links": [{"href": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6",
@@ -681,7 +681,7 @@ http_interactions:
         1, "swap": 512, "os-flavor-access:is_public": true, "rxtx_factor": 1.0, "OS-FLV-EXT-DATA:ephemeral":
         1, "disk": 1, "id": "6"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:54 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:18 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -699,13 +699,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:54 GMT
+      - Thu, 19 Oct 2017 11:37:18 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-fcd55534-7a08-48e2-a438-bd9c5ff6271a
+      - req-259411b2-87d9-4d0a-810b-e97f11120109
       Content-Length:
       - '4170'
       Connection:
@@ -714,10 +714,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:54.902875", "expires":
-        "2017-10-17T20:00:54Z", "id": "8522c3a5bedf4755adbd3f1a11820a47", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:18.465585", "expires":
+        "2017-10-19T12:37:18Z", "id": "8062cfd5411549a48a19d2b822477d9d", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["LCZMyj5MRHSL9eYFtDiV1Q"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["nguQo9utSEiUYFad4yzeAA"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -762,7 +762,7 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:54 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:18 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9292/
@@ -777,7 +777,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8522c3a5bedf4755adbd3f1a11820a47
+      - 8062cfd5411549a48a19d2b822477d9d
   response:
     status:
       code: 300
@@ -788,7 +788,7 @@ http_interactions:
       Content-Length:
       - '648'
       Date:
-      - Tue, 17 Oct 2017 19:00:54 GMT
+      - Thu, 19 Oct 2017 11:37:18 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "CURRENT", "id": "v2.3", "links": [{"href":
@@ -801,7 +801,7 @@ http_interactions:
         {"status": "SUPPORTED", "id": "v1.0", "links": [{"href": "http://10.8.99.233:9292/v1/",
         "rel": "self"}]}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:18 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9292/v2/images/bb799f70-5e02-461b-8324-17ee88259c7b
@@ -816,7 +816,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8522c3a5bedf4755adbd3f1a11820a47
+      - 8062cfd5411549a48a19d2b822477d9d
   response:
     status:
       code: 200
@@ -827,9 +827,9 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       X-Openstack-Request-Id:
-      - req-319c6fc1-e877-4e4b-b3dd-1d2d4f45a669
+      - req-7b41da9f-3e29-426c-8e48-736628d76888
       Date:
-      - Tue, 17 Oct 2017 19:00:55 GMT
+      - Thu, 19 Oct 2017 11:37:19 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"status": "active", "name": "EmsRefreshSpec-Image", "tags": [], "container_format":
@@ -840,7 +840,7 @@ http_interactions:
         "checksum": "ee1eca47dc88f4879d8a229cc70a07c6", "owner": "69f8f7205ade4aa59084c32c83e60b5a",
         "virtual_size": null, "min_ram": 0, "schema": "/v2/schemas/image"}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:19 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9292/v2/images/bb799f70-5e02-461b-8324-17ee88259c7b/members
@@ -855,7 +855,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8522c3a5bedf4755adbd3f1a11820a47
+      - 8062cfd5411549a48a19d2b822477d9d
   response:
     status:
       code: 200
@@ -866,17 +866,17 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       X-Openstack-Request-Id:
-      - req-26fa10f4-0831-4128-89a5-b53546916829
+      - req-f04cb3d0-e10a-431a-a62c-e9b4ed135625
       Date:
-      - Tue, 17 Oct 2017 19:00:55 GMT
+      - Thu, 19 Oct 2017 11:37:19 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"members": [], "schema": "/v2/schemas/members"}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:19 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/os-keypairs.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/os-keypairs
     body:
       encoding: US-ASCII
       string: ''
@@ -888,7 +888,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -899,9 +899,9 @@ http_interactions:
       Content-Length:
       - '1617'
       X-Compute-Request-Id:
-      - req-0cba890f-a434-4eb2-a707-eb5ae6a6ff78
+      - req-2feca205-5dea-43f5-9839-422031d0ac28
       Date:
-      - Tue, 17 Oct 2017 19:00:55 GMT
+      - Thu, 19 Oct 2017 11:37:19 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"keypairs": [{"keypair": {"public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCn6mhl9SBfXCBF8wcPeaNLi/0ZTbkOZb+3S4m1lEcfT6JVr1+Y9Pr91Kp228HrjFvVUGIMIgPytuK1rc6ytXqfzuar7fPZTxXSmUb0f+zz+eWRvbkvd9RgP4pqsENL3cPyjyTi/iE7GhpX7prItSA0HJOxDDFmeKupBudh4p2UpC5mwHyE0NonkjHfRQAnJNUz6wCcZbobTRXS+PVVZ0t9kQH6iG58iPQeXUzupZVjsPStksLA2Gtu5wUXewuIM1QbBB+GtGKUBZ7UKESO4oueKIH0Lu3z5SWA9MfGd2oyTPL0pbBKaCRMpzhKvIbaDIGoDu1h7kOFBcJQwPOLRkI/
@@ -911,10 +911,10 @@ http_interactions:
         {"keypair": {"public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwcaKcZZF6YrVWjgItxRWZyClehIYKU7tIQS3f1AbUzf/RBc3SrsZFtfPgzMXiX+YFxoxWUf6WCH7dJPZsmEaUJ21GbZ8s29ohCg67n9PL+kezdq9Ukm6CdojX0rsZfU/EKMhObvEmAzJ1ue0A2KQCrdSM92iO3BWcWFVjmxCZRB40eZvcvEbZc32s1MdxOk5cDrA0AsmFVyas3UeqWCE7U6SRWJIa3bjV34qeJWELZ6L7/XzdKYkiBpS0rjHuIejI73VSq082vyph8f8TE4bc3g57Sn4O1AbV7/9aIW+lA+7qw+MJ/7aVWRAtil0OQkhLc0mXmFXmUGMJkUHLFkUj
         Generated-by-Nova\n", "name": "EmsRefreshSpec-KeyPair-3", "fingerprint": "5f:98:28:4d:f4:f1:0d:0e:51:07:b4:7b:d7:f4:e6:cd"}}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:19 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6.json
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6
     body:
       encoding: US-ASCII
       string: ''
@@ -926,7 +926,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2736b01998b64459a43ee69fe18d5eaa
+      - 3b3755fc579f46c5b1469e2547d145fb
   response:
     status:
       code: 200
@@ -937,9 +937,9 @@ http_interactions:
       Content-Length:
       - '433'
       X-Compute-Request-Id:
-      - req-b10d917c-dfce-42a7-b237-9262e99f49a6
+      - req-2a823a28-bce5-4575-9647-403a879dc9f0
       Date:
-      - Tue, 17 Oct 2017 19:00:55 GMT
+      - Thu, 19 Oct 2017 11:37:20 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"flavor": {"name": "m1.ems_refresh_spec", "links": [{"href": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6",
@@ -948,7 +948,7 @@ http_interactions:
         1, "swap": 512, "os-flavor-access:is_public": true, "rxtx_factor": 1.0, "OS-FLV-EXT-DATA:ephemeral":
         1, "disk": 1, "id": "6"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:20 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/networks/c0e8e42b-005e-4183-8f25-fa91b3e441c1
@@ -963,7 +963,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -974,9 +974,9 @@ http_interactions:
       Content-Length:
       - '440'
       X-Openstack-Request-Id:
-      - req-de9dba5a-0572-429b-8ae5-680be4ed2ce0
+      - req-e59a53f9-55d8-4e6b-9136-5aa4d8aca235
       Date:
-      - Tue, 17 Oct 2017 19:00:55 GMT
+      - Thu, 19 Oct 2017 11:37:20 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"network": {"status": "ACTIVE", "subnets": ["104c081f-97dd-42b7-8930-98abbd015c74",
@@ -986,7 +986,7 @@ http_interactions:
         "vxlan", "id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "provider:segmentation_id":
         14}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:55 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:20 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/networks/20af6027-7aeb-432a-ab3b-d7217faa2f1c
@@ -1001,7 +1001,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -1012,9 +1012,9 @@ http_interactions:
       Content-Length:
       - '409'
       X-Openstack-Request-Id:
-      - req-6f02c648-5ba9-49fc-b3f7-eb37e50836cf
+      - req-9031cef4-75d6-457e-b19f-712c5e359d5d
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:21 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"network": {"status": "ACTIVE", "subnets": ["33da95a6-bded-44d8-be36-6cc97f3d72bd"],
@@ -1024,7 +1024,7 @@ http_interactions:
         "id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c", "provider:segmentation_id":
         null}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:56 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:21 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets
@@ -1039,7 +1039,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -1050,9 +1050,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-5384f0ea-8381-44c8-8c79-e9729df2c025
+      - req-dbe45c69-9bd7-4277-8139-298f3b34def2
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:21 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2", "enable_dhcp":
@@ -1156,7 +1156,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:56 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:21 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets
@@ -1171,7 +1171,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -1182,35 +1182,17 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-595c92b4-d16e-41af-83a9-c981a3fb0732
+      - req-7b69e155-cbb2-4b8b-b176-dfc6825c0043
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:21 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
-        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
-        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
-        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
-        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
-        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
-        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
-        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
-        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+      string: '{"subnets": [{"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2", "enable_dhcp":
+        true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.50.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.50.4", "end": "192.168.50.4"}, {"start":
+        "192.168.50.2", "end": "192.168.50.2"}], "host_routes": [], "ip_version":
+        4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24", "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4",
         "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
         true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
         "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
@@ -1275,6 +1257,24 @@ http_interactions:
         "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
         "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
         null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic", "enable_dhcp":
+        false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.17.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.11", "end":
+        "172.16.17.19"}, {"start": "172.16.17.2", "end": "172.16.17.9"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp": false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.21.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2",
+        "end": "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp":
+        false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.19.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21", "end":
+        "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
         "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
         true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
         "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
@@ -1288,7 +1288,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:56 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:22 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports/dda2ebad-f144-4f63-9a75-cbd4fe25e3e9
@@ -1303,7 +1303,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -1314,9 +1314,9 @@ http_interactions:
       Content-Length:
       - '954'
       X-Openstack-Request-Id:
-      - req-9d164e92-e0b0-4892-8930-3b6647cdc0dc
+      - req-88aa2f58-0390-4df2-b3bf-7b12285a5793
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:22 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"port": {"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -1331,7 +1331,7 @@ http_interactions:
         true}, "binding:vnic_type": "normal", "binding:vif_type": "ovs", "tenant_id":
         "69f8f7205ade4aa59084c32c83e60b5a", "mac_address": "fa:16:3e:e1:0b:2c"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:56 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:22 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -1346,20 +1346,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8aabeb28e1df4aff83c76b3d2c5bca41
+      - 1f7d575641524b05ae94b251f7eb6cae
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:22 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-bc16a096-5c45-46b2-a9c8-a3f9903fe780
+      - req-e0f1838f-5ef9-404b-95bf-f1b466b9b370
       Content-Length:
       - '500'
       Connection:
@@ -1376,7 +1376,7 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:56 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:22 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1394,13 +1394,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:56 GMT
+      - Thu, 19 Oct 2017 11:37:22 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-93c918c5-6db6-4866-859f-46572cfe6467
+      - req-87033dfb-96b0-4dd0-9e14-7b50b9e8946d
       Content-Length:
       - '4117'
       Connection:
@@ -1409,10 +1409,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:57.039299", "expires":
-        "2017-10-17T20:00:57Z", "id": "9aeeb967b9b94745b411dbf8e194e1ba", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:23.244354", "expires":
+        "2017-10-19T12:37:23Z", "id": "b8adee404d4945aea14d94fcb1d069d3", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["NK7gRtvXSY2dBwx2RDTiwA"]},
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["T_w1oROvSAmwmWC4a32-kQ"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -1456,7 +1456,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:23 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1474,13 +1474,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:23 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-dbe7522f-3789-49ea-8a2e-15949526afb9
+      - req-fd2ed369-f54f-4071-a2b1-ff652a2a01d7
       Content-Length:
       - '4131'
       Connection:
@@ -1489,10 +1489,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:57.216865", "expires":
-        "2017-10-17T20:00:57Z", "id": "7af6862dbff140b8b8bf1025a82b73d5", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:23.719930", "expires":
+        "2017-10-19T12:37:23Z", "id": "6a504d4f742e4a648d4a8981b804b946", "tenant":
         {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
-        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["cM0Yaq05SkiR95lKOakEuA"]},
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["fUwox0ESTji1ea_3Ek5SzQ"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8"}],
@@ -1536,7 +1536,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:23 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1554,13 +1554,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:23 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-5b48b436-34b8-46b3-8550-074370e2bb83
+      - req-8f4fdd01-093f-4763-be76-0b43cf5bc5d2
       Content-Length:
       - '4118'
       Connection:
@@ -1569,10 +1569,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:57.429217", "expires":
-        "2017-10-17T20:00:57Z", "id": "b413dbeb49c34ede97b699cf55041411", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:24.163019", "expires":
+        "2017-10-19T12:37:24Z", "id": "587b2f3d741d4be8b0853911c74c38e1", "tenant":
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
-        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["t3S3Av4pQs-ThIzroa_BTg"]},
+        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["Ee_0iBhpQuGDUxBzv2lCKg"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608"}],
@@ -1616,7 +1616,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:24 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1634,13 +1634,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:24 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-5f3f661b-3231-4be5-8622-dbd1ab7f38fd
+      - req-e83d3d65-cbf8-4868-837b-39fe701e724a
       Content-Length:
       - '4117'
       Connection:
@@ -1649,10 +1649,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:57.603564", "expires":
-        "2017-10-17T20:00:57Z", "id": "c645c1bff4284d88af6d9246185205a5", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:24.614309", "expires":
+        "2017-10-19T12:37:24Z", "id": "fb4eb7a9de46489f919ce84c654719a1", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["82P7OTe7TDmdloJssM7flQ"]},
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["Ugi791MbScyeT_m_gtot9g"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -1696,7 +1696,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:24 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000
@@ -1711,7 +1711,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - c645c1bff4284d88af6d9246185205a5
+      - fb4eb7a9de46489f919ce84c654719a1
   response:
     status:
       code: 200
@@ -1722,9 +1722,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-b8e43cac-0cfa-4f9c-b485-db7017ca2b6f
+      - req-8f2689ab-810c-4287-8897-0c05d9d3b884
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:25 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -1760,7 +1760,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:25 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000&marker=9330caba-d3ec-4675-b68a-b80fffae6365
@@ -1775,7 +1775,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - c645c1bff4284d88af6d9246185205a5
+      - fb4eb7a9de46489f919ce84c654719a1
   response:
     status:
       code: 200
@@ -1786,9 +1786,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-fcd46f51-c274-43ed-8370-6a4c22bf02b0
+      - req-1a9aa717-6ece-446e-b6e1-ab5b46f0d7eb
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:25 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -1824,7 +1824,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:57 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:25 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1842,13 +1842,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:57 GMT
+      - Thu, 19 Oct 2017 11:37:26 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-d8e7944c-8440-46bd-8a9c-5e77cf2b8b29
+      - req-a3409d3a-5f49-4b6f-940e-1311ad68c630
       Content-Length:
       - '4131'
       Connection:
@@ -1857,10 +1857,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:58.098672", "expires":
-        "2017-10-17T20:00:58Z", "id": "aa96a9de289443caab95b070ace975ff", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:26.486948", "expires":
+        "2017-10-19T12:37:26Z", "id": "ccb9528227a24e3488eb3c676838c02e", "tenant":
         {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
-        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["QMY4CELTTZWgS8qhkGhILg"]},
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["U7ejk4upSGyu5UFvI2Q1Pw"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8"}],
@@ -1904,7 +1904,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:58 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:26 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000
@@ -1919,7 +1919,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - aa96a9de289443caab95b070ace975ff
+      - ccb9528227a24e3488eb3c676838c02e
   response:
     status:
       code: 200
@@ -1930,9 +1930,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-3d10f5c3-c86d-4785-9bae-946db3d074ad
+      - req-9559d908-c93e-4b82-a5fa-b1b109830c56
       Date:
-      - Tue, 17 Oct 2017 19:00:58 GMT
+      - Thu, 19 Oct 2017 11:37:27 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -1968,7 +1968,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:58 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:27 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000&marker=9330caba-d3ec-4675-b68a-b80fffae6365
@@ -1983,7 +1983,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - aa96a9de289443caab95b070ace975ff
+      - ccb9528227a24e3488eb3c676838c02e
   response:
     status:
       code: 200
@@ -1994,9 +1994,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-6c512b9f-8992-4745-bc5a-7c3e16130060
+      - req-3b617d84-c006-4eed-ba16-3a4216c27230
       Date:
-      - Tue, 17 Oct 2017 19:00:58 GMT
+      - Thu, 19 Oct 2017 11:37:27 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -2032,7 +2032,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:58 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:27 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000
@@ -2047,7 +2047,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -2058,9 +2058,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-03120848-23eb-4be6-b423-9bd2a22b6afb
+      - req-8b0d7160-5707-45d6-abc4-1e168d89162c
       Date:
-      - Tue, 17 Oct 2017 19:00:58 GMT
+      - Thu, 19 Oct 2017 11:37:27 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -2096,7 +2096,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:58 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:27 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000&marker=9330caba-d3ec-4675-b68a-b80fffae6365
@@ -2111,7 +2111,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -2122,9 +2122,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-894eff29-467a-49f5-b343-c1d9b7959459
+      - req-aef1dee1-e668-4b3b-9980-3d7ef29a9d4f
       Date:
-      - Tue, 17 Oct 2017 19:00:58 GMT
+      - Thu, 19 Oct 2017 11:37:28 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -2160,7 +2160,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:58 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:28 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -2178,13 +2178,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Oct 2017 19:00:59 GMT
+      - Thu, 19 Oct 2017 11:37:28 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-3a2c76d4-f226-46d4-aba4-6009ba0f9834
+      - req-9e26cbde-5ca3-4ccf-8310-5fee72b4cd18
       Content-Length:
       - '4118'
       Connection:
@@ -2193,10 +2193,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-17T19:00:59.208061", "expires":
-        "2017-10-17T20:00:59Z", "id": "7892fd4ba43244cb864fba93df7bb040", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-19T11:37:28.379951", "expires":
+        "2017-10-19T12:37:28Z", "id": "34b7203a6c0548689746fc8e11e2219a", "tenant":
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
-        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["IrBwX1zWRcao9ICaqJnu9Q"]},
+        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["1trSCRciQxaeIHghTAr17Q"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608"}],
@@ -2240,7 +2240,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:59 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:28 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000
@@ -2255,7 +2255,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 7892fd4ba43244cb864fba93df7bb040
+      - 34b7203a6c0548689746fc8e11e2219a
   response:
     status:
       code: 200
@@ -2266,9 +2266,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-ef935422-339a-4608-a967-663623951e65
+      - req-c41538d6-7ac3-4d68-9d46-3518f20e7ff6
       Date:
-      - Tue, 17 Oct 2017 19:00:59 GMT
+      - Thu, 19 Oct 2017 11:37:29 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -2304,7 +2304,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:59 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:29 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/ports?device_id=57e17608-8ac6-44a6-803e-f42ec15e9d1e&limit=1000&marker=9330caba-d3ec-4675-b68a-b80fffae6365
@@ -2319,7 +2319,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 7892fd4ba43244cb864fba93df7bb040
+      - 34b7203a6c0548689746fc8e11e2219a
   response:
     status:
       code: 200
@@ -2330,9 +2330,9 @@ http_interactions:
       Content-Length:
       - '2617'
       X-Openstack-Request-Id:
-      - req-8e9947fc-e953-4669-af36-a3ea37af851d
+      - req-a7ba6cb5-7fcb-4bdf-939e-91f021887dbe
       Date:
-      - Tue, 17 Oct 2017 19:00:59 GMT
+      - Thu, 19 Oct 2017 11:37:29 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports": [{"status": "ACTIVE", "binding:host_id": "11.22.33.44",
@@ -2368,7 +2368,7 @@ http_interactions:
         {"port_filter": true, "ovs_hybrid_plug": true}, "binding:vnic_type": "normal",
         "binding:vif_type": "ovs", "tenant_id": "", "mac_address": "fa:16:3e:2e:66:be"}]}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:00:59 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:29 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/routers/57e17608-8ac6-44a6-803e-f42ec15e9d1e
@@ -2383,7 +2383,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -2394,9 +2394,9 @@ http_interactions:
       Content-Length:
       - '443'
       X-Openstack-Request-Id:
-      - req-7fb7f777-06d0-4402-b97c-ba4096447c71
+      - req-b36d2c69-683e-4ffc-9130-f967519b85e2
       Date:
-      - Tue, 17 Oct 2017 19:01:00 GMT
+      - Thu, 19 Oct 2017 11:37:29 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"router": {"status": "ACTIVE", "external_gateway_info": {"network_id":
@@ -2405,7 +2405,7 @@ http_interactions:
         "name": "EmsRefreshSpec-Router", "admin_state_up": true, "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
         "distributed": false, "routes": [], "ha": false, "id": "57e17608-8ac6-44a6-803e-f42ec15e9d1e"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:01:00 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:29 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/security-groups/fd147cb7-7456-43d9-a01f-c06e21b4e6fb
@@ -2420,7 +2420,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -2431,9 +2431,9 @@ http_interactions:
       Content-Length:
       - '6900'
       X-Openstack-Request-Id:
-      - req-2b32cbfd-7cca-40f4-bae8-22ff8025a804
+      - req-12b20e68-bbd9-4edb-b873-24947058bccc
       Date:
-      - Tue, 17 Oct 2017 19:01:00 GMT
+      - Thu, 19 Oct 2017 11:37:30 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group": {"tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
@@ -2519,7 +2519,7 @@ http_interactions:
         "port_range_max": 80, "port_range_min": 80, "id": "f79f0e32-b186-4778-952e-20827a60ef73",
         "security_group_id": "fd147cb7-7456-43d9-a01f-c06e21b4e6fb"}], "name": "EmsRefreshSpec-SecurityGroup"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:01:00 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:30 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/security-groups/e4836528-d0df-425e-a117-ae8ec6f356d4
@@ -2534,7 +2534,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - cea891813d0c4325a49654b87c36e823
+      - 347123f46aa94f7b91e2b8fd991840f5
   response:
     status:
       code: 200
@@ -2545,9 +2545,9 @@ http_interactions:
       Content-Length:
       - '880'
       X-Openstack-Request-Id:
-      - req-03327a2b-e49e-430b-abf2-b6eef71c175b
+      - req-8825b359-6d5e-41c6-9aea-32d0bb5a37e7
       Date:
-      - Tue, 17 Oct 2017 19:01:00 GMT
+      - Thu, 19 Oct 2017 11:37:30 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group": {"tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
@@ -2561,5 +2561,5 @@ http_interactions:
         "port_range_max": null, "port_range_min": null, "id": "75924ebc-4758-4042-ad04-4ef3c9189098",
         "security_group_id": "e4836528-d0df-425e-a117-ae8ec6f356d4"}], "name": "EmsRefreshSpec-SecurityGroup2"}}'
     http_version: 
-  recorded_at: Tue, 17 Oct 2017 19:01:00 GMT
+  recorded_at: Thu, 19 Oct 2017 11:37:30 GMT
 recorded_with: VCR 3.0.3
