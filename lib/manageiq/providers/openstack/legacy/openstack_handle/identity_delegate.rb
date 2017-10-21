@@ -118,5 +118,31 @@ module OpenstackHandle
     def delete_tenant_v2(tenant_id)
       tenants.destroy(tenant_id)
     end
+
+    def list_user_projects_tenants(user_id)
+      if respond_to?(:projects)
+        # V3
+        list_user_projects(user_id).body['projects']
+      else
+        # V2
+        user_projects = []
+        list_tenants.body['tenants'].each do |tenant|
+          if list_roles_for_user_on_tenant(tenant['id'], user_id).body['roles'].count.positive?
+            user_projects << tenant
+          end
+        end
+        user_projects
+      end
+    end
+
+    def list_project_tenant_user_roles(project_id, user_id)
+      if respond_to?(:projects)
+        # V3
+        list_project_user_roles(project_id, user_id).body["roles"]
+      else
+        # V2
+        list_roles_for_user_on_tenant(project_id, user_id).body["roles"]
+      end
+    end
   end
 end
