@@ -146,7 +146,6 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
 
     def miq_templates(extra_attributes = {})
       attributes = {
-        :model_class                 => ManageIQ::Providers::Openstack::CloudManager::Template,
         :inventory_object_attributes => [
           :type,
           :uid_ems,

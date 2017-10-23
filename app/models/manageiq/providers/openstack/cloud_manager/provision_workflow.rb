@@ -5,8 +5,14 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     source                  = load_ar_obj(get_source_vm)
     flavors                 = get_targets_for_ems(source, :cloud_filter, Flavor, 'flavors')
     return {} if flavors.blank?
-    minimum_disk_required   = [source.hardware.size_on_disk.to_i, source.hardware.disk_size_minimum.to_i].max
-    minimum_memory_required = source.hardware.memory_mb_minimum.to_i * 1.megabyte
+    if source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate) || source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate)
+      # no flavor requirements for booting from a volume
+      minimum_disk_required = 0
+      minimum_memory_required = 0
+    else
+      minimum_disk_required   = [source.hardware.size_on_disk.to_i, source.hardware.disk_size_minimum.to_i].max
+      minimum_memory_required = source.hardware.memory_mb_minimum.to_i * 1.megabyte
+    end
     flavors.each_with_object({}) do |flavor, h|
       next if flavor.root_disk_size < minimum_disk_required
       next if flavor.memory         < minimum_memory_required

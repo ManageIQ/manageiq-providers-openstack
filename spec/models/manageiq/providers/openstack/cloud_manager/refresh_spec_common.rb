@@ -76,8 +76,8 @@ module Openstack
       expect(CloudSubnet.count).to                       eq network_data.subnets.count
       expect(NetworkRouter.count).to                     eq network_data.routers.count
       expect(CloudVolume.count).to                       eq volumes_count
-      expect(VmOrTemplate.count).to                      eq vms_count + images_count
-      expect(MiqTemplate.count).to                       eq images_count
+      expect(VmOrTemplate.count).to                      eq vms_count + images_count + volume_and_snapshot_templates_count
+      expect(MiqTemplate.count).to                       eq images_count + volume_and_snapshot_templates_count
       expect(Disk.count).to                              eq disks_count
       expect(Hardware.count).to                          eq vms_count + images_count
       expect(Vm.count).to                                eq vms_count
@@ -193,6 +193,11 @@ module Openstack
       1
     end
 
+    def volume_and_snapshot_templates_count
+      # none of the snapshots on the VCR instances are bootable, so they are not included
+      CloudVolume.where(:status => "available", :bootable => true).count
+    end
+
     def all_vms_and_stacks
       all_vms = compute_data.servers + compute_data.servers_from_snapshot
       all_vms += orchestration_data.stacks if orchestration_supported?
@@ -243,9 +248,17 @@ module Openstack
       expect(CloudSubnet.count).to                       eq network_data.subnets.count
       expect(NetworkRouter.count).to                     eq network_data.routers.count
       expect(CloudVolume.count).to                       eq volumes_count
-      expect(VmOrTemplate.count).to                      eq vms_count + images_count
+      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
+      else
+        expect(VmOrTemplate.count).to                    eq vms_count + images_count
+      end
       expect(Vm.count).to                                eq vms_count
-      expect(MiqTemplate.count).to                       eq images_count
+      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
+      else
+        expect(MiqTemplate.count).to                     eq images_count
+      end
       expect(Disk.count).to                              eq disks_count
       # One hardware per each VM
       expect(Hardware.count).to                          eq vms_count + images_count
@@ -290,16 +303,24 @@ module Openstack
         :uid_ems     => identity_service == :v3 ? 'default' : nil
       )
 
-      expect(@ems.flavors.size).to            eq compute_data.flavors.count
-      expect(@ems.availability_zones.size).to eq availability_zones_count
-      expect(@ems.floating_ips.size).to       eq network_data.floating_ips.sum
-      expect(@ems.key_pairs.size).to          eq compute_data.key_pairs.count
+      expect(@ems.flavors.size).to             eq compute_data.flavors.count
+      expect(@ems.availability_zones.size).to  eq availability_zones_count
+      expect(@ems.floating_ips.size).to        eq network_data.floating_ips.sum
+      expect(@ems.key_pairs.size).to           eq compute_data.key_pairs.count
       security_groups_count = @ems.security_groups.count { |x| x.name != 'default' }
-      expect(security_groups_count).to        eq security_groups_count
-      expect(@ems.vms_and_templates.size).to  eq vms_count + images_count
-      expect(@ems.vms.size).to                eq vms_count
-      expect(@ems.miq_templates.size).to      eq images_count
-      expect(@ems.cloud_networks.size).to     eq network_data.networks.count
+      expect(security_groups_count).to         eq security_groups_count
+      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        expect(@ems.vms_and_templates.size).to eq vms_count + images_count + volume_and_snapshot_templates_count
+      else
+        expect(@ems.vms_and_templates.size).to eq vms_count + images_count
+      end
+      expect(@ems.vms.size).to                 eq vms_count
+      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        expect(@ems.miq_templates.size).to     eq images_count + volume_and_snapshot_templates_count
+      else
+        expect(@ems.miq_templates.size).to     eq images_count
+      end
+      expect(@ems.cloud_networks.size).to      eq network_data.networks.count
 
       if neutron_networking?
         expect(@ems.public_networks.first).to  be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public)

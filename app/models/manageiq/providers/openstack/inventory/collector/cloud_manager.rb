@@ -82,7 +82,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def vms_by_id
-    @vms_by_id ||= Hash[vms.collect { |s| [s.id, s] }]
+    @vms_by_id ||= vms.index_by(&:id)
   end
 
   def tenants
@@ -143,5 +143,23 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def orchestration_template(stack)
     safe_call { stack.template }
+  end
+
+  def volume_templates
+    return [] unless volume_service
+    return @volume_templates if @volume_templates.any?
+    @volume_templates = volume_service.handled_list(:volumes, {:status => "available"}, ::Settings.ems.ems_openstack.refresh.is_admin)
+  end
+
+  def volumes_by_id
+    @volumes_by_id ||= volume_templates.index_by(&:id)
+  end
+
+  def volume_snapshot_templates
+    return [] unless volume_service
+    return @volume_snapshot_templates if @volume_snapshot_templates.any?
+    @volume_snapshot_templates = volume_service.handled_list(:list_snapshots_detailed, :status => "available", :__request_body_index => "snapshots").select do |s|
+      volumes_by_id[s["volume_id"]] && (volumes_by_id[s["volume_id"]].attributes["bootable"].to_s == "true")
+    end
   end
 end
