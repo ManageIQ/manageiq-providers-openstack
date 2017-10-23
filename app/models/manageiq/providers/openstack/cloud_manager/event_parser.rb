@@ -3,7 +3,7 @@ module ManageIQ::Providers::Openstack::CloudManager::EventParser
     content = message_content(event, ems_id)
     event_type = content["event_type"]
     payload = content["payload"]
-  
+
     log_header = "ems_id: [#{ems_id}] " unless ems_id.nil?
     _log.debug("#{log_header}event: [#{event_type}]") if $log && $log.debug?
 
