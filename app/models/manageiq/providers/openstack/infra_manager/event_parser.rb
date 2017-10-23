@@ -6,7 +6,7 @@ module ManageIQ::Providers::Openstack::InfraManager::EventParser
 
     log_header = "ems_id: [#{ems_id}] " unless ems_id.nil?
     _log.debug("#{log_header}event: [#{event_type}]") if $log && $log.debug?
-    
+
     # attributes that are common to all notifications
     event_hash = {
       :event_type => event_type,
@@ -17,7 +17,7 @@ module ManageIQ::Providers::Openstack::InfraManager::EventParser
       :full_data  => event,
       :ems_id     => ems_id
     }
-    
+
     if payload.key? "instance_id"
       event_hash[:host_id] = Host.find_by("ems_ref_obj" => YAML.dump(payload["instance_id"])).try(:id)
     end
