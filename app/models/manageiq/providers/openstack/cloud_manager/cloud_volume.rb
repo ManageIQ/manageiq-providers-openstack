@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
+  include ManageIQ::Providers::Openstack::HelperMethods
   include_concern 'Operations'
 
   include SupportsFeatureMixin
@@ -25,7 +26,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
     {:ems_ref => volume.id, :status => volume.status, :name => options[:name]}
   rescue => e
     _log.error "volume=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqVolumeCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def validate_update_volume
@@ -39,7 +40,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
     end
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def validate_delete_volume
@@ -55,7 +56,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
     with_provider_object(&:destroy)
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeDeleteError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def backup_create(options)
@@ -66,7 +67,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
     end
   rescue => e
     _log.error "backup=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeBackupCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeBackupCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def backup_create_queue(userid, options = {})
@@ -92,7 +93,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
     end
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeBackupRestoreError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeBackupRestoreError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def backup_restore_queue(userid, backup_id)

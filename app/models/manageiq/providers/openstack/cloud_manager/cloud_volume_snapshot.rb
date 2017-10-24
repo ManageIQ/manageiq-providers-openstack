@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::CloudVolumeSnapshot
+  include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
 
   supports :create
@@ -56,7 +57,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::Clou
     )
   rescue => e
     _log.error "snapshot=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeSnapshotCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def update_snapshot_queue(userid = "system", options = {})
@@ -88,7 +89,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::Clou
     end
   rescue => e
     _log.error "snapshot=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeSnapshotUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def delete_snapshot_queue(userid = "system", _options = {})
@@ -120,7 +121,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::Clou
     end
   rescue => e
     _log.error "snapshot=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqVolumeSnapshotDeleteError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
 

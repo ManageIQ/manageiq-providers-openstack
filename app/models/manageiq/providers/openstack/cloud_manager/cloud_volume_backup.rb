@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudVolumeBackup
+  include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
 
   supports :delete
@@ -10,7 +11,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudV
     end
   rescue => e
     _log.error("backup=[#{name}], error: #{e}")
-    raise MiqException::MiqOpenstackApiRequestError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def raw_delete
@@ -19,7 +20,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudV
     end
   rescue => e
     _log.error("volume backup=[#{name}], error: #{e}")
-    raise MiqException::MiqOpenstackApiRequestError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def with_provider_object
