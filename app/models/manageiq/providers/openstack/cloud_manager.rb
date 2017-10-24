@@ -266,6 +266,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
     miq_openstack_instance = MiqOpenStackInstance.new(vm.ems_ref, openstack_handle)
     miq_openstack_instance.delete_evm_snapshot(snapshot_uid)
+    Notification.create(:type => :vm_snapshot_success, :subject => vm, :options => {:snapshot_op => 'remove'})
 
     # Remove from the snapshots table.
     ar_snapshot = vm.snapshots.find_by(:ems_ref  => snapshot_uid)
