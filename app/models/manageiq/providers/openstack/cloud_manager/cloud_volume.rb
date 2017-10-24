@@ -3,6 +3,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   include_concern 'Operations'
 
   include SupportsFeatureMixin
+  include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :create
   supports :backup_create
@@ -19,9 +20,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
 
     # provide display_name for Cinder V1
     options[:display_name] |= options[:name]
-    ext_management_system.with_provider_connection(cinder_connection_options(cloud_tenant)) do |service|
-      volume = service.volumes.new(options)
-      volume.save
+    with_notification(:cloud_volume_create,
+                      :options => {
+                        :volume_name => options[:name],
+                      }) do
+      ext_management_system.with_provider_connection(cinder_connection_options(cloud_tenant)) do |service|
+        volume = service.volumes.new(options)
+        volume.save
+      end
     end
     {:ems_ref => volume.id, :status => volume.status, :name => options[:name]}
   rescue => e
@@ -34,9 +40,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   end
 
   def raw_update_volume(options)
-    with_provider_object do |volume|
-      volume.attributes.merge!(options)
-      volume.save
+    with_notification(:cloud_volume_update,
+                      :options => {
+                        :subject => self,
+                      }) do
+      with_provider_object do |volume|
+        volume.attributes.merge!(options)
+        volume.save
+      end
     end
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
@@ -53,7 +64,12 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   end
 
   def raw_delete_volume
-    with_provider_object(&:destroy)
+    with_notification(:cloud_volume_delete,
+                      :options => {
+                        :subject => self,
+                      }) do
+      with_provider_object(&:destroy)
+    end
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
     raise MiqException::MiqVolumeDeleteError, parse_error_message_from_fog_response(e), e.backtrace

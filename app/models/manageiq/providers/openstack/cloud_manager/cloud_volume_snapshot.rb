@@ -1,6 +1,7 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::CloudVolumeSnapshot
   include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
+  include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :create
   supports :update
@@ -42,8 +43,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::Clou
     cloud_tenant = cloud_volume.cloud_tenant
     snapshot = nil
     options[:volume_id] = cloud_volume.ems_ref
-    ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      snapshot = service.snapshots.create(options)
+    with_notification(:cloud_volume_snapshot_create,
+                      :options => {
+                        :snapshot_name => options[:name],
+                        :volume_name   => cloud_volume.name,
+                      }) do
+      ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
+        snapshot = service.snapshots.create(options)
+      end
     end
 
     create(
@@ -112,18 +119,23 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::Clou
   end
 
   def delete_snapshot(_options = {})
-    with_provider_object do |snapshot|
-      if snapshot
-        snapshot.destroy
-      else
-        _log.warn "snapshot=[#{name}] already deleted"
+    with_notification(:cloud_volume_snapshot_delete,
+                      :options => {
+                        :subject       => self,
+                        :volume_name   => cloud_volume.name,
+                      }) do
+      with_provider_object do |snapshot|
+        if snapshot
+          snapshot.destroy
+        else
+          _log.warn("snapshot=[#{name}] already deleted")
+        end
       end
     end
   rescue => e
     _log.error "snapshot=[#{name}], error: #{e}"
     raise MiqException::MiqVolumeSnapshotDeleteError, parse_error_message_from_fog_response(e), e.backtrace
   end
-
 
   def self.connection_options(cloud_tenant = nil)
     connection_options = { :service => 'Volume' }
