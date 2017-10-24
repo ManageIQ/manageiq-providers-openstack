@@ -239,6 +239,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
     miq_openstack_instance = MiqOpenStackInstance.new(vm.ems_ref, openstack_handle)
     snapshot = miq_openstack_instance.create_snapshot(options)
+    Notification.create(:type => :vm_snapshot_success, :subject => vm, :options => {:snapshot_op => 'create'})
     snapshot_id = snapshot["id"]
 
     # Add new snapshot to the snapshots table.
