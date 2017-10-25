@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
+    uri: http://dhcp-8-99-233.cloudforms.lab.eng.rdu2.redhat.com:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":""}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"c2004d455a054b7c"},"tenantName":""}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -17,13 +17,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 23 Oct 2017 16:12:01 GMT
+      - Wed, 25 Oct 2017 13:52:09 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-4f42a61f-55d1-4071-ab7f-d3e5d4f05df5
+      - req-3a28b4fb-9fb2-47fb-a521-a0cf3d59dc95
       Content-Length:
       - '370'
       Connection:
@@ -32,16 +32,16 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-23T16:12:01.762076", "expires":
-        "2017-10-23T17:12:01Z", "id": "5d2163ea2f6c4287a1a6e7d32c26039a", "audit_ids":
-        ["bT3YmoaKS16vmIQCu8G0fA"]}, "serviceCatalog": [], "user": {"username": "admin",
+      string: '{"access": {"token": {"issued_at": "2017-10-25T13:52:09.744058", "expires":
+        "2017-10-25T14:52:09Z", "id": "d483aeafcad847aaa6df57fd03b3163d", "audit_ids":
+        ["j5Q7AhfhT3muhq4K2ai9uQ"]}, "serviceCatalog": [], "user": {"username": "admin",
         "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
         "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
     http_version: 
-  recorded_at: Mon, 23 Oct 2017 16:12:01 GMT
+  recorded_at: Wed, 25 Oct 2017 13:52:09 GMT
 - request:
     method: get
-    uri: http://11.22.33.44:5000/v2.0/tenants
+    uri: http://dhcp-8-99-233.cloudforms.lab.eng.rdu2.redhat.com:5000/v2.0/tenants
     body:
       encoding: US-ASCII
       string: ''
@@ -53,20 +53,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 5d2163ea2f6c4287a1a6e7d32c26039a
+      - d483aeafcad847aaa6df57fd03b3163d
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Mon, 23 Oct 2017 16:12:01 GMT
+      - Wed, 25 Oct 2017 13:52:09 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-55e9534a-b834-4cf3-8cdf-d4c197216438
+      - req-aa405fa3-0323-488e-ba81-28fae33104f3
       Content-Length:
       - '500'
       Connection:
@@ -83,13 +83,13 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Mon, 23 Oct 2017 16:12:01 GMT
+  recorded_at: Wed, 25 Oct 2017 13:52:10 GMT
 - request:
     method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
+    uri: http://dhcp-8-99-233.cloudforms.lab.eng.rdu2.redhat.com:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"5d2163ea2f6c4287a1a6e7d32c26039a"},"tenantName":"EmsRefreshSpec-Project"}}'
+      string: '{"auth":{"token":{"id":"d483aeafcad847aaa6df57fd03b3163d"},"tenantName":"EmsRefreshSpec-Project"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -101,13 +101,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 23 Oct 2017 16:12:02 GMT
+      - Wed, 25 Oct 2017 13:52:10 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-8a72c427-c029-4304-ab17-02d0fad5e759
+      - req-d50c1e23-8d52-48a1-8730-27bcc70ef702
       Content-Length:
       - '4143'
       Connection:
@@ -116,11 +116,11 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2017-10-23T16:12:02.143950", "expires":
-        "2017-10-23T17:12:01Z", "id": "8dd93bd809a948a8b7f7b2dc124034b1", "tenant":
+      string: '{"access": {"token": {"issued_at": "2017-10-25T13:52:10.450953", "expires":
+        "2017-10-25T14:52:09Z", "id": "39b5bc41dc064488a3346d7a7b4cd997", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["3cWNUivgSrKtEwJ_N9cwPg",
-        "bT3YmoaKS16vmIQCu8G0fA"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["VCBO_PYcSGercZsZJ015jw",
+        "j5Q7AhfhT3muhq4K2ai9uQ"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
         "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -164,7 +164,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Mon, 23 Oct 2017 16:12:02 GMT
+  recorded_at: Wed, 25 Oct 2017 13:52:10 GMT
 - request:
     method: get
     uri: http://10.8.99.233:5000/v2.0/tenants
@@ -179,20 +179,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 8dd93bd809a948a8b7f7b2dc124034b1
+      - 39b5bc41dc064488a3346d7a7b4cd997
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Mon, 23 Oct 2017 16:12:02 GMT
+      - Wed, 25 Oct 2017 13:52:10 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-15229b3b-0356-4ecd-896e-e75628aa1c55
+      - req-8d4559ce-db08-49f5-ace1-b89f31c4e331
       Content-Length:
       - '500'
       Connection:
@@ -209,5 +209,5 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Mon, 23 Oct 2017 16:12:02 GMT
+  recorded_at: Wed, 25 Oct 2017 13:52:10 GMT
 recorded_with: VCR 3.0.3
