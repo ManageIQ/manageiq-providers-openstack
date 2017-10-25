@@ -78,7 +78,10 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
   end
 
   def skip_user?(username)
-    users_to_skip = ["admin", "neutron", "heat", "aodh", "cinder", "swift", "glance", "placement", "gnocchi", "nova", "heat-cfn", "panko", "ceilometer"]
+    users_to_skip = ['admin', 'neutron', 'heat', 'aodh', 'cinder', 'swift',
+                     'glance', 'placement', 'gnocchi', 'nova', 'heat-cfn',
+                     'panko', 'ceilometer', 'mistral', 'zaqar-websocket',
+                     'ironic', 'ironic-inspector', 'zaqar']
     users_to_skip.include?(username)
   end
 
