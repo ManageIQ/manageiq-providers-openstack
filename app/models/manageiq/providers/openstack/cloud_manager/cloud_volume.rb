@@ -3,7 +3,6 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   include_concern 'Operations'
 
   include SupportsFeatureMixin
-  include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :create
   supports :backup_create

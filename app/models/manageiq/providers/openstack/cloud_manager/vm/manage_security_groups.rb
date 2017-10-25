@@ -28,7 +28,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::ManageSecurityGroups
     end
   rescue => err
     _log.error "vm=[#{name}], security_group=[#{security_group}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_remove_security_group(security_group)
@@ -37,7 +37,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::ManageSecurityGroups
     end
   rescue => err
     _log.error "vm=[#{name}], security_group=[#{security_group}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def compute_connection_options

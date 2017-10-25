@@ -28,7 +28,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::AssociateIp
     end
   rescue => err
     _log.error "vm=[#{name}], floating_ip=[#{floating_ip}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_disassociate_floating_ip(floating_ip)
@@ -37,7 +37,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::AssociateIp
     end
   rescue => err
     _log.error "vm=[#{name}], floating_ip=[#{floating_ip}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def compute_connection_options

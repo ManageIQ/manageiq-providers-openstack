@@ -20,7 +20,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Resize
                  :method_name => "raw_resize_finish")
   rescue => err
     _log.error "vm=[#{name}], flavor=[#{new_flavor.name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def validate_resize_confirm
@@ -33,7 +33,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Resize
     end
   rescue => err
     _log.error "vm=[#{name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_resize_finish
@@ -52,7 +52,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Resize
     end
   rescue => err
     _log.error "vm=[#{name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def compute_connection_options

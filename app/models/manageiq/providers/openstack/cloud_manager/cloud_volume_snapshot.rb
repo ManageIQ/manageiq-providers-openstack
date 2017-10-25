@@ -1,7 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::CloudVolumeSnapshot
   include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
-  include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :create
   supports :update

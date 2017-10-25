@@ -1,6 +1,7 @@
 require 'manageiq/providers/openstack/legacy/openstack_configuration_parser'
 
 class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
+  include ManageIQ::Providers::Openstack::HelperMethods
   belongs_to :availability_zone
 
   has_many :host_service_group_openstacks, :foreign_key => :host_id, :dependent => :destroy,
@@ -232,7 +233,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     end
   rescue => e
     _log.error "host=[#{name}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostSetManageableError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackInfraHostSetManageableError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def introspect_queue(userid = "system", _options = {})
@@ -272,7 +273,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     end
   rescue => e
     _log.error "host=[#{name}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostIntrospectError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackInfraHostIntrospectError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def provide_queue(userid = "system", _options = {})
@@ -311,7 +312,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     end
   rescue => e
     _log.error "host=[#{name}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostProvideError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackInfraHostProvideError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def validate_start
@@ -378,7 +379,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     end
   rescue => e
     _log.error "ironic node=[#{uid_ems}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostDestroyError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackInfraHostDestroyError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def refresh_network_interfaces(ssu)

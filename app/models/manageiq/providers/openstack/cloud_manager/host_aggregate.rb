@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggregate
+  include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :update_aggregate
   supports :delete_aggregate
@@ -53,7 +54,7 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
             :ext_management_system => ext_management_system)
   rescue => e
     _log.error "host_aggregate=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqHostAggregateCreateError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def external_aggregate
@@ -98,7 +99,7 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     end
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
-    raise MiqException::MiqHostAggregateUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def update_aggregate_metadata(new_metadata)
@@ -110,7 +111,7 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     aggr.update_metadata(out_metadata)
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
-    raise MiqException::MiqHostAggregateUpdateError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def delete_aggregate_queue(userid)
@@ -134,7 +135,7 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     external_aggregate.destroy
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
-    raise MiqException::MiqHostAggregateDeleteError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateDeleteError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def external_host_list
@@ -176,7 +177,7 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     end
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
-    raise MiqException::MiqHostAggregateAddHostError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateAddHostError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def remove_host_queue(userid, old_host)
@@ -206,6 +207,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     end
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
-    raise MiqException::MiqHostAggregateRemoveHostError, e.to_s, e.backtrace
+    raise MiqException::MiqHostAggregateRemoveHostError, parse_error_message_from_fog_response(e), e.backtrace
   end
 end

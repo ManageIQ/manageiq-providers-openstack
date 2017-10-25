@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Providers::CloudManager::Template
+  include ManageIQ::Providers::Openstack::HelperMethods
   belongs_to :cloud_tenant
 
   supports :smartstate_analysis do
@@ -79,7 +80,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     end
   rescue => err
     _log.error("image=[#{name}], error=[#{err}]")
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def self.validate_create_image(ext_management_system, _options = {})
@@ -102,7 +103,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     end
   rescue => err
     _log.error("image=[#{name}], error: #{err}")
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def update_image(options)
@@ -115,7 +116,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     end
   rescue => err
     _log.error("image=[#{name}], error: #{err}")
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def validate_delete_image

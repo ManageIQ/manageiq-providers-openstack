@@ -1,11 +1,13 @@
 class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
+  include ManageIQ::Providers::Openstack::HelperMethods
+
   def self.raw_create_flavor(ext_management_system, create_options)
     ext_management_system.with_provider_connection({:service => 'Compute'}) do |service|
       service.flavors.create(create_options)
     end
   rescue => err
     _log.error "flavor=[#{name}], error=[#{err}]"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def self.validate_create_flavor(ext_management_system, _options = {})
@@ -24,7 +26,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
     end
   rescue => err
     _log.error "flavor=[#{name}], error: #{err}"
-    raise MiqException::MiqOpenstackApiRequestError, err.to_s, err.backtrace
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def validate_delete_flavor
