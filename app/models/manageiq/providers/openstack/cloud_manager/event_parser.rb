@@ -29,7 +29,7 @@ module ManageIQ::Providers::Openstack::CloudManager::EventParser
     unless ems_id.nil?
       ems = ExtManagementSystem.find_by_id(ems_id)
       if ems.connection_configuration_by_role("amqp")
-        if event[:content].key? "oslo.message"
+        if event[:content].key?("oslo.message")
           return JSON.parse(event[:content]["oslo.message"])
         end
       end
