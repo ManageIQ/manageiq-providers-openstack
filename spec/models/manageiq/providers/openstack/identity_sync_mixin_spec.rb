@@ -9,13 +9,46 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
   end
 
   context "sync_users" do
+    it "should create user, groups, and assign user to group" do
+      list_users_data = [{"name" => "project1-admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "project1-admin@localhost", "password_expires_at" => nil}]
+      allow(ems).to receive(:list_users).and_return(list_users_data)
+      user_projects_data = [{"description" => nil, "enabled" => true, "id" => "6f4a2d27d0454ec1a100109b38cbfa09", "name" => "project1"}]
+      allow(ems.keystone).to receive(:list_user_projects_tenants).and_return(user_projects_data)
+      expect(User.find_by(:userid => "project1-admin")).to be_nil
+      cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack, :name => 'project1', :ems_id => ems.id)
+      tenant = FactoryGirl.create(:tenant, :source_id => cloud_tenant.id, :source_type => 'CloudTenant')
+      expect(CloudTenant.find_by(:name => 'project1', :ems_id => ems.id)).not_to be_nil
+      expect(Tenant.find_by(:source_id => cloud_tenant.id, :source_type => 'CloudTenant')).not_to be_nil
+      user_roles = [{"domain_id" => nil, "name" => "admin", "id" => "4e918d9808d34e658a3a647ed49b53f5"}, {"domain_id" => nil, "name" => "_member_", "id" => "9fe2ff9ee4384b1894a90878d3e92bab"}]
+      allow(ems.keystone).to receive(:list_project_tenant_user_roles).and_return(user_roles)
+      admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
+      member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
+
+      ems.sync_users(admin_role.id, member_role.id, "changeme")
+      user = User.find_by(:userid => "project1-admin")
+      expect(user).not_to be_nil
+      expect(user.password_digest).not_to be_nil
+      # current_group is required or user will not be able to login even if they have a password
+      expect(user.current_group.miq_user_role).to eq(admin_role)
+      expect(user.current_group.tenant).to eq(tenant)
+      expect(user.miq_groups.count).to eq(2)
+
+      # running sync_users multiple times should not create additional users if there are no changes
+      # in OpenStack
+      user_count = User.count
+      ems.sync_users(admin_role.id, member_role.id, "changeme")
+      expect(User.count).to eq(user_count)
+      user = User.find_by(:userid => "project1-admin")
+      expect(user.miq_groups.count).to eq(2)
+    end
+
     it "should create realuser, but skip admin and other special cases" do
       list_users_data = [{"name" => "admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "admin@localhost", "password_expires_at" => nil}, {"name" => "realuser", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "realuser@localhost", "password_expires_at" => nil}]
       allow(ems).to receive(:list_users).and_return(list_users_data)
       allow(ems.keystone).to receive(:list_user_projects_tenants).and_return([])
       expect(User.find_by(:userid => "admin")).to be_nil
       expect(User.find_by(:userid => "realuser")).to be_nil
-      ems.sync_users(1, 1)
+      ems.sync_users(1, 1, "changeme")
       expect(User.find_by(:userid => "admin")).to be_nil
       expect(User.find_by(:userid => "realuser")).not_to be_nil
     end
@@ -25,17 +58,18 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     it "should create a new user if it doesn't already exist" do
       username = "project1-admin"
       email = "testuser1@server.org"
+      password = "changeme"
       user = User.find_by(:userid => username)
       expect(user).to be_nil
-      user = ems.create_or_find_user(101, username, email)
+      user = ems.create_or_find_user(101, username, email, password)
       expect(user.name).to eq(username)
       expect(user.email).to eq(email)
     end
 
     it "should only return an existing user if username and email match" do
-      user = ems.create_or_find_user(1, "testuser", "testuser@email.com")
+      user = ems.create_or_find_user(1, "testuser", "testuser@email.com", "changeme")
       expect(user).to_not be_nil
-      user2 = ems.create_or_find_user(1, "testuser", "testuser@different.email.com")
+      user2 = ems.create_or_find_user(1, "testuser", "testuser@different.email.com", "changeme")
       expect(user2).to be_nil
     end
   end
@@ -71,7 +105,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
 
   context "create_or_find_miq_group_add_user" do
     it "should create new group and add user as member" do
-      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com")
+      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
       # leave in case we need to enable create_or_find_tenant
       # tenant = ems.create_or_find_tenant(101, "project1", true)
       tenant = FactoryGirl.create(:tenant, :name => "project1")
@@ -99,7 +133,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     end
 
     it "group should be named <provider>-<domainID>-<tenant>-<role> for keystone v3" do
-      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com")
+      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
       ems.keystone_v3_domain_id = "domain_id1"
       tenant = FactoryGirl.create(:tenant, :name => "project1")
       admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
@@ -109,7 +143,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     end
 
     it "group should be named <provider-<tenant>-<role> for keystone v2" do
-      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com")
+      user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
       tenant = FactoryGirl.create(:tenant, :name => "project1")
       admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
       member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")

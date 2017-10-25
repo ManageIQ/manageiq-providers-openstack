@@ -19,7 +19,7 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
     users
   end
 
-  def sync_users_queue(userid, admin_role_id, member_role_id)
+  def sync_users_queue(userid, admin_role_id, member_role_id, password_digest)
     task_opts = {
       :action => "Sync Users",
       :userid => userid
@@ -30,12 +30,12 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
       :instance_id => id,
       :role        => 'ems_operations',
       :zone        => ext_management_system.my_zone,
-      :args        => [admin_role_id, member_role_id]
+      :args        => [admin_role_id, member_role_id, password_digest]
     }
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
 
-  def sync_users(admin_role_id, member_role_id)
+  def sync_users(admin_role_id, member_role_id, password_digest)
     myusers = list_users
     myusers.each do |u|
       email = u["email"]
@@ -45,7 +45,7 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
 
       next if skip_user?(username) || enabled == false
 
-      user = create_or_find_user(user_uuid, username, email)
+      user = create_or_find_user(user_uuid, username, email, password_digest)
       # user is nil if an exist user exist with the same username but different email
       # in this case we don't do anything
       next if user.nil?
@@ -60,7 +60,7 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
 
         cloud_tenant = CloudTenant.find_by(:name => project_name, :ems_id => id)
         next if cloud_tenant.nil?
-        tenant = Tenant.find_by(:source_id => cloud_tenant.id, :source_type => "CloudTenant")
+        tenant = Tenant.find_by(:source_id => cloud_tenant.id, :source_type => 'CloudTenant')
         next if tenant.nil?
 
         # Find roles that this user has for this project/tenant
@@ -82,23 +82,22 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
     users_to_skip.include?(username)
   end
 
-  def create_or_find_user(openstack_uuid, username, email)
+  def create_or_find_user(openstack_uuid, username, email, password_digest)
     user = User.find_by(:userid => username)
     if user
       # user already exist with this user name
       # if email doesn't match, then this record should be skipped
       user = nil if user.email != email
     else
-      # password = SecureRandom.urlsafe_base64(10)
       user = User.new
       user.name = username
       user.userid = username
       user.email = email
-      user.password = 'test'
-      # old_password = BCrypt::Password.create("test")
-      # user.password_digest = old_password
-      # user.change_password(old_password, "test")
-      # user.miq_groups = [MiqGroup.find(4)]
+      if password_digest
+        user.password_digest = password_digest
+      else
+        user.password = SecureRandom.urlsafe_base64(20)
+      end
       user.settings[:openstack_user_id] = openstack_uuid
       user.save!
     end
@@ -165,6 +164,10 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
       unless miq_group.users.include?(user)
         miq_group.users << user
         miq_group.save!
+      end
+      unless user.current_group
+        user.current_group = miq_group
+        user.save!
       end
       miq_group
     end
