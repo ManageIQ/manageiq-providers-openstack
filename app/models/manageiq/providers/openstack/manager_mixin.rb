@@ -25,7 +25,32 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       authentication = {:userid => user, :password => MiqPassword.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
       ems.connection_configurations = [{:endpoint       => endpoint,
                                         :authentication => authentication}]
-      ems.connect(:service => service)
+
+      begin
+        ems.connect(:service => service)
+      rescue => err
+        miq_exception = translate_exception(err)
+        raise unless miq_exception
+
+        _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
+        raise miq_exception
+      end
+    end
+
+    def translate_exception(err)
+      require 'excon'
+      case err
+      when Excon::Errors::Unauthorized
+        MiqException::MiqInvalidCredentialsError.new("Login failed due to a bad username or password.")
+      when Excon::Errors::Timeout
+        MiqException::MiqUnreachableError.new("Login attempt timed out")
+      when Excon::Errors::SocketError
+        MiqException::MiqHostError.new("Socket error: #{err.message}")
+      when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError
+        err
+      else
+        MiqException::MiqEVMLoginError.new("Unexpected response returned from system: #{err.message}")
+      end
     end
   end
 
@@ -132,19 +157,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def translate_exception(err)
-    require 'excon'
-    case err
-    when Excon::Errors::Unauthorized
-      MiqException::MiqInvalidCredentialsError.new "Login failed due to a bad username or password."
-    when Excon::Errors::Timeout
-      MiqException::MiqUnreachableError.new "Login attempt timed out"
-    when Excon::Errors::SocketError
-      MiqException::MiqHostError.new "Socket error: #{err.message}"
-    when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError
-      err
-    else
-      MiqException::MiqEVMLoginError.new "Unexpected response returned from system: #{err.message}"
-    end
+    self.class.translate_exception(err)
   end
 
   def verify_api_credentials(options = {})
