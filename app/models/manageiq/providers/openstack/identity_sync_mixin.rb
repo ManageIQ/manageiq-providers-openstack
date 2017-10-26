@@ -12,7 +12,10 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
     openstack_users = list_users
     openstack_users.each do |u|
       username = u["name"]
+      user_uuid = u["id"]
       next if skip_user?(username)
+      user_projects = keystone.list_user_projects_tenants(user_uuid)
+      next unless user_projects.count.positive?
       user = User.find_by(:userid => username)
       users << u if user.nil?
     end
@@ -91,6 +94,10 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
       # user already exist with this user name
       # if email doesn't match, then this record should be skipped
       user = nil if user.email != email
+    elsif keystone.list_user_projects_tenants(openstack_uuid).count.zero?
+      # don't create a new user if the user is not a member of
+      # any tenants in OpenStack because the user's current_group
+      # attribute will be nil and will not be able to login.
     else
       user = User.new
       user.name = username

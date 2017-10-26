@@ -5,6 +5,8 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
   before do
     keystone = instance_double("keystone")
     allow(ems).to receive(:keystone).and_return(keystone)
+    user_projects_data = [{"description" => nil, "enabled" => true, "id" => "6f4a2d27d0454ec1a100109b38cbfa09", "name" => "project1"}]
+    allow(ems.keystone).to receive(:list_user_projects_tenants).and_return(user_projects_data)
     parent_tenant.save!
   end
 
@@ -45,7 +47,6 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     it "should create realuser, but skip admin and other special cases" do
       list_users_data = [{"name" => "admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "admin@localhost", "password_expires_at" => nil}, {"name" => "realuser", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "realuser@localhost", "password_expires_at" => nil}]
       allow(ems).to receive(:list_users).and_return(list_users_data)
-      allow(ems.keystone).to receive(:list_user_projects_tenants).and_return([])
       expect(User.find_by(:userid => "admin")).to be_nil
       expect(User.find_by(:userid => "realuser")).to be_nil
       ems.sync_users(1, 1, "changeme")
@@ -71,6 +72,13 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       expect(user).to_not be_nil
       user2 = ems.create_or_find_user(1, "testuser", "testuser@different.email.com", "changeme")
       expect(user2).to be_nil
+    end
+
+    it "should not create a new user if the user is not a member of any tenants" do
+      # Such user would not be able to login because its current_group will be nil
+      allow(ems.keystone).to receive(:list_user_projects_tenants).and_return([])
+      user = ems.create_or_find_user(1, "userwithoutatenant", "userwithoutatenant@email.com", "changeme")
+      expect(user).to be_nil
     end
   end
 
@@ -171,6 +179,16 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       allow(ems).to receive(:list_users).and_return(users_data)
       users = ems.new_users
       expect(users.count).to eq(0)
+    end
+
+    it "should not return users who are not member of any tenant" do
+      users_data = [{"name" => "newuser1", "links" => {"self" =>" http://127.0.0.1:5002/v3/users/009cfe67e1984e4dae36af5625c2fe92"}, "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "newuser1@localhost", "password_expires_at" => nil}, {"name" => "userwithoutatenant", "links" => {"self" => "http://127.0.0.1:5002/v3/users/0dab7200c18945f0ad96abdcfcc59716"}, "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "userwithoutatenant@localhost", "password_expires_at" => nil}]
+      allow(ems).to receive(:list_users).and_return(users_data)
+      user_projects_data = [{"description" => nil, "enabled" => true, "id" => "6f4a2d27d0454ec1a100109b38cbfa09", "name" => "project1"}]
+      allow(ems.keystone).to receive(:list_user_projects_tenants).with("009cfe67e1984e4dae36af5625c2fe92").and_return(user_projects_data)
+      allow(ems.keystone).to receive(:list_user_projects_tenants).with("0dab7200c18945f0ad96abdcfcc59716").and_return([])
+      users = ems.new_users
+      expect(users.count).to eq(1)
     end
   end
 end
