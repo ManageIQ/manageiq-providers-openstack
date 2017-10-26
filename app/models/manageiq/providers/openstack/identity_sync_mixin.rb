@@ -114,31 +114,6 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
     user
   end
 
-  # def create_or_find_tenant(openstack_uuid, project_name, project_enabled)
-  #  tenant = CloudTenant.where(name: project_name, ems_id: id).first
-  #  # Create Tenant if it doesn't exist for this ems
-  #  if tenant.nil?
-  #    ctenant = ManageIQ::Providers::Openstack::CloudManager::CloudTenant.new
-  #    ctenant.name = project_name
-  #    ctenant.ems_ref = openstack_uuid
-  #    ctenant.ext_management_system = self
-  #    ctenant.enabled = project_enabled
-  #    ctenant.save!
-  #
-  #    tenant = Tenant.new
-  #    parent_tenant = Tenant.where("source_type = :type and source_id = :id", { :type => "ExtManagementSystem", :id => id }).first
-  #    tenant.parent = parent_tenant
-  #    tenant.name = project_name
-  #    tenant.description = project_name
-  #    tenant.source_type = CloudTenant
-  #    tenant.source_id = ctenant.id
-  #    tenant.save!
-  #  else
-  #    tenant = Tenant.where(source_id: tenant.id, source_type: "CloudTenant").take
-  #  end
-  #  tenant
-  # end
-
   def create_or_find_miq_group_and_add_user(user, tenant, role_name, admin_role_id, member_role_id)
     # Find MiqGroup corresponding to this role and project/tenant
     # create one if it doesn't exist

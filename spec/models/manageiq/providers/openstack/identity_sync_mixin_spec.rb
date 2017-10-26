@@ -82,40 +82,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     end
   end
 
-  # context "create_or_find_tenant" do
-  #  it "create_or_find_tenant" do
-  #    project_name = "project1"
-  #    ctenant = CloudTenant.where(name: project_name).where(ems_id: ems.id).take
-  #    expect(ctenant).to be_nil
-  #    tenant_before_count = Tenant.count
-  #    tenant = ems.create_or_find_tenant(101, project_name, true)
-  #    expect(Tenant.count).to eq(tenant_before_count + 1)
-  #
-  #    expect(tenant.name).to eq(project_name)
-  #    expect(tenant.description).to eq(project_name)
-  #    expect(tenant.source_type).to eq("CloudTenant")
-  #    expect(tenant.parent).to eq(parent_tenant)
-  #    expect(tenant.default_miq_group_id).not_to eq(0)
-
-  #    ctenant = CloudTenant.where(name: project_name).where(ems_id: ems.id).take
-  #    expect(tenant.source_id).to eq(ctenant.id)
-  #    expect(ctenant.name).to eq(project_name)
-  #    expect(ctenant.ext_management_system).to eq(ems)
-  #    expect(ctenant.type).to eq("ManageIQ::Providers::Openstack::CloudManager::CloudTenant")
-  #    expect(ctenant.enabled).to eq(true)
-
-  #    # invoking second time should return existing tenant
-  #    tenant = ems.create_or_find_tenant(101, project_name, true)
-  #    expect(Tenant.count).to eq(tenant_before_count + 1)
-  #    expect(tenant.name).to eq(project_name)
-  #  end
-  # end
-
   context "create_or_find_miq_group_add_user" do
     it "should create new group and add user as member" do
       user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
-      # leave in case we need to enable create_or_find_tenant
-      # tenant = ems.create_or_find_tenant(101, "project1", true)
       tenant = FactoryGirl.create(:tenant, :name => "project1")
 
       admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
