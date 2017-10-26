@@ -34,6 +34,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include CinderManagerMixin
   include SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
+  include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
   supports :provisioning
   supports :cloud_tenant_mapping do
