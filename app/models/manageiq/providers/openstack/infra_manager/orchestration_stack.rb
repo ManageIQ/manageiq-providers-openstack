@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::OrchestrationStack
+  include ManageIQ::Providers::Openstack::HelperMethods
+
   belongs_to :ext_management_system, :foreign_key => :ems_id, :class_name => "ManageIQ::Providers::InfraManager"
   belongs_to :orchestration_template
   belongs_to :cloud_tenant
@@ -25,7 +27,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     end
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationUpdateError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationUpdateError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def update_ready?
@@ -41,7 +43,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     end
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationDeleteError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationDeleteError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_status
@@ -57,7 +59,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     raise
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationStatusError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationStatusError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def post_scaledown_task(services, task_id = nil)
@@ -157,7 +159,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
 
   def log_and_raise_update_error(method_name, err)
     _log.error "MIQ(#{self}.#{method_name}) stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationUpdateError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationUpdateError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def workflow_service

@@ -81,6 +81,6 @@ module ManageIQ::Providers::Openstack::InfraManager::Host::Operations
     end
   rescue => e
     _log.error "node=[#{name}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostSetPowerStateError, e.to_s, e.backtrace
+    raise MiqException::MiqOpenstackInfraHostSetPowerStateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 end

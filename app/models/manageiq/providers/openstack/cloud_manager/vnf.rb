@@ -1,4 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::CloudManager::OrchestrationStack
+  include ManageIQ::Providers::Openstack::HelperMethods
   require_nested :Status
 
   def self.raw_create_stack(orchestration_manager, stack_name, template, options = {})
@@ -11,14 +12,14 @@ class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::C
     end
   rescue => err
     _log.error "stack=[#{stack_name}], error: #{err}"
-    raise MiqException::MiqOrchestrationProvisionError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationProvisionError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_update_stack(_template, _options)
     # TODO(lsmola) implement updates
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationUpdateError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationUpdateError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_delete_stack
@@ -29,7 +30,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::C
     end
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationDeleteError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationDeleteError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
   def raw_status
@@ -46,6 +47,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::C
     raise
   rescue => err
     _log.error "stack=[#{name}], error: #{err}"
-    raise MiqException::MiqOrchestrationStatusError, err.to_s, err.backtrace
+    raise MiqException::MiqOrchestrationStatusError, parse_error_message_from_fog_response(err), err.backtrace
   end
 end
