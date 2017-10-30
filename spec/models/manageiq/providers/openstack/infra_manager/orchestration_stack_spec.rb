@@ -87,4 +87,44 @@ describe ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack do
       end
     end
   end
+
+  describe 'stack scaling' do
+    context 'stack not ready' do
+      it 'should check and throw an exception' do
+        allow(orchestration_stack).to receive(:update_ready?).and_return(false)
+        expect { orchestration_stack.raise_exception_if_stack_not_ready }.to raise_error(MiqException::MiqQueueError)
+        allow(orchestration_stack).to receive(:update_ready?).and_raise("provider connection error")
+        expect { orchestration_stack.raise_exception_if_stack_not_ready }.to raise_error(RuntimeError)
+        allow(orchestration_stack).to receive(:update_ready?).and_return(true)
+        expect(orchestration_stack.raise_exception_if_stack_not_ready).to be_nil
+      end
+    end
+
+    context 'queuing' do
+      it 'should do direct stack updates if workflows are not available' do
+        allow(orchestration_stack).to receive(:queue_post_scaledown_task).and_return(true)
+        allow(orchestration_stack).to receive(:update_ready?).and_return(true)
+        expect(orchestration_stack).to receive(:update_stack).with(any_args).twice
+
+        allow(orchestration_stack).to receive(:can_use_scale_up_workflow?).and_return(false)
+        orchestration_stack.scale_up([])
+
+        expect(orchestration_stack).to receive(:post_scaledown_task).with(any_args).once
+        allow(orchestration_stack).to receive(:can_use_scale_down_workflow?).and_return(false)
+        orchestration_stack.scale_down([], [])
+      end
+
+      it 'should call scale_queue if workflows are available' do
+        allow(orchestration_stack).to receive(:update_ready?).and_return(true)
+
+        expect(orchestration_stack).to receive(:scale_up_using_workflows).with(any_args).once
+        allow(orchestration_stack).to receive(:can_use_scale_up_workflow?).and_return(true)
+        orchestration_stack.scale_up([])
+
+        expect(orchestration_stack).to receive(:scale_down_using_workflows).with(any_args).once
+        allow(orchestration_stack).to receive(:can_use_scale_down_workflow?).and_return(true)
+        orchestration_stack.scale_down([], [])
+      end
+    end
+  end
 end
