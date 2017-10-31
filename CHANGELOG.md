@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 72 ending 2017-10-30
+
+### Added
+- Adds vm_snapshot_success Notification creation [(#128)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/128)
+- Trim Volume error messages out of Fog responses [(#123)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/123)
+- Enable provisioning from Volumes and Volume Snapshots via a proxy type [(#104)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/104)
+- Orchestration Stack and Cloud Tenant targeted refresh [(#86)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/86)
+- Add notifications for VM destroy Cloud Volume and Cloud Volume Snapshot actions [(#85)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/85)
+- Trim error messages from fog responses for remaining models [(#130)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/130)
+
+### Fixed
+- Translate exceptions from raw_connect [(#132)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/132)
+- Fix for amqp events [(#131)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/131)
+- Update event parser code to deal with amqp messages [(#127)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/127)
+- Trim key pair errors out of api responses [(#120)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/120)
+- Only update tenant mapping for the network manager if it's present [(#119)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/119)
+- Update raw connect method to accomodate OpenStack complexity [(#118)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/118)
+- Trim neutron error messages out of fog responses [(#110)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/110) 
+
 ## Unreleased as of Sprint 71 ending 2017-10-16
 
 ### Added
