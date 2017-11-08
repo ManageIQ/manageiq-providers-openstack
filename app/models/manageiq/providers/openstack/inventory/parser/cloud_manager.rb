@@ -172,7 +172,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       image = persister.miq_templates.find_or_build(i.id)
       image.type = "ManageIQ::Providers::Openstack::CloudManager::Template"
       image.uid_ems = i.id
-      image.name = i.name || i.id.to_s
+      image.name = i.name.blank? ? i.id.to_s : i.name
       image.vendor = "openstack"
       image.raw_power_state = "never"
       image.template = true
