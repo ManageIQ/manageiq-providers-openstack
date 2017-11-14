@@ -245,7 +245,11 @@ module ManageIQ::Providers
       # The array of hashes returned from this block is the same as what would
       # be produced by parse_quota ... so, parse_quota just returns the same
       # hash with a compound key.
-      quota.except("id", "tenant_id", "service_name").collect do |key, value|
+      # Metadata items, injected files, server groups, and rbac policies are not modeled.
+      # Skip them for now.
+      quota.except("id", "tenant_id", "service_name", "metadata_items", "injected_file_content_bytes",
+                   "injected_files", "injected_file_path_bytes", "server_groups", "server_group_members",
+                   "rbac_policy").collect do |key, value|
         begin
           value = value.to_i
         rescue

@@ -75,4 +75,46 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudResourceQuota < ::Cloud
   def subnet_quota_used
     CloudSubnet.joins(:cloud_network).where("cloud_networks.cloud_tenant_id" => cloud_tenant_id).count
   end
+
+  def port_quota_used
+    NetworkPort.where(:cloud_tenant_id => cloud_tenant_id).count
+  end
+
+  def volumes_quota_used
+    CloudVolume.where(:cloud_tenant_id => cloud_tenant_id).count
+  end
+
+  def gigabytes_quota_used
+    CloudVolume.where(:cloud_tenant_id => cloud_tenant_id)
+               .sum(:size) / 1_073_741_824
+  end
+
+  def backups_quota_used
+    CloudVolumeBackup.joins(:cloud_volume)
+                     .where("cloud_volumes.cloud_tenant_id" => cloud_tenant_id).count
+  end
+
+  def backup_gigabytes_quota_used
+    CloudVolumeBackup.joins(:cloud_volume)
+                     .where("cloud_volumes.cloud_tenant_id" => cloud_tenant_id)
+                     .sum(:size) / 1_073_741_824
+  end
+
+  def snapshots_quota_used
+    CloudVolumeSnapshot.where(:cloud_tenant_id => cloud_tenant_id).count
+  end
+
+  def ems
+    CloudTenant.find(cloud_tenant_id).ext_management_system
+  end
+
+  def key_pairs_quota_used
+    Authentication.where(:resource_id   => ems.id,
+                         :resource_type => 'ExtManagementSystem',
+                         :type          => ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.name).count
+  end
+
+  def router_quota_used
+    NetworkRouter.where(:cloud_tenant_id => cloud_tenant_id).count
+  end
 end
