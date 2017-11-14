@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 73 ending 2017-11-13
+
+### Fixed
+- Make sure volume template has name [(#148)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/148)
+- If an image name is "" use the image's id instead [(#146)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/146)
+- manageiq-gems-pending is already from manageiq itself [(#141)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/141)
+
+### Removed
+- Remove old refresh settings [(#135)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/135)
+
 ## Unreleased as of Sprint 72 ending 2017-10-30
 
 ### Added
