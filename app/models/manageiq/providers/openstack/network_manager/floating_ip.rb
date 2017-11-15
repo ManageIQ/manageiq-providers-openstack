@@ -27,7 +27,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     floating_network_id = CloudNetwork.find(options[:cloud_network_id]).ems_ref
 
     raw_options = remapping(options)
-
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       floating_ip = service.create_floating_ip(floating_network_id, raw_options)
     end
@@ -42,6 +41,12 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     new_options[:floating_ip_address] = options[:address] if options[:address]
     new_options[:tenant_id] = CloudTenant.find(options[:cloud_tenant_id]).ems_ref if options[:cloud_tenant_id]
     new_options[:port_id] = options[:network_port_ems_ref] if options[:network_port_ems_ref]
+
+    # if we got an empty string or nil for floating_ip_address (probably from the UI form)
+    # then remove the parameter from the options because otherwise Neutron will balk about the IP
+    # being invalid.
+    new_options.delete(:floating_ip_address) if new_options[:floating_ip_address].blank?
+
     new_options.delete(:address)
     new_options.delete(:cloud_network_id)
     new_options.delete(:network_port_ems_ref)
