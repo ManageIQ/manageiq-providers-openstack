@@ -5,6 +5,8 @@ class ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate < ::Orchestrati
   before_update :raw_update, :if => :remote_proxy?
   before_destroy :raw_destroy, :if => :remote_proxy?
 
+  validates :ems_id, :presence => true
+
   def raw_create
     vnfd_data = {:attributes    => {:vnfd => content},
                  :service_types => [{:service_type => "vnfd"}],
