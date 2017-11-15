@@ -239,6 +239,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
           :name,
           :description,
           :content,
+          :ems_id,
           :orderable
         ]
       }

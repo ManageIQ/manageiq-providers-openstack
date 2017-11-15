@@ -377,6 +377,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       vnfd.name = v.name.blank? ? v.id : v.name
       vnfd.description = v.description
       vnfd.content = v.vnf_attributes["vnfd"]
+      vnfd.ems_id = collector.manager.id
       vnfd.orderable = true
     end
   end
