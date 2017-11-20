@@ -150,15 +150,21 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
   def quotas
     collector.quotas.each do |q|
-      q.except("id", "tenant_id", "service_name").collect do |key, value|
+      # Metadata items, injected files, server groups, and rbac policies are not modeled,
+      # Skip them for now.
+      q.except("id", "tenant_id", "service_name", "metadata_items", "injected_file_content_bytes",
+               "injected_files", "injected_file_path_bytes", "server_groups", "server_group_members",
+               "rbac_policy").collect do |key, value|
         begin
           value = value.to_i
         rescue
           value = 0
         end
-        quota = persister.cloud_resource_quotas.find_or_build([q["id"], key])
+        id = q["id"] || q["tenant_id"]
+        uid = [id, key]
+        quota = persister.cloud_resource_quotas.find_or_build(uid)
         quota.service_name = q["service_name"]
-        quota.ems_ref = q["id"]
+        quota.ems_ref = uid
         quota.name = key
         quota.value = value
         quota.cloud_tenant = persister.cloud_tenants.lazy_find(q["tenant_id"])
