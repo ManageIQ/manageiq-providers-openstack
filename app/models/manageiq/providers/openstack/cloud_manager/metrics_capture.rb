@@ -98,4 +98,24 @@ class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::P
     perf_capture_data_openstack_base(self.class, start_time, end_time, resource_filter,
                                      metadata_filter)
   end
+
+  def add_gnocchi_meter_counters(counters, resource_filter)
+    # With Gnocchi, the network metrics are not associated with the instance's resource id
+    # but with the instance's network interface resource id. Here we fetch the counters
+    # for the network interface, so that the network metrics can be fetched.
+    if target.respond_to?(:network_ports)
+      target.network_ports.each do |port|
+        # fetch the list of resources and use the original_resource_id and type to find
+        # the network interface's resource
+        original_resource_id = "#{target.ems_ref}-tap#{port.ems_ref[0..10]}"
+        resources = @perf_ems.list_resources('instance_network_interface').body
+        resources.each do |r|
+          if r["type"].to_s == "instance_network_interface" && r["original_resource_id"].include?(original_resource_id)
+            resource_filter = {"field" => "resource_id", "value" => r["id"]}
+            counters += list_resource_meters(resource_filter, log_header)
+          end
+        end
+      end
+    end
+  end
 end
