@@ -13,6 +13,11 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
         :table => ui_lookup(:table => "ext_management_systems")
       })
     end
+    if network_ports.any?
+      unsupported_reason_add(:delete, _("Unable to delete \"%{name}\" because it has associated ports.") % {
+        :name => name
+      })
+    end
   end
 
   supports :update do
