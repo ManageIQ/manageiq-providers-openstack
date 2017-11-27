@@ -340,7 +340,9 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def validate_destroy
-    if hardware.provision_state == "active"
+    if archived?
+      {:available => true, :message => nil}
+    elsif hardware.provision_state == "active"
       {:available => false, :message => "Cannot remove #{name} because it is in #{hardware.provision_state} state."}
     else
       {:available => true, :message => nil}
@@ -371,15 +373,24 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def destroy_ironic
-    connection = ext_management_system.openstack_handle.detect_baremetal_service
-    response = connection.delete_node(name)
+    # Archived node has no associated back end provider; just delete the AR object
+    if archived?
+      destroy
+    else
+      connection = ext_management_system.openstack_handle.detect_baremetal_service
+      response = connection.delete_node(name)
 
-    if response.status == 204
-      Host.destroy_queue(id)
+      if response.status == 204
+        Host.destroy_queue(id)
+      end
     end
   rescue => e
     _log.error "ironic node=[#{uid_ems}], error: #{e}"
-    raise MiqException::MiqOpenstackInfraHostDestroyError, parse_error_message_from_fog_response(e), e.backtrace
+    if archived?
+      raise e
+    else
+      raise MiqException::MiqOpenstackInfraHostDestroyError, parse_error_message_from_fog_response(e), e.backtrace
+    end
   end
 
   def refresh_network_interfaces(ssu)
