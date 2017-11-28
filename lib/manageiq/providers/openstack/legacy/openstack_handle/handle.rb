@@ -48,7 +48,7 @@ module OpenstackHandle
 
     def self.raw_connect_try_ssl(username, password, address, port, service = "Compute", opts = nil, api_version = nil,
                                  security_protocol = nil)
-      ssl_options = opts.delete(:ssl_options)
+      ssl_options = opts.delete(:ssl_options) || {}
       try_connection(security_protocol, ssl_options) do |scheme, connection_options|
         auth_url = auth_url(address, port, scheme, api_version)
         opts[:connection_options] = (opts[:connection_options] || {}).merge(connection_options)
