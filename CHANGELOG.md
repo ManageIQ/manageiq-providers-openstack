@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Gaprindashvili Beta2
+
+### Fixed
+- If an image name is "", use the image's id instead [(#146)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/146)
+- Make sure volume template has name [(#148)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/148)
+- don't attempt cloning of OpenStack infra templates [(#153)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/153)
+- safe_call should catch Fog::Errors::NotFound [(#156)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/156)
+- Remove floating_ip_address from the create request if it is blank [(#145)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/145)
+- Fix missing quota calculations [(#158)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/158)
+- Restore missing quotas in new graph-based collector [(#159)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/159)
+
 ## Gaprindashvili Beta1
 
 ### Added
