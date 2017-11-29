@@ -1,5 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
-  extend ManageIQ::Providers::Openstack::HelperMethods
+  include ManageIQ::Providers::Openstack::HelperMethods
   has_and_belongs_to_many :miq_templates,
                           :foreign_key             => "cloud_tenant_id",
                           :join_table              => "cloud_tenants_vms",
