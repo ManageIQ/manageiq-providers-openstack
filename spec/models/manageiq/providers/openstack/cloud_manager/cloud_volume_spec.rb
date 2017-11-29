@@ -100,19 +100,19 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
 
     context "#delete_volume" do
       it "validates the volume delete operation when status is in-use" do
-        expect(the_raw_volume).to receive(:status).and_return("in-use")
+        expect(cloud_volume).to receive(:status).and_return("in-use")
         validation = cloud_volume.validate_delete_volume
         expect(validation[:available]).to be false
       end
 
       it "validates the volume delete operation when status is available" do
-        expect(the_raw_volume).to receive(:status).and_return("available")
+        expect(cloud_volume).to receive(:status).and_return("available")
         validation = cloud_volume.validate_delete_volume
         expect(validation[:available]).to be true
       end
 
       it "validates the volume delete operation when status is error" do
-        expect(the_raw_volume).to receive(:status).and_return("error")
+        expect(cloud_volume).to receive(:status).and_return("error")
         validation = cloud_volume.validate_delete_volume
         expect(validation[:available]).to be true
       end

@@ -56,8 +56,8 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   def validate_delete_volume
     msg = validate_volume
     return {:available => msg[:available], :message => msg[:message]} unless msg[:available]
-    if with_provider_object(&:status) == "in-use"
-      return validation_failed("Create Volume", "Can't delete volume that is in use.")
+    if status == "in-use"
+      return validation_failed("Delete Volume", "Can't delete volume that is in use.")
     end
     {:available => true, :message => nil}
   end
