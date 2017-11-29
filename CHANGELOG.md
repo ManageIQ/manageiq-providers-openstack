@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 74 ending 2017-11-27
+
+### Fixed
+- Add error message if FIP assigned to router [(#161)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/161)
+- safe_call should catch Fog::Errors::NotFound [(#156)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/156)
+- Don't attempt cloning of OpenStack infra templates [(#153)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/153)
+- Remove floating_ip_address from the create request if it is blank [(#145)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/145)
+
 ## Unreleased as of Sprint 73 ending 2017-11-13
 
 ### Fixed
