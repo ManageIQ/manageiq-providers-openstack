@@ -32,15 +32,23 @@ module ManageIQ::Providers::Openstack::HelperMethods
       error_options = options.delete(:error) || {}
       success_options.merge!(options)
       error_options.merge!(options)
+
+      # copy subject, initiator and cause from options
+      named_options_keys = [:subject, :initiator, :cause]
+      named_options = {}
+      named_options_keys.map do |key|
+        named_options[key] = options.fetch(key, nil)
+      end
+
       begin
         yield
       rescue => ex
         # Fog specific
         error_message = parse_error_message_from_fog_response(ex.to_s)
-        Notification.create(:type => "#{type}_error".to_sym, :options => error_options.merge(:error_message => error_message))
+        Notification.create(:type => "#{type}_error".to_sym, :options => error_options.merge(:error_message => error_message), **named_options)
         raise
       else
-        Notification.create(:type => "#{type}_success".to_sym, :options => success_options)
+        Notification.create(:type => "#{type}_success".to_sym, :options => success_options, **named_options)
       end
     end
   end
