@@ -1,4 +1,13 @@
 module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
+  def find_destination_in_vmdb(ems_ref)
+    super
+  rescue NoMethodError => ex
+    # TODO: this should not be needed after we update refresh to not disconnect VmOrTemplate from EMS
+    _log.debug("Unable to find Provison Source ExtmanagementSystem: #{ex}")
+    _log.debug("Trying use attribute src_ems_id=#{options[:src_ems_id].try(:first)} instead.")
+    vm_model_class.find_by(:ems_id => options[:src_ems_id].try(:first), :ems_ref => ems_ref)
+  end
+
   def do_clone_task_check(clone_task_ref)
     connection_options = {:tenant_name => options[:cloud_tenant][1]} if options[:cloud_tenant].kind_of?(Array)
     source.with_provider_connection(connection_options) do |openstack|
