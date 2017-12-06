@@ -28,11 +28,11 @@ class ManageIQ::Providers::Openstack::InfraManager::EmsCluster < ::EmsCluster
   end
 
   def service_group_services_running
-    service_group_services.where(SystemService.running_systemd_services_condition)
+    service_group_services.where(:system_services => {:systemd_active => 'running', :systemd_sub => 'running'})
   end
 
   def service_group_services_failed
-    service_group_services.where(SystemService.failed_systemd_services_condition)
+    service_group_services.where(:system_services => {:systemd_active => 'failed'}).or(service_group_services.where(:system_services => {:systemd_sub => 'failed'}))
   end
 
   def host_ids_with_running_service_group(service_group_name)

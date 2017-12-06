@@ -1,27 +1,13 @@
 class ManageIQ::Providers::Openstack::InfraManager::HostServiceGroup < ::HostServiceGroup
-  def running_system_services_condition
-    # UI can't do arel relations, so I need to expose conditions
-    SystemService.running_systemd_services_condition
-  end
-
-  def failed_system_services_condition
-    # UI can't do arel relations, so I need to expose conditions
-    SystemService.failed_systemd_services_condition
-  end
-
-  def host_service_group_system_services_condition
-    SystemService.host_service_group_condition(id)
-  end
-
-  def host_service_group_filesystems_condition
-    Filesystem.host_service_group_condition(id)
+  def host_service_group_filesystems
+    Filesystem.host_service_group_filesystems(id)
   end
 
   def running_system_services
-    system_services.where(running_system_services_condition)
+    SystemService.host_service_group_running_systemd(id)
   end
 
   def failed_system_services
-    system_services.where(failed_system_services_condition)
+    SystemService.host_service_group_failed_systemd(id)
   end
 end
