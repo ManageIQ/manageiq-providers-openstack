@@ -141,4 +141,12 @@ describe ManageIQ::Providers::Openstack::InfraManager do
       expect(@cluster.cloud_object_storage_disk_usage).to eq(12 * 2)
     end
   end
+
+  context "catalog types" do
+    let(:ems) { FactoryGirl.create(:ems_openstack_infra_with_authentication) }
+
+    it "#supported_catalog_types" do
+      expect(ems.supported_catalog_types).to eq(%w(openstack))
+    end
+  end
 end
