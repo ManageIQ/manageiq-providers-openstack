@@ -12,6 +12,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   #
   module ClassMethods
     def raw_connect(password, params, service = "Compute")
+      # TODO: this method seems to be used only for Provider credentials validation
       ems = new
       ems.name                   = params[:name].strip
       ems.provider_region        = params[:provider_region]
@@ -28,6 +29,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
       begin
         ems.connect(:service => service)
+        true
       rescue => err
         miq_exception = translate_exception(err)
         raise unless miq_exception
