@@ -207,4 +207,12 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
 
   end
+
+  context "catalog types" do
+    let(:ems) { FactoryGirl.create(:ems_openstack) }
+
+    it '#supported_catalog_types' do
+      expect(ems.supported_catalog_types).to eq(%w(openstack))
+    end
+  end
 end
