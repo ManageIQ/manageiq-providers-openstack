@@ -70,9 +70,7 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
     # aggregate events from ceilometer don't have an id field for the aggregate,
     # but they do have a "service" field in the form of "aggregate.<id>"
     aggregate_id = ems_event.full_data.fetch_path(:payload, 'service')
-    if !aggregate_id.nil?
-      aggregate_id.sub!('aggregate.', '')
-    end
+    aggregate_id&.sub!('aggregate.', '')
     add_target(target_collection, :host_aggregates, aggregate_id) if aggregate_id
   end
 end

@@ -25,16 +25,16 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
     collect_identity_tenant_references!(target_collection, ems_event)
 
     target_type = if ems_event.event_type.start_with?("floatingip.")
-      :floating_ips
-    elsif ems_event.event_type.start_with?("router.")
-      :routers
-    elsif ems_event.event_type.start_with?("port.")
-      :ports
-    elsif ems_event.event_type.start_with?("network.")
-      :networks
-    elsif ems_event.event_type.start_with?("security_group.")
-      :security_groups
-    end
+                    :floating_ips
+                  elsif ems_event.event_type.start_with?("router.")
+                    :routers
+                  elsif ems_event.event_type.start_with?("port.")
+                    :ports
+                  elsif ems_event.event_type.start_with?("network.")
+                    :networks
+                  elsif ems_event.event_type.start_with?("security_group.")
+                    :security_groups
+                  end
 
     resource_id = ems_event.full_data.fetch_path(:payload, 'resource_id')
     add_target(target_collection, target_type, resource_id) if resource_id
