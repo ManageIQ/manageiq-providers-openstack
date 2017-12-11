@@ -161,6 +161,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     %w(default amqp)
   end
 
+  def supported_catalog_types
+    %w(openstack)
+  end
+
   def supports_provider_id?
     true
   end
