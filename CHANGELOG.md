@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 75 ending 2017-12-11
+
+### Fixed
+- Added supported_catalog_types [(#177)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/177)
+- Skip disabled tenants when connecting to OpenStack [(#172)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/172)
+- Corrects handling of Notification params [(#171)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/171)
+- Set VolumeTemplate name to ID if empty [(#169)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/169)
+- Include HelperMethods instead of extending [(#167)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/167)
+- Don't pass nil ssl_options to try_connection [(#166)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/166)
+- Handle attempts to delete volumes that have already been deleted [(#147)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/147)
+- Replace conditions with scope [(#144)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/144)
+
 ## Unreleased as of Sprint 74 ending 2017-11-27
 
 ### Fixed
