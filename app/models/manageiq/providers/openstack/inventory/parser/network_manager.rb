@@ -48,6 +48,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
         subnet.parent_cloud_subnet = persister.cloud_subnets.lazy_find(s.attributes["vsd_managed"])
         subnet.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
         subnet.cloud_network = network
+        # Always default this to nil so that if a interface that connects this
+        # to a router are removed, then the association is properly broken when
+        # the subnet is refreshed.
+        subnet.network_router = nil
       end
     end
   end
