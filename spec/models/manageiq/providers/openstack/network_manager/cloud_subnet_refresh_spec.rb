@@ -1,5 +1,4 @@
 describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
-
   describe "refresh" do
     before do
       parent_ems = FactoryGirl.create(:ems_openstack_with_authentication)
@@ -55,9 +54,9 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
 
     def mocked_network_routers
       [OpenStruct.new(
-          :id         => "network_router_1",
-          :name       => "network_router_1_name",
-          :attributes => {},
+        :id         => "network_router_1",
+        :name       => "network_router_1_name",
+        :attributes => {},
       )]
     end
 
