@@ -190,7 +190,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
       guest_os = OperatingSystem.normalize_os_name(i.try(:os_distro) || 'unknown')
 
-      hardware = persister.hardwares.find_or_build(i.id)
+      hardware = persister.hardwares.find_or_build(image)
       hardware.vm_or_template = image
       hardware.guest_os = guest_os
       hardware.bitness = image_architecture(i)
@@ -326,7 +326,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       make_flavor(flavor) unless flavor.nil?
       server.flavor = persister.flavors.lazy_find(s.flavor["id"].to_s)
 
-      hardware = persister.hardwares.find_or_build(s.id)
+      hardware = persister.hardwares.find_or_build(server)
       hardware.vm_or_template = server
       hardware.cpu_sockets = flavor.try(:vcpus)
       hardware.cpu_total_cores = flavor.try(:vcpus)
@@ -345,7 +345,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
       unless s.private_ip_address.blank?
         private_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
+          :hardware    => hardware,
           :description => "private"
         )
         private_network.description = "private"
@@ -353,7 +353,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       end
       unless s.public_ip_address.blank?
         public_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
+          :hardware    => hardware,
           :description => "public"
         )
         public_network.description = "public"
