@@ -31,6 +31,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   end
 
   def cloud_tenants
+    self.class.none
   end
 
   def host_aggregates

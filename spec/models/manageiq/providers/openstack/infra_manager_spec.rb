@@ -149,4 +149,10 @@ describe ManageIQ::Providers::Openstack::InfraManager do
       expect(ems.supported_catalog_types).to eq(%w(openstack))
     end
   end
+
+  let(:openstack_infra_manager) { FactoryGirl.create(:ems_openstack_infra_with_authentication) }
+
+  it 'returns empty relation instead of nil when cloud_tenants are requested on infra provider' do
+    expect(openstack_infra_manager.cloud_tenants).to eq(ManageIQ::Providers::Openstack::InfraManager.none)
+  end
 end
