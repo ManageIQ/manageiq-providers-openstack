@@ -448,8 +448,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     else
       # Add owner of the image
       tenants << persister.cloud_tenants.lazy_find(image.owner) if image.owner
-      # Add members of the image
-      unless (members = image.members).blank?
+      # TODO: Glance v2 doesn't support members for "private" images, implement `members` for "shared" images later
+      if image.respond_to?(:is_public) && (members = image.members).any?
         tenants += members.map { |x| persister.cloud_tenants.lazy_find(x['member_id']) }
       end
     end
