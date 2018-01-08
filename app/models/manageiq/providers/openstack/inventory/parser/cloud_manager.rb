@@ -286,7 +286,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
     collector.vms.each do |s|
       if hosts && !s.os_ext_srv_attr_host.blank?
-        parent_host = hosts.find_by('lower(hypervisor_hostname) = ?', s.os_ext_srv_attr_host.downcase)
+        parent_host = hosts.find_by('lower(hypervisor_hostname) = ? OR lower(hypervisor_hostname) = ?', s.os_ext_srv_attr_host.split('.').first.downcase, s.os_ext_srv_attr_host.downcase)
         parent_cluster = parent_host.try(:ems_cluster)
       else
         parent_host = nil
