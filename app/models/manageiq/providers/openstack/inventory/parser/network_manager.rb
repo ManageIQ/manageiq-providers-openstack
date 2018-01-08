@@ -175,7 +175,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       subnet_id = network_port.fixed_ips.try(:first).try(:[], "subnet_id")
       if subnet_id
         subnet = persister.cloud_subnets.find_or_build(subnet_id)
-        subnet.network_router = persister.network_routers.lazy_find(network_port.device_id)
+        return subnet.network_router = persister.network_routers.lazy_find(network_port.device_id)
       end
     end
     # Returning nil for non VM port, we don't want to store those as ports
