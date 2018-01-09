@@ -28,6 +28,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::CloudManager < Manag
       cloud,
       %i(
         hardwares
+        operating_systems
         disks
         networks
         orchestration_templates
