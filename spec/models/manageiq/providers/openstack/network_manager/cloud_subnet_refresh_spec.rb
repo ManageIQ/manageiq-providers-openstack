@@ -27,6 +27,34 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       expect(CloudSubnet.first.network_router_id).to be(nil)
     end
 
+    it "targeted refresh shouldn't remove subnet link to router unless the interface is deleted" do
+      setup_mocked_collector
+      ::Settings.ems_refresh.openstack_network.allow_targeted_refresh = true
+
+      EmsRefresh.refresh(@ems)
+      expect(CloudSubnet.count).to eq(1)
+      expect(CloudNetwork.count).to eq(1)
+      expect(NetworkPort.count).to eq(1)
+      expect(NetworkRouter.count).to eq(1)
+      expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
+
+      target = ManagerRefresh::Target.new(
+          :manager     => @ems.parent_manager,
+          :association => :cloud_networks,
+          :manager_ref => {
+            :ems_ref => "cloud_network_1"
+          }
+        )
+      setup_mocked_targeted_collector
+      EmsRefresh.refresh(target)
+      expect(CloudSubnet.count).to eq(1)
+      expect(CloudNetwork.count).to eq(1)
+      expect(NetworkPort.count).to eq(1)
+      expect(NetworkRouter.count).to eq(1)
+      expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
+      ::Settings.ems_refresh.openstack_network.allow_targeted_refresh = false
+    end
+
     def mocked_network_ports
       [OpenStruct.new(
         :id              => "network_port_1",
@@ -62,6 +90,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
 
     def setup_mocked_collector
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:cloud_services).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:vms).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:tenants).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:orchestration_stacks).and_return([])
@@ -70,6 +99,19 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_ports).and_return(mocked_network_ports)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_routers).and_return(mocked_network_routers)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:security_groups).and_return([])
+    end
+
+    def setup_mocked_targeted_collector
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:availability_zones).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_services).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:vms).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:tenants).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:orchestration_stacks).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_networks).and_return(mocked_cloud_networks)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:floating_ips).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_ports).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_routers).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:security_groups).and_return([])
     end
   end
 end
