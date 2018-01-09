@@ -27,7 +27,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       expect(CloudSubnet.first.network_router_id).to be(nil)
     end
 
-    it "targeted refresh shouldn't remove subnet link to router unless the interface is deleted" do
+    it "shouldn't remove subnet link to router unless the interface is deleted" do
       setup_mocked_collector
       ::Settings.ems_refresh.openstack_network.allow_targeted_refresh = true
 
@@ -53,6 +53,35 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       expect(NetworkRouter.count).to eq(1)
       expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
       ::Settings.ems_refresh.openstack_network.allow_targeted_refresh = false
+    end
+
+    it "should update the subnet's router association correctly if the interface is simultaneously removed and replaced" do
+      setup_mocked_collector
+
+      EmsRefresh.refresh(@ems)
+      expect(CloudSubnet.count).to eq(1)
+      expect(CloudNetwork.count).to eq(1)
+      expect(NetworkPort.count).to eq(1)
+      expect(NetworkRouter.count).to eq(1)
+      expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
+
+      # simulate the interface between a router and subnet being removed on the OSP side, but then recreated via a different port
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_ports).and_return([OpenStruct.new(
+        :id              => "network_port_2",
+        :name            => "network_port_2_name",
+        :device_owner    => "network:router_interface",
+        :device_id       => "network_router_1",
+        :fixed_ips       => [{"subnet_id" => "cloud_subnet_1", "ip_address" => "10.0.0.1"}],
+        :attributes      => {},
+        :security_groups => [],
+      )])
+
+      EmsRefresh.refresh(@ems)
+      expect(CloudSubnet.count).to eq(1)
+      expect(CloudNetwork.count).to eq(1)
+      expect(NetworkPort.count).to eq(1)
+      expect(NetworkRouter.count).to eq(1)
+      expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
     end
 
     def mocked_network_ports
