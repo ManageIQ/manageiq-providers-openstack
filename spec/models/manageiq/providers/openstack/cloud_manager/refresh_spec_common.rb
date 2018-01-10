@@ -248,13 +248,13 @@ module Openstack
       expect(CloudSubnet.count).to                       eq network_data.subnets.count
       expect(NetworkRouter.count).to                     eq network_data.routers.count
       expect(CloudVolume.count).to                       eq volumes_count
-      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
         expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
       else
         expect(VmOrTemplate.count).to                    eq vms_count + images_count
       end
       expect(Vm.count).to                                eq vms_count
-      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
         expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
       else
         expect(MiqTemplate.count).to                     eq images_count
@@ -309,13 +309,13 @@ module Openstack
       expect(@ems.key_pairs.size).to           eq compute_data.key_pairs.count
       security_groups_count = @ems.security_groups.count { |x| x.name != 'default' }
       expect(security_groups_count).to         eq security_groups_count
-      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
         expect(@ems.vms_and_templates.size).to eq vms_count + images_count + volume_and_snapshot_templates_count
       else
         expect(@ems.vms_and_templates.size).to eq vms_count + images_count
       end
       expect(@ems.vms.size).to                 eq vms_count
-      if ::Settings.ems.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
         expect(@ems.miq_templates.size).to     eq images_count + volume_and_snapshot_templates_count
       else
         expect(@ems.miq_templates.size).to     eq images_count

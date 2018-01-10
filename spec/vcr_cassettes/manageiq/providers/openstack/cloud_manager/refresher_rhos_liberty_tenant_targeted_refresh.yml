@@ -17,13 +17,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 05 Jan 2018 13:11:07 GMT
+      - Fri, 05 Jan 2018 18:38:40 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-663f6b58-2ff3-43e7-9b5d-72643d55793d
+      - req-5d51839f-734a-44c1-962b-77ec31ab3808
       Content-Length:
       - '370'
       Connection:
@@ -32,13 +32,13 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-01-05T13:11:07.096704", "expires":
-        "2018-01-05T14:11:07Z", "id": "197f04b2a71e452ebd8e8a258e3b0b40", "audit_ids":
-        ["AFd387_HRV-UrG6pqgvdLg"]}, "serviceCatalog": [], "user": {"username": "admin",
+      string: '{"access": {"token": {"issued_at": "2018-01-05T18:38:40.880958", "expires":
+        "2018-01-05T19:38:40Z", "id": "0f044a8de2e749dcb7da3cfdcc081e0c", "audit_ids":
+        ["wOtRLRepTx6siA3aEm3lhQ"]}, "serviceCatalog": [], "user": {"username": "admin",
         "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
         "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
     http_version: 
-  recorded_at: Fri, 05 Jan 2018 13:11:07 GMT
+  recorded_at: Fri, 05 Jan 2018 18:38:40 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -53,20 +53,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 197f04b2a71e452ebd8e8a258e3b0b40
+      - 0f044a8de2e749dcb7da3cfdcc081e0c
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Fri, 05 Jan 2018 13:11:07 GMT
+      - Fri, 05 Jan 2018 18:38:40 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-afd3b1d7-0814-4a64-8fc3-71cfb8941b20
+      - req-a1a8a9e3-182d-454a-ac29-87efdaaca834
       Content-Length:
       - '500'
       Connection:
@@ -83,13 +83,13 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Fri, 05 Jan 2018 13:11:07 GMT
+  recorded_at: Fri, 05 Jan 2018 18:38:41 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"token":{"id":"197f04b2a71e452ebd8e8a258e3b0b40"},"tenantName":"EmsRefreshSpec-Project"}}'
+      string: '{"auth":{"token":{"id":"0f044a8de2e749dcb7da3cfdcc081e0c"},"tenantName":"EmsRefreshSpec-Project"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -101,13 +101,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 05 Jan 2018 13:11:07 GMT
+      - Fri, 05 Jan 2018 18:38:41 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-5d61679a-ded2-4c84-a3ee-5f458c2d6b92
+      - req-9dea24a8-42e6-40d4-b8e2-21666e9706f6
       Content-Length:
       - '4143'
       Connection:
@@ -116,11 +116,11 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-01-05T13:11:07.916977", "expires":
-        "2018-01-05T14:11:07Z", "id": "643b4eb466c84096bba754b34cdc51ea", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-01-05T18:38:41.364996", "expires":
+        "2018-01-05T19:38:40Z", "id": "b08dc9254ba24adb96da1608c9f88318", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["pUdsHGOhS1mB1Umr1Atk0A",
-        "AFd387_HRV-UrG6pqgvdLg"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["2_zZzEMjTdGXiJyF_hgdlQ",
+        "wOtRLRepTx6siA3aEm3lhQ"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
         "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -164,7 +164,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Fri, 05 Jan 2018 13:11:07 GMT
+  recorded_at: Fri, 05 Jan 2018 18:38:41 GMT
 - request:
     method: get
     uri: http://10.8.99.233:5000/v2.0/tenants
@@ -179,20 +179,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 643b4eb466c84096bba754b34cdc51ea
+      - b08dc9254ba24adb96da1608c9f88318
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Fri, 05 Jan 2018 13:11:08 GMT
+      - Fri, 05 Jan 2018 18:38:41 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-496e27b1-dc23-4432-bea0-a5e0d4ac66fc
+      - req-6c545c63-0dcc-4fc5-9f61-29f1acecd4a9
       Content-Length:
       - '500'
       Connection:
@@ -209,5 +209,5 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Fri, 05 Jan 2018 13:11:08 GMT
+  recorded_at: Fri, 05 Jan 2018 18:38:41 GMT
 recorded_with: VCR 3.0.3
