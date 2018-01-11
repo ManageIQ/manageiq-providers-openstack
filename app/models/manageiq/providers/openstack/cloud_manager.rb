@@ -31,7 +31,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
            :autosave    => true,
            :dependent   => :destroy
 
-  include CinderManagerMixin
+  include ManageIQ::Providers::Openstack::CinderManagerMixin
   include SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
@@ -78,7 +78,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def ensure_cinder_manager
     return false if cinder_manager
-    build_cinder_manager(:type => 'ManageIQ::Providers::StorageManager::CinderManager')
+    build_cinder_manager(:type => 'ManageIQ::Providers::Openstack::StorageManager::CinderManager')
     true
   end
 

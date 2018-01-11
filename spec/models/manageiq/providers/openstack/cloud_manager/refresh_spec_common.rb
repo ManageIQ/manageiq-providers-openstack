@@ -999,19 +999,19 @@ module Openstack
 
       disk = vm.hardware.disks.find_by(:device_name => "Root disk")
       expect(disk).to have_attributes(
-        :device_name => "Root disk",
+        :location    => "vda",
         :device_type => "disk",
         :size        => flavor_expected[:disk].gigabyte
       )
       disk = vm.hardware.disks.find_by(:device_name => "Ephemeral disk")
       expect(disk).to have_attributes(
-        :device_name => "Ephemeral disk",
+        :location    => "vdb",
         :device_type => "disk",
         :size        => flavor_expected[:ephemeral].gigabyte
       )
       disk = vm.hardware.disks.find_by(:device_name => "Swap disk")
       expect(disk).to have_attributes(
-        :device_name => "Swap disk",
+        :location    => "vdc",
         :device_type => "disk",
         :size        => flavor_expected[:swap].megabytes
       )
