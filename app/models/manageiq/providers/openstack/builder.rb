@@ -4,6 +4,14 @@ class ManageIQ::Providers::Openstack::Builder
       case target
       when ManageIQ::Providers::Openstack::CloudManager
         cloud_manager_inventory(ems, target)
+      when ManageIQ::Providers::Openstack::StorageManager::CinderManager
+        inventory(
+          ems,
+          target,
+          ManageIQ::Providers::Openstack::Inventory::Collector::StorageManager::CinderManager,
+          ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::CinderManager,
+          [ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager]
+        )
       when ManageIQ::Providers::Openstack::NetworkManager
         inventory(
           ems,

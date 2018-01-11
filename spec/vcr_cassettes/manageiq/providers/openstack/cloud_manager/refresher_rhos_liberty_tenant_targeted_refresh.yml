@@ -363,7 +363,7 @@ http_interactions:
       string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":""}}'
     headers:
       User-Agent:
-      - fog-core/1.45.0
+      - fog-core/2.0.0
       Content-Type:
       - application/json
   response:
@@ -372,13 +372,21 @@ http_interactions:
       message: OK
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
+=======
+      - Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
+<<<<<<< HEAD
       - req-ba065298-173b-4112-ad70-06c22eec3d44
+=======
+      - req-7e60d4bc-a6f7-43c2-9cfa-76b08af7394b
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Content-Length:
       - '370'
       Connection:
@@ -387,6 +395,7 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
+<<<<<<< HEAD
       string: '{"access": {"token": {"issued_at": "2018-04-13T16:00:33.344975", "expires":
         "2018-04-13T17:00:33Z", "id": "31cb27374fcc4fd1ade597e394fb10e7", "audit_ids":
         ["UmzYmHFKRheDqGxzkDzU0g"]}, "serviceCatalog": [], "user": {"username": "admin",
@@ -394,6 +403,15 @@ http_interactions:
         "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
     http_version: 
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
+=======
+      string: '{"access": {"token": {"issued_at": "2018-01-11T23:19:51.533300", "expires":
+        "2018-01-12T00:19:51Z", "id": "0d9d011df282482e999e90255688535e", "audit_ids":
+        ["B5WhTlbvR_u1uvW8ho99kw"]}, "serviceCatalog": [], "user": {"username": "admin",
+        "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
+        "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
+    http_version: 
+  recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -402,26 +420,38 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog-core/1.45.0
+      - fog-core/2.0.0
       Content-Type:
       - application/json
       Accept:
       - application/json
       X-Auth-Token:
+<<<<<<< HEAD
       - 31cb27374fcc4fd1ade597e394fb10e7
+=======
+      - 0d9d011df282482e999e90255688535e
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
+=======
+      - Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
+<<<<<<< HEAD
       - req-3cd1d2e4-42e2-4484-88b6-d0f8b52ffe9e
+=======
+      - req-4a9ae1d4-e4f2-47f8-a2da-20f793078007
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Content-Length:
       - '500'
       Connection:
@@ -438,16 +468,24 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
+<<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
+=======
+  recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
     body:
       encoding: UTF-8
+<<<<<<< HEAD
       string: '{"auth":{"token":{"id":"31cb27374fcc4fd1ade597e394fb10e7"},"tenantName":"EmsRefreshSpec-Project"}}'
+=======
+      string: '{"auth":{"token":{"id":"0d9d011df282482e999e90255688535e"},"tenantName":"EmsRefreshSpec-Project"}}'
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
     headers:
       User-Agent:
-      - fog-core/1.45.0
+      - fog-core/2.0.0
       Content-Type:
       - application/json
   response:
@@ -456,13 +494,21 @@ http_interactions:
       message: OK
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
+=======
+      - Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
+<<<<<<< HEAD
       - req-98ce29fa-ddcf-4397-a391-3322eed6475f
+=======
+      - req-3d69a1bc-377d-43df-9cbc-6bb888410b46
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Content-Length:
       - '4143'
       Connection:
@@ -471,11 +517,19 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
+<<<<<<< HEAD
       string: '{"access": {"token": {"issued_at": "2018-04-13T16:00:33.757412", "expires":
         "2018-04-13T17:00:33Z", "id": "0189c70310364a709b05becdea94b060", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
         "name": "EmsRefreshSpec-Project"}, "audit_ids": ["9ekOdpOtSaiwAWQZXUznLA",
         "UmzYmHFKRheDqGxzkDzU0g"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+=======
+      string: '{"access": {"token": {"issued_at": "2018-01-11T23:19:51.847727", "expires":
+        "2018-01-12T00:19:51Z", "id": "75f237fb19c1443dbe690ae8670363cf", "tenant":
+        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["Et1c4IZ2TNmI24-rFn1RDw",
+        "B5WhTlbvR_u1uvW8ho99kw"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
         "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -519,7 +573,11 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
+<<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
+=======
+  recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -528,26 +586,38 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog-core/1.45.0
+      - fog-core/2.0.0
       Content-Type:
       - application/json
       Accept:
       - application/json
       X-Auth-Token:
+<<<<<<< HEAD
       - 31cb27374fcc4fd1ade597e394fb10e7
+=======
+      - 75f237fb19c1443dbe690ae8670363cf
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
+=======
+      - Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
+<<<<<<< HEAD
       - req-f02bb50c-53fb-411d-a506-f641417579f5
+=======
+      - req-65273a18-ee08-4ff8-b47c-2df2a5226580
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
       Content-Length:
       - '500'
       Connection:
@@ -564,6 +634,7 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
+<<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
 - request:
     method: post
@@ -2206,4 +2277,7 @@ http_interactions:
         "subnetpool_id": null}]}'
     http_version: 
   recorded_at: Fri, 13 Apr 2018 16:00:39 GMT
+=======
+  recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
+>>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
 recorded_with: VCR 3.0.3

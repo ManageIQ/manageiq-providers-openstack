@@ -4,6 +4,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
 
   require_nested :CloudManager
   require_nested :NetworkManager
+  require_nested :CinderManager
   require_nested :TargetCollection
 
   attr_reader :availability_zones
@@ -25,6 +26,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
   attr_reader :security_groups
   attr_reader :volume_templates
   attr_reader :volume_snapshot_templates
+  attr_reader :volumes
+  attr_reader :snapshots
+  attr_reader :backups
 
   def initialize(_manager, _target)
     super
@@ -55,6 +59,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
     @network_ports             = []
     @network_routers           = []
     @security_groups           = []
+    # cinder
+    @volumes                   = []
+    @snapshots                 = []
+    @backups                   = []
   end
 
   def connection
@@ -64,6 +72,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
 
   def compute_service
     connection
+  end
+
+  def cinder_service
+    @cinder_service ||= manager.openstack_handle.cinder_service
   end
 
   def identity_service
