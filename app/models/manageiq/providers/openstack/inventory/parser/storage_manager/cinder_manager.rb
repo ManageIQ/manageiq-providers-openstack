@@ -70,8 +70,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
 
       attachment_names = {'vda' => 'Root disk', 'vdb' => 'Ephemeral disk', 'vdc' => 'Swap disk'}
       persister.disks.find_or_build_by(
-        # FIXME: find works here, but lazy_find doesn't... I don't understand why
-        :hardware    => persister.hardwares.find(a["server_id"]),
+        :hardware    => persister.hardwares.lazy_find(a["server_id"]),
         :device_name => attachment_names.fetch(dev, dev)
       ).assign_attributes(
         :location        => dev,
