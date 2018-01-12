@@ -39,12 +39,12 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
 
       target = ManagerRefresh::Target.new(
-          :manager     => @ems.parent_manager,
-          :association => :cloud_networks,
-          :manager_ref => {
-            :ems_ref => "cloud_network_1"
-          }
-        )
+        :manager     => @ems.parent_manager,
+        :association => :cloud_networks,
+        :manager_ref => {
+          :ems_ref => "cloud_network_1"
+        }
+      )
       setup_mocked_targeted_collector
       EmsRefresh.refresh(target)
       expect(CloudSubnet.count).to eq(1)
@@ -56,6 +56,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     end
 
     it "should update the subnet's router association correctly if the interface is simultaneously removed and replaced" do
+      pending("needs a schema update to associate routers to subnets through network ports instead of directly")
       setup_mocked_collector
 
       EmsRefresh.refresh(@ems)
