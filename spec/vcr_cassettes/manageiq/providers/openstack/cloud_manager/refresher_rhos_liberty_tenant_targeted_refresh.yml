@@ -373,20 +373,28 @@ http_interactions:
     headers:
       Date:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
 =======
       - Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - Fri, 12 Jan 2018 21:22:01 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - req-ba065298-173b-4112-ad70-06c22eec3d44
 =======
       - req-7e60d4bc-a6f7-43c2-9cfa-76b08af7394b
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - req-68ea0069-4d44-4bf7-9e55-de3e82ec1379
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Content-Length:
       - '370'
       Connection:
@@ -395,6 +403,7 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
+<<<<<<< HEAD
 <<<<<<< HEAD
       string: '{"access": {"token": {"issued_at": "2018-04-13T16:00:33.344975", "expires":
         "2018-04-13T17:00:33Z", "id": "31cb27374fcc4fd1ade597e394fb10e7", "audit_ids":
@@ -412,6 +421,15 @@ http_interactions:
     http_version: 
   recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      string: '{"access": {"token": {"issued_at": "2018-01-12T21:22:02.025330", "expires":
+        "2018-01-12T22:22:02Z", "id": "a55ee0cb63c641d8b0fad3056eafab19", "audit_ids":
+        ["i4Z8VJ-9TDivoxkk2wWUyA"]}, "serviceCatalog": [], "user": {"username": "admin",
+        "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
+        "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
+    http_version: 
+  recorded_at: Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -427,10 +445,14 @@ http_interactions:
       - application/json
       X-Auth-Token:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - 31cb27374fcc4fd1ade597e394fb10e7
 =======
       - 0d9d011df282482e999e90255688535e
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - a55ee0cb63c641d8b0fad3056eafab19
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
   response:
     status:
       code: 200
@@ -438,20 +460,28 @@ http_interactions:
     headers:
       Date:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
 =======
       - Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - req-3cd1d2e4-42e2-4484-88b6-d0f8b52ffe9e
 =======
       - req-4a9ae1d4-e4f2-47f8-a2da-20f793078007
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - req-94da74c9-43af-4015-9972-e43857276c30
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Content-Length:
       - '500'
       Connection:
@@ -469,20 +499,28 @@ http_interactions:
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
 <<<<<<< HEAD
+<<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
 =======
   recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+  recorded_at: Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
     body:
       encoding: UTF-8
 <<<<<<< HEAD
+<<<<<<< HEAD
       string: '{"auth":{"token":{"id":"31cb27374fcc4fd1ade597e394fb10e7"},"tenantName":"EmsRefreshSpec-Project"}}'
 =======
       string: '{"auth":{"token":{"id":"0d9d011df282482e999e90255688535e"},"tenantName":"EmsRefreshSpec-Project"}}'
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      string: '{"auth":{"token":{"id":"a55ee0cb63c641d8b0fad3056eafab19"},"tenantName":"EmsRefreshSpec-Project"}}'
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
     headers:
       User-Agent:
       - fog-core/2.0.0
@@ -495,20 +533,28 @@ http_interactions:
     headers:
       Date:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
 =======
       - Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - req-98ce29fa-ddcf-4397-a391-3322eed6475f
 =======
       - req-3d69a1bc-377d-43df-9cbc-6bb888410b46
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - req-9cca1341-e183-4a18-920a-6af9e0db5de5
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Content-Length:
       - '4143'
       Connection:
@@ -517,6 +563,7 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
+<<<<<<< HEAD
 <<<<<<< HEAD
       string: '{"access": {"token": {"issued_at": "2018-04-13T16:00:33.757412", "expires":
         "2018-04-13T17:00:33Z", "id": "0189c70310364a709b05becdea94b060", "tenant":
@@ -530,6 +577,13 @@ http_interactions:
         "name": "EmsRefreshSpec-Project"}, "audit_ids": ["Et1c4IZ2TNmI24-rFn1RDw",
         "B5WhTlbvR_u1uvW8ho99kw"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      string: '{"access": {"token": {"issued_at": "2018-01-12T21:22:02.556120", "expires":
+        "2018-01-12T22:22:02Z", "id": "20248b86512e452fa28c4b63792a1797", "tenant":
+        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["9qndk0TwQ8y7S68VUrpA1Q",
+        "i4Z8VJ-9TDivoxkk2wWUyA"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
         "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -574,10 +628,14 @@ http_interactions:
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
 <<<<<<< HEAD
+<<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
 =======
   recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+  recorded_at: Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -593,10 +651,14 @@ http_interactions:
       - application/json
       X-Auth-Token:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - 31cb27374fcc4fd1ade597e394fb10e7
 =======
       - 75f237fb19c1443dbe690ae8670363cf
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - 20248b86512e452fa28c4b63792a1797
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
   response:
     status:
       code: 200
@@ -604,20 +666,28 @@ http_interactions:
     headers:
       Date:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - Fri, 13 Apr 2018 16:00:33 GMT
 =======
       - Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
 <<<<<<< HEAD
+<<<<<<< HEAD
       - req-f02bb50c-53fb-411d-a506-f641417579f5
 =======
       - req-65273a18-ee08-4ff8-b47c-2df2a5226580
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+      - req-1da3bf29-f25b-43f8-89cb-c9dd697031de
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
       Content-Length:
       - '500'
       Connection:
@@ -634,6 +704,7 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
+<<<<<<< HEAD
 <<<<<<< HEAD
   recorded_at: Fri, 13 Apr 2018 16:00:33 GMT
 - request:
@@ -2280,4 +2351,7 @@ http_interactions:
 =======
   recorded_at: Thu, 11 Jan 2018 23:19:51 GMT
 >>>>>>> 3ff912e... Implement graph refresh for the Cinder manager
+=======
+  recorded_at: Fri, 12 Jan 2018 21:22:02 GMT
+>>>>>>> f3c4970... Revert ensure_cinder_manager STI change
 recorded_with: VCR 3.0.3
