@@ -42,6 +42,13 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
       :parent   => manager.network_manager
     )
 
+    ######## Storage ########
+    add_inventory_collections_with_references(
+      storage,
+      %i(cloud_volumes cloud_volume_backups cloud_volume_snapshots),
+      :parent => manager.cinder_manager
+    )
+
     ######## Custom processing of Ancestry ##########
     add_inventory_collection(
       cloud.vm_and_miq_template_ancestry(
@@ -91,13 +98,5 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
 
   def name_references(collection)
     target.manager_refs_by_association.try(:[], collection).try(:[], :name).try(:to_a) || []
-  end
-
-  def cloud
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager
-  end
-
-  def network
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
   end
 end

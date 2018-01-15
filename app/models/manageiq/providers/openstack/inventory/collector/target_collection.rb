@@ -194,6 +194,14 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     @vms_by_id ||= Hash[vms.collect { |s| [s.id, s] }]
   end
 
+  def cloud_volumes
+    return [] if references(:cloud_volumes).blank?
+    return @cloud_volumes if @cloud_volumes.any?
+    @cloud_volumes = references(:cloud_volumes).collect do |volume_id|
+      safe_get { cinder_service.volumes.get(volume_id) }
+    end.compact
+  end
+
   private
 
   def parse_targets!
@@ -277,6 +285,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       vm.key_pairs.collect(&:name).compact.each do |name|
         add_simple_target!(:key_pairs, name)
       end
+      vm.cloud_volumes.collect(&:ems_ref).compact.each do |ems_ref|
+        add_simple_target!(:cloud_volumes, ems_ref)
+      end
       add_simple_target!(:images, vm.parent.ems_ref) if vm.parent
       add_simple_target!(:cloud_tenants, vm.cloud_tenant.ems_ref) if vm.cloud_tenant
     end
@@ -290,6 +301,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       add_simple_target!(:cloud_tenants, vm.tenant_id)
       add_simple_target!(:flavors, vm.flavor["id"])
 
+      # pull the attachments from the raw attribute to avoid Fog making an unnecessary call
+      # to inflate the volumes before we need them
+      vm.attributes.fetch('os-extended-volumes:volumes_attached', []).each do |attachment|
+        add_simple_target!(:cloud_volumes, attachment["id"])
+      end
       vm.os_interfaces.each do |iface|
         add_simple_target!(:network_ports, iface.port_id)
         add_simple_target!(:cloud_networks, iface.net_id)
