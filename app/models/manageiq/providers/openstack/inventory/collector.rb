@@ -26,9 +26,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
   attr_reader :security_groups
   attr_reader :volume_templates
   attr_reader :volume_snapshot_templates
-  attr_reader :volumes
-  attr_reader :snapshots
-  attr_reader :backups
+  attr_reader :cloud_volumes
+  attr_reader :cloud_volume_snapshots
+  attr_reader :cloud_volume_backups
 
   def initialize(_manager, _target)
     super
@@ -59,9 +59,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
     @network_routers           = []
     @security_groups           = []
     # cinder
-    @volumes                   = []
-    @snapshots                 = []
-    @backups                   = []
+    @cloud_volumes             = []
+    @cloud_volume_snapshots    = []
+    @cloud_volume_backups      = []
   end
 
   def connection

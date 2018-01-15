@@ -1,12 +1,12 @@
 class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
   def parse
-    volumes
-    snapshots
-    backups
+    cloud_volumes
+    cloud_volume_snapshots
+    cloud_volume_backups
   end
 
-  def volumes
-    collector.volumes.each do |v|
+  def cloud_volumes
+    collector.cloud_volumes.each do |v|
       volume = persister.cloud_volumes.find_or_build(v.id)
       volume.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
       volume.name = volume_name(v)
@@ -24,8 +24,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
     end
   end
 
-  def snapshots
-    collector.snapshots.each do |s|
+  def cloud_volume_snapshots
+    collector.cloud_volume_snapshots.each do |s|
       snapshot = persister.cloud_volume_snapshots.find_or_build(s['id'])
       snapshot.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot"
       snapshot.creation_time = s['created_at']
@@ -39,8 +39,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
     end
   end
 
-  def backups
-    collector.backups.each do |b|
+  def cloud_volume_backups
+    collector.cloud_volume_backups.each do |b|
       backup = persister.cloud_volume_backups.find_or_build(b['id'])
       backup.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup"
       backup.status = b['status']
