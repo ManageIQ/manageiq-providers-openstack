@@ -4,6 +4,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
       attributes = {
         :model_class                 => ::ManageIQ::Providers::Openstack::NetworkManager::NetworkPort,
         :association                 => :network_ports,
+        :delete_method               => :disconnect_port,
         :inventory_object_attributes => [
           :type,
           :name,
