@@ -27,7 +27,8 @@ class ManageIQ::Providers::Openstack::Builder
           ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection,
           ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection,
           [ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager,
-           ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager]
+           ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager,
+           ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager]
         )
       else
         # Fallback to ems refresh

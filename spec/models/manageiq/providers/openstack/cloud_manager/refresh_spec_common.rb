@@ -992,7 +992,7 @@ module Openstack
         :disk_capacity => 2.5.gigabytes # TODO(lsmola) Where is this coming from?
       )
 
-      expect(vm.hardware.disks.size).to eq disks_count_for_vm(vm_expected, false)
+      expect(vm.hardware.disks.size).to eq disks_count_for_vm(vm_expected, true)
 
       # TODO(lsmola) the flavor disk data should be stored in Flavor model, getting it from test data now
       flavor_expected = compute_data.flavors.detect { |x| x[:name] == vm.flavor.name }
@@ -1028,6 +1028,8 @@ module Openstack
       expect(network_private).to have_attributes(
         :description => "private",
       )
+
+      expect(vm.cloud_volumes.map(&:name)).to match_array ["EmsRefreshSpec-Volume", "EmsRefreshSpec-Volume-2"]
     end
   end
 end

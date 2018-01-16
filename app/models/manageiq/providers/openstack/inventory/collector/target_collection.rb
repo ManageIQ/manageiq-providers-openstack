@@ -15,8 +15,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
   end
 
-  def orchestration_stack_references
-    @orchestration_stack_references ||= target.targets.select { |x| x.kind_of?(ManagerRefresh::Target) && x.association == :orchestration_stacks }
+  def targets_by_association(association)
+    target.targets.select { |x| x.kind_of?(ManagerRefresh::Target) && x.association == association }.uniq { |x| x.manager_ref[:ems_ref] }
   end
 
   def name_references(collection)
@@ -78,9 +78,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def orchestration_stacks
-    return [] if orchestration_stack_references.blank?
+    return [] if targets_by_association(:orchestration_stacks).blank?
     return @orchestration_stacks if @orchestration_stacks.any?
-    @orchestration_stacks = orchestration_stack_references.collect do |target|
+    @orchestration_stacks = targets_by_association(:orchestration_stacks).collect do |target|
       get_orchestration_stack(target.manager_ref[:ems_ref], target.options[:tenant_id])
     end.compact
   rescue Excon::Errors::Forbidden
@@ -197,9 +197,40 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def cloud_volumes
     return [] if references(:cloud_volumes).blank?
     return @cloud_volumes if @cloud_volumes.any?
-    @cloud_volumes = references(:cloud_volumes).collect do |volume_id|
-      safe_get { cinder_service.volumes.get(volume_id) }
+    @cloud_volumes = targets_by_association(:cloud_volumes).collect do |target|
+      scoped_get_volume(target.manager_ref[:ems_ref], target.options[:tenant_id])
     end.compact
+  end
+
+  def cloud_volume_snapshots
+    return [] if references(:cloud_volume_snapshots).blank?
+    return @cloud_volume_snapshots if @cloud_volume_snapshots.any?
+    @cloud_volume_snapshots = targets_by_association(:cloud_volume_snapshots).collect do |target|
+      scoped_get_snapshot(target.manager_ref[:ems_ref], target.options[:tenant_id])
+    end.compact
+  end
+
+  def cloud_volume_backups
+    return [] if references(:cloud_volume_backups).blank?
+    return @cloud_volume_backups if @cloud_volume_backups.any?
+    @cloud_volume_backups = targets_by_association(:cloud_volume_backups).collect do |target|
+      scoped_get_backup(target.manager_ref[:ems_ref], target.options[:tenant_id])
+    end.compact
+  end
+
+  def scoped_get_volume(volume_id, tenant_id)
+    tenant = memoized_get_tenant(tenant_id)
+    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).volumes.get(volume_id) }
+  end
+
+  def scoped_get_snapshot(snapshot_id, tenant_id)
+    tenant = memoized_get_tenant(tenant_id)
+    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).snapshots.get(snapshot_id) }
+  end
+
+  def scoped_get_backup(backup_id, tenant_id)
+    tenant = memoized_get_tenant(tenant_id)
+    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).backups.get(backup_id) }
   end
 
   private
@@ -276,7 +307,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       stack      = vm.orchestration_stack
       all_stacks = ([stack] + (stack.try(:ancestors) || [])).compact
 
-      all_stacks.each { |s| add_simple_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.id) }
+      all_stacks.each { |s| add_simple_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.ems_ref) }
       vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:cloud_networks, ems_ref) }
       vm.floating_ips.collect(&:address).compact.each { |address| add_simple_target!(:floating_ips, address) }
       vm.network_ports.collect(&:ems_ref).compact.each do |ems_ref|
@@ -286,7 +317,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
         add_simple_target!(:key_pairs, name)
       end
       vm.cloud_volumes.collect(&:ems_ref).compact.each do |ems_ref|
-        add_simple_target!(:cloud_volumes, ems_ref)
+        add_simple_target!(:cloud_volumes, ems_ref, :tenant_id => vm.cloud_tenant.ems_ref)
       end
       add_simple_target!(:images, vm.parent.ems_ref) if vm.parent
       add_simple_target!(:cloud_tenants, vm.cloud_tenant.ems_ref) if vm.cloud_tenant
@@ -304,7 +335,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       # pull the attachments from the raw attribute to avoid Fog making an unnecessary call
       # to inflate the volumes before we need them
       vm.attributes.fetch('os-extended-volumes:volumes_attached', []).each do |attachment|
-        add_simple_target!(:cloud_volumes, attachment["id"])
+        add_simple_target!(:cloud_volumes, attachment["id"], :tenant_id => vm.tenant_id)
       end
       vm.os_interfaces.each do |iface|
         add_simple_target!(:network_ports, iface.port_id)
