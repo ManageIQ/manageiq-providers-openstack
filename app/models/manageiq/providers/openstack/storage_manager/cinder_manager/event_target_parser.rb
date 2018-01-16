@@ -24,13 +24,29 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     # there's almost always a tenant id regardless of event type
     collect_identity_tenant_references!(target_collection, ems_event)
 
-    # WIP
+    target_type = if ems_event.event_type.start_with?("volume.")
+                    collect_volume_references!(target_collection, ems_event)
+                  elsif ems_event.event_type.start_with?("snapshot.")
+                    collect_snapshot_references!(target_collection, ems_event)
+                  end
 
     target_collection.targets
   end
 
+  def collect_volume_references!(target_collection, ems_event)
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    add_target(target_collection, :cloud_volumes, resource_id) if resource_id
+  end
+
+  def collect_snapshot_references!(target_collection, ems_event)
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'snapshot_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    add_target(target_collection, :cloud_volume_snapshots, resource_id) if resource_id
+    volume_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id')
+    add_target(target_collection, :cloud_volumes, volume_id) if volume_id
+  end
+
   def collect_identity_tenant_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:payload, 'tenant_id') || ems_event.full_data.fetch_path(:payload, 'project_id') || ems_event.full_data.fetch_path(:payload, 'initiator', 'project_id')
+    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id') || ems_event.full_data.fetch_path(:content, 'payload', 'project_id') || ems_event.full_data.fetch_path(:content, 'payload', 'initiator', 'project_id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end
 
