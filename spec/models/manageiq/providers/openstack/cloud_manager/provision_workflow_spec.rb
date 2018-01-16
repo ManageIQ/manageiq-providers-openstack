@@ -216,6 +216,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
           expect(workflow.allowed_availability_zones).to eq({})
         end
 
+        it "#allowed_cloud_networks" do
+          expect(workflow.allowed_cloud_networks).to eq({})
+        end
+
         it "#allowed_guest_access_key_pairs" do
           expect(workflow.allowed_guest_access_key_pairs).to eq({})
         end
@@ -239,6 +243,12 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
           azs = workflow.allowed_availability_zones
           expect(azs.length).to eq(1)
           expect(azs.first).to eq([az.id, az.name])
+        end
+
+        it "#allowed_cloud_networks" do
+          cn = FactoryGirl.create(:cloud_network)
+          provider.cloud_networks << cn
+          expect(workflow.allowed_cloud_networks).to eq(cn.id => cn.name)
         end
 
         it "#allowed_guest_access_key_pairs" do
