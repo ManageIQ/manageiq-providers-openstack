@@ -85,7 +85,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       :message    => payload,
       :timestamp  => "2016-03-13T16:59:01.760000",
       :username   => "",
-      :full_data  => {:payload => payload },
+      :full_data  => {:content => {'payload' => payload}},
       :ems_id     => @ems.network_manager.id
     }
     EmsEvent.add(@ems.network_manager.id, event_hash)
