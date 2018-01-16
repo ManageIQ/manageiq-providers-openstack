@@ -36,14 +36,14 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
                     :security_groups
                   end
 
-    resource_id = ems_event.full_data.fetch_path(:payload, 'resource_id')
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
     add_target(target_collection, target_type, resource_id) if resource_id
 
     target_collection.targets
   end
 
   def collect_identity_tenant_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:payload, 'tenant_id') || ems_event.full_data.fetch_path(:payload, 'project_id') || ems_event.full_data.fetch_path(:payload, 'initiator', 'project_id')
+    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id') || ems_event.full_data.fetch_path(:content, 'payload', 'project_id') || ems_event.full_data.fetch_path(:content, 'payload', 'initiator', 'project_id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end
 

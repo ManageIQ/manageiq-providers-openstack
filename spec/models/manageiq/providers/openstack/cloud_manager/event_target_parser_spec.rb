@@ -87,7 +87,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
       :message    => payload,
       :timestamp  => "2016-03-13T16:59:01.760000",
       :username   => "",
-      :full_data  => {:payload => payload },
+      :full_data  => {:content => {'payload' => payload}},
       :ems_id     => @ems.id
     }
     EmsEvent.add(@ems.id, event_hash)
