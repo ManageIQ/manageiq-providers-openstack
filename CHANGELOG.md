@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 77 ending 2018-01-15
+
+### Fixed
+- Add missing 'return' statement to 'network_manager.find_device_object' [(#188)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/188)
+- Fix refresh for private images [(#187)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/187)
+- Use only hypervisor hostname to match infra host with cloud vm [(#186)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/186)
+- Return empty AR relation instead of nil for ::InfraManager#cloud_tenants [(#184)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/184)
+- Improve Targeted Refresh for Cloud and Network managers [(#175)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/175)
+
 ## Unreleased as of Sprint 76 ending 2018-01-01
 
 ### Fixed
