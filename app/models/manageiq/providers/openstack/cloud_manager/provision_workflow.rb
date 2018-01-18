@@ -26,6 +26,12 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     ems.each_with_object({}) { |f, h| h[f.id] = f.name }
   end
 
+  def availability_zone_to_cloud_network(src)
+    load_ar_obj(src[:ems]).all_cloud_networks.each_with_object({}) do |cn, hash|
+      hash[cn.id] = cn.name
+    end
+  end
+
   def set_request_values(values)
     values[:volumes] = prepare_volumes_fields(values)
     super
