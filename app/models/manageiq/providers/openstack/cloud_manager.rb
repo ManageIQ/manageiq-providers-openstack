@@ -129,6 +129,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     )
   end
 
+  def self.api_allowed_attributes
+    %w[keystone_v3_domain_id].freeze
+  end
+
   def hostname_uniqueness_valid?
     return unless hostname_required?
     return unless hostname.present? # Presence is checked elsewhere
