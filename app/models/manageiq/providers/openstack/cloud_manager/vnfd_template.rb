@@ -66,4 +66,8 @@ class ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate < ::Orchestrati
     self.orderable = true
     save!
   end
+
+  def self.display_name(number = 1)
+    n_('VNF Template', 'VNF Templates', number)
+  end
 end

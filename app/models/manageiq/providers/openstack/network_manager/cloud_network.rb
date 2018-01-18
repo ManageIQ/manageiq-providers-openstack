@@ -182,6 +182,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     end
   end
 
+  def self.display_name(number = 1)
+    n_('Cloud Network (OpenStack)', 'Cloud Networks (OpenStack)', number)
+  end
+
   private
 
   def connection_options(cloud_tenant = nil)

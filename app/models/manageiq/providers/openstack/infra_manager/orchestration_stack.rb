@@ -139,6 +139,10 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     log_and_raise_update_error(__method__, err)
   end
 
+  def self.display_name(number = 1)
+    n_('Orchestration Stack (OpenStack)', 'Orchestration Stacks (OpenStack)', number)
+  end
+
   private
 
   def scale_queue(method_name, userid, parameters)

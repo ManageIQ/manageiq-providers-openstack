@@ -96,6 +96,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     connection_options
   end
 
+  def self.display_name(number = 1)
+    n_('Cloud Subnet (OpenStack)', 'Cloud Subnets (OpenStack)', number)
+  end
+
   private
 
   def connection_options(cloud_tenant = nil)

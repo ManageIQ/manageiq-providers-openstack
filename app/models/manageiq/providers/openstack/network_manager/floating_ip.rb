@@ -116,6 +116,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     connection_options
   end
 
+  def self.display_name(number = 1)
+    n_('Floating IP (OpenStack)', 'Floating IPs (OpenStack)', number)
+  end
+
   private
 
   def connection_options(cloud_tenant = nil)

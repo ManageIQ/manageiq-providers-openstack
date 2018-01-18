@@ -162,6 +162,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     connection_options
   end
 
+  def self.display_name(number = 1)
+    n_('Network Router (OpenStack)', 'Network Routers (OpenStack)', number)
+  end
+
   private
 
   def connection_options(cloud_tenant = nil)

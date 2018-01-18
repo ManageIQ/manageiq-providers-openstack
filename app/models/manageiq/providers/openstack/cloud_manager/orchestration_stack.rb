@@ -68,4 +68,8 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack < ManageI
       end
     end
   end
+
+  def self.display_name(number = 1)
+    n_('Orchestration Stack (OpenStack)', 'Orchestration Stacks (OpenStack)', number)
+  end
 end

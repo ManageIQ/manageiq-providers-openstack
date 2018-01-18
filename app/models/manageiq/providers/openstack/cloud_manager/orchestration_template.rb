@@ -83,6 +83,10 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
     content.strip.start_with?('{') ? 'json'.freeze : 'yaml'.freeze
   end
 
+  def self.display_name(number = 1)
+    n_('Heat Template', 'Heat Templates', number)
+  end
+
   private
 
   def parse
