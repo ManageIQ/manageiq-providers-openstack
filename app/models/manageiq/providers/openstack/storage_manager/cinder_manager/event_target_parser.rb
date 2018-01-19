@@ -24,11 +24,11 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     # there's almost always a tenant id regardless of event type
     collect_identity_tenant_references!(target_collection, ems_event)
 
-    target_type = if ems_event.event_type.start_with?("volume.")
-                    collect_volume_references!(target_collection, ems_event)
-                  elsif ems_event.event_type.start_with?("snapshot.")
-                    collect_snapshot_references!(target_collection, ems_event)
-                  end
+    if ems_event.event_type.start_with?("volume.")
+      collect_volume_references!(target_collection, ems_event)
+    elsif ems_event.event_type.start_with?("snapshot.")
+      collect_snapshot_references!(target_collection, ems_event)
+    end
 
     target_collection.targets
   end
