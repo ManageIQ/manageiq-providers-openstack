@@ -107,6 +107,7 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
           :memory_mb,
           :disk_capacity,
           :bitness,
+          :guest_os,
           :disk_size_minimum,
           :memory_mb_minimum,
           :root_device_type,
@@ -114,6 +115,19 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
           :virtualization_type
         ]
       }
+      super(attributes.merge!(extra_attributes))
+    end
+
+    def operating_systems(extra_attributes = {})
+      attributes = {
+        :inventory_object_attributes => [
+          :vm_or_template,
+          :product_name,
+          :distribution,
+          :version,
+        ]
+      }
+
       super(attributes.merge!(extra_attributes))
     end
 

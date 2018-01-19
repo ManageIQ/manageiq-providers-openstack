@@ -188,14 +188,23 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       image.cloud_tenant = persister.cloud_tenants.lazy_find(i.owner) if i.owner
       image.genealogy_parent = persister.vms.lazy_find(parent_server_uid) unless parent_server_uid.nil?
 
+      guest_os = OperatingSystem.normalize_os_name(i.try(:os_distro) || 'unknown')
+
       hardware = persister.hardwares.find_or_build(i.id)
       hardware.vm_or_template = image
+      hardware.guest_os = guest_os
       hardware.bitness = image_architecture(i)
       hardware.disk_size_minimum = (i.min_disk * 1.gigabyte)
       hardware.memory_mb_minimum = i.min_ram
       hardware.root_device_type = i.disk_format
       hardware.size_on_disk = i.size
       hardware.virtualization_type = i.properties.try(:[], 'hypervisor_type') || i.attributes['hypervisor_type']
+
+      operating_system = persister.operating_systems.find_or_build(i.id)
+      operating_system.vm_or_template = image
+      operating_system.product_name = guest_os
+      operating_system.distribution = i.try(:os_distro)
+      operating_system.version = i.try(:os_version)
     end
   end
 
@@ -326,6 +335,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware.disk_capacity = (
         flavor.try(:disk).to_i.gigabytes + flavor.try(:swap).to_i.megabytes + flavor.try(:ephemeral).to_i.gigabytes
       )
+      hardware.guest_os = persister.hardwares.lazy_find(s.image["id"], :key => :guest_os)
+
+      operating_system = persister.operating_systems.find_or_build(s.id)
+      operating_system.vm_or_template = server
+      operating_system.product_name = persister.operating_systems.lazy_find(s.image["id"], :key => :product_name)
+      operating_system.distribution = persister.operating_systems.lazy_find(s.image["id"], :key => :distribution)
+      operating_system.version = persister.operating_systems.lazy_find(s.image["id"], :key => :version)
 
       unless s.private_ip_address.blank?
         private_network = persister.networks.find_or_build_by(
