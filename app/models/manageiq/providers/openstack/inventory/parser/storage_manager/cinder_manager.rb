@@ -61,8 +61,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
     (attachments || []).each do |a|
       if a['device'].blank?
         log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data for EMS name: [#{ems.name}] id: [#{ems.id}]"
-        _log.warn "#{log_header}: Volume: #{persister_volume.ems_ref}, is missing a mountpoint, skipping the volume processing"
-        _log.warn "#{log_header}: EMS: #{ems.name}, Instance: #{a['server_id']}"
+        _log.warn("#{log_header}: Volume: #{persister_volume.ems_ref}, is missing a mountpoint, skipping the volume processing")
+        _log.warn("#{log_header}: EMS: #{ems.name}, Instance: #{a['server_id']}")
         next
       end
 
