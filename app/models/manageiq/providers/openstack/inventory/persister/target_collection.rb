@@ -17,8 +17,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
     # Child models with references in the Parent InventoryCollections for Cloud
     add_inventory_collections(
       cloud,
-      %i(hardwares networks disks orchestration_stacks_resources orchestration_stacks_outputs
-         orchestration_stacks_parameters),
+      %i(hardwares operating_systems networks disks orchestration_stacks_resources
+         orchestration_stacks_outputs orchestration_stacks_parameters),
       :strategy => strategy,
       :targeted => true
     )
