@@ -20,18 +20,16 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     end
   end
 
-  def allowed_cloud_networks(_options = {})
-    return {} unless (src_obj = provider_or_tenant_object)
-
-    src_obj.all_cloud_networks.each_with_object({}) do |cn, hash|
-      hash[cn.id] = cn.cidr.blank? ? cn.name : "#{cn.name} (#{cn.cidr})"
-    end
-  end
-
   def allowed_cloud_tenants(_options = {})
     source = load_ar_obj(get_source_vm)
     ems = get_targets_for_ems(source, :cloud_filter, CloudTenant, 'cloud_tenants')
     ems.each_with_object({}) { |f, h| h[f.id] = f.name }
+  end
+
+  def availability_zone_to_cloud_network(src)
+    load_ar_obj(src[:ems]).all_cloud_networks.each_with_object({}) do |cn, hash|
+      hash[cn.id] = cn.name
+    end
   end
 
   def set_request_values(values)
