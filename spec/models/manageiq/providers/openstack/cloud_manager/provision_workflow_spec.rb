@@ -254,6 +254,18 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
         end
       end
 
+      context "availability_zone_to_cloud_network" do
+        it "has one when it should" do
+          FactoryGirl.create(:cloud_network_google, :ext_management_system => provider.network_manager)
+
+          expect(workflow.allowed_cloud_networks.size).to eq(1)
+        end
+
+        it "has none when it should" do
+          expect(workflow.allowed_cloud_networks.size).to eq(0)
+        end
+      end
+
       context "#display_name_for_name_description" do
         let(:flavor) { FactoryGirl.create(:flavor_openstack) }
 
