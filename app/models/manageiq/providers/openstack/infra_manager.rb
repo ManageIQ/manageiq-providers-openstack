@@ -170,4 +170,10 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   def validate_shutdown
     {:available => false,   :message => nil}
   end
+
+  # need override https://github.com/ManageIQ/manageiq/pull/16755 destroy method
+  def destroy
+    ar_destroy = ApplicationRecord.instance_method(:destroy)
+    ar_destroy.bind(self).call
+  end
 end
