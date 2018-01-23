@@ -6,7 +6,7 @@ module ManageIQ::Providers::Openstack
       res = ""
       if ManageIQ::NetworkDiscovery::PortScanner.portOpen(ost, 6385)
         Socket.tcp(ost.ipaddr, 6385) do |s|
-          s.print("GET / HTTP/1.0")
+          s.print("GET / HTTP/1.0\r\n\r\n")
           s.close_write
           res = s.read
         end
