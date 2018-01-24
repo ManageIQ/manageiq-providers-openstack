@@ -103,10 +103,10 @@ describe ManageIQ::Providers::Openstack::InfraManager do
       # compare they both use the same provider
       expect(@ems_cloud.provider).to eq(@ems.provider)
 
-      # destroy ems and see the relation of ems_cloud to provider nullified
+      # destroy ems and see the ems_cloud removed as well
       @ems.destroy
-      expect(ManageIQ::Providers::Openstack::Provider.count).to eq 0
-      expect(@ems_cloud.reload.provider).to be_nil
+      expect(ManageIQ::Providers::Openstack::Provider.count).to     eq 0
+      expect(ManageIQ::Providers::Openstack::CloudManager.count).to eq 0
     end
   end
 
