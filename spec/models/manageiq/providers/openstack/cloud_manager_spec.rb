@@ -164,6 +164,24 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
   end
 
+  context "provider hooks" do
+    it "related EmsOpenstack and ProviderOpenstack are left around on EmsOpenstackCloud destroy" do
+      @ems = FactoryGirl.create(:ems_openstack_infra_with_authentication)
+      @ems_cloud = FactoryGirl.create(:ems_openstack_with_authentication)
+      @ems.provider.cloud_ems << @ems_cloud
+
+      # compare they both use the same provider
+      expect(@ems_cloud.provider).to eq(@ems.provider)
+
+      @ems_cloud.destroy
+      expect(ManageIQ::Providers::Openstack::CloudManager.count).to eq 0
+
+      # Ensure the ems infra and provider still stays around
+      expect(ManageIQ::Providers::Openstack::Provider.count).to eq 1
+      expect(ManageIQ::Providers::Openstack::InfraManager.count).to eq 1
+    end
+  end
+
   it "event_monitor_options" do
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
     @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
