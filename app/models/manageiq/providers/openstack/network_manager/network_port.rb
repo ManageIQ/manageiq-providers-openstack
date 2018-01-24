@@ -8,4 +8,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkPort < ::NetworkPor
     end
     delete
   end
+
+  def self.display_name(number = 1)
+    n_('Network Port (OpenStack)', 'Network Ports (OpenStack)', number)
+  end
 end

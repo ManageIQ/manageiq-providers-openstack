@@ -43,6 +43,10 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     connection_options
   end
 
+  def self.display_name(number = 1)
+    n_('Cloud Tenant (OpenStack)', 'Cloud Tenants (OpenStack)', number)
+  end
+
   private
 
   def connection_options

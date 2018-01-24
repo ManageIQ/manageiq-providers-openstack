@@ -389,4 +389,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   def object_storage_disk_usage(swift_replicas = 1)
     cloud_object_store_containers.sum(:bytes).to_f * swift_replicas
   end
+
+  def self.display_name(number = 1)
+    n_('Cloud Provider (OpenStack)', 'Cloud Providers (OpenStack)', number)
+  end
 end

@@ -155,6 +155,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     connection_options
   end
 
+  def self.display_name(number = 1)
+    n_('Security Group (OpenStack)', 'Security Groups (OpenStack)', number)
+  end
+
   private
 
   def parse_direction(val)

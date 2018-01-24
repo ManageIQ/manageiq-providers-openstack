@@ -435,4 +435,8 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     _log.warn("Error in refreshing network interfaces of host #{id}. Error: #{e.message}")
     _log.warn(e.backtrace.join("\n"))
   end
+
+  def self.display_name(number = 1)
+    n_('Host (OpenStack)', 'Hosts (OpenStack)', number)
+  end
 end

@@ -194,4 +194,8 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
     }
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
+
+  def self.display_name(number = 1)
+    n_('Network Provider (OpenStack)', 'Network Providers (OpenStack)', number)
+  end
 end

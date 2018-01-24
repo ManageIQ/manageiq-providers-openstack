@@ -170,4 +170,8 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   def validate_shutdown
     {:available => false,   :message => nil}
   end
+
+  def self.display_name(number = 1)
+    n_('Infrastructure Provider (OpenStack)', 'Infrastructure Providers (OpenStack)', number)
+  end
 end
