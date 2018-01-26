@@ -28,7 +28,7 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
 
   def availability_zone_to_cloud_network(src)
     load_ar_obj(src[:ems]).all_cloud_networks.each_with_object({}) do |cn, hash|
-      hash[cn.id] = cn.name
+      hash[cn.id] = cloud_network_display_name(cn)
     end
   end
 
