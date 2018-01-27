@@ -18,11 +18,11 @@ module ManageIQ::Providers
         private
 
         def stacks
-          @stacks ||= detailed_stacks
+          @stacks ||= uniques(detailed_stacks)
         end
 
         def root_stacks
-          @root_stacks ||= detailed_stacks(false)
+          @root_stacks ||= uniques(detailed_stacks(false))
         end
 
         def detailed_stacks(show_nested = true)

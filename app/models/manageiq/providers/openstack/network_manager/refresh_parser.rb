@@ -64,23 +64,23 @@ module ManageIQ::Providers
     end
 
     def security_groups
-      @security_groups ||= @network_service.handled_list(:security_groups, {}, openstack_network_admin?)
+      @security_groups ||= uniques(@network_service.handled_list(:security_groups, {}, openstack_network_admin?))
     end
 
     def networks
-      @networks ||= @network_service.handled_list(:networks, {}, openstack_network_admin?)
+      @networks ||= uniques(@network_service.handled_list(:networks, {}, openstack_network_admin?))
     end
 
     def network_ports
-      @network_ports ||= @network_service.handled_list(:ports, {}, openstack_network_admin?)
+      @network_ports ||= uniques(@network_service.handled_list(:ports, {}, openstack_network_admin?))
     end
 
     def network_routers
-      @network_routers ||= @network_service.handled_list(:routers, {}, openstack_network_admin?)
+      @network_routers ||= uniques(@network_service.handled_list(:routers, {}, openstack_network_admin?))
     end
 
     def floating_ips
-      @floating_ips ||= @network_service.handled_list(:floating_ips, {}, openstack_network_admin?)
+      @floating_ips ||= uniques(@network_service.handled_list(:floating_ips, {}, openstack_network_admin?))
     end
 
     def get_networks
