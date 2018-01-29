@@ -6,6 +6,10 @@ module ManageIQ::Providers
           ::Settings.ems_refresh.openstack.try(:is_admin)
         end
 
+        def cinder_admin?
+          ::Settings.ems_refresh.cinder.try(:is_admin)
+        end
+
         def openstack_network_admin?
           ::Settings.ems_refresh.openstack_network.try(:is_admin)
         end

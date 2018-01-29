@@ -30,7 +30,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
            :class_name  => "ManageIQ::Providers::StorageManager",
            :autosave    => true
 
-  include CinderManagerMixin
+  include ManageIQ::Providers::Openstack::CinderManagerMixin
   include SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::IdentitySyncMixin

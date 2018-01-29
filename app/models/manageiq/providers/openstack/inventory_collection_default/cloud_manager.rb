@@ -71,7 +71,9 @@ class ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager <
           :device_type,
           :controller_type,
           :size,
-          :location
+          :location,
+          :backing,
+          :hardware
         ]
       }
       super(attributes.merge!(extra_attributes))

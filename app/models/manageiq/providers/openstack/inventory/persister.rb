@@ -1,6 +1,7 @@
 class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inventory::Persister
   require_nested :CloudManager
   require_nested :NetworkManager
+  require_nested :CinderManager
   require_nested :TargetCollection
 
   # TODO(lsmola) figure out a way to pass collector info, probably via target, then remove the below
@@ -26,5 +27,9 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inv
 
   def network
     ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
+  end
+
+  def storage
+    ManageIQ::Providers::Openstack::InventoryCollectionDefault::StorageManager
   end
 end
