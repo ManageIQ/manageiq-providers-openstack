@@ -144,5 +144,11 @@ module OpenstackHandle
         list_roles_for_user_on_tenant(project_id, user_id).body["roles"]
       end
     end
+
+    # Remove this method once fog/openstack allows get_project correctly
+    def projects_get_by_id(id)
+      @all_projects ||= projects.all
+      @all_projects.find { |project| project.id == id }
+    end
   end
 end
