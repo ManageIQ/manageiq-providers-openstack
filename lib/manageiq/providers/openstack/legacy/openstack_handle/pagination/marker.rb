@@ -7,6 +7,7 @@ module OpenstackHandle
         all_objects = objects_on_page = call_list_method(@collection_type, @options, @method)
 
         while more_pages?(objects_on_page)
+          last_page_count = objects_on_page.length
           objects_on_page = call_list_method(@collection_type,
                                              @options,
                                              @method,
@@ -14,6 +15,10 @@ module OpenstackHandle
                                              :limit  => @service.default_pagination_limit)
           break if pagination_break?(all_objects, objects_on_page)
           all_objects.concat(objects_on_page)
+          # Break after adding this page if it contained less elements than the previous page.
+          # having less elements should indicate that this is the last page in the set.
+          # This is a sanity test to prevent timing-related looping or repetition
+          break if objects_on_page.length < last_page_count
         end
 
         all_objects
