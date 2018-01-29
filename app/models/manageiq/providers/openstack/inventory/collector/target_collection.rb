@@ -124,7 +124,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def memoized_get_tenant(tenant_id)
     return nil if tenant_id.blank?
     @tenant_memo ||= Hash.new do |h, key|
-      h[key] = safe_get { identity_service.tenants.find_by_id(key) }
+      h[key] = safe_get { identity_service.respond_to?(:projects) ? identity_service.projects_get_by_id(key) : identity_service.tenants.find_by_id(key) }
     end
     @tenant_memo[tenant_id]
   end
@@ -293,7 +293,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def infer_related_cloud_tenant_ems_refs_api!
     tenants.each do |tenant|
-      add_simple_target(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
+      add_simple_target!(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
     end
   end
 
