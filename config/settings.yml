@@ -139,6 +139,7 @@
         :amqp_port: 5672
         :amqp_heartbeat: 30
         :amqp_recovery_attempts: 4
+        :amqp_vhost: '/'
         :ceilometer:
           :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
       :event_catcher_openstack_infra:
@@ -154,6 +155,7 @@
         :amqp_port: 5672
         :amqp_heartbeat: 30
         :amqp_recovery_attempts: 4
+        :amqp_vhost: '/'
         :ceilometer:
           :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
       :event_catcher_openstack_network:
@@ -165,6 +167,7 @@
         :amqp_port: 5672
         :amqp_heartbeat: 30
         :amqp_recovery_attempts: 4
+        :amqp_vhost: '/'
         :ceilometer:
           :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
       :event_catcher_openstack_service: "auto"
