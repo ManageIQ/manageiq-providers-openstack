@@ -2,4 +2,5 @@ class ManageIQ::Providers::Openstack::CloudManager::Provision < ::MiqProvisionCl
   include_concern 'Cloning'
   include_concern 'Configuration'
   include_concern 'VolumeAttachment'
+  include_concern 'OptionsHelper'
 end
