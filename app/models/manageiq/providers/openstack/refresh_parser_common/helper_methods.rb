@@ -2,6 +2,18 @@ module ManageIQ::Providers
   module Openstack
     module RefreshParserCommon
       module HelperMethods
+        def uniques(collection)
+          unique_objs = []
+          # caling uniq on a fog collection makes it lose
+          # properties from fog that it will attempt to use
+          # during iteration, resulting in an exeption.
+          # to avoid that, turn it into an array first.
+          unique_objs.concat(collection)
+          # uniquify via identity if these are fog objects
+          unique_objs.uniq!(&:identity) if (unique_objs.size > 0 && unique_objs[0].respond_to?(:identity))
+          unique_objs
+        end
+
         def openstack_admin?
           ::Settings.ems_refresh.openstack.try(:is_admin)
         end
