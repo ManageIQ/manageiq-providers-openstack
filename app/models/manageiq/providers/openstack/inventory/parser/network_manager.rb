@@ -11,28 +11,30 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def cloud_networks
     collector.cloud_networks.each do |n|
-      status = status = n.status.to_s.downcase == "active" ? "active" : "inactive"
-      network_type_suffix = n.router_external ? "::Public" : "::Private"
+      status = status = n["status"].to_s.downcase == "active" ? "active" : "inactive"
+      network_type_suffix = n["router:external"] ? "::Public" : "::Private"
 
-      network = persister.cloud_networks.find_or_build(n.id)
+      network = persister.cloud_networks.find_or_build(n["id"])
       network.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork" + network_type_suffix
-      network.name = n.name
-      network.shared = n.shared
+      network.name = n["name"]
+      network.shared = n["shared"]
       network.status = status
-      network.enabled = n.admin_state_up
-      network.external_facing = n.router_external
-      network.provider_physical_network = n.provider_physical_network
-      network.provider_network_type = n.provider_network_type
-      network.provider_segmentation_id = n.provider_segmentation_id
-      network.port_security_enabled = n.attributes["port_security_enabled"]
-      network.qos_policy_id = n.attributes["qos_policy_id"]
-      network.vlan_transparent = n.attributes["vlan_transparent"]
-      network.maximum_transmission_unit = n.attributes["mtu"]
-      network.cloud_tenant = persister.cloud_tenants.lazy_find(n.tenant_id)
+      network.enabled = n["admin_state_up"]
+      network.external_facing = n["router:external"]
+      network.provider_physical_network = n["provider:physical_network"]
+      network.provider_network_type = n["provider:network_type"]
+      network.provider_segmentation_id = n["provider:segmentation_id"]
+      network.port_security_enabled = n["port_security_enabled"]
+      network.qos_policy_id = n["qos_policy_id"]
+      network.vlan_transparent = n["vlan_transparent"]
+      network.maximum_transmission_unit = n["mtu"]
+      network.cloud_tenant = persister.cloud_tenants.lazy_find(n["tenant_id"])
       network.orchestration_stack = persister.orchestration_stacks_resources.lazy_find(
-        collector.orchestration_stack_by_resource_id(n.id).try(:physical_resource_id), :key => :stack
+        collector.orchestration_stack_by_resource_id(n["id"]).try(:physical_resource_id), :key => :stack
       )
-      n.subnets.each do |s|
+      n["subnets"].each do |subnet_id|
+        s = collector.cloud_subnets.fetch(subnet_id, nil)
+        next if s.nil?
         subnet = persister.cloud_subnets.find_or_build(s.id)
         subnet.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet"
         subnet.name = s.name

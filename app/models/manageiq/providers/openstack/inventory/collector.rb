@@ -53,6 +53,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inv
     @volume_snapshot_templates = []
     # network
     @cloud_networks            = []
+    @cloud_subnets             = []
     @floating_ips              = []
     @network_ports             = []
     @network_routers           = []
