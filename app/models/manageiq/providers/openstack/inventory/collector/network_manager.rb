@@ -8,7 +8,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
 
   def cloud_networks
     return @cloud_networks if @cloud_networks.any?
-    @cloud_networks = network_service.handled_list(:networks, {}, openstack_network_admin?)
+    @cloud_networks = safe_list { network_service.list_networks.body["networks"] }
+  end
+
+  def cloud_subnets
+    return @cloud_subnets if @cloud_subnets.any?
+    subnets = network_service.handled_list(:subnets, {}, openstack_network_admin?)
+    @cloud_subnets = Hash[subnets.collect { |s| [s.id, s] }]
   end
 
   def network_ports
