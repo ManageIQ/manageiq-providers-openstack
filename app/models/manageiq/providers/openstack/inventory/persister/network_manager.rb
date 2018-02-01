@@ -26,6 +26,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager < Man
       %i(
         vms
         orchestration_stacks
+        orchestration_stacks_resources
         availability_zones
         cloud_tenants
       ),

@@ -31,6 +31,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       assert_table_counts
       assert_ems
       assert_specific_host
+      assert_mapped_stacks
       assert_specific_public_template
     end
   end
@@ -234,5 +235,29 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(template.hardware).not_to               be_nil
     expect(template.parent).to                     be_nil
     template
+  end
+
+  def assert_mapped_stacks
+    expect(CloudNetwork.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
+      match_array(
+        %w(
+          storage___overcloud-Networks-pbb77pcdo5vf-StorageNetwork-alynjx5sbihk
+          internal_api___overcloud-Networks-pbb77pcdo5vf-InternalNetwork-m6gf3fnrmv2o
+          external___overcloud-Networks-pbb77pcdo5vf-ExternalNetwork-t35bvwrbnmml
+          storage_mgmt___overcloud-Networks-pbb77pcdo5vf-StorageMgmtNetwork-4hapfhdgyuxk
+          ctlplane___
+          tenant___overcloud-Networks-pbb77pcdo5vf-TenantNetwork-6ls6x5prvhle
+        )
+      )
+    )
+
+    expect(SecurityGroup.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
+      match_array(
+        %w(
+          default___
+          default___
+        )
+      )
+    )
   end
 end

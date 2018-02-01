@@ -190,7 +190,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
       guest_os = OperatingSystem.normalize_os_name(i.try(:os_distro) || 'unknown')
 
-      hardware = persister.hardwares.find_or_build(i.id)
+      hardware = persister.hardwares.find_or_build(image)
       hardware.vm_or_template = image
       hardware.guest_os = guest_os
       hardware.bitness = image_architecture(i)
@@ -200,7 +200,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware.size_on_disk = i.size
       hardware.virtualization_type = i.properties.try(:[], 'hypervisor_type') || i.attributes['hypervisor_type']
 
-      operating_system = persister.operating_systems.find_or_build(i.id)
+      operating_system = persister.operating_systems.find_or_build(image)
       operating_system.vm_or_template = image
       operating_system.product_name = guest_os
       operating_system.distribution = i.try(:os_distro)
@@ -303,6 +303,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       end
 
       availability_zone = s.availability_zone.blank? ? "null_az" : s.availability_zone
+      miq_template_lazy = persister.miq_templates.lazy_find(s.image["id"])
 
       server = persister.vms.find_or_build(s.id.to_s)
       server.uid_ems = s.id
@@ -316,7 +317,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
       server.key_pairs = [persister.key_pairs.lazy_find(s.key_name)].compact
       server.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id.to_s)
-      server.genealogy_parent = persister.miq_templates.lazy_find(s.image["id"]) unless s.image["id"].nil?
+      server.genealogy_parent = miq_template_lazy unless s.image["id"].nil?
 
       # to populate the hardware, we need some fields from the flavor object
       # that we don't already have from the flavor field on the server details
@@ -326,7 +327,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       make_flavor(flavor) unless flavor.nil?
       server.flavor = persister.flavors.lazy_find(s.flavor["id"].to_s)
 
-      hardware = persister.hardwares.find_or_build(s.id)
+      hardware = persister.hardwares.find_or_build(server)
       hardware.vm_or_template = server
       hardware.cpu_sockets = flavor.try(:vcpus)
       hardware.cpu_total_cores = flavor.try(:vcpus)
@@ -335,17 +336,17 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware.disk_capacity = (
         flavor.try(:disk).to_i.gigabytes + flavor.try(:swap).to_i.megabytes + flavor.try(:ephemeral).to_i.gigabytes
       )
-      hardware.guest_os = persister.hardwares.lazy_find(s.image["id"], :key => :guest_os)
+      hardware.guest_os = persister.hardwares.lazy_find(miq_template_lazy, :key => :guest_os)
 
-      operating_system = persister.operating_systems.find_or_build(s.id)
+      operating_system = persister.operating_systems.find_or_build(server)
       operating_system.vm_or_template = server
-      operating_system.product_name = persister.operating_systems.lazy_find(s.image["id"], :key => :product_name)
-      operating_system.distribution = persister.operating_systems.lazy_find(s.image["id"], :key => :distribution)
-      operating_system.version = persister.operating_systems.lazy_find(s.image["id"], :key => :version)
+      operating_system.product_name = persister.operating_systems.lazy_find(miq_template_lazy, :key => :product_name)
+      operating_system.distribution = persister.operating_systems.lazy_find(miq_template_lazy, :key => :distribution)
+      operating_system.version = persister.operating_systems.lazy_find(miq_template_lazy, :key => :version)
 
       unless s.private_ip_address.blank?
         private_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
+          :hardware    => hardware,
           :description => "private"
         )
         private_network.description = "private"
@@ -353,7 +354,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       end
       unless s.public_ip_address.blank?
         public_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
+          :hardware    => hardware,
           :description => "public"
         )
         public_network.description = "public"

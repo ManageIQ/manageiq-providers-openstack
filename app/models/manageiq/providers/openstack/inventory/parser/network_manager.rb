@@ -29,7 +29,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       network.vlan_transparent = n.attributes["vlan_transparent"]
       network.maximum_transmission_unit = n.attributes["mtu"]
       network.cloud_tenant = persister.cloud_tenants.lazy_find(n.tenant_id)
-      network.orchestration_stack = persister.orchestration_stacks.lazy_find(collector.orchestration_stack_by_resource_id(n.id))
+      network.orchestration_stack = persister.orchestration_stacks_resources.lazy_find(
+        collector.orchestration_stack_by_resource_id(n.id).try(:physical_resource_id), :key => :stack
+      )
       n.subnets.each do |s|
         subnet = persister.cloud_subnets.find_or_build(s.id)
         subnet.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet"
@@ -127,7 +129,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       security_group.name = s.name
       security_group.description = s.description.try(:truncate, 255)
       security_group.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
-      security_group.orchestration_stack = persister.orchestration_stacks.lazy_find(collector.orchestration_stack_by_resource_id(s.id))
+      security_group.orchestration_stack = persister.orchestration_stacks_resources.lazy_find(
+        collector.orchestration_stack_by_resource_id(s.id).try(:physical_resource_id), :key => :stack
+      )
 
       s.security_group_rules.each do |r|
         case collector.network_service.name
