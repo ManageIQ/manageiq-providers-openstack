@@ -6,6 +6,7 @@ require 'thread'
 class OpenstackRabbitEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_PORT = 5672
   DEFAULT_AMQP_HEARTBEAT = 30
+  DEFAULT_AMQP_VHOST = '/'
 
   # The rabbit event monitor is available if a connection can be established.
   # This ensures that the amqp server is indeed rabbit (and not another amqp
@@ -26,6 +27,7 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     connection_options[:heartbeat]          = options[:heartbeat] || DEFAULT_AMQP_HEARTBEAT
     connection_options[:automatic_recovery] = options[:automatic_recovery] if options.key? :automatic_recovery
     connection_options[:recovery_attempts]  = options[:recovery_attempts] if options.key? :recovery_attempts
+    connection_options[:vhost]              = options[:vhost] || DEFAULT_AMQP_VHOST
 
     if options.key? :recover_from_connection_close
       connection_options[:recover_from_connection_close] = options[:recover_from_connection_close]
