@@ -4,7 +4,7 @@ require "manageiq/providers/openstack/version"
 module ManageIQ
   module Providers
     module Openstack
-      autoload :InfraDiscovery, 'manageiq/providers/openstack/infra_discovery'
+      autoload :Discovery, 'manageiq/providers/openstack/discovery'
     end
   end
 end
