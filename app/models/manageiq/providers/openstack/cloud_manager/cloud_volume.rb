@@ -67,7 +67,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
                       :options => {
                         :subject => self,
                       }) do
-      with_provider_object(&:destroy)
+      with_provider_object { |volume| volume.try(:destroy) }
     end
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
