@@ -50,7 +50,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     {:ems_ref => network.id, :name => options[:name]}
   rescue => e
     _log.error "network=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqNetworkCreateError, parse_error_message_from_neutron_response(e), e.backtrace
+    parsed_error = parse_error_message_from_neutron_response(e)
+    error_message = if parsed_error =~ /Invalid input for operation: network_type value '.*' not supported\./
+                      _("Network type '#{options[:provider_network_type]}' is not supported by the Provider")
+                    else
+                      parsed_error
+                    end
+    raise MiqException::MiqNetworkCreateError, error_message, e.backtrace
   end
 
   def raw_delete_cloud_network
