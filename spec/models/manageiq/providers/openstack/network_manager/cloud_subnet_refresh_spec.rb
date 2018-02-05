@@ -106,11 +106,11 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     end
 
     def mocked_cloud_subnets
-      {"cloud_subnet_1" => OpenStruct.new(
+      [OpenStruct.new(
         :id         => "cloud_subnet_1",
         :name       => "cloud_subnet_1_name",
         :attributes => {},
-      )}
+      )]
     end
 
     def mocked_network_routers
