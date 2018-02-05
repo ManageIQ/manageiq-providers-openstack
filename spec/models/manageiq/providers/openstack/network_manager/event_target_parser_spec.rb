@@ -21,6 +21,19 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       )
     end
 
+    it "parses subnet events" do
+      ems_event = create_ems_event("subnet.create.end", "resource_id" => "subnet_id_test",)
+      parsed_targets = described_class.new(ems_event).parse
+      expect(parsed_targets.size).to eq(1)
+      expect(target_references(parsed_targets)).to(
+        match_array(
+          [
+            [:subnets, {:ems_ref => "subnet_id_test"}]
+          ]
+        )
+      )
+    end
+
     it "parses router events" do
       ems_event = create_ems_event("router.create.end", "resource_id" => "router_id_test",)
       parsed_targets = described_class.new(ems_event).parse
