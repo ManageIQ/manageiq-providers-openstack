@@ -41,7 +41,25 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       ems.sync_users(admin_role.id, member_role.id, "changeme")
       expect(User.count).to eq(user_count)
       user = User.find_by(:userid => "project1-admin")
+      expect(user.current_group.miq_user_role).to eq(admin_role)
+      expect(user.current_group.tenant).to eq(tenant)
       expect(user.miq_groups.count).to eq(2)
+
+      # switch roles in sync should unmap user from old groups and roles
+      user = User.find_by(:userid => "project1-admin")
+      expect(user.current_group.miq_user_role.id).to eq(admin_role.id)
+      new_admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-operator")
+      new_member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-vm_user")
+      ems.sync_users(new_admin_role.id, new_member_role.id, "changeme")
+      user = User.find_by(:userid => "project1-admin")
+      expect(user.miq_groups.count).to eq(2)
+      user.miq_groups.each do |group|
+        expect(group.miq_user_role).not_to eq(admin_role)
+        expect(group.miq_user_role).not_to eq(member_role)
+      end
+      expect(user.current_group.miq_user_role.id.to_s).not_to eq(admin_role.id.to_s)
+      expect(user.current_group.miq_user_role.id.to_s).not_to eq(member_role.id.to_s)
+      expect(user.current_group.miq_user_role.id.to_s).to eq(new_admin_role.id.to_s)
     end
 
     it "should create realuser, but skip admin and other special cases" do
@@ -93,7 +111,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       # admin
       miq_group = MiqGroup.joins(:entitlement).where(:tenant_id => tenant.id).where('entitlements.miq_user_role_id' => admin_role.id).take
       expect(miq_group).to be_nil
-      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin", admin_role.id, member_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_ADMIN_ROLE_ID_NEW, admin_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_MEMBER_ROLE_ID_NEW, member_role.id)
+      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin")
 
       expect(miq_group.tenant).to eq(tenant)
       expect(miq_group.entitlement.miq_user_role).to eq(admin_role)
@@ -102,7 +122,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       # member
       miq_group = MiqGroup.joins(:entitlement).where(:tenant_id => tenant.id).where('entitlements.miq_user_role_id' => member_role.id).take
       expect(miq_group).to be_nil
-      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "_member_", admin_role.id, member_role.id)
+      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "_member_")
 
       expect(miq_group.tenant).to eq(tenant)
       expect(miq_group.entitlement.miq_user_role).to eq(member_role)
@@ -115,7 +135,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       tenant = FactoryGirl.create(:tenant, :name => "project1")
       admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
       member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
-      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin", admin_role.id, member_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_ADMIN_ROLE_ID_NEW, admin_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_MEMBER_ROLE_ID_NEW, member_role.id)
+      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin")
       expect(miq_group.name).to eq("#{ems.name}-#{ems.keystone_v3_domain_id}-#{tenant.name}-#{admin_role.name}")
     end
 
@@ -124,7 +146,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       tenant = FactoryGirl.create(:tenant, :name => "project1")
       admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
       member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
-      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin", admin_role.id, member_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_ADMIN_ROLE_ID_NEW, admin_role.id)
+      ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_MEMBER_ROLE_ID_NEW, member_role.id)
+      miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin")
       expect(miq_group.name).to eq("#{ems.name}-#{tenant.name}-#{admin_role.name}")
     end
 
