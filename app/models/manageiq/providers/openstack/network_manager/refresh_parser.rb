@@ -158,7 +158,7 @@ module ManageIQ::Providers
 
     def parse_network(network)
       uid     = network["id"]
-      status  = (network["status"].to_s.downcase == "active") ? "active" : "inactive"
+      status  = network["status"].to_s.downcase == "active" ? "active" : "inactive"
 
       network_type_suffix = network["router:external"] ? "::Public" : "::Private"
 
@@ -276,7 +276,7 @@ module ManageIQ::Providers
         :name                           => subnet.name,
         :ems_ref                        => subnet.id,
         :cidr                           => subnet.cidr,
-        :status                         => (network["status"].to_s.downcase == "active") ? "active" : "inactive",
+        :status                         => network["status"].to_s.downcase == "active" ? "active" : "inactive",
         :network_protocol               => "ipv#{subnet.ip_version}",
         :gateway                        => subnet.gateway_ip,
         :dhcp_enabled                   => subnet.enable_dhcp,
