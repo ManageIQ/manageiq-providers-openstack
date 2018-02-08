@@ -12,7 +12,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def cloud_networks
     collector.cloud_networks.each do |n|
-      status = status = n["status"].to_s.downcase == "active" ? "active" : "inactive"
+      status = n["status"].to_s.downcase == "active" ? "active" : "inactive"
       network_type_suffix = n["router:external"] ? "::Public" : "::Private"
 
       network = persister.cloud_networks.find_or_build(n["id"])
