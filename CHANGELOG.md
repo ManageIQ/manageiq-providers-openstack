@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 79 ending 2018-02-12
+
+### Added
+- Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
+- Store selected user sync roles as custom attributes. [(#210)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/210)
+- Infra discovery: Port scan needs trailing FF/LN [(#205)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/205)
+
+### Fixed
+- Send tenant with identity service requests [(#225)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/225)
+- Repetitive storage volume deletion gives unexpected error [(#224)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/224)
+- Fix Service Provisioning cloud_tenant issue [(#223)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/223)
+- Add proper error message if network type not supported [(#222)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/222)
+- Don't require CinderManager in inventory classes [(#218)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/218)
+- Don't dependent => destroy cinder manager [(#214)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/214)
+- Filter out duplicates during inventory collection [(#212)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/212)
+
 ## Gaprindashvili-1 - Released 2018-01-31
 
 ### Added
@@ -48,6 +64,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Return empty AR relation instead of nil for ::InfraManager#cloud_tenants [(#184)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/184)
 - Fix refresh for private images [(#187)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/187)
 - Use only hypervisor hostname to match infra host with cloud vm [(#186)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/186)
+- If an image name is "" use the image's id instead [(#146)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/146)
+- manageiq-gems-pending is already from manageiq itself [(#141)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/141)
+- safe_call should catch Fog::Errors::NotFound [(#156)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/156)
+- Don't attempt cloning of OpenStack infra templates [(#153)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/153)
+- Remove floating_ip_address from the create request if it is blank [(#145)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/145)
+- Added supported_catalog_types [(#177)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/177)
+- Skip disabled tenants when connecting to OpenStack [(#172)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/172)
+- Corrects handling of Notification params [(#171)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/171)
+- Set VolumeTemplate name to ID if empty [(#169)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/169)
+- Include HelperMethods instead of extending [(#167)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/167)
+- Don't pass nil ssl_options to try_connection [(#166)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/166)
+- Add missing 'return' statement to 'network_manager.find_device_object' [(#188)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/188)
+- Fix refresh for private images [(#187)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/187)
+- Use only hypervisor hostname to match infra host with cloud vm [(#186)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/186)
+- Return empty AR relation instead of nil for ::InfraManager#cloud_tenants [(#184)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/184)
+- Improve Targeted Refresh for Cloud and Network managers [(#175)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/175)
+- Fix disable CloudTenant Vm targeted refresh [(#213)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/213)
+- Add back missing IP address range in Virtual Private Cloud name. [(#211)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/211)
+- Bypass the superclass orchestrated destroy for this Provider. [(#209)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/209)
+- Don't dependent => destroy child_managers [(#208)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/208)
+- Override az_zone_to_cloud_network in openstack prov [(#202)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/202)
+- Correct the paths that event target IDs are parsed from [(#195)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/195)
+- Ensure that subnets are dissociated from routers in the ManageIQ inventory when their interfaces are removed on the OSP side [(#182)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/182)
 
 ### Removed
 - Remove old refresh settings [(#135)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/135)
@@ -58,41 +97,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Added keystone_v3_domain_id to api_allowed_attributes method [(#196)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/196)
 
 ### Fixed
-- Fix disable CloudTenant Vm targeted refresh [(#213)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/213)
-- Add back missing IP address range in Virtual Private Cloud name. [(#211)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/211)
-- Bypass the superclass orchestrated destroy for this Provider. [(#209)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/209)
-- Don't dependent => destroy child_managers [(#208)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/208)
-- Override az_zone_to_cloud_network in openstack prov [(#202)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/202)
 - Provider base class handles the managers' destroy now [(#198)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/198)
 - Extend allowed_cloud_network for providers that don't support allowed_ci [(#197)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/197)
-- Correct the paths that event target IDs are parsed from [(#195)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/195)
 - Implement graph refresh for the Cinder manager [(#194)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/194)
 - Track guest OS for openstack images and VMs [(#193)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/193)
-- Ensure that subnets are dissociated from routers in the ManageIQ inventory when their interfaces are removed on the OSP side [(#182)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/182)
-
-## Unreleased as of Sprint 77 ending 2018-01-15
-
-### Fixed
-- Add missing 'return' statement to 'network_manager.find_device_object' [(#188)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/188)
-- Fix refresh for private images [(#187)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/187)
-- Use only hypervisor hostname to match infra host with cloud vm [(#186)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/186)
-- Return empty AR relation instead of nil for ::InfraManager#cloud_tenants [(#184)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/184)
-- Improve Targeted Refresh for Cloud and Network managers [(#175)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/175)
-
-## Unreleased as of Sprint 76 ending 2018-01-01
-
-### Fixed
-- Fix Provisioning of disconnected VolumeTemplate [(#173)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/173)
 
 ## Unreleased as of Sprint 75 ending 2017-12-11
 
 ### Fixed
-- Added supported_catalog_types [(#177)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/177)
-- Skip disabled tenants when connecting to OpenStack [(#172)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/172)
-- Corrects handling of Notification params [(#171)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/171)
-- Set VolumeTemplate name to ID if empty [(#169)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/169)
-- Include HelperMethods instead of extending [(#167)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/167)
-- Don't pass nil ssl_options to try_connection [(#166)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/166)
 - Handle attempts to delete volumes that have already been deleted [(#147)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/147)
 - Replace conditions with scope [(#144)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/144)
 
@@ -100,19 +112,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Add error message if FIP assigned to router [(#161)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/161)
-- safe_call should catch Fog::Errors::NotFound [(#156)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/156)
-- Don't attempt cloning of OpenStack infra templates [(#153)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/153)
-- Remove floating_ip_address from the create request if it is blank [(#145)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/145)
-
-## Unreleased as of Sprint 73 ending 2017-11-13
-
-### Fixed
-- Make sure volume template has name [(#148)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/148)
-- If an image name is "" use the image's id instead [(#146)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/146)
-- manageiq-gems-pending is already from manageiq itself [(#141)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/141)
-
-### Removed
-- Remove old refresh settings [(#135)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/135)
 
 ## Unreleased as of Sprint 72 ending 2017-10-30
 
