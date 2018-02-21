@@ -123,9 +123,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def memoized_get_tenant(tenant_id)
     return nil if tenant_id.blank?
-    @tenant_memo ||= Hash.new do |h, key|
-      h[key] = safe_get { identity_service.respond_to?(:projects) ? identity_service.projects_get_by_id(key) : identity_service.tenants.find_by_id(key) }
-    end
+    @tenant_memo ||= identity_service.visible_tenants.index_by(&:id)
     @tenant_memo[tenant_id]
   end
 
