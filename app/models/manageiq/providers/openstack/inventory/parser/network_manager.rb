@@ -3,6 +3,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def parse
     cloud_networks
+    cloud_subnets
     floating_ips
     network_ports
     network_routers
@@ -11,46 +12,49 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
 
   def cloud_networks
     collector.cloud_networks.each do |n|
-      status = status = n.status.to_s.downcase == "active" ? "active" : "inactive"
-      network_type_suffix = n.router_external ? "::Public" : "::Private"
+      status = n["status"].to_s.downcase == "active" ? "active" : "inactive"
+      network_type_suffix = n["router:external"] ? "::Public" : "::Private"
 
-      network = persister.cloud_networks.find_or_build(n.id)
+      network = persister.cloud_networks.find_or_build(n["id"])
       network.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork" + network_type_suffix
-      network.name = n.name
-      network.shared = n.shared
+      network.name = n["name"]
+      network.shared = n["shared"]
       network.status = status
-      network.enabled = n.admin_state_up
-      network.external_facing = n.router_external
-      network.provider_physical_network = n.provider_physical_network
-      network.provider_network_type = n.provider_network_type
-      network.provider_segmentation_id = n.provider_segmentation_id
-      network.port_security_enabled = n.attributes["port_security_enabled"]
-      network.qos_policy_id = n.attributes["qos_policy_id"]
-      network.vlan_transparent = n.attributes["vlan_transparent"]
-      network.maximum_transmission_unit = n.attributes["mtu"]
-      network.cloud_tenant = persister.cloud_tenants.lazy_find(n.tenant_id)
+      network.enabled = n["admin_state_up"]
+      network.external_facing = n["router:external"]
+      network.provider_physical_network = n["provider:physical_network"]
+      network.provider_network_type = n["provider:network_type"]
+      network.provider_segmentation_id = n["provider:segmentation_id"]
+      network.port_security_enabled = n["port_security_enabled"]
+      network.qos_policy_id = n["qos_policy_id"]
+      network.vlan_transparent = n["vlan_transparent"]
+      network.maximum_transmission_unit = n["mtu"]
+      network.cloud_tenant = persister.cloud_tenants.lazy_find(n["tenant_id"])
       network.orchestration_stack = persister.orchestration_stacks_resources.lazy_find(
-        collector.orchestration_stack_by_resource_id(n.id).try(:physical_resource_id), :key => :stack
+        collector.orchestration_stack_by_resource_id(n["id"]).try(:physical_resource_id), :key => :stack
       )
-      n.subnets.each do |s|
-        subnet = persister.cloud_subnets.find_or_build(s.id)
-        subnet.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet"
-        subnet.name = s.name
-        subnet.cidr = s.cidr
-        subnet.status = status
-        subnet.network_protocol = "ipv#{s.ip_version}"
-        subnet.gateway = s.gateway_ip
-        subnet.dhcp_enabled = s.enable_dhcp
-        subnet.dns_nameservers = s.dns_nameservers
-        subnet.ipv6_router_advertisement_mode = s.attributes["ipv6_ra_mode"]
-        subnet.ipv6_address_mode = s.attributes["ipv6_address_mode"]
-        subnet.allocation_pools = s.allocation_pools
-        subnet.host_routes = s.host_routes
-        subnet.ip_version = s.ip_version
-        subnet.parent_cloud_subnet = persister.cloud_subnets.lazy_find(s.attributes["vsd_managed"])
-        subnet.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
-        subnet.cloud_network = network
-      end
+    end
+  end
+
+  def cloud_subnets
+    collector.cloud_subnets.each do |s|
+      subnet = persister.cloud_subnets.find_or_build(s.id)
+      subnet.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet"
+      subnet.name = s.name
+      subnet.cidr = s.cidr
+      subnet.network_protocol = "ipv#{s.ip_version}"
+      subnet.gateway = s.gateway_ip
+      subnet.dhcp_enabled = s.enable_dhcp
+      subnet.dns_nameservers = s.dns_nameservers
+      subnet.ipv6_router_advertisement_mode = s.attributes["ipv6_ra_mode"]
+      subnet.ipv6_address_mode = s.attributes["ipv6_address_mode"]
+      subnet.allocation_pools = s.allocation_pools
+      subnet.host_routes = s.host_routes
+      subnet.ip_version = s.ip_version
+      subnet.parent_cloud_subnet = persister.cloud_subnets.lazy_find(s.attributes["vsd_managed"])
+      subnet.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
+      subnet.cloud_network = persister.cloud_networks.lazy_find(s.network_id)
+      subnet.status = persister.cloud_networks.lazy_find(s.network_id, :key => :status)
     end
   end
 

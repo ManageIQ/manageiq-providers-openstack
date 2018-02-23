@@ -34,8 +34,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     return [] if references(:cloud_networks).blank?
     return @cloud_networks if @cloud_networks.any?
     @cloud_networks = references(:cloud_networks).collect do |network_id|
-      safe_get { network_service.networks.get(network_id) }
+      safe_get { network_service.get_network(network_id).body["network"] }
     end.compact
+  end
+
+  def cloud_subnets
+    return @cloud_subnets if @cloud_subnets.any?
+    @cloud_subnets = network_service.handled_list(:subnets, {}, openstack_network_admin?)
   end
 
   def network_ports
