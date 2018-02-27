@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 80 ending 2018-02-26
+
+### Fixed
+- Fix targeted refresh clearing vm cloud tenant for v2 [(#233)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/233)
+- Improve network manager refresh speed [(#216)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/216)
+
 ## Unreleased as of Sprint 79 ending 2018-02-12
 
 ### Added
