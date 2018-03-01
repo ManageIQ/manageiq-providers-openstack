@@ -12,7 +12,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :message      => "Success"
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to    be_instance_of Hash
       expect(data[:host_ems_ref]).to be_instance_of String
@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
                          " baremetal_2."
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to    be_instance_of Hash
       expect(data[:host_ems_ref]).to be_instance_of String
@@ -47,7 +47,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :timestamp  => "2015-05-12 07:24:45.026776"
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to be_instance_of Hash
     end
@@ -61,7 +61,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :timestamp  => "2015-05-12 07:33:57.772136"
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to be_instance_of Hash
     end
@@ -75,7 +75,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :timestamp  => "2015-05-12 07:22:37.008738",
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to be_instance_of Hash
     end
@@ -89,7 +89,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :timestamp  => "2015-05-12 07:22:43.948145"
       )
 
-      expect(data).to have_attributes(expected_attributes)
+      expect(data).to include(expected_attributes)
 
       expect(data[:full_data]).to be_instance_of Hash
     end
@@ -102,18 +102,11 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
   def common_attributes(event)
     {
       :event_type   => "compute.instance.create.error",
-      :chain_id     => nil,
-      :is_task      => nil,
       :source       => "OPENSTACK",
       :timestamp    => nil,
       :full_data    => event,
       :ems_id       => nil,
       :username     => nil,
-      :vm_ems_ref   => nil,
-      :vm_name      => nil,
-      :vm_location  => nil,
-      :host_ems_ref => nil,
-      :host_name    => nil,
     }
   end
 end
