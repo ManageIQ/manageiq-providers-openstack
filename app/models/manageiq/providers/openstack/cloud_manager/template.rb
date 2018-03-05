@@ -74,6 +74,22 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     false
   end
 
+  def self.create_image_queue(userid, ext_management_system, options = {})
+    task_opts = {
+      :action => "Creating image for user #{userid}",
+      :userid => userid
+    }
+
+    queue_opts = {
+      :class_name  => 'ManageIQ::Providers::Openstack::CloudManager::Template',
+      :method_name => 'create_image',
+      :role        => 'ems_operations',
+      :zone        => ext_management_system.my_zone,
+      :args        => [ext_management_system.id, options]
+    }
+    MiqTask.generic_action_with_callback(task_opts, queue_opts)
+  end
+
   def self.raw_create_image(ext_management_system, create_options)
     ext_management_system.with_provider_connection(:service => 'Image') do |service|
       service.create_image(create_options)
