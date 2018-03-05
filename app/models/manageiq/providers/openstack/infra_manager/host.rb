@@ -20,6 +20,33 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   supports :refresh_network_interfaces
 
+  supports :host_manageable do
+    # Setting a host from available to manageable is through Ironic set_node_provision_state call.
+    # To put a host back to being available for use, the Mistral provide workflow is used.
+    # Both of these operations should be made available for the :host_manageable
+    # feature to be supported.
+    unsupported_reason_add(:host_manageable, "To change provision state to manageable, host should be in available state.") unless hardware.provision_state == "available"
+    unsupported_reason_add(:host_manageable, 'Baremetal service unavailable') if ext_management_system.baremetal_service.nil?
+    check_supporting_workflow(:host_manageable, "tripleo.baremetal.v1.provide")
+  end
+
+  supports :host_provide do
+    unsupported_reason_add(:host_provide, "To make host available, provision state should be manageable .") unless hardware.provision_state == "manageable"
+    check_supporting_workflow(:host_provide, "tripleo.baremetal.v1.provide")
+  end
+
+  supports :host_introspect do
+    unsupported_reason_add(:host_introspect, "To introspect host, provision state should be manageable .") unless hardware.provision_state == "manageable"
+    check_supporting_workflow(:host_introspect, "tripleo.baremetal.v1.introspect")
+  end
+
+  def check_supporting_workflow(feature, workflow_name)
+    unsupported_reason_add(feature, 'Workflow service unavailable') if ext_management_system.workflow_service.nil?
+    unless ext_management_system.workflow_service.nil?
+      unsupported_reason_add(feature, "Cannot find #{workflow_name}") unless ext_management_system.workflow_service.has_workflow?(workflow_name)
+    end
+  end
+
   # TODO(lsmola) for some reason UI can't handle joined table cause there is hardcoded somewhere that it selects
   # DISTINCT id, with joined tables, id needs to be prefixed with table name. When this is figured out, replace
   # cloud tenant with rails relations

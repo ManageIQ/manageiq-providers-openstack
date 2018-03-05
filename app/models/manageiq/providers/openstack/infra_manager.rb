@@ -22,6 +22,13 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   before_create :ensure_managers
   before_update :ensure_managers_zone_and_provider_region
 
+  supports :add_host do
+    unsupported_reason_add(:add_host, 'Workflow service unavailable') if workflow_service.nil?
+    unless workflow_service.nil?
+      unsupported_reason_add(:add_host, 'Cannot find tripleo.baremetal.v1.register_or_update workflow') unless workflow_service.has_workflow?("tripleo.baremetal.v1.register_or_update")
+    end
+  end
+
   def ensure_network_manager
     build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
   end
@@ -135,6 +142,10 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
          .all? { |h| h.verify_credentials('ssh_keypair') }
   end
   private :verify_ssh_keypair_credentials
+
+  def baremetal_service
+    openstack_handle.detect_baremetal_service
+  end
 
   def workflow_service
     openstack_handle.detect_workflow_service

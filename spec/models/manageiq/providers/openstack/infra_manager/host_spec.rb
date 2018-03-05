@@ -76,10 +76,32 @@ openstack-keystone:                     active
     context "supported features" do
       before(:each) do
         host.refresh_openstack_services(ssu)
+
+        dummy_service = instance_double("dummy_service")
+        allow(host).to receive(:ext_management_system).and_return(instance_double("dummy_ems"))
+        allow(host.ext_management_system).to receive(:baremetal_service).and_return(dummy_service)
+        allow(host.ext_management_system).to receive(:workflow_service).and_return(dummy_service)
+        allow(dummy_service).to receive(:has_workflow?).and_return(true)
+        allow(host).to receive(:hardware).and_return(instance_double("dummy_hardware"))
       end
 
       it "supports refresh_network_interfaces" do
         expect(host.supports_refresh_network_interfaces?).to be_truthy
+      end
+
+      it "supports :host_manageable" do
+        allow(host.hardware).to receive(:provision_state).and_return("available")
+        expect(host.supports_host_manageable?).to be_truthy
+      end
+
+      it "supports :host_introspect" do
+        allow(host.hardware).to receive(:provision_state).and_return("manageable")
+        expect(host.supports_host_introspect?).to be_truthy
+      end
+
+      it "supports :host_provide" do
+        allow(host.hardware).to receive(:provision_state).and_return("manageable")
+        expect(host.supports_host_provide?).to be_truthy
       end
     end
 
