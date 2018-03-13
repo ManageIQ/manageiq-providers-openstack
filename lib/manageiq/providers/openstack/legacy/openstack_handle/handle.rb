@@ -172,16 +172,11 @@ module OpenstackHandle
       opts.delete(:auth_type)
 
       unless tenant
-        tenant = "any_tenant" if service == "Identity"
         tenant ||= default_tenant_name
       end
-
-      unless service == "Identity"
-        opts[:openstack_tenant] = tenant
-        # For identity ,there is only domain scope, with project_name nil
-        opts[:openstack_project_name] = @project_name = tenant
-      end
-
+      opts[:openstack_tenant] = tenant
+      # For identity ,there is only domain scope, with project_name nil
+      opts[:openstack_project_name] = @project_name = tenant
       opts[:openstack_project_domain_id] = domain
       opts[:openstack_user_domain_id]    = domain
       opts[:openstack_region]            = region

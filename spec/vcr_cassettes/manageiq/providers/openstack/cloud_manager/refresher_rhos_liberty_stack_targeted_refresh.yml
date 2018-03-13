@@ -5,7 +5,7 @@ http_interactions:
     uri: http://11.22.33.44:5000/v2.0/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":""}}'
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"admin"}}'
     headers:
       User-Agent:
       - fog-core/1.45.0
@@ -17,120 +17,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2018 17:21:45 GMT
+      - Fri, 09 Mar 2018 20:04:54 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-45392eaa-30ae-4be5-9b46-542b602deea9
+      - req-64f83f6a-c7bd-43f9-9f3e-48801dd198fa
       Content-Length:
-      - '370'
+      - '4170'
       Connection:
       - close
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-02-21T17:21:45.961852", "expires":
-        "2018-02-21T18:21:45Z", "id": "a52cba8aece9489ca18f4dca7edbc9f8", "audit_ids":
-        ["NKNMc5P8SiO1B249Iz6jEQ"]}, "serviceCatalog": [], "user": {"username": "admin",
-        "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
-        "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
-    http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:46 GMT
-- request:
-    method: get
-    uri: http://11.22.33.44:5000/v2.0/tenants
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - a52cba8aece9489ca18f4dca7edbc9f8
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 21 Feb 2018 17:21:46 GMT
-      Server:
-      - Apache/2.4.6 (Red Hat Enterprise Linux)
-      Vary:
-      - X-Auth-Token,Accept-Encoding
-      X-Openstack-Request-Id:
-      - req-d15797df-b832-4d43-8d4b-468d2fcb6359
-      Content-Length:
-      - '500'
-      Connection:
-      - close
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"tenants_links": [], "tenants": [{"description": "", "enabled": true,
-        "id": "69f8f7205ade4aa59084c32c83e60b5a", "name": "EmsRefreshSpec-Project"},
-        {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
-        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, {"description": "admin tenant",
-        "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a", "name": "admin"},
-        {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
-        "name": "EmsRefreshSpec-Project2"}]}'
-    http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:46 GMT
-- request:
-    method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"token":{"id":"a52cba8aece9489ca18f4dca7edbc9f8"},"tenantName":"EmsRefreshSpec-Project"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 21 Feb 2018 17:21:46 GMT
-      Server:
-      - Apache/2.4.6 (Red Hat Enterprise Linux)
-      Vary:
-      - X-Auth-Token,Accept-Encoding
-      X-Openstack-Request-Id:
-      - req-4f3fea0e-90da-484a-9311-9047c89d9f3b
-      Content-Length:
-      - '4143'
-      Connection:
-      - close
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-02-21T17:21:46.359101", "expires":
-        "2018-02-21T18:21:45Z", "id": "bd1191f0ea1249628b317e931a522509", "tenant":
-        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["dZKKaoScQjiC1B8n2yQhcg",
-        "NKNMc5P8SiO1B249Iz6jEQ"]}, "serviceCatalog": [{"endpoints": [{"adminURL":
-        "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a", "region": "RegionOne",
-        "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+      string: '{"access": {"token": {"issued_at": "2018-03-09T20:04:54.213826", "expires":
+        "2018-03-09T21:04:54Z", "id": "3e5d6ca446954c84bd2fe3eb86d51706", "tenant":
+        {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
+        "name": "admin"}, "audit_ids": ["ojahpEroR_ixr5FH6N_aCw"]}, "serviceCatalog":
+        [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
         "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
         "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
         "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
         "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
+        [{"adminURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
         "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
         [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
         "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
@@ -141,30 +56,112 @@ http_interactions:
         "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
         "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
-        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
         "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
         [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
         "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
         "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
-        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
         "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
         [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a", "id":
-        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a"}],
+        "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a"}],
         "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
         [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
         "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
         "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
         "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
         [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
-        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
-        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
+        {"name": "_member_"}, {"name": "heat_stack_owner"}], "name": "admin"}, "metadata":
+        {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
+        "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:46 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:54 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 09 Mar 2018 20:04:54 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-bffdd2e0-52e0-47d0-a63a-18d64c76f034
+      Content-Length:
+      - '4170'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2018-03-09T20:04:54.477470", "expires":
+        "2018-03-09T21:04:54Z", "id": "0f91b48a53bd4960b49025a9d91a35ea", "tenant":
+        {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
+        "name": "admin"}, "audit_ids": ["_Q_I_BSmR7uPCZf62XtzWQ"]}, "serviceCatalog":
+        [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "_member_"}, {"name": "heat_stack_owner"}], "name": "admin"}, "metadata":
+        {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
+        "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Fri, 09 Mar 2018 20:04:54 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -179,20 +176,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - a52cba8aece9489ca18f4dca7edbc9f8
+      - 0f91b48a53bd4960b49025a9d91a35ea
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2018 17:21:46 GMT
+      - Fri, 09 Mar 2018 20:04:54 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-839ab9b6-bf72-4511-ac2d-e298383d6840
+      - req-8cc61425-3c54-4f41-b9c4-4519183d03db
       Content-Length:
       - '500'
       Connection:
@@ -209,7 +206,7 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:46 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:54 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -227,13 +224,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 21 Feb 2018 17:21:46 GMT
+      - Fri, 09 Mar 2018 20:04:54 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-44a6cd7c-25fd-4f95-b90d-54b3e3ca9a19
+      - req-88239c57-d2a6-44c0-a495-cd57ab97296d
       Content-Length:
       - '4117'
       Connection:
@@ -242,10 +239,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-02-21T17:21:46.939445", "expires":
-        "2018-02-21T18:21:46Z", "id": "40a59ee5aa954f908dc6a93f4c2f05eb", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-03-09T20:04:54.900456", "expires":
+        "2018-03-09T21:04:54Z", "id": "cbb35f07fed44047bd5e540042322150", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["PtknkV1zSje5TXnUa4_dcQ"]},
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["D3wqMWLOQwCETun8XuF__g"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -289,7 +286,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:46 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:54 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks
@@ -304,7 +301,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 40a59ee5aa954f908dc6a93f4c2f05eb
+      - cbb35f07fed44047bd5e540042322150
   response:
     status:
       code: 200
@@ -315,9 +312,9 @@ http_interactions:
       Content-Length:
       - '2559'
       X-Openstack-Request-Id:
-      - req-e85e4292-4bd3-4e59-93ba-1dd24e1bfe56
+      - req-82e03726-e886-4b6b-9341-9925e203ff68
       Date:
-      - Wed, 21 Feb 2018 17:21:47 GMT
+      - Fri, 09 Mar 2018 20:04:55 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"stacks": [{"description": "Heat WordPress template to support F20,
@@ -351,7 +348,7 @@ http_interactions:
         "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
         "CREATE_COMPLETE", "id": "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"}]}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:47 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:55 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/template
@@ -366,7 +363,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 40a59ee5aa954f908dc6a93f4c2f05eb
+      - cbb35f07fed44047bd5e540042322150
   response:
     status:
       code: 200
@@ -377,9 +374,9 @@ http_interactions:
       Content-Length:
       - '4249'
       X-Openstack-Request-Id:
-      - req-d5a51ba5-f117-4126-aefe-267776c45fed
+      - req-5da08497-61bf-4569-aa9a-d0643714dde2
       Date:
-      - Wed, 21 Feb 2018 17:21:47 GMT
+      - Fri, 09 Mar 2018 20:04:55 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"outputs": {"WebsiteURL": {"description": "URL for Wordpress wiki",
@@ -435,7 +432,7 @@ http_interactions:
         /etc/wordpress/wp-config.php\n\nsystemctl start httpd.service\n"}}, "flavor":
         {"get_param": "instance_type"}, "networks": [{"uuid": {"get_param": "network_id"}}]}}}}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:47 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:55 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/resources
@@ -450,7 +447,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 40a59ee5aa954f908dc6a93f4c2f05eb
+      - cbb35f07fed44047bd5e540042322150
   response:
     status:
       code: 200
@@ -461,9 +458,9 @@ http_interactions:
       Content-Length:
       - '700'
       X-Openstack-Request-Id:
-      - req-4bb6e726-40a9-4d5c-b5d5-63ef35cca58f
+      - req-2ff86414-d884-4d79-af08-269de6d443cc
       Date:
-      - Wed, 21 Feb 2018 17:21:47 GMT
+      - Fri, 09 Mar 2018 20:04:55 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"resources": [{"resource_name": "wordpress_instance", "links": [{"href":
@@ -475,5 +472,5 @@ http_interactions:
         changed", "physical_resource_id": "b686353f-0da0-48bf-bc35-8ea411a67dfd",
         "resource_type": "OS::Nova::Server"}]}'
     http_version: 
-  recorded_at: Wed, 21 Feb 2018 17:21:47 GMT
+  recorded_at: Fri, 09 Mar 2018 20:04:55 GMT
 recorded_with: VCR 3.0.3
