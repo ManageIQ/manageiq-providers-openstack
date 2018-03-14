@@ -15,7 +15,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:networks, {:ems_ref => "network_id_test"}]
+            [:cloud_networks, {:ems_ref => "network_id_test"}]
           ]
         )
       )
@@ -28,7 +28,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:subnets, {:ems_ref => "subnet_id_test"}]
+            [:cloud_subnets, {:ems_ref => "subnet_id_test"}]
           ]
         )
       )
@@ -41,7 +41,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:routers, {:ems_ref => "router_id_test"}]
+            [:network_routers, {:ems_ref => "router_id_test"}]
           ]
         )
       )
@@ -54,7 +54,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:ports, {:ems_ref => "port_id_test"}]
+            [:network_ports, {:ems_ref => "port_id_test"}]
           ]
         )
       )

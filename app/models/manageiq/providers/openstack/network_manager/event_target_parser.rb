@@ -27,13 +27,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
     target_type = if ems_event.event_type.start_with?("floatingip.")
                     :floating_ips
                   elsif ems_event.event_type.start_with?("router.")
-                    :routers
+                    :network_routers
                   elsif ems_event.event_type.start_with?("port.")
-                    :ports
+                    :network_ports
                   elsif ems_event.event_type.start_with?("network.")
-                    :networks
+                    :cloud_networks
                   elsif ems_event.event_type.start_with?("subnet.")
-                    :subnets
+                    :cloud_subnets
                   elsif ems_event.event_type.start_with?("security_group.")
                     :security_groups
                   end
