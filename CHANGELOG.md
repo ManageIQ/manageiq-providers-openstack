@@ -5,10 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 81 ending 2018-03-12
+
+### Added
+- Add delete_queue method for Template [(#236)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/236)
+
+## Gaprindashvili-2 released 2018-06-06
+
+### Fixed
+- Add back missing IP address range in Virtual Private Cloud name. [(#211)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/211)
+- Fix disable CloudTenant Vm targeted refresh [(#213)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/213)
+- Filter out duplicates during inventory collection [(#212)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/212)
+- Fix targeted refresh clearing vm cloud tenant for v2 [(#233)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/233)
+
 ## Unreleased as of Sprint 80 ending 2018-02-26
 
 ### Fixed
-- Fix targeted refresh clearing vm cloud tenant for v2 [(#233)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/233)
 - Improve network manager refresh speed [(#216)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/216)
 
 ## Unreleased as of Sprint 79 ending 2018-02-12
@@ -25,7 +37,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Add proper error message if network type not supported [(#222)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/222)
 - Don't require CinderManager in inventory classes [(#218)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/218)
 - Don't dependent => destroy cinder manager [(#214)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/214)
-- Filter out duplicates during inventory collection [(#212)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/212)
 
 ## Gaprindashvili-1 - Released 2018-01-31
 
@@ -86,8 +97,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Use only hypervisor hostname to match infra host with cloud vm [(#186)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/186)
 - Return empty AR relation instead of nil for ::InfraManager#cloud_tenants [(#184)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/184)
 - Improve Targeted Refresh for Cloud and Network managers [(#175)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/175)
-- Fix disable CloudTenant Vm targeted refresh [(#213)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/213)
-- Add back missing IP address range in Virtual Private Cloud name. [(#211)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/211)
 - Bypass the superclass orchestrated destroy for this Provider. [(#209)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/209)
 - Don't dependent => destroy child_managers [(#208)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/208)
 - Override az_zone_to_cloud_network in openstack prov [(#202)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/202)
