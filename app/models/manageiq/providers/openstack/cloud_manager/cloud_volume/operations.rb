@@ -18,6 +18,10 @@ module ManageIQ::Providers::Openstack::CloudManager::CloudVolume::Operations
         service.servers.get(server_ems_ref).attach_volume(ems_ref, device)
       end
     end
+  rescue => e
+    volume_name = name.empty? ? ems_ref : name
+    _log.error("volume=[#{volume_name}], error: #{e}")
+    raise MiqException::MiqVolumeAttachError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
   def raw_detach_volume(server_ems_ref)
@@ -30,5 +34,9 @@ module ManageIQ::Providers::Openstack::CloudManager::CloudVolume::Operations
         service.servers.get(server_ems_ref).detach_volume(ems_ref)
       end
     end
+  rescue => e
+    volume_name = name.empty? ? ems_ref : name
+    _log.error("volume=[#{volume_name}], error: #{e}")
+    raise MiqException::MiqVolumeDetachError, parse_error_message_from_fog_response(e), e.backtrace
   end
 end
