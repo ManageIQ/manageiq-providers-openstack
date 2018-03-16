@@ -32,6 +32,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
                     :ports
                   elsif ems_event.event_type.start_with?("network.")
                     :networks
+                  elsif ems_event.event_type.start_with?("subnet.")
+                    :subnets
                   elsif ems_event.event_type.start_with?("security_group.")
                     :security_groups
                   end

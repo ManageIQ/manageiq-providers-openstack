@@ -113,5 +113,27 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         end
       end
     end
+
+    it "will not wipe out subnet relationships when performing a targeted network refresh against RHOS #{@environment}" do
+      with_cassette("#{@environment}_network_targeted_refresh", @ems) do
+        EmsRefresh.refresh(@ems)
+        EmsRefresh.refresh(@ems.network_manager)
+        EmsRefresh.refresh(@ems.cinder_manager)
+        EmsRefresh.refresh(@ems.swift_manager)
+
+        @ems.cloud_subnets.each do |subnet|
+          expect(subnet.cloud_network_id).to_not be(nil)
+        end
+
+        network = CloudNetwork.find_by(:name => "EmsRefreshSpec-NetworkPublic")
+        network_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                    :association => :cloud_networks,
+                                                    :manager_ref => {:ems_ref => network.ems_ref})
+        EmsRefresh.refresh(network_target)
+        @ems.cloud_subnets.each do |subnet|
+          expect(subnet.cloud_network_id).to_not be(nil)
+        end
+      end
+    end
   end
 end

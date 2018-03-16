@@ -98,15 +98,18 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     end
 
     def mocked_cloud_networks
+      [{
+        "id"      => "cloud_network_1",
+        "name"    => "cloud_network_1_name",
+        "subnets" => ["cloud_subnet_1"]
+      }]
+    end
+
+    def mocked_cloud_subnets
       [OpenStruct.new(
-        :id         => "cloud_network_1",
-        :name       => "cloud_network_1_name",
+        :id         => "cloud_subnet_1",
+        :name       => "cloud_subnet_1_name",
         :attributes => {},
-        :subnets    => [OpenStruct.new(
-          :id         => "cloud_subnet_1",
-          :name       => "cloud_subnet_1_name",
-          :attributes => {}
-        )],
       )]
     end
 
@@ -125,6 +128,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:tenants).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:orchestration_stacks).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:cloud_networks).and_return(mocked_cloud_networks)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:cloud_subnets).and_return(mocked_cloud_subnets)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:floating_ips).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_ports).and_return(mocked_network_ports)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_routers).and_return(mocked_network_routers)
@@ -138,6 +142,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:tenants).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:orchestration_stacks).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_networks).and_return(mocked_cloud_networks)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_subnets).and_return(mocked_cloud_subnets)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:floating_ips).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_ports).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_routers).and_return([])
