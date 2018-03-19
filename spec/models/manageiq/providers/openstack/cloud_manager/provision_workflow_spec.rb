@@ -256,9 +256,16 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
       context "availability_zone_to_cloud_network" do
         it "has one when it should" do
-          FactoryGirl.create(:cloud_network_google, :ext_management_system => provider.network_manager)
+          subnet = FactoryGirl.create(:cloud_subnet_openstack)
+          FactoryGirl.create(:cloud_network_openstack, :ext_management_system => provider.network_manager, :cloud_subnets => [subnet])
 
           expect(workflow.allowed_cloud_networks.size).to eq(1)
+        end
+
+        it "filters cloud networks without subnets" do
+          FactoryGirl.create(:cloud_network_openstack, :ext_management_system => provider.network_manager)
+
+          expect(workflow.allowed_cloud_networks.size).to eq(0)
         end
 
         it "has none when it should" do
@@ -287,24 +294,34 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
         context "cloud networks" do
           before do
+            subnet1 = FactoryGirl.create(:cloud_subnet_openstack)
+            subnet2 = FactoryGirl.create(:cloud_subnet_openstack)
+            subnet3 = FactoryGirl.create(:cloud_subnet_openstack)
+            subnet4 = FactoryGirl.create(:cloud_subnet_openstack)
+            subnet5 = FactoryGirl.create(:cloud_subnet_openstack)
             @cn1 = FactoryGirl.create(:cloud_network_private_openstack,
                                       :cloud_tenant          => @ct1,
-                                      :ext_management_system => provider.network_manager)
+                                      :ext_management_system => provider.network_manager,
+                                      :cloud_subnets         => [subnet1])
             @cn2 = FactoryGirl.create(:cloud_network_private_openstack,
                                       :cloud_tenant          => @ct2,
-                                      :ext_management_system => provider.network_manager)
+                                      :ext_management_system => provider.network_manager,
+                                      :cloud_subnets         => [subnet2])
             @cn3 = FactoryGirl.create(:cloud_network_public_openstack,
                                       :cloud_tenant          => @ct2,
-                                      :ext_management_system => provider.network_manager)
+                                      :ext_management_system => provider.network_manager,
+                                      :cloud_subnets         => [subnet3])
 
             @cn_shared        = FactoryGirl.create(:cloud_network_private_openstack,
                                                    :shared                => true,
                                                    :cloud_tenant          => @ct2,
-                                                   :ext_management_system => provider.network_manager)
+                                                   :ext_management_system => provider.network_manager,
+                                                   :cloud_subnets         => [subnet4])
             @cn_public_shared = FactoryGirl.create(:cloud_network_public_openstack,
                                                    :shared                => true,
                                                    :cloud_tenant          => @ct2,
-                                                   :ext_management_system => provider.network_manager)
+                                                   :ext_management_system => provider.network_manager,
+                                                   :cloud_subnets         => [subnet5])
           end
 
           it "#allowed_cloud_networks with tenant selected" do

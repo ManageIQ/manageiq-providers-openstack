@@ -85,6 +85,13 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     validate_placement(field, values, dlg, fld, value)
   end
 
+  def allowed_cloud_networks(_options = {})
+    return {} unless (src = provider_or_tenant_object)
+    targets = get_targets_for_source(src, :cloud_filter, CloudNetwork, 'all_cloud_networks')
+    targets = filter_cloud_networks(targets)
+    allowed_ci(:cloud_network, [:availability_zone], targets.map(&:id))
+  end
+
   private
 
   def dialog_name_from_automate(message = 'get_dialog_name')
@@ -93,5 +100,11 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
 
   def self.provider_model
     ManageIQ::Providers::Openstack::CloudManager
+  end
+
+  def filter_cloud_networks(networks)
+    networks.select do |cloud_network|
+      cloud_network.cloud_subnets.any?
+    end
   end
 end
