@@ -1,9 +1,11 @@
 # asasaki <asasaki@redhat.com>, 2017. #zanata
+# asasaki <asasaki@redhat.com>, 2018. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Openstack 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2017-11-13 05:55-0500\n"
+"POT-Creation-Date: 2018-02-21 12:58+0100\n"
+"PO-Revision-Date: 2018-02-27 09:02-0500\n"
 "Last-Translator: asasaki <asasaki@redhat.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -13,104 +15,153 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "X-Generator: Zanata 3.9.6\n"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/flavor.rb:39
 msgid "#{cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk"
-msgstr ""
+msgstr "#{cpus} CPU、#{ram} RAM、#{disk_size} Root ディスク"
 
+#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:322
 msgid "Cannot start. Already on."
 msgstr "開始できません。すでにオンの状態です。"
 
+#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:334
 msgid "Cannot stop. Already off."
 msgstr "停止できません。すでにオフの状態です。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:171
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:201
 msgid "Host ID cannot be nil"
 msgstr "ホスト ID を nil にすることはできません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:173
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:203
 msgid "Host cannot be found"
 msgstr "ホストが見つかりません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/relocation.rb:9
 msgid "Migrate operation is not supported."
 msgstr "移行操作はサポートされていません。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:14
 msgid "No snapshots available for this VM"
 msgstr "この仮想マシンに利用できるスナップショットはありません。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:20
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:31
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:35
 msgid "Operation not supported"
 msgstr "操作がサポートされていません。"
 
-msgid "Provider stack is not ready to be updated, another operation is in progress."
+#: ../app/models/manageiq/providers/openstack/infra_manager/orchestration_stack.rb:76
+msgid ""
+"Provider stack is not ready to be updated, another operation is in progress."
 msgstr "プロバイダースタックを更新できません。別の操作が進行中です。"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:95
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:125
 msgid "Subnet ID cannot be nil"
 msgstr "サブネット ID を nil にすることはできません"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:97
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:127
 msgid "Subnet cannot be found"
 msgstr "サブネットが見つかりません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:41
 msgid "Tenant mapping is disabled on the Provider"
 msgstr "テナントマッピングはプロバイダーで無効にされています"
 
-msgid "Tenant mapping is supported only when CloudTenant exists on the CloudManager"
+#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:43
+msgid ""
+"Tenant mapping is supported only when CloudTenant exists on the CloudManager"
 msgstr "テナントマッピングは、クラウドテナントがクラウドマネージャー上に存在する場合にのみサポートされます。"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:9
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:17
 msgid "The Cloud Network is not connected to an active %{table}"
 msgstr "クラウドネットワークはアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/flavor.rb:18
 msgid "The Flavor is not connected to an active %{table}"
 msgstr "フレーバーはアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:10
+#: ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:18
 msgid "The Floating Ip is not connected to an active %{table}"
 msgstr "Floating IP はアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/template.rb:91
 msgid "The Image is not connected to an active %{table}"
 msgstr "イメージはアクティブな%{table}に接続されていません"
 
-msgid "The Instance cannot be resized, current state has to be active or shutoff."
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/resize.rb:8
+msgid ""
+"The Instance cannot be resized, current state has to be active or shutoff."
 msgstr "インスタンスのサイズを変更できません。現在の状態はアクティブまたはシャットオフのいずれかである必要があります。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/auth_key_pair.rb:19
 msgid "The Keypair is not connected to an active %{table}"
 msgstr "キーペアはアクティブな%{table}に接続されません"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:12
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:20
 msgid "The Network Router is not connected to an active %{table}"
 msgstr "ネットワークルーターはアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:8
+#: ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:16
 msgid "The Security Group is not connected to an active %{table}"
 msgstr "セキュリティーグループはアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/guest.rb:7
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/guest.rb:12
 msgid "The VM is not powered on"
 msgstr "仮想マシンの電源がオンになっていません"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:14
 msgid "The subnet has an active %{table}"
 msgstr "サブネットにはアクティブな%{table}があります"
 
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:9
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:21
 msgid "The subnet is not connected to an active %{table}"
 msgstr "サブネットはアクティブな%{table}に接続されていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/associate_ip.rb:8
 msgid "There are no %{floating_ips} available to this %{instance}."
 msgstr "この%{instance}で利用できる %{floating_ips} はありません。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/manage_security_groups.rb:8
 msgid "There are no %{security_groups} available to this %{instance}."
 msgstr "この %{instance} で利用できる %{security_groups} はありません。"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/associate_ip.rb:17
 msgid "This %{instance} does not have any associated %{floating_ips}"
 msgstr "この %{instance} には %{floating_ips} が関連付けられていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/manage_security_groups.rb:17
 msgid "This %{instance} does not have any associated %{security_groups}"
 msgstr "この %{instance} には %{security_groups} が関連付けられていません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/orchestration_template.rb:169
 msgid "Unknown constraint %{constraint}"
 msgstr "不明な制約 %{constraint}"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:38
 msgid "cloud_volume cannot be nil"
 msgstr "cloud_volume を nil にすることはできません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:35
 msgid "ems cannot be found"
 msgstr "ems が見つかりません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:33
 msgid "ems cannot be nil"
 msgstr "ems を nil にすることはできません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:40
 msgid "ext_management_system cannot be nil"
 msgstr "ext_management_system を nil にすることはできません"
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/template.rb:16
 msgid "not connected to ems"
 msgstr "EMS に接続されていません"
