@@ -138,7 +138,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(@host.ems_cluster).not_to be nil
 
     expect(@host).to have_attributes(
-      :ipmi_address       => nil,
+      :ipmi_address       => "172.16.0.1",
       :vmm_vendor         => "redhat",
       :vmm_version        => nil,
       :vmm_product        => "rhel (No hypervisor, Host Type is Controller)",
@@ -166,11 +166,11 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       #:manufacturer         => "Red Hat",
       #:model                => "KVM",
       #:bios                 => "seabios-1.7.5-11.el7",
-      :memory_mb            => 16384,
+      :memory_mb            => 32768,
       :memory_console       => nil,
       :disk_capacity        => 29,
-      :cpu_sockets          => 4,
-      :cpu_total_cores      => 4,
+      :cpu_sockets          => 8,
+      :cpu_total_cores      => 8,
       :cpu_cores_per_socket => 1,
       :guest_os             => nil,
       :guest_os_full_name   => nil,
@@ -241,12 +241,13 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(CloudNetwork.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
       match_array(
         %w(
-          storage___overcloud-Networks-pbb77pcdo5vf-StorageNetwork-alynjx5sbihk
-          internal_api___overcloud-Networks-pbb77pcdo5vf-InternalNetwork-m6gf3fnrmv2o
-          external___overcloud-Networks-pbb77pcdo5vf-ExternalNetwork-t35bvwrbnmml
-          storage_mgmt___overcloud-Networks-pbb77pcdo5vf-StorageMgmtNetwork-4hapfhdgyuxk
+          external___overcloud-Networks-qjtholakrc6g-ExternalNetwork-6zyampmzf3tj
+          tenant___overcloud-Networks-qjtholakrc6g-TenantNetwork-ctrbnzridcnt
+          storage_mgmt___overcloud-Networks-qjtholakrc6g-StorageMgmtNetwork-gznjlt35mzvj
+          internal_api___overcloud-Networks-qjtholakrc6g-InternalNetwork-pmjtzxalczbj
+          management___overcloud-Networks-qjtholakrc6g-ManagementNetwork-pez37zpjatdk
+          storage___overcloud-Networks-qjtholakrc6g-StorageNetwork-ka2bg3xvbajf
           ctlplane___
-          tenant___overcloud-Networks-pbb77pcdo5vf-TenantNetwork-6ls6x5prvhle
         )
       )
     )
