@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activesupport",        ">= 5.0", "< 5.2"
   s.add_runtime_dependency "bunny",                "~>2.1.0"
   s.add_runtime_dependency "excon",                "~>0.40"
-  s.add_runtime_dependency "fog-openstack",        "=0.1.22"
+  s.add_runtime_dependency "fog-openstack",        "=0.1.25"
   s.add_runtime_dependency "more_core_extensions", "~>3.2"
 
   s.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
