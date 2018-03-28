@@ -103,12 +103,14 @@ class ManageIQ::Providers::Openstack::BaseMetricsCapture < ManageIQ::Providers::
       target.network_ports.each do |port|
         # fetch the list of resources and use the original_resource_id and type to find
         # the network interface's resource
-        original_resource_id = "#{target.ems_ref}-tap#{port.ems_ref[0..10]}"
-        resources = @perf_ems.list_resources.body
-        resources.each do |r|
-          if r["type"].to_s == "instance_network_interface" && r["original_resource_id"].include?(original_resource_id)
-            resource_filter = {"field" => "resource_id", "value" => r["id"]}
-            counters = counters + list_resource_meters(resource_filter, log_header)
+        if port.ems_ref
+          original_resource_id = "#{target.ems_ref}-tap#{port.ems_ref[0..10]}"
+          resources = @perf_ems.list_resources.body
+          resources.each do |r|
+            if r["type"].to_s == "instance_network_interface" && r["original_resource_id"].include?(original_resource_id)
+              resource_filter = {"field" => "resource_id", "value" => r["id"]}
+              counters = counters + list_resource_meters(resource_filter, log_header)
+            end
           end
         end
       end
