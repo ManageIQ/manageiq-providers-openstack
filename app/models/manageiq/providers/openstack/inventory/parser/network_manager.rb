@@ -51,7 +51,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       subnet.allocation_pools = s.allocation_pools
       subnet.host_routes = s.host_routes
       subnet.ip_version = s.ip_version
-      subnet.parent_cloud_subnet = persister.cloud_subnets.lazy_find(s.attributes["vsd_managed"])
+      if s.attributes["vsd_managed"]
+        subnet.parent_cloud_subnet = persister.cloud_subnets.lazy_find(s.attributes["vsd_id"])
+      end
       subnet.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
       subnet.cloud_network = persister.cloud_networks.lazy_find(s.network_id)
       subnet.status = persister.cloud_networks.lazy_find(s.network_id, :key => :status)
