@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 82 ending 2018-03-26
+
+### Fixed
+- Improve provisioning failure error messages [(#254)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/254)
+- Correct network event target associations [(#250)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/250)
+- Dont return Storage Services if They arent present [(#240)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/240)
+- Filter openstack networks without subnets [(#238)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/238)
+
 ## Unreleased as of Sprint 81 ending 2018-03-12
 
 ### Added
