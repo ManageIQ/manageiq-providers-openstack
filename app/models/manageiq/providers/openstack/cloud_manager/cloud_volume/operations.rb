@@ -19,7 +19,7 @@ module ManageIQ::Providers::Openstack::CloudManager::CloudVolume::Operations
       end
     end
   rescue => e
-    volume_name = name.blank? ? ems_ref : name
+    volume_name = name.presence || ems_ref
     _log.error("volume=[#{volume_name}], error: #{e}")
     raise MiqException::MiqVolumeAttachError, parse_error_message_from_fog_response(e), e.backtrace
   end
@@ -35,7 +35,7 @@ module ManageIQ::Providers::Openstack::CloudManager::CloudVolume::Operations
       end
     end
   rescue => e
-    volume_name = name.blank? ? ems_ref : name
+    volume_name = name.presence || ems_ref
     _log.error("volume=[#{volume_name}], error: #{e}")
     raise MiqException::MiqVolumeDetachError, parse_error_message_from_fog_response(e), e.backtrace
   end
