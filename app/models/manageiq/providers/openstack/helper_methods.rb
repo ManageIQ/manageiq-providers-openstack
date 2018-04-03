@@ -21,7 +21,12 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def parse_error_message_from_neutron_response(exception)
-      JSON.parse(exception.response.body)["NeutronError"]["message"]
+      response_body = JSON.parse(exception.response.body)
+      if response_body.key?("NeutronError")
+        response_body["NeutronError"]["message"]
+      else
+        parse_error_message_from_fog_response(exception)
+      end
     end
 
     def with_notification(type, options: {})
