@@ -21,6 +21,8 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def parse_error_message_from_neutron_response(exception)
+      return exception.to_s unless exception.respond_to?(:response)
+
       response_body = JSON.parse(exception.response.body)
       if response_body.key?("NeutronError")
         response_body["NeutronError"]["message"]
