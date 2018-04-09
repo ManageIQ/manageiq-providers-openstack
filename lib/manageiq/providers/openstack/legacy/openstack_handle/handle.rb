@@ -166,17 +166,19 @@ module OpenstackHandle
       opts     = options.dup
       service  = (opts.delete(:service) || "Compute").to_s.camelize
       tenant   = opts.delete(:tenant_name)
+      discover_tenants = opts.fetch(:discover_tenants, true)
+      opts.delete(:discover_tenants)
       domain   = domain_id
 
       # Do not send auth_type to fog, it throws warning
       opts.delete(:auth_type)
 
-      unless tenant
-        tenant ||= default_tenant_name
+      if discover_tenants && tenant.blank?
+        tenant = default_tenant_name
       end
-      opts[:openstack_tenant] = tenant
+      opts[:openstack_tenant] = tenant if tenant
       # For identity ,there is only domain scope, with project_name nil
-      opts[:openstack_project_name] = @project_name = tenant
+      opts[:openstack_project_name] = @project_name = tenant if tenant
       opts[:openstack_project_domain_id] = domain
       opts[:openstack_user_domain_id]    = domain
       opts[:openstack_region]            = region
@@ -239,8 +241,8 @@ module OpenstackHandle
     end
     alias_method :connect_compute, :compute_service
 
-    def identity_service
-      connect(:service => "Identity")
+    def identity_service(discover_tenants = true)
+      connect(:service => "Identity", :discover_tenants => discover_tenants)
     end
     alias_method :connect_identity, :identity_service
 
@@ -346,7 +348,7 @@ module OpenstackHandle
     end
 
     def tenants
-      @tenants ||= identity_service.visible_tenants
+      @tenants ||= identity_service(false).visible_tenants
     end
 
     def tenant_names
