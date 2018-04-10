@@ -10,6 +10,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::Cind
 
     add_inventory_collections(cloud,
                               %i(
+                                vms
                                 availability_zones
                                 hardwares
                                 cloud_tenants
