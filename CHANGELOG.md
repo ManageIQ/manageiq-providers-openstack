@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 83 ending 2018-04-09
+
+### Added
+- Update VCRs and remove obsolete VCRs for very old versions of Openstack [(#266)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/266)
+
+### Fixed
+- Avoid tenant discovery recursion [(#265)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/265)
+- Fallback to generic error parsing if neutron-specific parsing fails [(#263)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/263)
+- Fix parent subnet relationship [(#260)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/260)
+- Parse volume attachment/detachment messages from fog responses [(#253)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/253)
+- Ensure Openstack uses its own CinderManager [(#242)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/242)
+
 ## Unreleased as of Sprint 82 ending 2018-03-26
 
 ### Fixed
