@@ -1,5 +1,6 @@
 module ManageIQ::Providers::Openstack::ManagerMixin
   extend ActiveSupport::Concern
+  include ManageIQ::Providers::Openstack::HelperMethods
 
   included do
     after_save :stop_event_monitor_queue_on_change
@@ -49,7 +50,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError
         err
       else
-        MiqException::MiqEVMLoginError.new("Unexpected response returned from system: #{err.message}")
+        MiqException::MiqEVMLoginError.new("Unexpected response returned from system: #{parse_error_message_from_fog_response(err)}")
       end
     end
   end
