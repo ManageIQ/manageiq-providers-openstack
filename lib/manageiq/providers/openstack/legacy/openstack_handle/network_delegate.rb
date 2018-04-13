@@ -30,7 +30,7 @@ module OpenstackHandle
     end
 
     def quotas_for_accessible_tenants
-      @os_handle.accessor_for_accessible_tenants(SERVICE_NAME, :quotas_for_current_tenant, 'id', false)
+      @os_handle.accessor_for_accessible_tenants(SERVICE_NAME, :quotas_for_current_tenant, 'tenant_id', false)
     end
   end
 end
