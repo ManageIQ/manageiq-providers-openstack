@@ -30,8 +30,10 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
   end
 
   def raw_delete_cloud_tenant
-    ext_management_system.with_provider_connection(connection_options) do |service|
-      service.delete_tenant(ems_ref)
+    with_notification(:cloud_tenant_delete, :options => {:subject => self}) do
+      ext_management_system.with_provider_connection(connection_options) do |service|
+        service.delete_tenant(ems_ref)
+      end
     end
   rescue => e
     _log.error "tenant=[#{name}], error: #{e}"
