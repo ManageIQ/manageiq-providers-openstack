@@ -27,7 +27,11 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
     source.ext_management_system.with_provider_connection(connection_options) do |service|
       volumes_refs.each do |volume_attrs|
         next unless volume_attrs[:source_type] == "volume"
-        status = service.volumes.get(volume_attrs[:uuid]).try(:status)
+        volume = service.volumes.get(volume_attrs[:uuid])
+        status = volume.try(:status)
+        if status == "error"
+          raise MiqException::MiqProvisionError, "An error occurred while creating Volume #{volume.name}"
+        end
         return false, status unless status == "available"
       end
     end

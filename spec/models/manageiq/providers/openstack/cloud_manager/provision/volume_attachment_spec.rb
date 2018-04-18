@@ -65,5 +65,15 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
 
       expect(@task.do_volume_creation_check([pending_volume_attrs])).to eq [false, nil]
     end
+
+    it "status error" do
+      pending_volume_attrs = {:source_type => "volume"}
+      service = double
+      allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
+                                                                                          :status => "error")
+      allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
+        .with(:service => 'volume').and_yield(service)
+      expect { @task.do_volume_creation_check([pending_volume_attrs]) }.to raise_error(MiqException::MiqProvisionError)
+    end
   end
 end
