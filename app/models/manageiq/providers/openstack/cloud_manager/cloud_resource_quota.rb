@@ -89,6 +89,12 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudResourceQuota < ::Cloud
                .sum(:size) / 1_073_741_824
   end
 
+  def per_volume_gigabytes_quota_used
+    max_used = CloudVolume.where(:cloud_tenant_id => cloud_tenant_id)
+                          .maximum(:size)
+    max_used.nil? ? 0 : max_used / 1_073_741_824
+  end
+
   def backups_quota_used
     CloudVolumeBackup.joins(:cloud_volume)
                      .where("cloud_volumes.cloud_tenant_id" => cloud_tenant_id).count
