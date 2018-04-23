@@ -361,18 +361,47 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
         public_network.ipaddress = s.public_ip_address
       end
 
+      attachment_names = {'vda' => 'Root disk'}
       disk_location = "vda"
       if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
         root_size = 1.gigabytes
       end
-      make_instance_disk(hardware, root_size, disk_location.dup, "Root disk")
+      make_instance_disk(hardware, root_size, disk_location.dup, attachment_names[disk_location])
       ephemeral_size = flavor.try(:ephemeral).to_i.gigabytes
       unless ephemeral_size.zero?
-        make_instance_disk(hardware, ephemeral_size, disk_location.succ!.dup, "Ephemeral disk")
+        disk_location = "vdb"
+        attachment_names[disk_location] = "Ephemeral disk"
+        make_instance_disk(hardware, ephemeral_size, disk_location, attachment_names[disk_location])
       end
       swap_size = flavor.try(:swap).to_i.megabytes
       unless swap_size.zero?
-        make_instance_disk(hardware, swap_size, disk_location.succ!.dup, "Swap disk")
+        disk_location = disk_location.succ
+        attachment_names[disk_location] = "Swap disk"
+        make_instance_disk(hardware, swap_size, disk_location, attachment_names[disk_location])
+      end
+
+      # Make disks in the inventory for each of this server's volume attachments.
+      # Start by checking the raw attributes from fog to see whether whether this
+      # server has any attachments. If it does, then use the fog object's
+      # volume_attachments method to inflate them and get the device names.
+      # Checking the attribute first avoids making an expensive api call for
+      # every server when they may not all have attachments.
+      # Don't worry about filling in the volume, since the volume service refresh
+      # will take care of that.
+      if s.attributes.fetch("os-extended-volumes:volumes_attached", []).length > 0
+        s.volume_attachments.each do |attachment|
+          dev = File.basename(attachment['device'])
+          persister.disks.find_or_build_by(
+            :hardware    => hardware,
+            # reuse the device names from above in the event that this is an
+            # instance that was booted from a volume
+            :device_name => attachment_names.fetch(dev, dev)
+          ).assign_attributes(
+            :location        => dev,
+            :device_type     => "disk",
+            :controller_type => "openstack"
+          )
+        end
       end
     end
   end
@@ -408,12 +437,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     disk = persister.disks.find_or_build_by(
       :hardware    => hardware,
       :device_name => name
+    ).assign_attributes(
+      :location        => location,
+      :size            => size,
+      :device_type     => "disk",
+      :controller_type => "openstack"
     )
-    disk.device_name = name
-    disk.device_type = "disk"
-    disk.controller_type = "openstack"
-    disk.size = size
-    disk.location = location
     disk
   end
 

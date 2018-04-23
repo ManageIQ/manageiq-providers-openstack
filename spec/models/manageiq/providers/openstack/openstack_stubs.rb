@@ -233,7 +233,8 @@ module OpenstackStubs
         :flavor             => {"id" => i},
         :availability_zone  => "nova",
         :private_ip_address => '10.10.10.1',
-        :public_ip_address  => '172.1.1.2'
+        :public_ip_address  => '172.1.1.2',
+        :attributes         => {}
       )
     end
     mocked_vms
