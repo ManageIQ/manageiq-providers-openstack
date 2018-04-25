@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 84 ending 2018-04-23
+
+### Fixed
+- per_volume_gigabytes_used definition is missing [(#276)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/276)
+- Use the correct id when collecting quotas from Neutron [(#272)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/272)
+- translate_exceptions: Parse errors out of fog responses [(#271)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/271)
+- Catch error when volume creation fails [(#269)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/269)
+- Make Gnocchi default granularity configurable in Settings [(#267)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/267)
+- Don't lose VM volume attachments when refreshing the cloud inventory [(#243)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/243)
+
 ## Unreleased as of Sprint 83 ending 2018-04-09
 
 ### Added
