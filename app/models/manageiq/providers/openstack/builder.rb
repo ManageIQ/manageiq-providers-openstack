@@ -8,9 +8,9 @@ class ManageIQ::Providers::Openstack::Builder
         inventory(
           ems,
           target,
-          ManageIQ::Providers::Openstack::Inventory::Collector::StorageManager::CinderManager,
-          ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::CinderManager,
-          [ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager]
+          ManageIQ::Providers::Openstack::Inventory::Collector::CinderManager,
+          ManageIQ::Providers::Openstack::Inventory::Persister::CinderManager,
+          [ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager]
         )
       when ManageIQ::Providers::Openstack::NetworkManager
         inventory(
@@ -28,7 +28,7 @@ class ManageIQ::Providers::Openstack::Builder
           ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection,
           [ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager,
            ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager,
-           ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager]
+           ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager]
         )
       else
         # Fallback to ems refresh

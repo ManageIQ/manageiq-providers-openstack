@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Persister
+class ManageIQ::Providers::Openstack::Inventory::Persister::CinderManager < ManageIQ::Providers::Openstack::Inventory::Persister
   def initialize_inventory_collections
     add_inventory_collections(storage,
                               %i(
