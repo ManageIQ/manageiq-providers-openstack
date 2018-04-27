@@ -1,6 +1,7 @@
 class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inventory::Persister
   require_nested :CloudManager
   require_nested :NetworkManager
+  require_nested :CinderManager
   require_nested :TargetCollection
 
   # TODO(lsmola) figure out a way to pass collector info, probably via target, then remove the below

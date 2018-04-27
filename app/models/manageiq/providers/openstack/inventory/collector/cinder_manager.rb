@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Collector::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Collector
+class ManageIQ::Providers::Openstack::Inventory::Collector::CinderManager < ManageIQ::Providers::Openstack::Inventory::Collector
   include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
 
   def cloud_volumes
