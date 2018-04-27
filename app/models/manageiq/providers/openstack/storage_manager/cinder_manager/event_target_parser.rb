@@ -21,40 +21,44 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
   def parse_ems_event_targets(ems_event)
     target_collection = ManagerRefresh::TargetCollection.new(:manager => ems_event.ext_management_system.parent_manager, :event => ems_event)
 
-    # there's almost always a tenant id regardless of event type
-    collect_identity_tenant_references!(target_collection, ems_event)
-
     if ems_event.event_type.start_with?("volume.")
       collect_volume_references!(target_collection, ems_event)
     elsif ems_event.event_type.start_with?("snapshot.")
       collect_snapshot_references!(target_collection, ems_event)
+    elsif ems_event.event_type.start_with?("backup.")
+      collect_backup_references!(target_collection, ems_event)
     end
 
     target_collection.targets
   end
 
   def collect_volume_references!(target_collection, ems_event)
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    add_target(target_collection, :cloud_volumes, resource_id) if resource_id
+    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    add_target(target_collection, :cloud_volumes, resource_id, :tenant_id => tenant_id) if resource_id
   end
 
   def collect_snapshot_references!(target_collection, ems_event)
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'snapshot_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    add_target(target_collection, :cloud_volume_snapshots, resource_id) if resource_id
+    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    add_target(target_collection, :cloud_volume_snapshots, resource_id, :tenant_id => tenant_id) if resource_id
     volume_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id')
-    add_target(target_collection, :cloud_volumes, volume_id) if volume_id
+    add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
   end
 
-  def collect_identity_tenant_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id') || ems_event.full_data.fetch_path(:content, 'payload', 'project_id') || ems_event.full_data.fetch_path(:content, 'payload', 'initiator', 'project_id')
-    add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
+  def collect_backup_references!(target_collection, ems_event)
+    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    add_target(target_collection, :cloud_volume_backups, resource_id, :tenant_id => tenant_id) if resource_id
+    volume_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id')
+    add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
   end
 
   def parsed_targets(target_collection = {})
     target_collection.select { |_target_class, references| references[:manager_ref].present? }
   end
 
-  def add_target(target_collection, association, ref)
-    target_collection.add_target(:association => association, :manager_ref => {:ems_ref => ref})
+  def add_target(target_collection, association, ref, options = {})
+    target_collection.add_target(:association => association, :manager_ref => {:ems_ref => ref}, :options => options)
   end
 end
