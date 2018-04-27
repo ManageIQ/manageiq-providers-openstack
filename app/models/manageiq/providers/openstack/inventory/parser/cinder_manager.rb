@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
+class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
   def parse
     cloud_volumes
     cloud_volume_snapshots
