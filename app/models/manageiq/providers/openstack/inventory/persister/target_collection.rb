@@ -46,7 +46,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
     add_inventory_collections_with_references(
       storage,
       %i(cloud_volumes cloud_volume_backups cloud_volume_snapshots),
-      :parent => manager.cinder_manager
+      :parent => manager.cinder_manager,
+      :builder_params => {:ext_management_system => manager.cinder_manager}
     )
 
     ######## Custom processing of Ancestry ##########

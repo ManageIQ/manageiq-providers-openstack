@@ -225,12 +225,12 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def scoped_get_snapshot(snapshot_id, tenant_id)
     tenant = memoized_get_tenant(tenant_id)
-    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).snapshots.get(snapshot_id) }
+    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).get_snapshot_details(snapshot_id).body["snapshot"] }
   end
 
   def scoped_get_backup(backup_id, tenant_id)
     tenant = memoized_get_tenant(tenant_id)
-    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).backups.get(backup_id) }
+    safe_get { @os_handle.detect_volume_service(tenant.try(:name)).get_backup_details(backup_id).body["backup"] }
   end
 
   private
