@@ -5,7 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-2
+## Gaprindashvili-3
+
+### Added
+- Infra discovery: Port scan needs trailing FF/LN [(#205)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/205)
+- For archived nodes, just delete AR object on remove [(#165)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/165)
+- Move CinderManager inventory classes [(#282)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/282)
+
+### Fixed
+- Send tenant with identity service requests [(#225)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/225)
+- Track guest OS for openstack images and VMs [(#193)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/193)
+- Improve network manager refresh speed [(#216)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/216)
+- Correct network event target associations [(#250)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/250)
+- Improve provisioning failure error messages [(#254)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/254)
+- Filter openstack networks without subnets [(#238)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/238)
+- Dont return Storage Services if They arent present [(#240)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/240)
+- Fix parent subnet relationship [(#260)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/260)
+- Fallback to generic error parsing if neutron-specific parsing fails [(#263)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/263)
+- Default Event payload to empty Hash [(#262)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/262)
+- Fixes unfriendly message when adding network for unavailable provider [(#264)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/264)
+- Catch Fog::Errors::NotFound in OpenstackHandle.handled_list [(#280)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/280)
+
+## Gaprindashvili-2 - Released 2018-03-07
 
 ### Fixed
 - Add back missing IP address range in Virtual Private Cloud name. [(#211)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/211)
