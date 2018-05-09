@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 85 ending 2018-05-07
+
+### Added
+- Move CinderManager inventory classes [(#282)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/282)
+- Add Openstack CinderManager EventCatcher [(#281)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/281)
+
+### Fixed
+- duplicate opts hash before modifying in raw_connect_try_ssl [(#284)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/284)
+- Catch Fog::Errors::NotFound in OpenstackHandle.handled_list [(#280)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/280)
+
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
 ### Fixed
