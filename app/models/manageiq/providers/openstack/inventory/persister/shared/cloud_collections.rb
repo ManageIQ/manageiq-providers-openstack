@@ -89,7 +89,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollec
 
   # TODO: mslemr - same as amazon!
   def add_vm_and_miq_template_ancestry
-    add_collection(cloud, :vm_and_miq_template_ancestry, {}, {:auto_object_attributes => false, :auto_model_class => false, :without_model_class => true}) do |builder|
+    add_collection(cloud, :vm_and_miq_template_ancestry, {}, {:auto_inventory_attributes => false, :auto_model_class => false, :without_model_class => true}) do |builder|
       builder.add_dependency_attributes(
         :vms           => [collections[:vms]],
         :miq_templates => [collections[:miq_templates]]
@@ -100,7 +100,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollec
   # TODO: mslemr - almost same as amazon!
   # Needed remove_dependency_attributes for core basic definition
   def add_orchestration_stack_ancestry
-    add_collection(cloud, :orchestration_stack_ancestry, {}, {:auto_object_attributes => false, :auto_model_class => false, :without_model_class => true}) do |builder|
+    add_collection(cloud, :orchestration_stack_ancestry, {}, {:auto_inventory_attributes => false, :auto_model_class => false, :without_model_class => true}) do |builder|
       builder.add_dependency_attributes(
         :orchestration_stacks => [collections[:orchestration_stacks]]
       )
@@ -116,8 +116,8 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollec
   private
 
   # Shortcut for better code readability
-  def add_collection_with_ems_param(builder_class, collection_name, extra_properties = {})
-    add_collection(builder_class, collection_name, extra_properties) do |builder|
+  def add_collection_with_ems_param(builder_class, collection_name, extra_properties = {}, settings = {})
+    add_collection(builder_class, collection_name, extra_properties, settings) do |builder|
       builder.add_builder_params(:ext_management_system => manager)
     end
   end
