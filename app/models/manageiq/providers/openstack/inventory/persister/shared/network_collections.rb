@@ -1,37 +1,48 @@
 module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkCollections
   extend ActiveSupport::Concern
 
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
+
   def network
     ::ManagerRefresh::InventoryCollection::Builder::NetworkManager
   end
 
   def initialize_network_inventory_collections
-    %i(cloud_networks
-       cloud_subnets
-       floating_ips
-       network_routers
-       security_groups).each do |name|
+    add_cloud_networks
 
-      add_collection(network, name) do |builder|
-        builder.add_builder_params(:ext_management_system => (targeted? ? manager.network_manager : manager))
-      end
-    end
-
-    add_network_ports
+    add_cloud_subnets
 
     add_cloud_subnet_network_ports
 
     add_firewall_rules
+
+    add_floating_ips
+
+    add_network_ports
+
+    add_network_routers
+
+    add_security_groups
   end
 
   # ------ IC provider specific definitions -------------------------
 
-  def add_network_ports
-    add_collection(network, :network_ports) do |builder|
-      builder.add_properties(:delete_method => :disconnect_port)
+  # model_class defined due to ovirt dependency
+  def add_cloud_networks
+    add_collection(network, :cloud_networks) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork)
 
-      builder.add_builder_params(:ext_management_system => (targeted? ? manager.network_manager : manager))
-s    end
+      ems_builder_param(builder) unless targeted?
+    end
+  end
+
+  # model_class defined due to ovirt dependency
+  def add_cloud_subnets
+    add_collection(network, :cloud_subnets) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet)
+
+      ems_builder_param(builder) unless targeted?
+    end
   end
 
   def add_cloud_subnet_network_ports
@@ -47,6 +58,42 @@ s    end
       builder.add_properties(
         :manager_ref => %i(ems_ref)
       )
+    end
+  end
+
+  # model_class defined due to ovirt dependency
+  def add_floating_ips
+    add_collection(network, :floating_ips) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::FloatingIp)
+
+      ems_builder_param(builder) unless targeted?
+    end
+  end
+
+  def add_network_ports
+    add_collection(network, :network_ports) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
+      builder.add_properties(:delete_method => :disconnect_port)
+
+      builder.add_builder_params(:ext_management_system => manager) unless targeted?
+    end
+  end
+
+  # model_class defined due to ovirt dependency
+  def add_network_routers
+    add_collection(network, :network_routers) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter)
+
+      ems_builder_param(builder) unless targeted?
+    end
+  end
+
+  # model_class defined due to ovirt dependency
+  def add_security_groups
+    add_collection(network, :security_groups) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup)
+
+      ems_builder_param(builder) unless targeted?
     end
   end
 end
