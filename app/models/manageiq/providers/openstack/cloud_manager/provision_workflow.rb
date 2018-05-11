@@ -56,6 +56,7 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
       if new_volume.blank?
         prepare_volumes = false
       else
+        new_volume[:size] = "1" if new_volume[:size].empty?
         volumes.push new_volume
       end
     end
