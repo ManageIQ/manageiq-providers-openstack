@@ -117,6 +117,36 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       end
     end
 
+    it "will perform a targeted router refresh against RHOS #{@environment}" do
+      router_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                 :association => :network_routers,
+                                                 :manager_ref => {:ems_ref => "57e17608-8ac6-44a6-803e-f42ec15e9d1e"})
+
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_router_targeted_refresh", @ems) do
+          EmsRefresh.refresh(router_target)
+          expect(NetworkRouter.count).to eq(1)
+          router = NetworkRouter.find_by(:ems_ref => "57e17608-8ac6-44a6-803e-f42ec15e9d1e")
+          expect(router.ext_management_system).to eq(@ems.network_manager)
+        end
+      end
+    end
+
+    it "will perform a targeted port refresh against RHOS #{@environment}" do
+      port_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                               :association => :network_ports,
+                                               :manager_ref => {:ems_ref => "02b5cbb1-6072-429c-b185-89f44b552d40"})
+
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_port_targeted_refresh", @ems) do
+          EmsRefresh.refresh(port_target)
+          expect(NetworkPort.count).to eq(1)
+          router = NetworkPort.find_by(:ems_ref => "02b5cbb1-6072-429c-b185-89f44b552d40")
+          expect(router.ext_management_system).to eq(@ems.network_manager)
+        end
+      end
+    end
+
     it "will not wipe out subnet relationships when performing a targeted network refresh against RHOS #{@environment}" do
       with_cassette("#{@environment}_network_targeted_refresh", @ems) do
         EmsRefresh.refresh(@ems)

@@ -29,7 +29,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
     add_inventory_collections_with_references(
       network,
       %i(cloud_networks cloud_subnets security_groups floating_ips network_ports network_routers),
-      :parent => manager.network_manager
+      :parent => manager.network_manager,
+      :builder_params => {:ext_management_system => manager.network_manager}
     )
 
     add_inventory_collections(
