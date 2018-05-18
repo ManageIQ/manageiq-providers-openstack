@@ -15,4 +15,9 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
   def ems_builder_param(builder)
     builder.add_builder_params(:ext_management_system => manager)
   end
+
+  def ems_network_builder_param(builder)
+    ems = targeted? ? manager.network_manager : manager
+    builder.add_builder_params(:ext_management_system => ems)
+  end
 end

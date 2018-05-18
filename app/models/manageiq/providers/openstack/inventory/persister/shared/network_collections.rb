@@ -32,7 +32,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
     add_collection(network, :cloud_networks) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork)
 
-      ems_builder_param(builder) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 
@@ -41,7 +41,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
     add_collection(network, :cloud_subnets) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet)
 
-      ems_builder_param(builder) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 
@@ -66,7 +66,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
     add_collection(network, :floating_ips) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::FloatingIp)
 
-      ems_builder_param(builder) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 
@@ -75,7 +75,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
       builder.add_properties(:delete_method => :disconnect_port)
 
-      builder.add_builder_params(:ext_management_system => manager) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 
@@ -84,7 +84,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
     add_collection(network, :network_routers) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter)
 
-      ems_builder_param(builder) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 
@@ -93,7 +93,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
     add_collection(network, :security_groups) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup)
 
-      ems_builder_param(builder) unless targeted?
+      ems_network_builder_param(builder)
     end
   end
 end
