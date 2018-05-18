@@ -422,16 +422,30 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       allow_any_instance_of(described_class).to receive(:update_field_visibility)
       described_class.new({:src_vm_id => template.id}, admin.userid)
     end
-    it "converts numbered volume form fields into an array" do
-      volumes = workflow.prepare_volumes_fields(
-        :name_1 => "v1n", :size_1 => "v1s", :delete_on_terminate_1 => true,
-        :name_2 => "v2n", :size_2 => "v2s", :delete_on_terminate_2 => false,
-        :other_irrelevant_key => 1
-      )
-      expect(volumes.length).to eq(2)
-      expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
-      expect(volumes[1]).to eq(:name => "v2n", :size => "v2s", :delete_on_terminate => false)
+
+    context "converts numbered volume form fields into an array" do
+      it "with no default values" do
+        volumes = workflow.prepare_volumes_fields(
+          :name_1 => "v1n", :size_1 => "v1s", :delete_on_terminate_1 => true,
+          :name_2 => "v2n", :size_2 => "v2s", :delete_on_terminate_2 => false,
+          :other_irrelevant_key => 1
+        )
+        expect(volumes.length).to eq(2)
+        expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
+        expect(volumes[1]).to eq(:name => "v2n", :size => "v2s", :delete_on_terminate => false)
+      end
+      it "with defaulr size" do
+        volumes = workflow.prepare_volumes_fields(
+          :name_1 => "v1n", :size_1 => "v1s", :delete_on_terminate_1 => true,
+          :name_2 => "v2n", :size_2 => "", :delete_on_terminate_2 => false,
+          :other_irrelevant_key => 1
+        )
+        expect(volumes.length).to eq(2)
+        expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
+        expect(volumes[1]).to eq(:name => "v2n", :size => "1", :delete_on_terminate => false)
+      end
     end
+
     it "produces an empty array if there are no volume fields" do
       volumes = workflow.prepare_volumes_fields(:other_irrelevant_key => 1)
       expect(volumes.length).to eq(0)
