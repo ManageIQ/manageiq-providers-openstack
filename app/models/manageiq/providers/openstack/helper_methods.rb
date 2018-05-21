@@ -21,7 +21,13 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def parse_error_message_from_neutron_response(exception)
+      # not a neutron exception
       return exception.to_s unless exception.respond_to?(:response)
+
+      # undercloud neutron-server service is stopped
+      if exception.kind_of?(::Excon::Error::HTTPStatus)
+        return parse_error_message_excon_http_status(exception)
+      end
 
       response_body = JSON.parse(exception.response.body)
       if response_body.key?("NeutronError")
@@ -29,6 +35,10 @@ module ManageIQ::Providers::Openstack::HelperMethods
       else
         parse_error_message_from_fog_response(exception)
       end
+    end
+
+    def parse_error_message_excon_http_status(exception)
+      Nokogiri::HTML.parse(exception.response.body).text.gsub('\n', ' ')
     end
 
     def with_notification(type, options: {})
