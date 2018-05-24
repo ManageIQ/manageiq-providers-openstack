@@ -3,10 +3,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkColl
 
   include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
 
-  def network
-    ::ManagerRefresh::InventoryCollection::Builder::NetworkManager
-  end
-
   def initialize_network_inventory_collections
     add_cloud_networks
 

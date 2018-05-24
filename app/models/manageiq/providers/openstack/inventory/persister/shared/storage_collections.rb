@@ -1,10 +1,6 @@
 module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::StorageCollections
   extend ActiveSupport::Concern
 
-  def storage
-    ::ManagerRefresh::InventoryCollection::Builder::StorageManager
-  end
-
   def initialize_storage_inventory_collections
     %i(cloud_volumes
        cloud_volume_snapshots

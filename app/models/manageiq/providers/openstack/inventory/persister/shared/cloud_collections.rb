@@ -3,12 +3,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollec
 
   include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
 
-  # Builder class for Cloud
-  # TODO (mslemr) shared with amazon (maybe with all providers)
-  def cloud
-    ::ManagerRefresh::InventoryCollection::Builder::CloudManager
-  end
-
   # used also in ovirt, so automatic model_classes are not possible in many cases
   def initialize_cloud_inventory_collections
     add_vms
