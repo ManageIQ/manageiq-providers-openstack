@@ -17,6 +17,8 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   include HasManyOrchestrationStackMixin
   include HasNetworkManagerMixin
 
+  supports :configure_events
+
   before_save :ensure_parent_provider
   before_destroy :destroy_parent_provider
   before_create :ensure_managers
