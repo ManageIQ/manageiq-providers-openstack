@@ -13,15 +13,34 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Default volume size value in provisioning [(#289)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/289)
 - Combine InfraManager and child manager refresh queues [(#286)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/286)
 
+## Gaprindashvili-3 - Released 2018-05-15
+
+### Added
+- Infra discovery: Port scan needs trailing FF/LN [(#205)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/205)
+- For archived nodes, just delete AR object on remove [(#165)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/165)
+- Move CinderManager inventory classes [(#282)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/282)
+
+### Fixed
+- Send tenant with identity service requests [(#225)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/225)
+- Track guest OS for openstack images and VMs [(#193)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/193)
+- Improve network manager refresh speed [(#216)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/216)
+- Correct network event target associations [(#250)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/250)
+- Improve provisioning failure error messages [(#254)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/254)
+- Filter openstack networks without subnets [(#238)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/238)
+- Dont return Storage Services if They arent present [(#240)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/240)
+- Fix parent subnet relationship [(#260)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/260)
+- Fallback to generic error parsing if neutron-specific parsing fails [(#263)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/263)
+- Default Event payload to empty Hash [(#262)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/262)
+- Fixes unfriendly message when adding network for unavailable provider [(#264)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/264)
+- Catch Fog::Errors::NotFound in OpenstackHandle.handled_list [(#280)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/280)
+
 ## Unreleased as of Sprint 85 ending 2018-05-07
 
 ### Added
-- Move CinderManager inventory classes [(#282)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/282)
 - Add Openstack CinderManager EventCatcher [(#281)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/281)
 
 ### Fixed
 - duplicate opts hash before modifying in raw_connect_try_ssl [(#284)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/284)
-- Catch Fog::Errors::NotFound in OpenstackHandle.handled_list [(#280)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/280)
 
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
@@ -40,18 +59,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 ### Fixed
 - Avoid tenant discovery recursion [(#265)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/265)
-- Fallback to generic error parsing if neutron-specific parsing fails [(#263)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/263)
-- Fix parent subnet relationship [(#260)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/260)
 - Parse volume attachment/detachment messages from fog responses [(#253)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/253)
 - Ensure Openstack uses its own CinderManager [(#242)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/242)
-
-## Unreleased as of Sprint 82 ending 2018-03-26
-
-### Fixed
-- Improve provisioning failure error messages [(#254)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/254)
-- Correct network event target associations [(#250)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/250)
-- Dont return Storage Services if They arent present [(#240)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/240)
-- Filter openstack networks without subnets [(#238)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/238)
 
 ## Unreleased as of Sprint 81 ending 2018-03-12
 
@@ -66,20 +75,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Filter out duplicates during inventory collection [(#212)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/212)
 - Fix targeted refresh clearing vm cloud tenant for v2 [(#233)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/233)
 
-## Unreleased as of Sprint 80 ending 2018-02-26
-
-### Fixed
-- Improve network manager refresh speed [(#216)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/216)
-
 ## Unreleased as of Sprint 79 ending 2018-02-12
 
 ### Added
 - Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
 - Store selected user sync roles as custom attributes. [(#210)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/210)
-- Infra discovery: Port scan needs trailing FF/LN [(#205)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/205)
 
 ### Fixed
-- Send tenant with identity service requests [(#225)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/225)
 - Repetitive storage volume deletion gives unexpected error [(#224)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/224)
 - Fix Service Provisioning cloud_tenant issue [(#223)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/223)
 - Add proper error message if network type not supported [(#222)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/222)
@@ -163,7 +165,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Provider base class handles the managers' destroy now [(#198)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/198)
 - Extend allowed_cloud_network for providers that don't support allowed_ci [(#197)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/197)
 - Implement graph refresh for the Cinder manager [(#194)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/194)
-- Track guest OS for openstack images and VMs [(#193)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/193)
 
 ## Unreleased as of Sprint 75 ending 2017-12-11
 
