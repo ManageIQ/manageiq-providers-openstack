@@ -45,8 +45,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
   end
 
   def raw_delete_network_router
-    ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      service.delete_router(ems_ref)
+    with_notification(:network_router_delete,
+                      :options => {
+                        :subject => self,
+                      }) do
+      ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
+        service.delete_router(ems_ref)
+      end
     end
   rescue => e
     _log.error "router=[#{name}], error: #{e}"
