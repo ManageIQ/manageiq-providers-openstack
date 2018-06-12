@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
+module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
   extend ActiveSupport::Concern
 
   protected

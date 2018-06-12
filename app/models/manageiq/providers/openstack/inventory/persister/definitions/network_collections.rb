@@ -1,7 +1,7 @@
-module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkCollections
+module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::NetworkCollections
   extend ActiveSupport::Concern
 
-  include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
 
   def initialize_network_inventory_collections
     add_cloud_networks

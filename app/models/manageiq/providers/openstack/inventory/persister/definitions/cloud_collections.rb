@@ -1,7 +1,7 @@
-module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollections
+module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudCollections
   extend ActiveSupport::Concern
 
-  include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::Utils
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
 
   # used also in ovirt, so automatic model_classes are not possible in many cases
   def initialize_cloud_inventory_collections

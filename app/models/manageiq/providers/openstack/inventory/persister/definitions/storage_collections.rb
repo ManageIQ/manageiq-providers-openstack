@@ -1,4 +1,4 @@
-module ManageIQ::Providers::Openstack::Inventory::Persister::Shared::StorageCollections
+module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::StorageCollections
   extend ActiveSupport::Concern
 
   def initialize_storage_inventory_collections

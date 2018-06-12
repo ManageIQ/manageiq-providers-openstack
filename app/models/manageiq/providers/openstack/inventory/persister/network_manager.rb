@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager < ManageIQ::Providers::Openstack::Inventory::Persister
-  include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::CloudCollections
-  include ManageIQ::Providers::Openstack::Inventory::Persister::Shared::NetworkCollections
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudCollections
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::NetworkCollections
 
   def initialize_inventory_collections
     initialize_network_inventory_collections
