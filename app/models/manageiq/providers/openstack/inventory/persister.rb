@@ -25,8 +25,13 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inv
     nil
   end
 
+  def parent
+    manager.presence
+  end
+
   def shared_options
     {
+      :parent   => parent,
       :strategy => strategy,
       :targeted => targeted?
     }
