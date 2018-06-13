@@ -38,4 +38,8 @@ class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
     disk_size = ActionController::Base.helpers.number_to_human_size(root_disk_size)
     _("#{cpus} CPUs, #{ram} RAM, #{disk_size} Root Disk")
   end
+
+  def self.display_name(number = 1)
+    n_('Flavor (OpenStack)', 'Flavors (OpenStack)', number)
+  end
 end
