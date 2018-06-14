@@ -8,7 +8,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inv
   attr_reader :collector
   # @param manager [ManageIQ::Providers::BaseManager] A manager object
   # @param target [Object] A refresh Target object
-  # @param target [ManagerRefresh::Inventory::Collector] A Collector object
+  # @param collector [ManagerRefresh::Inventory::Collector] A Collector object
   def initialize(manager, target = nil, collector = nil)
     @manager   = manager
     @target    = target
@@ -21,15 +21,19 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManagerRefresh::Inv
 
   protected
 
-  def cloud
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::CloudManager
+  def strategy
+    nil
   end
 
-  def network
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::NetworkManager
+  def parent
+    manager.presence
   end
 
-  def storage
-    ManageIQ::Providers::Openstack::InventoryCollectionDefault::StorageManager
+  def shared_options
+    {
+      :parent   => parent,
+      :strategy => strategy,
+      :targeted => targeted?
+    }
   end
 end
