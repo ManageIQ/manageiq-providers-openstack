@@ -28,6 +28,6 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       .to receive(:refresh_targets_for_ems).and_raise(Excon::Errors::BadRequest.new(error))
     expect do
       EmsRefresh.refresh(ems)
-    end.to raise_error(EmsRefresh::Refreshers::EmsRefresherMixin::PartialRefreshError)
+    end.to raise_error(@ems.refresher::PartialRefreshError)
   end
 end
