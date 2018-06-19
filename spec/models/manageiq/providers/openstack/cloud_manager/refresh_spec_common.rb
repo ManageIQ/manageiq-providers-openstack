@@ -144,6 +144,10 @@ module Openstack
       volume_data.volume_snapshots.count
     end
 
+    def volume_types_count
+      volume_data.volume_types.count
+    end
+
     def firewall_rules_count
       # Number of defined rules
       count = network_data.security_group_rules.count
@@ -248,17 +252,7 @@ module Openstack
       expect(CloudSubnet.count).to                       eq network_data.subnets.count
       expect(NetworkRouter.count).to                     eq network_data.routers.count
       expect(CloudVolume.count).to                       eq volumes_count
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
-      else
-        expect(VmOrTemplate.count).to                    eq vms_count + images_count
-      end
       expect(Vm.count).to                                eq vms_count
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
-      else
-        expect(MiqTemplate.count).to                     eq images_count
-      end
       expect(Disk.count).to                              eq disks_count
       # One hardware per each VM
       expect(Hardware.count).to                          eq vms_count + images_count
@@ -277,6 +271,15 @@ module Openstack
       expect(MiqQueue.count).to            be > 0
       expect(CloudService.count).to        be > 0
       expect(CloudResourceQuota.count).to  be > 0
+
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
+        expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
+        expect(CloudVolumeType.count).to                 eq volume_types_count
+      else
+        expect(VmOrTemplate.count).to                    eq vms_count + images_count
+        expect(MiqTemplate.count).to                     eq images_count
+      end
     end
 
     def assert_table_counts_orchestration
