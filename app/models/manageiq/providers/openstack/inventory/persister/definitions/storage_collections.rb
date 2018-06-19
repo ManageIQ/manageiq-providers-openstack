@@ -4,7 +4,9 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Storag
   def initialize_storage_inventory_collections
     %i(cloud_volumes
        cloud_volume_snapshots
-       cloud_volume_backups).each do |name|
+       cloud_volume_backups
+       cloud_volume_types
+       ).each do |name|
 
       add_collection(cloud, name) do |builder|
         if targeted?
