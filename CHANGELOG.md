@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 88 ending 2018-06-18
+
+### Added
+- Add display name for flavor [(#302)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/302)
+
+### Removed
+- Remove useless EmsRefresherMixin [(#304)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/304)
+
 ## Unreleased as of Sprint 86 ending 2018-05-21
 
 ### Fixed
