@@ -44,6 +44,9 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     add_collection(cloud, :vm_and_miq_template_ancestry)
 
     add_orchestration_stack_ancestry
+
+    add_vm_and_template_labels
+    add_vm_and_template_taggings
   end
 
   # ------ IC provider specific definitions -------------------------
@@ -132,6 +135,39 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
   def add_orchestration_stack_ancestry
     add_collection(cloud, :orchestration_stack_ancestry) do |builder|
       builder.remove_dependency_attributes(:orchestration_stacks_resources) unless targeted?
+    end
+  end
+
+  def add_vm_and_template_labels
+    add_collection(cloud, :vm_and_template_labels) do |builder|
+      builder.add_targeted_arel(
+        lambda do |inventory_collection|
+          manager_uuids = inventory_collection.parent_inventory_collections.collect(&:manager_uuids).map(&:to_a).flatten
+          inventory_collection.parent.vm_and_template_labels.where(
+            'vms' => {:ems_ref => manager_uuids}
+          )
+        end
+      )
+    end
+  end
+
+  def add_vm_and_template_taggings
+    add_collection(cloud, :vm_and_template_taggings) do |builder|
+      builder.add_properties(
+        :model_class                  => Tagging,
+        :manager_ref                  => %i(taggable tag),
+        :parent_inventory_collections => %i(vms miq_templates)
+      )
+
+      builder.add_targeted_arel(
+        lambda do |inventory_collection|
+          manager_uuids = inventory_collection.parent_inventory_collections.collect(&:manager_uuids).map(&:to_a).flatten
+          ems = inventory_collection.parent
+          ems.vm_and_template_taggings.where(
+            'taggable_id' => ems.vms_and_templates.where(:ems_ref => manager_uuids)
+          )
+        end
+      )
     end
   end
 
