@@ -9,9 +9,9 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Storag
       add_collection(cloud, name) do |builder|
         if targeted?
           builder.add_properties(:parent => manager.cinder_manager)
-          builder.add_builder_params(:ext_management_system => manager.cinder_manager)
+          builder.add_default_values(:ems_id => manager.cinder_manager.try(:id))
         else
-          builder.add_builder_params(:ext_management_system => manager)
+          builder.add_default_values(:ems_id => manager.id)
         end
       end
     end
