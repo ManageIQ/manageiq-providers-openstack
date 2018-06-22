@@ -16,7 +16,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
     builder.add_default_values(:ems_id => manager.id)
   end
 
-  def ems_network_builder_param(builder)
+  def network_ems_default_value(builder)
     ems = targeted? ? manager.network_manager : manager
     builder.add_default_values(:ems_id => ems.id)
   end
