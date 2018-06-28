@@ -37,7 +37,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       volume_template = persister.miq_templates.find_or_build(vt["id"])
       volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate"
       volume_template.name = (vt['display_name'] || vt['name']).blank? ? vt.id : (vt['display_name'] || vt['name'])
-      volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt["tenant_id"]) if vt["tenant_id"]
+      volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt["os-extended-snapshot-attributes:project_id"])
       volume_template.location = "N/A"
       volume_template.vendor = "openstack"
     end
