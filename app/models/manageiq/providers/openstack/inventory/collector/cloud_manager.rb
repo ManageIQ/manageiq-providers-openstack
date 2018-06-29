@@ -152,7 +152,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def volumes_by_id
-    @volumes_by_id ||= volume_templates.index_by(&:id)
+    # collect even unavailable volumes since they're just being used to identify
+    # whether a given snapshot is based on a bootable volume-- the volume's current
+    # status doesn't matter.
+    @volumes_by_id ||= volume_service.handled_list(:volumes, {}, openstack_admin?).index_by(&:id)
   end
 
   def volume_snapshot_templates
