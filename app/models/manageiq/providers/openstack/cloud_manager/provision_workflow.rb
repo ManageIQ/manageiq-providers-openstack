@@ -14,7 +14,8 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
       minimum_memory_required = source.hardware.memory_mb_minimum.to_i * 1.megabyte
     end
     flavors.each_with_object({}) do |flavor, h|
-      next if flavor.root_disk_size < minimum_disk_required
+      # Allow flavors with 0 disk size: The instance will grow disk based upon image build definition
+      next if flavor.root_disk_size.positive? && flavor.root_disk_size < minimum_disk_required
       next if flavor.memory         < minimum_memory_required
       h[flavor.id] = display_name_for_name_description(flavor)
     end
