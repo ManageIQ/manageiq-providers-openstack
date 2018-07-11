@@ -28,7 +28,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
     add_collection(network, :cloud_networks) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 
@@ -37,7 +37,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
     add_collection(network, :cloud_subnets) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 
@@ -62,7 +62,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
     add_collection(network, :floating_ips) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::FloatingIp)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 
@@ -71,7 +71,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
       builder.add_properties(:delete_method => :disconnect_port)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 
@@ -80,7 +80,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
     add_collection(network, :network_routers) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 
@@ -89,7 +89,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
     add_collection(network, :security_groups) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup)
 
-      ems_network_builder_param(builder)
+      network_ems_default_value(builder)
     end
   end
 end
