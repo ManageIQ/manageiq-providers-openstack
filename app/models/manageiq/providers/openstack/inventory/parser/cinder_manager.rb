@@ -67,7 +67,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageI
         volume_type.backend_name = t.extra_specs["volume_backend_name"]
       end
       volume_type.description = t.attributes["description"]
-      volume_type.is_public = t.attributes["is_public"]
+      volume_type.public = t.attributes["is_public"]
     end
   end
 
