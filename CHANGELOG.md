@@ -5,9 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 89 ending 2018-07-02
+## Unreleased as of Sprint 90 ending 2018-07-16
+
+### Added
+- Instances workflow: Allow flavors with disk size of 0 [(#314)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/314)
+- Persister: optimized InventoryCollection definitions [(#307)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/307)
+
+## Gaprindashvili-4
 
 ### Fixed
+- Catch error when volume creation fails [(#269)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/269)
+- Make Gnocchi default granularity configurable in Settings [(#267)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/267)
+- duplicate opts hash before modifying in raw_connect_try_ssl [(#284)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/284)
+- Combine InfraManager and child manager refresh queues [(#286)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/286)
+- Fix targeted refresh builder params for network objects [(#290)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/290)
+- Friendly error message for HTTP 503 [(#293)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/293)
 - Fix tenant associations on VolumeSnapshotTemplates [(#310)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/310)
 
 ## Unreleased as of Sprint 88 ending 2018-06-18
@@ -21,10 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ## Unreleased as of Sprint 86 ending 2018-05-21
 
 ### Fixed
-- Friendly error message for HTTP 503 [(#293)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/293)
-- Fix targeted refresh builder params for network objects [(#290)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/290)
 - Default volume size value in provisioning [(#289)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/289)
-- Combine InfraManager and child manager refresh queues [(#286)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/286)
 
 ## Gaprindashvili-3 - Released 2018-05-15
 
@@ -52,17 +61,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 - Add Openstack CinderManager EventCatcher [(#281)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/281)
 
-### Fixed
-- duplicate opts hash before modifying in raw_connect_try_ssl [(#284)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/284)
-
 ## Unreleased as of Sprint 84 ending 2018-04-23
 
 ### Fixed
 - per_volume_gigabytes_used definition is missing [(#276)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/276)
 - Use the correct id when collecting quotas from Neutron [(#272)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/272)
 - translate_exceptions: Parse errors out of fog responses [(#271)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/271)
-- Catch error when volume creation fails [(#269)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/269)
-- Make Gnocchi default granularity configurable in Settings [(#267)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/267)
 - Don't lose VM volume attachments when refreshing the cloud inventory [(#243)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/243)
 
 ## Unreleased as of Sprint 83 ending 2018-04-09
