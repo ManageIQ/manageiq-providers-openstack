@@ -13,28 +13,38 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   #
   module ClassMethods
     def raw_connect(password, params, service = "Compute")
-      ems = new
-      ems.name                   = params[:name].strip
-      ems.provider_region        = params[:provider_region]
-      ems.api_version            = params[:api_version].strip
-      ems.security_protocol      = params[:default_security_protocol].strip
-      ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
+      if params[:amqp_hostname].present?
+        require 'manageiq/providers/openstack/legacy/events/openstack_rabbit_event_monitor'
+        OpenstackRabbitEventMonitor.available?(
+          :hostname => params[:amqp_hostname],
+          :username => params[:amqp_userid],
+          :password => params[:amqp_password],
+          :port     => params[:amqp_api_port]
+        )
+      else
+        ems = new
+        ems.name                   = params[:name].strip
+        ems.provider_region        = params[:provider_region]
+        ems.api_version            = params[:api_version].strip
+        ems.security_protocol      = params[:default_security_protocol].strip
+        ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
 
-      user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
+        user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
 
-      endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
-      authentication = {:userid => user, :password => MiqPassword.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
-      ems.connection_configurations = [{:endpoint       => endpoint,
-                                        :authentication => authentication}]
+        endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
+        authentication = {:userid => user, :password => MiqPassword.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
+        ems.connection_configurations = [{:endpoint       => endpoint,
+                                          :authentication => authentication}]
 
-      begin
-        ems.connect(:service => service)
-      rescue => err
-        miq_exception = translate_exception(err)
-        raise unless miq_exception
+        begin
+          ems.connect(:service => service)
+        rescue => err
+          miq_exception = translate_exception(err)
+          raise unless miq_exception
 
-        _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
-        raise miq_exception
+          _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
+          raise miq_exception
+        end
       end
     end
 
