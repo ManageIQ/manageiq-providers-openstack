@@ -3,6 +3,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageI
     cloud_volumes
     cloud_volume_snapshots
     cloud_volume_backups
+    cloud_volume_types
   end
 
   def cloud_volumes
@@ -54,6 +55,19 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageI
       backup.description = b['display_description'] || b['description']
       backup.cloud_volume = persister.cloud_volumes.lazy_find(b['volume_id'])
       backup.availability_zone = persister.availability_zones.lazy_find(b['availability_zone'] || "null_az")
+    end
+  end
+
+  def cloud_volume_types
+    collector.cloud_volume_types.each do |t|
+      volume_type = persister.cloud_volume_types.find_or_build(t.id)
+      volume_type.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeType"
+      volume_type.name = t.name
+      unless t.extra_specs.blank?
+        volume_type.backend_name = t.extra_specs["volume_backend_name"]
+      end
+      volume_type.description = t.attributes["description"]
+      volume_type.public = t.attributes["is_public"]
     end
   end
 

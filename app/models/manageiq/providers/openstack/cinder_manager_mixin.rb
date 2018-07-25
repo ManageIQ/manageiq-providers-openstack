@@ -13,6 +13,7 @@ module ManageIQ::Providers::Openstack::CinderManagerMixin
     delegate :cloud_volumes,
              :cloud_volume_snapshots,
              :cloud_volume_backups,
+             :cloud_volume_types,
              :to        => :cinder_manager,
              :allow_nil => true
   end
