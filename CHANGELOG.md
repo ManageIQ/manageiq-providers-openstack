@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 91 ending 2018-07-30
+
+### Added
+- Collect Cinder Volume Types during Inventory Refresh [(#305)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/305)
+
+### Fixed
+- Add template decorator [(#309)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/309)
+
 ## Unreleased as of Sprint 90 ending 2018-07-16
 
 ### Added
