@@ -46,12 +46,11 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
   end
 
-  def collect_backup_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    add_target(target_collection, :cloud_volume_backups, resource_id, :tenant_id => tenant_id) if resource_id
-    volume_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id')
-    add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
+  def collect_backup_references!(target_collection, _ems_event)
+    # backup notifications from panko don't include IDs, so we can't target
+    # a single backup. Add a dummy backup target which will allow us to collect
+    # all backups as a workaround.
+    add_target(target_collection, :cloud_volume_backups, nil)
   end
 
   def parsed_targets(target_collection = {})

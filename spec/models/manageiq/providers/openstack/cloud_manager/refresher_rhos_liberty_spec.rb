@@ -81,11 +81,12 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     it "will perform a targeted VM refresh against RHOS #{@environment}" do
       # EmsRefreshSpec-PoweredOn
       vm_target = ManagerRefresh::Target.new(:manager => @ems, :association => :vms, :manager_ref => {:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b"})
-      2.times do # Run twice to verify that a second run with existing data does not change anything
-        with_cassette("#{@environment}_vm_targeted_refresh", @ems) do
-          EmsRefresh.refresh(vm_target)
-          assert_targeted_vm("EmsRefreshSpec-PoweredOn", :power_state => "on",)
-        end
+      # Run twice to verify that a second run with existing data does not change anything.
+      with_cassette("#{@environment}_vm_targeted_refresh", @ems) do
+        EmsRefresh.refresh(vm_target)
+        assert_targeted_vm("EmsRefreshSpec-PoweredOn", :power_state => "on",)
+        EmsRefresh.refresh(vm_target)
+        assert_targeted_vm("EmsRefreshSpec-PoweredOn", :power_state => "on",)
       end
     end
 

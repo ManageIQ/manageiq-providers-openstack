@@ -124,8 +124,14 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
       builder.add_properties(
         :model_class => ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair,
       )
-
-      builder.add_default_values(:resource => manager) unless targeted?
+      # targeted refresh workaround-- always refresh the whole keypair collection
+      # regardless of whether this is a TargetCollection or not
+      # because OpenStack doesn't give us UUIDs of changed keypairs,
+      # we just get an event that one of them changed
+      if references(:key_pairs).present?
+        builder.add_properties(:targeted => false)
+      end
+      builder.add_default_values(:resource => manager)
     end
   end
 

@@ -32,6 +32,8 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
       collect_image_references!(target_collection, ems_event)
     elsif ems_event.event_type.start_with?("aggregate.")
       collect_host_aggregate_references!(target_collection, ems_event)
+    elsif ems_event.event_type.start_with?("keypair")
+      collect_key_pair_references!(target_collection, ems_event)
     end
 
     target_collection.targets
@@ -72,5 +74,9 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
     aggregate_id = ems_event.full_data.fetch_path(:content, 'payload', 'service')
     aggregate_id&.sub!('aggregate.', '')
     add_target(target_collection, :host_aggregates, aggregate_id) if aggregate_id
+  end
+
+  def collect_key_pair_references!(target_collection, _ems_event)
+    add_target(target_collection, :key_pairs, nil)
   end
 end

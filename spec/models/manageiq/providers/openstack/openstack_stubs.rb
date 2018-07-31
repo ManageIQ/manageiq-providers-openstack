@@ -24,6 +24,7 @@ module OpenstackStubs
       :vms_count                       => scaling * 10,
       :volume_templates_count          => scaling * 10,
       :volume_snapshot_templates_count => scaling * 10,
+      :cloud_volume_backups_count      => scaling * 10,
     }
   end
 
@@ -264,5 +265,16 @@ module OpenstackStubs
       )
     end
     mocked_volume_snapshot_templates
+  end
+
+  def mocked_cloud_volume_backups
+    mocked_cloud_volume_backups = []
+    test_counts[:cloud_volume_backups_count].times do |i|
+      mocked_cloud_volume_backups << OpenStruct.new(
+        :id   => "cloud_volume_backup_#{i}",
+        :name => "cloud_volume_backup_#{i}",
+      )
+    end
+    mocked_cloud_volume_backups
   end
 end

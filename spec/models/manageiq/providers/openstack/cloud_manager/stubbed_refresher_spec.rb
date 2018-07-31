@@ -50,6 +50,63 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       end
     end
 
+    context "targeted refresh workaround" do
+      it "works around backup targeted refresh by refreshing all backups without creating duplicates" do
+        @data_scaling = 1
+        2.times do
+          setup_mocked_collector
+          backup_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                     :association => :cloud_volume_backups,
+                                                     :manager_ref => {:ems_ref => nil})
+          EmsRefresh.refresh(backup_target)
+          assert_do_not_delete
+          expect(@ems.cloud_volume_backups.count).to eq(test_counts(@data_scaling)[:cloud_volume_backups_count])
+          expect(CloudVolumeBackup.count).to eq(test_counts(@data_scaling)[:cloud_volume_backups_count])
+        end
+      end
+
+      it "deletes backups correctly" do
+        @data_scaling = 1
+        2.times do
+          setup_mocked_collector
+          backup_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                     :association => :cloud_volume_backups,
+                                                     :manager_ref => {:ems_ref => nil})
+          EmsRefresh.refresh(backup_target)
+          expect(@ems.cloud_volume_backups.count).to eq(test_counts(@data_scaling)[:cloud_volume_backups_count])
+          expect(CloudVolumeBackup.count).to eq(test_counts(@data_scaling)[:cloud_volume_backups_count])
+        end
+      end
+
+      it "works around keypair targeted refresh by refreshing all keypairs without creating duplicates" do
+        @data_scaling = 1
+        2.times do
+          setup_mocked_collector
+          keypair_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                      :association => :key_pairs,
+                                                      :manager_ref => {:ems_ref => nil})
+          EmsRefresh.refresh(keypair_target)
+          assert_do_not_delete
+          expect(@ems.key_pairs.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+          expect(AuthPrivateKey.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+        end
+      end
+
+      it "deletes keypairs correctly" do
+        @data_scaling = 1
+        2.times do
+          setup_mocked_collector
+          keypair_target = ManagerRefresh::Target.new(:manager     => @ems,
+                                                      :association => :key_pairs,
+                                                      :manager_ref => {:ems_ref => nil})
+          EmsRefresh.refresh(keypair_target)
+          expect(@ems.key_pairs.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+          expect(AuthPrivateKey.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+          @data_scaling -= 1
+        end
+      end
+    end
+
     def refresh_spec
       @ems.reload
       # with_openstack_stubbed(stub_responses) do
@@ -136,6 +193,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:private_flavor).and_return(nil)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_templates).and_return(mocked_volume_templates)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_snapshot_templates).and_return(mocked_volume_snapshot_templates)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:volume_service).and_return(double(:name => "not-cinder"))
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_volume_backups).and_return(mocked_cloud_volume_backups)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_service).and_return(double(:name => "not-neutron"))
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:key_pairs).and_return(mocked_key_pairs)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_subnets).and_return([])
     end
 
     def assert_ems

@@ -70,10 +70,12 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def floating_ips
-    return [] if references(:floating_ips).blank?
+    return [] if references(:floating_ips).blank? && references(:floating_ips_by_address).blank?
     return @floating_ips if @floating_ips.any?
-    @floating_ips = references(:floating_ips).collect do |floating_ip|
+    @floating_ips = references(:floating_ips_by_address).collect do |floating_ip|
       safe_get { network_service.floating_ips.all(:floating_ip_address => floating_ip).first }
+    end.compact + references(:floating_ips).collect do |floating_ip_id|
+      safe_get { network_service.floating_ips.get(floating_ip_id) }
     end.compact
   end
 
@@ -133,11 +135,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def key_pairs
+    # keypair notifications from panko don't include ids, so
+    # we will just refresh all the keypairs if we get an event.
     return [] if references(:key_pairs).blank?
     return @key_pairs if @key_pairs.any?
-    @key_pairs = references(:key_pairs).collect do |key_pair_id|
-      safe_get { compute_service.key_pairs.get(key_pair_id) }
-    end.compact
+    @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
   end
 
   def flavors_by_id
@@ -211,11 +213,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_volume_backups
+    # backup notifications from panko don't include ids, so
+    # we will just refresh all the backups if we get an event.
     return [] if references(:cloud_volume_backups).blank?
     return @cloud_volume_backups if @cloud_volume_backups.any?
-    @cloud_volume_backups = targets_by_association(:cloud_volume_backups).collect do |target|
-      scoped_get_backup(target.manager_ref[:ems_ref], target.options[:tenant_id])
-    end.compact
+    @cloud_volume_backups = cinder_service.handled_list(:list_backups_detailed, {:__request_body_index => "backups"}, cinder_admin?)
   end
 
   def scoped_get_volume(volume_id, tenant_id)
@@ -309,7 +311,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
       all_stacks.each { |s| add_simple_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.ems_ref) }
       vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:cloud_networks, ems_ref) }
-      vm.floating_ips.collect(&:address).compact.each { |address| add_simple_target!(:floating_ips, address) }
+      vm.floating_ips.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:floating_ips, ems_ref) }
       vm.network_ports.collect(&:ems_ref).compact.each do |ems_ref|
         add_simple_target!(:network_ports, ems_ref)
       end
@@ -344,7 +346,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       vm.security_groups.each do |sg|
         add_simple_target!(:security_groups, sg.id)
       end
-      add_simple_target!(:floating_ips, vm.public_ip_address) unless vm.public_ip_address.blank?
+      add_simple_target!(:floating_ips_by_address, vm.public_ip_address) if vm.public_ip_address.present?
     end
     target.manager_refs_by_association_reset
     floating_ips.each do |floating_ip|
