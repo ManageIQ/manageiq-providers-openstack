@@ -403,16 +403,16 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
           )
         end
       end
-      vm_and_template_labels(server, s.attributes["tags"] || [])
-      vm_and_template_taggings(server, map_labels("Vm", s.attributes["tags"] || []))
+      vm_and_template_labels(server, s.metadata || [])
+      vm_and_template_taggings(server, map_labels("VmOpenstack", s.metadata || []))
     end
   end
 
   def vm_and_template_labels(resource, tags)
     tags.each do |tag|
-      persister.vm_and_template_labels.find_or_build_by(:resource => resource, :name => tag).assign_attributes(
+      persister.vm_and_template_labels.find_or_build_by(:resource => resource, :name => tag.key).assign_attributes(
         :section => 'labels',
-        :value   => tag,
+        :value   => tag.value,
         :source  => 'openstack'
       )
     end
@@ -420,8 +420,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
   # Returns array of InventoryObject<Tag>.
   def map_labels(model_name, labels)
-    label_hashes = labels.collect do |tag|
-      {:name => tag, :value => tag}
+    label_hashes = labels.collect do |label|
+      {:name => label.key, :value => label.value}
     end
     persister.tag_mapper.map_labels(model_name, label_hashes)
   end
