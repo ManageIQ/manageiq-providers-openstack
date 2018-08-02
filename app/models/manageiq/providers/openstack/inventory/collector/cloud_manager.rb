@@ -20,11 +20,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def flavors
     return @flavors if @flavors.any?
-    flavors = if openstack_admin?
-                   connection.handled_list(:flavors, {'is_public' => 'None'}, true)
-                 else
-                   connection.handled_list(:flavors)
-                 end
+    flavors = connection.handled_list(:flavors, {'is_public' => 'None'}, true)
     @flavors = flavors
   end
 
