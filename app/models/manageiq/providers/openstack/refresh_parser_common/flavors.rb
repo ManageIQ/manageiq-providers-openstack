@@ -4,11 +4,7 @@ module ManageIQ::Providers::Openstack
       include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
 
       def get_flavors
-        flavors = if @ems.kind_of?(ManageIQ::Providers::Openstack::CloudManager) && openstack_admin?
-                    @connection.handled_list(:flavors, {'is_public' => 'None'}, true)
-                  else
-                    @connection.handled_list(:flavors)
-                  end
+        flavors = @connection.handled_list(:flavors, {'is_public' => 'None'}, true)
         flavors = uniques(flavors)
         process_collection(flavors, :flavors) { |flavor| parse_flavor(flavor) }
       end
