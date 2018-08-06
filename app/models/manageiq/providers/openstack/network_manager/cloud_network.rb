@@ -60,8 +60,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
   end
 
   def raw_delete_cloud_network
-    ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      service.delete_network(ems_ref)
+    with_notification(:cloud_network_delete,
+                      :options => {
+                        :subject => self,
+                      }) do
+      ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
+        service.delete_network(ems_ref)
+      end
     end
   rescue => e
     _log.error "network=[#{name}], error: #{e}"

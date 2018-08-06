@@ -39,8 +39,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
   end
 
   def raw_delete_cloud_subnet
-    ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      service.delete_subnet(ems_ref)
+    with_notification(:cloud_subnet_delete,
+                      :options => {
+                        :subject => self,
+                      }) do
+      ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
+        service.delete_subnet(ems_ref)
+      end
     end
   rescue => e
     _log.error "subnet=[#{name}], error: #{e}"
