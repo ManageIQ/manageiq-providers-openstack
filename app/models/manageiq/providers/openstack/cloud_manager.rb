@@ -55,6 +55,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   before_update :ensure_managers_zone_and_provider_region
 
+  def hostname_required?
+    enabled?
+  end
+
   def ensure_managers_zone_and_provider_region
     if network_manager
       network_manager.zone_id         = zone_id
