@@ -20,6 +20,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
   end
 
   def initialize_inventory_collections
+    initialize_tag_mapper
     initialize_cloud_inventory_collections
 
     @init_network_collections = true

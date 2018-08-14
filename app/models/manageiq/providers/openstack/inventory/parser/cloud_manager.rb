@@ -403,6 +403,32 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
           )
         end
       end
+      vm_and_template_labels(server, s.metadata || [])
+      vm_and_template_taggings(server, map_labels("VmOpenstack", s.metadata || []))
+    end
+  end
+
+  def vm_and_template_labels(resource, tags)
+    tags.each do |tag|
+      persister.vm_and_template_labels.find_or_build_by(:resource => resource, :name => tag.key).assign_attributes(
+        :section => 'labels',
+        :value   => tag.value,
+        :source  => 'openstack'
+      )
+    end
+  end
+
+  # Returns array of InventoryObject<Tag>.
+  def map_labels(model_name, labels)
+    label_hashes = labels.collect do |label|
+      {:name => label.key, :value => label.value}
+    end
+    persister.tag_mapper.map_labels(model_name, label_hashes)
+  end
+
+  def vm_and_template_taggings(resource, tags_inventory_objects)
+    tags_inventory_objects.each do |tag|
+      persister.vm_and_template_taggings.build(:taggable => resource, :tag => tag)
     end
   end
 
