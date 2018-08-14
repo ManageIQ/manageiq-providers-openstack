@@ -166,7 +166,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
 
   def supported_auth_types
-    %w(default amqp)
+    %w(default amqp ssh_keypair)
   end
 
   def supported_catalog_types
@@ -187,6 +187,22 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def supports_authentication?(authtype)
     supported_auth_types.include?(authtype.to_s)
+  end
+
+  def required_credential_fields(type)
+    case type.to_s
+    when 'ssh_keypair' then [:userid, :auth_key]
+    else                    [:userid, :password]
+    end
+  end
+
+  def authentication_status_ok?(type = nil)
+    return true if type == :ssh_keypair
+    super
+  end
+
+  def authentications_to_validate
+    authentication_for_providers.collect(&:authentication_type) - [:ssh_keypair]
   end
 
   #
