@@ -21,7 +21,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       service = double
       allow(service).to receive_message_chain('volumes.create').and_return @volume
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
-        .with(:service => 'volume').and_yield(service)
+        .with(:service => 'volume', :tenant_name => nil).and_yield(service)
       allow(@task).to receive(:instance_type).and_return @flavor
 
       default_volume = {:name => "root", :size => 1, :source_type => "image", :destination_type => "local",
@@ -40,7 +40,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
                                                                                           :status => "pending")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
-        .with(:service => 'volume').and_yield(service)
+        .with(:service => 'volume', :tenant_name => nil).and_yield(service)
 
       expect(@task.do_volume_creation_check([pending_volume_attrs])).to eq [false, "pending"]
     end
@@ -51,7 +51,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
                                                                                           :status => "available")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
-        .with(:service => 'volume').and_yield(service)
+        .with(:service => 'volume', :tenant_name => nil).and_yield(service)
 
       expect(@task.do_volume_creation_check([pending_volume_attrs])).to eq true
     end
@@ -61,7 +61,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       service = double
       allow(service).to receive_message_chain('volumes.get').and_return nil
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
-        .with(:service => 'volume').and_yield(service)
+        .with(:service => 'volume', :tenant_name => nil).and_yield(service)
 
       expect(@task.do_volume_creation_check([pending_volume_attrs])).to eq [false, nil]
     end
@@ -72,7 +72,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
                                                                                           :status => "error")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
-        .with(:service => 'volume').and_yield(service)
+        .with(:service => 'volume', :tenant_name => nil).and_yield(service)
       expect { @task.do_volume_creation_check([pending_volume_attrs]) }.to raise_error(MiqException::MiqProvisionError)
     end
   end

@@ -9,7 +9,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
   end
 
   def do_clone_task_check(clone_task_ref)
-    connection_options = {:tenant_name => cloud_tenant.name}
+    connection_options = {:tenant_name => cloud_tenant.try(:name)}
     source.with_provider_connection(connection_options) do |openstack|
       instance = if connection_options
                    openstack.servers.get(clone_task_ref)
@@ -56,7 +56,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::Cloning
   end
 
   def start_clone(clone_options)
-    connection_options = {:tenant_name => cloud_tenant.name}
+    connection_options = {:tenant_name => cloud_tenant.try(:name)}
     if source.kind_of?(ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate)
       # remove the image_ref parameter from the options since it actually refers
       # to a volume, and then overwrite the default root volume with the volume
