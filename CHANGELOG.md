@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 92 ending 2018-08-13
+
+### Added
+- Infra Discovery: support for SSL [(#326)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/326)
+
+### Fixed
+- Catch Bad Request responses in safe_call [(#330)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/330)
+- Flavors: always include private flavors [(#329)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/329)
+- Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
+
 ## Unreleased as of Sprint 91 ending 2018-07-30
 
 ### Added
