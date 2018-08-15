@@ -46,12 +46,12 @@ module OpenstackHandle
       end
     end
 
-    def self.raw_connect_try_ssl(username, password, address, port, service = "Compute", options = nil, api_version = nil,
+    def self.raw_connect_try_ssl(username, password, address, port, service = "Compute", options = nil,
                                  security_protocol = nil)
       opts = options.dup
       ssl_options = opts.delete(:ssl_options) || {}
       try_connection(security_protocol, ssl_options) do |scheme, connection_options|
-        auth_url = auth_url(address, port, scheme, api_version)
+        auth_url = auth_url(address, port, scheme)
         opts[:connection_options] = (opts[:connection_options] || {}).merge(connection_options)
         raw_connect(username, password, auth_url, service, opts)
       end
@@ -83,28 +83,13 @@ module OpenstackHandle
       else
         Fog.const_get(service).new(opts)
       end
-    rescue Fog::Errors::NotFound => err
+    rescue Fog::OpenStack::Auth::Catalog::ServiceTypeError
       $fog_log.warn("MIQ(#{self.class.name}##{__method__}) "\
                     "Service #{service} not available for openstack provider #{auth_url}")
-      $fog_log.warn(err.message)
-      raise MiqException::ServiceNotAvailable if err.message.include?("Could not find service")
-      raise
+      raise MiqException::ServiceNotAvailable
     end
 
-    def self.path_for_api_version(api_version)
-      case api_version
-      when 'v2'
-        '/v2.0/tokens'
-      when 'v3'
-        '/v3/auth/tokens'
-      end
-    end
-
-    def self.auth_url(address, port = 5000, scheme = "http", api_version = 'v2')
-      url(address, port, scheme, path_for_api_version(api_version))
-    end
-
-    def self.url(address, port = 5000, scheme = "http", path = "")
+    def self.auth_url(address, port = 5000, scheme = "http", path = '')
       URI::Generic.build(:scheme => scheme, :host => address, :port => port.to_i, :path => path).to_s
     end
 
@@ -177,11 +162,15 @@ module OpenstackHandle
       if discover_tenants && tenant.blank?
         tenant = default_tenant_name
       end
-      opts[:openstack_tenant] = tenant if tenant
-      # For identity ,there is only domain scope, with project_name nil
-      opts[:openstack_project_name] = @project_name = tenant if tenant
-      opts[:openstack_project_domain_id] = domain
-      opts[:openstack_user_domain_id]    = domain
+
+      if api_version == 'v2'
+        opts[:openstack_tenant] = tenant if tenant
+      else # "v3"
+        opts[:openstack_project_name] = @project_name = tenant if tenant
+        opts[:openstack_project_domain_id] = domain
+        opts[:openstack_user_domain_id]    = domain
+      end
+
       opts[:openstack_region]            = region
 
       svc_cache = (@connection_cache[service] ||= {})
@@ -189,18 +178,8 @@ module OpenstackHandle
         opts[:connection_options] = (connection_options || {}).merge(excon_options)
         opts[:ssl_options]        = ssl_options
 
-        raw_service = self.class.raw_connect_try_ssl(username, password, address, port, service, opts, api_version,
+        raw_service = self.class.raw_connect_try_ssl(username, password, address, port, service, opts,
                                                      security_protocol)
-
-        # need to check if this is versionless keystone endpoint
-        if service == "Identity"
-          identity_prefix = (api_version == "v2" ? "v2.0" : "v3")
-          unless raw_service.credentials[:openstack_management_url].include?(identity_prefix)
-            opts[:openstack_identity_prefix] = identity_prefix
-            raw_service = self.class.raw_connect_try_ssl(username, password, address, port, service, opts, api_version,
-                                                         security_protocol)
-          end
-        end
 
         service_wrapper_name = "#{service}Delegate"
         # Allow openstack to define new services without explicitly requiring a
