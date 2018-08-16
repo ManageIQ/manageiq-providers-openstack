@@ -7,7 +7,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate do
     end
   end
 
-  let(:valid_template) { FactoryGirl.create(:vnfd_template_openstack_in_yaml) }
+  let(:valid_template) { FactoryGirl.create(:vnfd_template_openstack_in_yaml,
+                                            :ext_management_system => FactoryGirl.create(:ems_openstack_with_authentication)) }
 
   describe '#validate_format' do
     it 'passes validation if no content' do

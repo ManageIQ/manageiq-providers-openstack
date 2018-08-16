@@ -119,6 +119,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
   def add_orchestration_templates
     add_collection(cloud, :orchestration_templates) do |builder|
       builder.add_properties(:model_class => ::OrchestrationTemplate)
+      builder.add_default_values(:ems_id => manager.id)
     end
   end
 
