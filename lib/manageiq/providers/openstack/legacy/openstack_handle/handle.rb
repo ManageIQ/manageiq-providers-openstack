@@ -165,6 +165,7 @@ module OpenstackHandle
 
       if api_version == 'v2'
         opts[:openstack_tenant] = tenant if tenant
+        opts[:openstack_identity_api_version] = 'v2.0'
       else # "v3"
         opts[:openstack_project_name] = @project_name = tenant if tenant
         opts[:openstack_project_domain_id] = domain
