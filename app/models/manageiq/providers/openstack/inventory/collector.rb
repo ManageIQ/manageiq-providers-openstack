@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Collector < ManagerRefresh::Inventory::Collector
+class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers::Inventory::Collector
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
   include Vmdb::Logging
 
