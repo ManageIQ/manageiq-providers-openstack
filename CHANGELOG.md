@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-4
+## Gaprindashvili-5
+
+### Added
+- Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
+
+### Fixed
+- Catch Bad Request responses in safe_call [(#330)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/330)
+
+## Gaprindashvili-4 - Released 2018-07-16
 
 ### Fixed
 - Catch error when volume creation fails [(#269)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/269)
@@ -16,7 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Friendly error message for HTTP 503 [(#293)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/293)
 - Fix tenant associations on VolumeSnapshotTemplates [(#310)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/310)
 
-## Gaprindashvili-3
+## Gaprindashvili-3 - Released 2018-05-15
 
 ### Added
 - Infra discovery: Port scan needs trailing FF/LN [(#205)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/205)
