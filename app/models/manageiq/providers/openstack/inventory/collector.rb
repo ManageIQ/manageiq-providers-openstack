@@ -46,7 +46,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     @host_aggregates           = []
     @key_pairs                 = []
     @images                    = []
-    @orchestration_stacks      = []
+    @orchestration_stacks      = nil
     @quotas                    = []
     @vms                       = []
     @vnfs                      = []
