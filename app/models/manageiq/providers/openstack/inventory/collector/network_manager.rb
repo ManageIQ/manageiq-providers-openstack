@@ -40,7 +40,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
-    return @orchestration_stacks if @orchestration_stacks.any?
+    return @orchestration_stacks unless @orchestration_stacks.nil?
     @orchestration_stacks = if openstack_heat_global_admin?
                                 orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
                               else

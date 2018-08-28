@@ -81,7 +81,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def orchestration_stacks
     return [] if targets_by_association(:orchestration_stacks).blank?
-    return @orchestration_stacks if @orchestration_stacks.any?
+    return @orchestration_stacks unless @orchestration_stacks.nil?
     @orchestration_stacks = targets_by_association(:orchestration_stacks).collect do |target|
       get_orchestration_stack(target.manager_ref[:ems_ref], target.options[:tenant_id])
     end.compact
