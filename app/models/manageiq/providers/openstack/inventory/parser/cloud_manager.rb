@@ -330,6 +330,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware = persister.hardwares.find_or_build(server)
       hardware.vm_or_template = server
       hardware.cpu_sockets = flavor.try(:vcpus)
+      hardware.cpu_cores_per_socket = 1
       hardware.cpu_total_cores = flavor.try(:vcpus)
       hardware.cpu_speed = parent_host.try(:hardware).try(:cpu_speed)
       hardware.memory_mb = flavor.try(:ram)
