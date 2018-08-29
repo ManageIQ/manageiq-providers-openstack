@@ -43,6 +43,8 @@ module OpenstackHandle
       []
     rescue => err
       # Show any list related exception in a nice format.
+      require 'pry-byebug'
+      binding.pry
       openstack_service_name = Handle::SERVICE_NAME_MAP[self.class::SERVICE_NAME]
 
       _log.error "Unable to obtain collection: '#{collection_type}' in service: '#{openstack_service_name}' "\

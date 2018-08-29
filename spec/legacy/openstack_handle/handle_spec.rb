@@ -53,11 +53,10 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
-        :openstack_region            => nil,
-        :connection_options          => {:ssl_verify_peer => false}
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
+        :openstack_region               => nil,
+        :connection_options             => {:ssl_verify_peer => false}
       ).once do |_, _, address|
         expect(address).to eq(auth_url)
         fog
@@ -67,7 +66,7 @@ describe OpenstackHandle::Handle do
 
     it "handles non ssl connections just fine" do
       fog      = double('fog')
-      handle   = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'non-ssl')
+      handle   = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'v2', 'non-ssl')
       auth_url = OpenstackHandle::Handle.auth_url("address", 5000, "http")
 
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
@@ -75,9 +74,8 @@ describe OpenstackHandle::Handle do
         "dummy",
         "http://address:5000",
         "Compute",
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
         :openstack_region            => nil,
         :connection_options          => {}
       ).once do |_, _, address|
@@ -89,7 +87,7 @@ describe OpenstackHandle::Handle do
 
     it "handles ssl connections just fine, too" do
       fog            = double('fog')
-      handle         = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'ssl')
+      handle         = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'v2', 'ssl')
       auth_url_ssl   = OpenstackHandle::Handle.auth_url("address", 5000, "https")
 
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
@@ -97,11 +95,10 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
-        :openstack_region            => nil,
-        :connection_options          => {:ssl_verify_peer => false}
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
+        :openstack_region               => nil,
+        :connection_options             => {:ssl_verify_peer => false}
       ) do |_, _, address|
         expect(address).to eq(auth_url_ssl)
         fog
@@ -112,7 +109,7 @@ describe OpenstackHandle::Handle do
 
     it "handles ssl with validation connections just fine, too" do
       fog            = double('fog')
-      handle         = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'ssl-with-validation')
+      handle         = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'v2', 'ssl-with-validation')
       auth_url_ssl   = OpenstackHandle::Handle.auth_url("address", 5000, "https")
 
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
@@ -120,11 +117,10 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
-        :openstack_region            => nil,
-        :connection_options          => {:ssl_verify_peer => true}
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
+        :openstack_region               => nil,
+        :connection_options             => {:ssl_verify_peer => true}
       ) do |_, _, address|
         expect(address).to eq(auth_url_ssl)
         fog
@@ -142,11 +138,10 @@ describe OpenstackHandle::Handle do
       }
 
       expected_options = {
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
-        :openstack_region            => nil,
-        :connection_options          => {
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
+        :openstack_region               => nil,
+        :connection_options             => {
           :ssl_verify_peer => true,
           :ssl_ca_file     => "file",
           :ssl_ca_path     => "path",
@@ -154,7 +149,7 @@ describe OpenstackHandle::Handle do
         }
       }
 
-      handle           = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'ssl-with-validation', extra_options)
+      handle           = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'v2',  'ssl-with-validation', extra_options)
       auth_url_ssl     = OpenstackHandle::Handle.auth_url("address", 5000, "https")
 
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
@@ -175,7 +170,7 @@ describe OpenstackHandle::Handle do
   context "supports regions" do
     it "handles connections with region just fine" do
       fog      = double('fog')
-      handle   = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'non-ssl', :region => 'RegionOne')
+      handle   = OpenstackHandle::Handle.new("dummy", "dummy", "address", 5000, 'v2', 'non-ssl', :region => 'RegionOne')
       auth_url = OpenstackHandle::Handle.auth_url("address", 5000, "http")
 
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
@@ -183,11 +178,10 @@ describe OpenstackHandle::Handle do
         "dummy",
         "http://address:5000",
         "Compute",
-        :openstack_project_name      => "admin",
-        :openstack_project_domain_id => nil,
-        :openstack_user_domain_id    => nil,
-        :openstack_region            => 'RegionOne',
-        :connection_options          => {}
+        :openstack_tenant               => "admin",
+        :openstack_identity_api_version =>"v2.0",
+        :openstack_region               => 'RegionOne',
+        :connection_options             => {}
       ).once do |_, _, address|
         expect(address).to eq(auth_url)
         fog
