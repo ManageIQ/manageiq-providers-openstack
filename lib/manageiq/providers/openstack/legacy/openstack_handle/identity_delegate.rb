@@ -122,7 +122,8 @@ module OpenstackHandle
     def list_user_projects_tenants(user_id)
       if respond_to?(:projects)
         # V3
-        list_user_projects(user_id).body['projects']
+        # filter projects by domain_id to ensure having projects only from domain_id entered in Provider form
+        list_user_projects(user_id).body['projects'].select { |project| project['domain_id'] == @os_handle.domain_id }
       else
         # V2
         user_projects = []
