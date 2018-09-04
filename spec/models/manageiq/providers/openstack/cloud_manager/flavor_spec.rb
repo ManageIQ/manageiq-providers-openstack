@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
   let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
-  let(:flavor_attributes) { {:name => "flavor", :ram => "1"} }
+  let(:flavor_attributes) { {:name => 'flavor', :ram => '1', 'cloud_tenant_refs' => %w(1 2) } }
   let(:flavor_openstack) { FactoryGirl.create :flavor_openstack, :ext_management_system => ems }
   let(:service) { double }
 
@@ -12,15 +12,26 @@ describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
     end
 
     let(:flavors) { double }
+    let(:flavor_fog) { double }
 
     context 'with correct data' do
-      it 'should create flavor' do
-        expect(flavors).to receive(:create).with(flavor_attributes).and_return(flavor_openstack).once
+      it 'should create public flavor' do
+        allow(flavors).to receive(:create).with(flavor_attributes).and_return(flavor_fog).once
+        expect(flavor_fog).to receive(:is_public).and_return(true)
+        subject.class.raw_create_flavor(ems, flavor_attributes)
+      end
+
+      it 'should create private flavor' do
+        allow(flavors).to receive(:create).with(flavor_attributes).and_return(flavor_fog).once
+        expect(flavor_fog).to receive(:is_public).and_return(false)
+        expect(flavor_fog).to receive(:id).and_return(1).twice
+        allow(service).to receive(:add_flavor_access)
         subject.class.raw_create_flavor(ems, flavor_attributes)
       end
 
       it 'should not raise error' do
-        allow(flavors).to receive(:create).with(flavor_attributes).and_return(flavor_openstack).once
+        allow(flavors).to receive(:create).with(flavor_attributes).and_return(flavor_fog).once
+        expect(flavor_fog).to receive(:is_public).and_return(true)
         expect do
           subject.class.raw_create_flavor(ems, flavor_attributes)
         end.not_to raise_error
