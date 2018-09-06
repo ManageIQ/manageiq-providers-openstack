@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Persister::CinderManager < ManageIQ::Providers::Openstack::Inventory::Persister
+class ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Persister
   include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudCollections
   include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::NetworkCollections
   include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::StorageCollections
