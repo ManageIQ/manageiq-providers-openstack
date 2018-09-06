@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
+class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
   def parse
     cloud_volumes
     cloud_volume_snapshots
@@ -63,7 +63,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CinderManager < ManageI
       volume_type = persister.cloud_volume_types.find_or_build(t.id)
       volume_type.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolumeType"
       volume_type.name = t.name
-      unless t.extra_specs.blank?
+      if t.extra_specs.present?
         volume_type.backend_name = t.extra_specs["volume_backend_name"]
       end
       volume_type.description = t.attributes["description"]
