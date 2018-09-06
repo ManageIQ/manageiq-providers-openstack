@@ -434,15 +434,27 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
         expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
         expect(volumes[1]).to eq(:name => "v2n", :size => "v2s", :delete_on_terminate => false)
       end
-      it "with defaulr size" do
+      it "with default size" do
         volumes = workflow.prepare_volumes_fields(
           :name_1 => "v1n", :size_1 => "v1s", :delete_on_terminate_1 => true,
           :name_2 => "v2n", :size_2 => "", :delete_on_terminate_2 => false,
+          :name_3 => "v3n", :delete_on_terminate_3 => false,
+          :other_irrelevant_key => 1
+        )
+        expect(volumes.length).to eq(3)
+        expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
+        expect(volumes[1]).to eq(:name => "v2n", :size => "1", :delete_on_terminate => false)
+        expect(volumes[2]).to eq(:name => "v3n", :size => "1", :delete_on_terminate => false)
+      end
+      it "with empty name if only size given" do
+        volumes = workflow.prepare_volumes_fields(
+          :name_1 => "v1n", :size_1 => "v1s", :delete_on_terminate_1 => true,
+          :size_2 => "v2s", :delete_on_terminate_2 => false,
           :other_irrelevant_key => 1
         )
         expect(volumes.length).to eq(2)
         expect(volumes[0]).to eq(:name => "v1n", :size => "v1s", :delete_on_terminate => true)
-        expect(volumes[1]).to eq(:name => "v2n", :size => "1", :delete_on_terminate => false)
+        expect(volumes[1]).to eq(:name => "", :size => "v2s", :delete_on_terminate => false)
       end
     end
 
