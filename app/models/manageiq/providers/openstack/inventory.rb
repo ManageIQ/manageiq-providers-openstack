@@ -11,7 +11,7 @@ class ManageIQ::Providers::Openstack::Inventory < ManageIQ::Providers::Inventory
 
   def self.parser_classes_for(_ems, target)
     case target
-    when ManagerRefresh::TargetCollection
+    when InventoryRefresh::TargetCollection
       [ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager,
        ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager,
        ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager]

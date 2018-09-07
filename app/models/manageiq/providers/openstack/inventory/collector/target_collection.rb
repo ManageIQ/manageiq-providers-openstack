@@ -16,7 +16,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def targets_by_association(association)
-    target.targets.select { |x| x.kind_of?(ManagerRefresh::Target) && x.association == association }.uniq { |x| x.manager_ref[:ems_ref] }
+    target.targets.select { |x| x.kind_of?(InventoryRefresh::Target) && x.association == association }.uniq { |x| x.manager_ref[:ems_ref] }
   end
 
   def name_references(collection)

@@ -38,7 +38,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       expect(NetworkRouter.count).to eq(1)
       expect(CloudSubnet.first.network_router_id).to eq(NetworkRouter.first.id)
 
-      target = ManagerRefresh::Target.new(
+      target = InventoryRefresh::Target.new(
         :manager     => @ems.parent_manager,
         :association => :cloud_networks,
         :manager_ref => {

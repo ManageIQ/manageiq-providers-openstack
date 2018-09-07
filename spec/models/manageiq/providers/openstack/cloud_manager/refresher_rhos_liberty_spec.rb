@@ -80,7 +80,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   context "targeted refresh" do
     it "will perform a targeted VM refresh against RHOS #{@environment}" do
       # EmsRefreshSpec-PoweredOn
-      vm_target = ManagerRefresh::Target.new(:manager => @ems, :association => :vms, :manager_ref => {:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b"})
+      vm_target = InventoryRefresh::Target.new(:manager => @ems, :association => :vms, :manager_ref => {:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b"})
       # Run twice to verify that a second run with existing data does not change anything.
       with_cassette("#{@environment}_vm_targeted_refresh", @ems) do
         EmsRefresh.refresh(vm_target)
@@ -92,7 +92,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
 
     it "will perform a targeted stack refresh against RHOS #{@environment}" do
       # stack1
-      stack_target = ManagerRefresh::Target.new(:manager     => @ems,
+      stack_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                 :association => :orchestration_stacks,
                                                 :manager_ref => {:ems_ref => "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"},
                                                 :options     => {:tenant_id => "69f8f7205ade4aa59084c32c83e60b5a"})
@@ -106,7 +106,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
 
     it "will perform a targeted tenant refresh against RHOS #{@environment}" do
       # EmsRefreshSpec-Project
-      stack_target = ManagerRefresh::Target.new(:manager     => @ems,
+      stack_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                 :association => :cloud_tenants,
                                                 :manager_ref => {:ems_ref => "69f8f7205ade4aa59084c32c83e60b5a"})
       2.times do # Run twice to verify that a second run with existing data does not change anything
@@ -119,7 +119,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     end
 
     it "will perform a targeted router refresh against RHOS #{@environment}" do
-      router_target = ManagerRefresh::Target.new(:manager     => @ems,
+      router_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                  :association => :network_routers,
                                                  :manager_ref => {:ems_ref => "57e17608-8ac6-44a6-803e-f42ec15e9d1e"})
 
@@ -134,7 +134,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     end
 
     it "will perform a targeted port refresh against RHOS #{@environment}" do
-      port_target = ManagerRefresh::Target.new(:manager     => @ems,
+      port_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                :association => :network_ports,
                                                :manager_ref => {:ems_ref => "02b5cbb1-6072-429c-b185-89f44b552d40"})
 
@@ -160,7 +160,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         end
 
         network = CloudNetwork.find_by(:name => "EmsRefreshSpec-NetworkPublic")
-        network_target = ManagerRefresh::Target.new(:manager     => @ems,
+        network_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                     :association => :cloud_networks,
                                                     :manager_ref => {:ems_ref => network.ems_ref})
         EmsRefresh.refresh(network_target)
