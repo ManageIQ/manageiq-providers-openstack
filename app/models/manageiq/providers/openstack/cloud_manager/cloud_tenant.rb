@@ -49,6 +49,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     n_('Cloud Tenant (OpenStack)', 'Cloud Tenants (OpenStack)', number)
   end
 
+  def default_security_group
+    default = security_groups.find_by(:name => "default")
+    return default if default
+    # if there's not a security group named "default",
+    # then return the security group with the most VMs in it.
+    security_groups.sort { |sg| sg.vms.count }.last
+  end
+
   private
 
   def connection_options
