@@ -75,8 +75,7 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
 
   def start
     connection.start
-    @channel = connection.create_channel
-    initialize_queues(@channel)
+    initialize_queues
   end
 
   def stop
@@ -105,15 +104,34 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     @connection ||= OpenstackRabbitEventMonitor.connect(@options)
   end
 
-  def initialize_queues(channel)
+  def initialize_queues
     remove_legacy_queues
+    begin
+      try_initialize_queues(false)
+    # If the exchange was created in OpenStack as a durable exchange, it must be
+    # opened that way here, too. Attempting to open a durable exchange without
+    # specifying ":durable => true" will raise a Bunny::PreconditionFailed
+    # exception. Catch this and try again with ":durable => true".
+    rescue Bunny::PreconditionFailed => e
+      begin
+        try_initialize_queues(true)
+      # If it fails the second time, the problem was something other than being durable.
+      # If this happens, raise the original exception.
+      rescue Bunny::PreconditionFailed
+        raise e
+      end
+    end
+  end
+
+  def try_initialize_queues(durable)
+    @channel = connection.create_channel
     @queues = {}
     if @options[:topics]
       @options[:topics].each do |exchange, topic|
-        amqp_exchange = channel.topic(exchange)
+        amqp_exchange = @channel.topic(exchange, :durable => durable)
         queue_name = "miq-#{@client_ip}-#{exchange}"
-        @queues[exchange] = channel.queue(queue_name, :auto_delete => true, :exclusive => true)
-                                   .bind(amqp_exchange, :routing_key => topic)
+        @queues[exchange] = @channel.queue(queue_name, :auto_delete => true, :exclusive => true)
+                                    .bind(amqp_exchange, :routing_key => topic)
       end
     end
   end
