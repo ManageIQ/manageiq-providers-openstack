@@ -7,19 +7,19 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   end
 
   # Parses all targets present in the EmsEvent givin in the initializer
-  # @return [Array] Array of ManagerRefresh::Target objects
+  # @return [Array] Array of InventoryRefresh::Target objects
   def parse
     parse_ems_event_targets(ems_event)
   end
 
   private
 
-  # Parses list of ManagerRefresh::Target(s) out of the given EmsEvent
+  # Parses list of InventoryRefresh::Target(s) out of the given EmsEvent
   #
   # @param ems_event [EmsEvent] EmsEvent object
-  # @return [Array] Array of ManagerRefresh::Target objects
+  # @return [Array] Array of InventoryRefresh::Target objects
   def parse_ems_event_targets(ems_event)
-    target_collection = ManagerRefresh::TargetCollection.new(:manager => ems_event.ext_management_system, :event => ems_event)
+    target_collection = InventoryRefresh::TargetCollection.new(:manager => ems_event.ext_management_system, :event => ems_event)
 
     # there's almost always a tenant id regardless of event type
     collect_identity_tenant_references!(target_collection, ems_event)

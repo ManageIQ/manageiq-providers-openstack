@@ -55,7 +55,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         @data_scaling = 1
         2.times do
           setup_mocked_collector
-          backup_target = ManagerRefresh::Target.new(:manager     => @ems,
+          backup_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                      :association => :cloud_volume_backups,
                                                      :manager_ref => {:ems_ref => nil})
           EmsRefresh.refresh(backup_target)
@@ -69,7 +69,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         @data_scaling = 1
         2.times do
           setup_mocked_collector
-          backup_target = ManagerRefresh::Target.new(:manager     => @ems,
+          backup_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                      :association => :cloud_volume_backups,
                                                      :manager_ref => {:ems_ref => nil})
           EmsRefresh.refresh(backup_target)
@@ -82,7 +82,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         @data_scaling = 1
         2.times do
           setup_mocked_collector
-          keypair_target = ManagerRefresh::Target.new(:manager     => @ems,
+          keypair_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                       :association => :key_pairs,
                                                       :manager_ref => {:ems_ref => nil})
           EmsRefresh.refresh(keypair_target)
@@ -96,7 +96,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         @data_scaling = 1
         2.times do
           setup_mocked_collector
-          keypair_target = ManagerRefresh::Target.new(:manager     => @ems,
+          keypair_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                       :association => :key_pairs,
                                                       :manager_ref => {:ems_ref => nil})
           EmsRefresh.refresh(keypair_target)
