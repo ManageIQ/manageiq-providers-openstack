@@ -4,7 +4,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
 
   require_nested :CloudManager
   require_nested :NetworkManager
-  require_nested :CinderManager
+  require_nested :StorageManager
   require_nested :TargetCollection
 
   attr_reader :availability_zones
