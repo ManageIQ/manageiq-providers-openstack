@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
+  virtual_has_one :default_security_group, :uses => :security_groups
+
   include ManageIQ::Providers::Openstack::HelperMethods
   has_and_belongs_to_many :miq_templates,
                           :foreign_key             => "cloud_tenant_id",
