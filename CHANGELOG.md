@@ -5,13 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 94 ending 2018-09-10
+
+### Added
+- Moving Inventory Builder functionality to Inventory [(#343)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/343)
+
+### Fixed
+- Add cores per socket to OpenStack cloud inventory parser [(#341)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/341)
+
+## Gaprindashvili-5 - Released 2018-09-07
+
+### Added
+- Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
+
+### Fixed
+- Catch Bad Request responses in safe_call [(#330)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/330)
+
 ## Unreleased as of Sprint 92 ending 2018-08-13
 
 ### Added
 - Infra Discovery: support for SSL [(#326)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/326)
 
 ### Fixed
-- Catch Bad Request responses in safe_call [(#330)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/330)
 - Flavors: always include private flavors [(#329)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/329)
 - Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
 
@@ -113,7 +128,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ## Unreleased as of Sprint 79 ending 2018-02-12
 
 ### Added
-- Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
 - Store selected user sync roles as custom attributes. [(#210)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/210)
 
 ### Fixed
