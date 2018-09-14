@@ -10,7 +10,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
     collector.cloud_volumes.each do |v|
       volume = persister.cloud_volumes.find_or_build(v.id)
       volume.type = "ManageIQ::Providers::Openstack::CloudManager::CloudVolume"
-      volume.name = volume_name(v)
+      volume.name = volume_name(v).blank? ? v.id : volume_name(v)
       volume.status = v.status
       volume.bootable = v.attributes['bootable']
       volume.creation_time = v.created_at
