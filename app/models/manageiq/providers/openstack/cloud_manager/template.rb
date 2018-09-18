@@ -76,7 +76,9 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
 
   def self.raw_create_image(ext_management_system, create_options)
     ext_management_system.with_provider_connection(:service => 'Image') do |service|
-      service.create_image(create_options)
+      url = create_options.delete(:url)
+      image = service.images.create(create_options)
+      ManageIQ::Providers::Openstack::CloudManager::UploadImageWorkflow.create_job(ext_management_system, image.id, url)
     end
   rescue => err
     _log.error("image=[#{name}], error=[#{err}]")

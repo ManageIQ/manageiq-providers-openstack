@@ -45,5 +45,13 @@ module OpenstackHandle
       @os_handle.accessor_for_accessible_tenants(
         SERVICE_NAME, :images_with_pagination_loop, :id)
     end
+
+    def handle_upload(image, url)
+      file = open(url) if url =~ URI::DEFAULT_PARSER.make_regexp
+      image.upload_data(file)
+    ensure
+      file.close
+      file.unlink
+    end
   end
 end

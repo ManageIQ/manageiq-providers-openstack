@@ -1,22 +1,33 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Template do
   let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:image_attributes) { {:name => 'image', :ram => '1'} }
+  let(:image_attributes) { {:name => 'image', :ram => '1', :url => 'url'} }
   let(:template_openstack) { FactoryGirl.create :template_openstack, :ext_management_system => ems, :ems_ref => 'one_id' }
   let(:service) { double }
 
   context 'when create_image' do
     before do
       allow(ems).to receive(:with_provider_connection).with(:service => 'Image').and_yield(service)
+      allow(service).to receive(:images).and_return(images)
     end
+
+    let(:images) { double }
+    let(:image_fog) { double }
 
     context 'with correct data' do
       it 'should create image' do
-        expect(service).to receive(:create_image).with(image_attributes).once
+        allow(images).to receive(:create).with(image_attributes.except(:url)).and_return(image_fog).once
+        allow(service).to receive(:handle_upload).with(image_fog, image_attributes[:url]).and_return(true).once
+
+        expect(images).to receive(:create).with(image_attributes.except(:url)).and_return(image_fog).once
+        expect(service).to receive(:handle_upload).and_return(true)
+
         subject.class.create_image(ems, image_attributes)
       end
 
       it 'should not raise error' do
-        allow(service).to receive(:create_image).with(image_attributes).once
+        allow(images).to receive(:create).with(image_attributes.except(:url)).and_return(image_fog).once
+
+        expect(service).to receive(:handle_upload).and_return(true)
         expect do
           subject.class.create_image(ems, image_attributes)
         end.not_to raise_error
@@ -26,7 +37,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Template do
     context 'with incorrect data' do
       [Excon::Error::BadRequest, ArgumentError].map do |error|
         it "should raise error when #{error}" do
-          allow(service).to receive(:create_image).with(image_attributes).and_raise(error)
+          allow(images).to receive(:create).with(image_attributes.except(:url)).and_raise(error)
           expect do
             subject.class.create_image(ems, image_attributes)
           end.to raise_error(MiqException::MiqOpenstackApiRequestError)
