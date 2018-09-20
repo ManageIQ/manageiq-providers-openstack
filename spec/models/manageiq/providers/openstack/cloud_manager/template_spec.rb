@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Template do
   let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:image_attributes) { {:name => 'image', :ram => '1'} }
+  let(:image_attributes) { {'name' => 'test_image', 'description' => 'test_description'} }
   let(:template_openstack) { FactoryGirl.create :template_openstack, :ext_management_system => ems, :ems_ref => 'one_id' }
   let(:service) { double }
 
@@ -46,7 +46,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Template do
     subject { template_openstack }
 
     it 'should update image' do
-      expect(fog_image).to receive(:update).with(image_attributes).once
+      expect(subject).to receive(:update_image).with(image_attributes).once
       subject.update_image(image_attributes)
     end
   end
