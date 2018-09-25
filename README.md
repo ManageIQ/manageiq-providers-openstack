@@ -1,11 +1,11 @@
 # manageiq-providers-openstack
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-providers-openstack.svg)](http://badge.fury.io/rb/manageiq-providers-openstack)
-[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-openstack.svg)](https://travis-ci.org/ManageIQ/manageiq-providers-openstack)
+[![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-openstack.svg?branch=hammer)](https://travis-ci.org/ManageIQ/manageiq-providers-openstack)
 [![Code Climate](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack)
 [![Test Coverage](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/badges/coverage.svg)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/coverage)
 [![Dependency Status](https://gemnasium.com/ManageIQ/manageiq-providers-openstack.svg)](https://gemnasium.com/ManageIQ/manageiq-providers-openstack)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/master)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/hammer.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/hammer)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-openstack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Translate](https://img.shields.io/badge/translate-zanata-blue.svg)](https://translate.zanata.org/zanata/project/view/manageiq-providers-openstack)
