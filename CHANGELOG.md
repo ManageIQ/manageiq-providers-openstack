@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 95 ending 2018-09-24
+
+### Added
+- Pass openstack_admin? flag to volume snapshot template collection [(#359)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/359)
+- Support the :cinder_volume_types feature in the CinderManager [(#358)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/358)
+- Make `default_security_group` visible in the API [(#355)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/355)
+- Use UUID if volume name is missing [(#351)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/351)
+
+### Fixed
+- Add StorageManager modules to fix CinderManager import paths [(#352)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/352)
+- Use empty name for volume if only size provided [(#344)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/344)
+
 ## Unreleased as of Sprint 94 ending 2018-09-10
 
 ### Added
