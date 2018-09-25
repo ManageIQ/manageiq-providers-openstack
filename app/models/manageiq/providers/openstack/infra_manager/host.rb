@@ -137,9 +137,25 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     authentication_best_fit.try(:resource_type) != 'Host'
   end
 
+  def collect_services(ssu)
+    containers = ssu.shell_exec("docker ps --format 'table {{.Names}}\t{{.Status}}' | tail -n +2")
+    if containers
+      containers = MiqLinux::Utils.parse_docker_ps_list(containers)
+      return super(ssu).concat(containers)
+    end
+    super(ssu)
+  end
+
   def refresh_openstack_services(ssu)
     openstack_status = ssu.shell_exec("systemctl -la --plain | awk '/openstack/ {gsub(/ +/, \" \"); gsub(\".service\", \":\"); gsub(\"not-found\",\"(disabled)\"); split($0,s,\" \"); print s[1],s[3],s[2]}' | sed \"s/ loaded//g\"")
+    openstack_containerized_status = ssu.shell_exec("docker ps --format 'table {{.Names}}\t{{.Status}}' | tail -n +2")
+
     services = MiqLinux::Utils.parse_openstack_status(openstack_status)
+    if openstack_containerized_status.present?
+      containerized_services = MiqLinux::Utils.parse_openstack_container_status(openstack_containerized_status)
+      services = MiqLinux::Utils.merge_openstack_services(services, containerized_services)
+    end
+
     self.host_service_group_openstacks = services.map do |service|
       # find OpenstackHostServiceGroup records by host and name and initialize if not found
       host_service_group_openstacks.where(:name => service['name'])
