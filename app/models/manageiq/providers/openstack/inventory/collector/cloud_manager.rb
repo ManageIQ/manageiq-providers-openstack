@@ -53,7 +53,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   def images
     return @images if @images.any?
     @images = if openstack_admin?
-                image_service.handled_list(:images, {}, true).all
+                image_service.images_with_pagination_loop
               else
                 image_service.handled_list(:images)
               end
