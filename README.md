@@ -13,7 +13,7 @@
 ManageIQ plugin for the Openstack provider.
 
 ## Development
-
+Test CI
 See the section on pluggable providers in the [ManageIQ Developer Setup](http://manageiq.org/docs/guides/developer_setup)
 
 For quick local setup run `bin/setup`, which will clone the core ManageIQ repository under the *spec* directory and setup necessary config files. If you have already cloned it, you can run `bin/update` to bring the core ManageIQ code up to date.
