@@ -53,9 +53,11 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
         indexed_key = :"#{key}_#{volumes.length + 1}"
         new_volume[key.to_sym] = values[indexed_key] if values.key?(indexed_key)
       end
-      if new_volume.blank?
+      if new_volume.blank? || new_volume.values.all?(&:blank?)
         prepare_volumes = false
       else
+        new_volume[:size] = "1" if new_volume[:size].blank?
+        new_volume[:name] = "" unless new_volume.key?(:name)
         volumes.push new_volume
       end
     end
