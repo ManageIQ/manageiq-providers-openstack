@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ManageIQ_Providers_Openstack 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-21 10:06+0200\n"
-"PO-Revision-Date: 2017-04-21 10:06+0200\n"
+"POT-Creation-Date: 2018-10-08 12:26+0200\n"
+"PO-Revision-Date: 2018-10-08 12:26+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -18,59 +18,195 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:427
+#: ../app/models/manageiq/providers/openstack/cloud_manager/flavor.rb:45
+msgid "%{cpus} CPUs, %{ram} RAM, %{disk_size} Root Disk"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:322
 msgid "Cannot start. Already on."
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:439
+#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:334
 msgid "Cannot stop. Already off."
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:170 ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:200
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:200 ../app/models/manageiq/providers/openstack/network_manager/cloud_network/private.rb:3
+msgid "Cloud Network (OpenStack)"
+msgid_plural "Cloud Networks (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:414
+msgid "Cloud Provider (OpenStack)"
+msgid_plural "Cloud Providers (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:105
+msgid "Cloud Subnet (OpenStack)"
+msgid_plural "Cloud Subnets (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_tenant.rb:52
+msgid "Cloud Tenant (OpenStack)"
+msgid_plural "Cloud Tenants (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/decorators/manageiq/providers/openstack/cloud_manager/template_decorator.rb:3
+msgid "Default value is 1"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network/public.rb:3
+msgid "External Cloud Network (OpenStack)"
+msgid_plural "External Cloud Networks (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/flavor.rb:49
+msgid "Flavor (OpenStack)"
+msgid_plural "Flavors (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:120
+msgid "Floating IP (OpenStack)"
+msgid_plural "Floating IPs (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/orchestration_template.rb:87
+msgid "Heat Template"
+msgid_plural "Heat Templates"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/infra_manager/host.rb:440
+msgid "Host (OpenStack)"
+msgid_plural "Hosts (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:171 ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:201
 msgid "Host ID cannot be nil"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:172 ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:202
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:173 ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:203
 msgid "Host cannot be found"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/relocation.rb:11
+#: ../app/models/manageiq/providers/openstack/infra_manager.rb:175
+msgid "Infrastructure Provider (OpenStack)"
+msgid_plural "Infrastructure Providers (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm.rb:171
+msgid "Instance (OpenStack)"
+msgid_plural "Instances (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/relocation.rb:9
 msgid "Migrate operation is not supported."
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:78 ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:108
+#: ../app/models/manageiq/providers/openstack/network_manager/network_port.rb:13
+msgid "Network Port (OpenStack)"
+msgid_plural "Network Ports (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager.rb:199
+msgid "Network Provider (OpenStack)"
+msgid_plural "Network Providers (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:171
+msgid "Network Router (OpenStack)"
+msgid_plural "Network Routers (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:56
+msgid "Network type '#{options[:provider_network_type]}' is not supported by the Provider"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:14
+msgid "No snapshots available for this VM"
+msgstr ""
+
+#: ../lib/manageiq/providers/openstack/engine.rb:8
+msgid "OpenStack Provider"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:20 ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:31 ../app/models/manageiq/providers/openstack/cloud_manager/vm/operations/snapshot.rb:35
+msgid "Operation not supported"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/orchestration_stack.rb:73 ../app/models/manageiq/providers/openstack/infra_manager/orchestration_stack.rb:143
+msgid "Orchestration Stack (OpenStack)"
+msgid_plural "Orchestration Stacks (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/infra_manager/orchestration_stack.rb:76
+msgid "Provider stack is not ready to be updated, another operation is in progress."
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:159
+msgid "Security Group (OpenStack)"
+msgid_plural "Security Groups (OpenStack)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:105 ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:135
 msgid "Subnet ID cannot be nil"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:80 ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:110
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:107 ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:137
 msgid "Subnet cannot be found"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:39
+#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:42
 msgid "Tenant mapping is disabled on the Provider"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:41
+#: ../app/models/manageiq/providers/openstack/cloud_manager.rb:44
 msgid "Tenant mapping is supported only when CloudTenant exists on the CloudManager"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:8 ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:16
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:9 ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:17
 msgid "The Cloud Network is not connected to an active %{table}"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:9 ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:17
+#: ../app/models/manageiq/providers/openstack/cloud_manager/flavor.rb:24
+msgid "The Flavor is not connected to an active %{table}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:10 ../app/models/manageiq/providers/openstack/network_manager/floating_ip.rb:18
 msgid "The Floating Ip is not connected to an active %{table}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/template.rb:91
+msgid "The Image is not connected to an active %{table}"
 msgstr ""
 
 #: ../app/models/manageiq/providers/openstack/cloud_manager/vm/resize.rb:8
 msgid "The Instance cannot be resized, current state has to be active or shutoff."
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/auth_key_pair.rb:17
+#: ../app/models/manageiq/providers/openstack/cloud_manager/auth_key_pair.rb:19
 msgid "The Keypair is not connected to an active %{table}"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:6 ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:14
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:12 ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:25
+msgid "The Network Router is not connected to an active %{table}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:8 ../app/models/manageiq/providers/openstack/network_manager/security_group.rb:16
 msgid "The Security Group is not connected to an active %{table}"
 msgstr ""
 
@@ -78,11 +214,11 @@ msgstr ""
 msgid "The VM is not powered on"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:13
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:14
 msgid "The subnet has an active %{table}"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:8 ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:20
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:9 ../app/models/manageiq/providers/openstack/network_manager/cloud_subnet.rb:21
 msgid "The subnet is not connected to an active %{table}"
 msgstr ""
 
@@ -90,26 +226,52 @@ msgstr ""
 msgid "There are no %{floating_ips} available to this %{instance}."
 msgstr ""
 
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/manage_security_groups.rb:8
+msgid "There are no %{security_groups} available to this %{instance}."
+msgstr ""
+
 #: ../app/models/manageiq/providers/openstack/cloud_manager/vm/associate_ip.rb:17
 msgid "This %{instance} does not have any associated %{floating_ips}"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:37
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vm/manage_security_groups.rb:17
+msgid "This %{instance} does not have any associated %{security_groups}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/network_router.rb:17
+msgid "Unable to delete \"%{name}\" because it has associated ports."
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/orchestration_template.rb:173
+msgid "Unknown constraint %{constraint}"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/network_manager/cloud_network.rb:58
+msgid "Unknown physical network '#{options[:provider_physical_network]}' for flat provider network"
+msgstr ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/vnfd_template.rb:71
+msgid "VNF Template"
+msgid_plural "VNF Templates"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:38
 msgid "cloud_volume cannot be nil"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:34
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:35
 msgid "ems cannot be found"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:32
+#: ../app/models/manageiq/providers/openstack/cloud_manager/host_aggregate.rb:33
 msgid "ems cannot be nil"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:39
+#: ../app/models/manageiq/providers/openstack/cloud_manager/cloud_volume_snapshot.rb:40
 msgid "ext_management_system cannot be nil"
 msgstr ""
 
-#: ../app/models/manageiq/providers/openstack/cloud_manager/template.rb:15
+#: ../app/models/manageiq/providers/openstack/cloud_manager/template.rb:16
 msgid "not connected to ems"
 msgstr ""
