@@ -56,6 +56,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
                       _("Network type '#{options[:provider_network_type]}' is not supported by the Provider")
                     when /Invalid input for operation: physical_network '.*' unknown for flat provider network\./
                       _("Unknown physical network '#{options[:provider_physical_network]}' for flat provider network")
+                    when /Unable to create the flat network. Physical network .* is in use\./
+                      _("Physical network '#{options[:provider_physical_network]}' is in use")
                     else
                       parsed_error
                     end
