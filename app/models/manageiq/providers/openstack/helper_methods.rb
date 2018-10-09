@@ -24,14 +24,12 @@ module ManageIQ::Providers::Openstack::HelperMethods
       # not a neutron exception
       return exception.to_s unless exception.respond_to?(:response)
 
-      # undercloud neutron-server service is stopped
-      if exception.kind_of?(::Excon::Error::HTTPStatus)
-        return parse_error_message_excon_http_status(exception)
-      end
-
-      response_body = JSON.parse(exception.response.body)
-      if response_body.key?("NeutronError")
-        response_body["NeutronError"]["message"]
+      if exception.kind_of?(::Excon::Error::BadRequest) || exception.kind_of?(::Excon::Error::Conflict)
+        response_body = JSON.parse(exception.response.body)
+        response_body["NeutronError"]["message"] if response_body.key?("NeutronError")
+      elsif exception.kind_of?(::Excon::Error::HTTPStatus)
+        # undercloud neutron-server service is stopped
+        parse_error_message_excon_http_status(exception)
       else
         parse_error_message_from_fog_response(exception)
       end
