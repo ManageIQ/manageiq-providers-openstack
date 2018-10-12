@@ -61,7 +61,18 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def key_pairs
     return @key_pairs if @key_pairs.any?
-    @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
+    users = User.all
+
+    results = users.map do |u|
+      next if u.settings[:openstack_user_id].nil?
+      @key_pairs = compute_service.handled_list(:key_pairs, {:user_id => u.settings[:openstack_user_id]}, openstack_admin?)
+
+      @key_pairs.map do |kp|
+        kp.user_id = u.settings[:openstack_user_id]
+        kp
+      end
+    end.flatten
+    results
   end
 
   def quotas
