@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer Beta-1
+## Hammer Beta-1 - Released 2018-10-12
 
 ### Added
 - Pass openstack_admin? flag to volume snapshot template collection [(#359)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/359)
@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Orchestration Stack and Cloud Tenant targeted refresh [(#86)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/86)
 - Add notifications for VM destroy Cloud Volume and Cloud Volume Snapshot actions [(#85)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/85)
 - Trim error messages from fog responses for remaining models [(#130)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/130)
+- Update i18n catalog for hammer [(#368)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/368)
 
 ### Fixed
 - Add StorageManager modules to fix CinderManager import paths [(#352)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/352)
@@ -63,6 +64,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Only update tenant mapping for the network manager if it's present [(#119)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/119)
 - Update raw connect method to accomodate OpenStack complexity [(#118)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/118)
 - Trim neutron error messages out of fog responses [(#110)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/110) 
+- Direct attribute access for `cloud_volume_types` via cloud_tenants API [(#366)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/366)
+- Get images with pagination loop [(#363)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/363)
+- Don't use string interpolations inside gettext strings [(#369)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/369)
 
 ### Removed
 - Remove useless EmsRefresherMixin [(#304)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/304)
