@@ -51,17 +51,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
   rescue => e
     _log.error "network=[#{options[:name]}], error: #{e}"
     parsed_error = parse_error_message_from_neutron_response(e)
-    error_message = case parsed_error
-                    when /Invalid input for operation: network_type value '.*' not supported\./
-                      _("Network type '#{options[:provider_network_type]}' is not supported by the Provider")
-                    when /Invalid input for operation: physical_network '.*' unknown for flat provider network\./
-                      _("Unknown physical network '#{options[:provider_physical_network]}' for flat provider network")
-                    when /Unable to create the flat network. Physical network .* is in use\./
-                      _("Physical network '#{options[:provider_physical_network]}' is in use")
-                    else
-                      parsed_error
-                    end
-    raise MiqException::MiqNetworkCreateError, error_message, e.backtrace
+    raise MiqException::MiqNetworkCreateError, parsed_error, e.backtrace
   end
 
   def raw_delete_cloud_network
