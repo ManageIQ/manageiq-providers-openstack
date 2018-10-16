@@ -41,7 +41,14 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     {:ems_ref => router['id'], :name => options[:name]}
   rescue => e
     _log.error "router=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqNetworkRouterCreateError, parse_error_message_from_neutron_response(e), e.backtrace
+    parsed_error = parse_error_message_from_neutron_response(e)
+    error_message = case parsed_error
+                    when /Quota exceeded for resources/
+                      _("Quota exceeded for routers.")
+                    else
+                      parsed_error
+                    end
+    raise MiqException::MiqNetworkRouterCreateError, error_message, e.backtrace
   end
 
   def raw_delete_network_router
