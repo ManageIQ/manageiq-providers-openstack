@@ -99,6 +99,8 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
 
   def raw_update_image(options)
     ext_management_system.with_provider_connection(:service => 'Image') do |service|
+      image_attrs = service.images.find_by_id(ems_ref).attributes.stringify_keys
+      options = options.select { |k| image_attrs.key?(k) }
       service.images.find_by_id(ems_ref).update(options)
     end
   rescue => err
