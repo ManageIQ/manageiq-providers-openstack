@@ -174,4 +174,43 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   def self.display_name(number = 1)
     n_('Infrastructure Provider (OpenStack)', 'Infrastructure Providers (OpenStack)', number)
   end
+
+  # For infra, validate primary endpoint *and* verify presence of ironic
+  def self.validate_credentials_task(args, user_id, zone)
+    task_opts = {
+      :action => "Validate EMS Provider Credentials",
+      :userid => user_id
+    }
+
+    queue_opts = {
+      :args        => [*args],
+      :class_name  => self,
+      :method_name => "validate_credentials_undercloud",
+      :queue_name  => "generic",
+      :role        => "ems_operations",
+      :zone        => zone
+    }
+
+    task_id = MiqTask.generic_action_with_callback(task_opts, queue_opts)
+    task = MiqTask.wait_for_taskid(task_id, :timeout => 30)
+
+    if task.nil?
+      error_message = "Task Error"
+    elsif MiqTask.status_error?(task.status) || MiqTask.status_timeout?(task.status)
+      error_message = task.message
+    end
+
+    [error_message.blank?, error_message]
+  end
+
+  # For infra, validate primary endpoint *and* verify presence of ironic
+  def self.validate_credentials_undercloud(*params)
+    if raw_connect(*params)
+      begin
+        !!raw_connect(*params, "Baremetal")
+      rescue MiqException::ServiceNotAvailable
+        raise MiqException::ServiceNotAvailable, "Baremetal service not found. Not an OpenStack Infrastructure provider."
+      end
+    end
+  end
 end
