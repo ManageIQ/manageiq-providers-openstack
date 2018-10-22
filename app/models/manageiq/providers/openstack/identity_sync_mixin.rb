@@ -198,6 +198,14 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
 
         miq_group.entitlement = entitlement
         miq_group.description = create_group_name(ext_management_system, tenant, this_role)
+        unless miq_group.valid?
+          description_errors = miq_group.errors[:description]
+          if description_errors.size == 1 && description_errors[0].starts_with?("is not unique")
+            # A group with this description already exists, probably because a user previously changed
+            # the associated role. Create a timestamped description to ensure uniqueness
+            miq_group.description = create_group_name(ext_management_system, tenant, this_role, true)
+          end
+        end
         miq_group.save!
         _log.info("new group id: #{miq_group.id} name: #{miq_group.name}")
       end
@@ -216,11 +224,9 @@ module ManageIQ::Providers::Openstack::IdentitySyncMixin
     end
   end
 
-  def create_group_name(ems, tenant, role)
-    if ems.keystone_v3_domain_id.nil?
-      "#{ems.name}-#{tenant.name}-#{role.name}"
-    else
-      "#{ems.name}-#{ems.keystone_v3_domain_id}-#{tenant.name}-#{role.name}"
-    end
+  def create_group_name(ems, tenant, role, timestamp = false)
+    domain_id_component = ems.keystone_v3_domain_id.nil? ? "" : "-#{ems.keystone_v3_domain_id}"
+    timestamp_component = timestamp ? "-#{Time.now.to_f}" : ""
+    "#{ems.name}#{domain_id_component}-#{tenant.name}-#{role.name}#{timestamp_component}"
   end
 end
