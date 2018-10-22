@@ -13,7 +13,7 @@ module ManageIQ
       end
 
       def post_process_refresh_classes
-        [::Vm]
+        [::Vm, ManageIQ::Providers::Openstack::InfraManager::Host]
       end
     end
   end

@@ -455,4 +455,30 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   def self.display_name(number = 1)
     n_('Host (OpenStack)', 'Hosts (OpenStack)', number)
   end
+
+  def self.post_refresh_ems(ems_id, update_start_time)
+    ems = ExtManagementSystem.find(ems_id)
+    hosts = ems.hosts.where("created_on >= ?", update_start_time)
+    hosts.find_each(&:post_create_actions_queue)
+  end
+
+  def post_create_actions_queue
+    MiqQueue.submit_job(
+      :class_name  => self.class.name,
+      :instance_id => id,
+      :method_name => 'post_create_actions'
+    )
+  end
+
+  def post_create_actions
+    update_create_event
+  end
+
+  def update_create_event
+    parsed_ems_ref_obj = YAML.safe_load(ems_ref_obj)
+    create_event = ext_management_system.ems_events.find_by(:host_id    => nil,
+                                                            :event_type => "compute.instance.create.end",
+                                                            :host_name  => parsed_ems_ref_obj)
+    create_event&.update_attributes!(:host_id => id)
+  end
 end
