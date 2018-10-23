@@ -1,23 +1,37 @@
 describe ManageIQ::Providers::Openstack::InfraManager::Host do
   describe "#refresh_openstack_services" do
     let(:openstack_status_text) do
-      <<-EOT
-openstack-nova-api:                     active
-openstack-nova-cert:                    inactive  (disabled on boot)
-openstack-nova-compute:                 active
-openstack-nova-network:                 inactive  (disabled on boot)
-openstack-nova-scheduler:               active
-openstack-nova-conductor:               active
-openstack-glance-api:                   active
-openstack-glance-registry:              active
-openstack-glance-for-test:              active
-openstack-keystone:                     active
+      <<~EOT
+        openstack-nova-api:                     active
+        openstack-nova-cert:                    inactive  (disabled on boot)
+        openstack-nova-compute:                 active
+        openstack-nova-network:                 inactive  (disabled on boot)
+        openstack-nova-scheduler:               active
+        openstack-nova-conductor:               active
+        openstack-glance-api:                   active
+        openstack-glance-registry:              active
+        openstack-glance-for-test:              active
+        openstack-keystone:                     active
+      EOT
+    end
+
+    let(:openstack_containers_status_text) do
+      <<~EOT
+        aodh_listener              Up 7 days (healthy)
+        heat_api_cron              Up 7 days
+        swift_container_auditor    Up 7 days
+        swift_object_expirer       Up 7 days
+        swift_object_updater       Up 7 days
+        swift_container_replicator Up 7 days
+        swift_account_auditor      Up 7 days
+        cinder_api_cron            Up 7 days
       EOT
     end
 
     let(:ssu) do
       double('ssu').tap do |ssu|
         expect(ssu).to receive(:shell_exec).with(/systemctl/).and_return(openstack_status_text)
+        expect(ssu).to receive(:shell_exec).with(/docker/).and_return(openstack_containers_status_text)
       end
     end
 
@@ -67,7 +81,10 @@ openstack-keystone:                     active
     context "with stubbed MiqLinux::Utils" do
       it "makes proper utils calls" do
         miq_linux_utils_double = double('MiqLinux::Utils')
+        allow(miq_linux_utils_double).to receive(:parse_openstack_container_status).with(openstack_containers_status_text).and_return([])
+        allow(miq_linux_utils_double).to receive(:merge_openstack_services).with([], []).and_return([])
         expect(miq_linux_utils_double).to receive(:parse_openstack_status).with(openstack_status_text).and_return([])
+        expect(miq_linux_utils_double).to receive(:parse_openstack_container_status).with(openstack_containers_status_text).and_return([])
         stub_const('MiqLinux::Utils', miq_linux_utils_double)
         host.refresh_openstack_services(ssu)
       end
@@ -94,12 +111,16 @@ openstack-keystone:                     active
           'Nova',
           'Glance',
           'Keystone',
+          'Swift',
+          'Aodh',
+          'Cinder',
+          'Heat'
         ]
       end
 
       let(:unexpected) do
         [
-          'Swift',
+          'Panko',
         ]
       end
 
