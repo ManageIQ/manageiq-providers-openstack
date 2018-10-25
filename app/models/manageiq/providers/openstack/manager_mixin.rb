@@ -47,7 +47,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         MiqException::MiqUnreachableError.new("Login attempt timed out")
       when Excon::Errors::SocketError
         MiqException::MiqHostError.new("Socket error: #{err.message}")
-      when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError
+      when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError, MiqException::ServiceNotAvailable
         err
       else
         MiqException::MiqEVMLoginError.new("Unexpected response returned from system: #{parse_error_message_from_fog_response(err)}")
