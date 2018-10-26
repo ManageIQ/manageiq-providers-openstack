@@ -12,7 +12,18 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   # OpenStack interactions
   #
   module ClassMethods
-    def raw_connect(password, params, service = "Compute")
+    def amqp_available?(params)
+      require 'manageiq/providers/openstack/legacy/events/openstack_rabbit_event_monitor'
+      OpenstackRabbitEventMonitor.available?(
+        :hostname => params[:amqp_hostname],
+        :username => params[:amqp_userid],
+        :password => params[:amqp_password],
+        :port     => params[:amqp_api_port]
+      )
+    end
+    private :amqp_available?
+
+    def ems_connect?(password, params, service)
       ems = new
       ems.name                   = params[:name].strip
       ems.provider_region        = params[:provider_region]
@@ -35,6 +46,15 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
         _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
         raise miq_exception
+      end
+    end
+    private :ems_connect?
+
+    def raw_connect(password, params, service = "Compute")
+      if params[:cred_type] == 'amqp'
+        amqp_available?(params)
+      else
+        ems_connect?(password, params, service)
       end
     end
 
