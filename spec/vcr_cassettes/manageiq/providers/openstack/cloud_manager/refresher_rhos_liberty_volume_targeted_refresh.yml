@@ -17,13 +17,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:32 GMT
+      - Thu, 01 Nov 2018 18:36:41 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-7daa8dcf-feb0-4238-a24b-0702f86f7943
+      - req-5f888e91-3e3a-4a1f-886c-70bf662d6534
       Content-Length:
       - '4170'
       Connection:
@@ -32,10 +32,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:32.281609", "expires":
-        "2018-11-01T19:36:32Z", "id": "31ecc100db9540979f17697583f40c88", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:41.254155", "expires":
+        "2018-11-01T19:36:41Z", "id": "c33a7157e96f43ffa4a77a3ee6d43b74", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["hf5q8cbHRN-dl3924xt-BQ"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["Fd4lTFo9SayUPYbI5ItAXA"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -80,7 +80,7 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:32 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:41 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8774/
@@ -95,7 +95,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 31ecc100db9540979f17697583f40c88
+      - c33a7157e96f43ffa4a77a3ee6d43b74
   response:
     status:
       code: 200
@@ -106,7 +106,7 @@ http_interactions:
       Content-Length:
       - '371'
       Date:
-      - Thu, 01 Nov 2018 18:36:32 GMT
+      - Thu, 01 Nov 2018 18:36:41 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "SUPPORTED", "updated": "2011-01-21T11:33:21Z",
@@ -115,7 +115,7 @@ http_interactions:
         "links": [{"href": "http://10.8.99.233:8774/v2.1/", "rel": "self"}], "min_version":
         "2.1", "version": "2.12", "id": "v2.1"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:32 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:41 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -133,13 +133,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:32 GMT
+      - Thu, 01 Nov 2018 18:36:41 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-2119ab3b-6a74-4d40-a993-1b573998755c
+      - req-aab35d3e-47ad-45db-b433-2589ddd55aba
       Content-Length:
       - '4170'
       Connection:
@@ -148,10 +148,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:32.553747", "expires":
-        "2018-11-01T19:36:32Z", "id": "5c161243a4084e98a9ef8069da2749b5", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:41.554476", "expires":
+        "2018-11-01T19:36:41Z", "id": "073b679c5c8047f69d64b7ee17ec5c56", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["fIRsXecaRvuOsSdLa8uvqA"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["uKZk1CY5RJ-A4vSVgsbPjw"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -196,7 +196,235 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:32 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:41 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a/volumes/0a55c0d5-c780-4e7d-9d09-47f5520c7448
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 073b679c5c8047f69d64b7ee17ec5c56
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Compute-Request-Id:
+      - req-a9620b73-8ac9-4247-8c36-5c88747a0956
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1406'
+      X-Openstack-Request-Id:
+      - req-a9620b73-8ac9-4247-8c36-5c88747a0956
+      Date:
+      - Thu, 01 Nov 2018 18:36:41 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"volume": {"migration_status": null, "attachments": [{"server_id":
+        "ca4f3a16-bae3-4407-83e9-f77b28af0f2b", "attachment_id": "7913f588-2068-4b0c-810f-5e8cf00a4754",
+        "host_name": null, "volume_id": "0a55c0d5-c780-4e7d-9d09-47f5520c7448", "device":
+        "/dev/vdd", "id": "0a55c0d5-c780-4e7d-9d09-47f5520c7448"}], "links": [{"href":
+        "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a/volumes/0a55c0d5-c780-4e7d-9d09-47f5520c7448",
+        "rel": "self"}, {"href": "http://10.8.99.233:8776/e54e5c3c19e34720b05661f2ea1ea00a/volumes/0a55c0d5-c780-4e7d-9d09-47f5520c7448",
+        "rel": "bookmark"}], "availability_zone": "nova", "os-vol-host-attr:host":
+        "dhcp-8-99-233@lvm#lvm", "encrypted": false, "os-volume-replication:extended_status":
+        null, "replication_status": "disabled", "snapshot_id": null, "id": "0a55c0d5-c780-4e7d-9d09-47f5520c7448",
+        "size": 1, "user_id": "80ea157498b44d08aa6d6f54b8a7c3e7", "os-vol-tenant-attr:tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "os-vol-mig-status-attr:migstat": null,
+        "metadata": {"readonly": "False", "attached_mode": "rw"}, "status": "in-use",
+        "description": "EmsRefreshSpec-Volume description", "multiattach": false,
+        "os-volume-replication:driver_data": null, "source_volid": null, "consistencygroup_id":
+        null, "os-vol-mig-status-attr:name_id": null, "name": "EmsRefreshSpec-Volume",
+        "bootable": "false", "created_at": "2016-11-11T13:49:20.000000", "volume_type":
+        "iscsi"}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:41 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - c33a7157e96f43ffa4a77a3ee6d43b74
+      X-Openstack-Nova-Api-Version:
+      - '2.12'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2088'
+      X-Compute-Request-Id:
+      - req-b7836be7-74ce-4af0-9412-e2915643207d
+      Date:
+      - Thu, 01 Nov 2018 18:36:42 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"server": {"status": "ACTIVE", "updated": "2018-10-09T18:40:19Z",
+        "hostId": "bb5e57f091d4c5737235b6ea23cd3cf06921fdb1ff1e90c2eb3098a9", "OS-EXT-SRV-ATTR:host":
+        "11.22.33.44", "addresses": {"EmsRefreshSpec-NetworkPrivate":
+        [{"OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:e1:0b:2c", "version": 4, "addr": "192.168.0.5",
+        "OS-EXT-IPS:type": "fixed"}, {"OS-EXT-IPS-MAC:mac_addr": "fa:16:3e:e1:0b:2c",
+        "version": 4, "addr": "172.16.17.4", "OS-EXT-IPS:type": "floating"}]}, "links":
+        [{"href": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b",
+        "rel": "self"}, {"href": "http://10.8.99.233:8774/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b",
+        "rel": "bookmark"}], "key_name": "EmsRefreshSpec-KeyPair", "image": {"id":
+        "bb799f70-5e02-461b-8324-17ee88259c7b", "links": [{"href": "http://10.8.99.233:8774/e54e5c3c19e34720b05661f2ea1ea00a/images/bb799f70-5e02-461b-8324-17ee88259c7b",
+        "rel": "bookmark"}]}, "OS-EXT-STS:task_state": null, "OS-EXT-STS:vm_state":
+        "active", "OS-EXT-SRV-ATTR:instance_name": "instance-00000004", "OS-SRV-USG:launched_at":
+        "2016-11-11T13:51:08.000000", "OS-EXT-SRV-ATTR:hypervisor_hostname": "11.22.33.44",
+        "flavor": {"id": "6", "links": [{"href": "http://10.8.99.233:8774/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6",
+        "rel": "bookmark"}]}, "id": "ca4f3a16-bae3-4407-83e9-f77b28af0f2b", "security_groups":
+        [{"name": "EmsRefreshSpec-SecurityGroup2"}, {"name": "EmsRefreshSpec-SecurityGroup"}],
+        "OS-SRV-USG:terminated_at": null, "OS-EXT-AZ:availability_zone": "nova", "user_id":
+        "80ea157498b44d08aa6d6f54b8a7c3e7", "name": "EmsRefreshSpec-PoweredOn", "created":
+        "2016-11-11T13:50:32Z", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "OS-DCF:diskConfig":
+        "MANUAL", "os-extended-volumes:volumes_attached": [{"id": "0a55c0d5-c780-4e7d-9d09-47f5520c7448"},
+        {"id": "2c774148-c11a-434c-aabb-7fa9c82c37ce"}], "accessIPv4": "", "accessIPv6":
+        "", "progress": 0, "OS-EXT-STS:power_state": 1, "config_drive": "", "metadata":
+        {}}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:42 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - c33a7157e96f43ffa4a77a3ee6d43b74
+      X-Openstack-Nova-Api-Version:
+      - '2.12'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '433'
+      X-Compute-Request-Id:
+      - req-0a42538b-8cb3-4ed5-af0c-3aa5a44375fb
+      Date:
+      - Thu, 01 Nov 2018 18:36:42 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"flavor": {"name": "m1.ems_refresh_spec", "links": [{"href": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6",
+        "rel": "self"}, {"href": "http://10.8.99.233:8774/e54e5c3c19e34720b05661f2ea1ea00a/flavors/6",
+        "rel": "bookmark"}], "ram": 512, "OS-FLV-DISABLED:disabled": false, "vcpus":
+        1, "swap": 512, "os-flavor-access:is_public": true, "rxtx_factor": 1.0, "OS-FLV-EXT-DATA:ephemeral":
+        1, "disk": 1, "id": "6"}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:42 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"admin"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Nov 2018 18:36:42 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-6daab7a5-abd0-40d0-8792-6f0a26530e5c
+      Content-Length:
+      - '4170'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:42.715459", "expires":
+        "2018-11-01T19:36:42Z", "id": "f521c435d50a45b5a66d956cf7f4811c", "tenant":
+        {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
+        "name": "admin"}, "audit_ids": ["ZowtzdImRBK2fgMuVcMc6Q"]}, "serviceCatalog":
+        [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_e54e5c3c19e34720b05661f2ea1ea00a"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "_member_"}, {"name": "heat_stack_owner"}], "name": "admin"}, "metadata":
+        {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
+        "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:42 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -211,20 +439,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 5c161243a4084e98a9ef8069da2749b5
+      - f521c435d50a45b5a66d956cf7f4811c
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:32 GMT
+      - Thu, 01 Nov 2018 18:36:42 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-87e3009a-4e76-4cd4-b89a-b8edc9e4e3f5
+      - req-1daa491f-8067-4017-8d08-e94c948e85db
       Content-Length:
       - '500'
       Connection:
@@ -241,90 +469,10 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:32 GMT
-- request:
-    method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 01 Nov 2018 18:36:32 GMT
-      Server:
-      - Apache/2.4.6 (Red Hat Enterprise Linux)
-      Vary:
-      - X-Auth-Token,Accept-Encoding
-      X-Openstack-Request-Id:
-      - req-0f5dc551-92f2-4430-a497-c8151322a801
-      Content-Length:
-      - '4117'
-      Connection:
-      - close
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:32.880721", "expires":
-        "2018-11-01T19:36:32Z", "id": "d4ddb4cfda924ba6aab211031061ca8d", "tenant":
-        {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["AoxDllPLQ5OTTnoHPbMfjA"]},
-        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
-        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
-        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
-        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
-        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
-        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
-        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
-        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
-        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
-        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
-        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
-        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
-        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
-        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
-        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
-        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
-        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
-        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a",
-        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a"}],
-        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a", "id":
-        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_69f8f7205ade4aa59084c32c83e60b5a"}],
-        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
-        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
-        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
-        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
-        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
-        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:32 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:42 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/os-floating-ips
     body:
       encoding: US-ASCII
       string: ''
@@ -336,57 +484,30 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - d4ddb4cfda924ba6aab211031061ca8d
+      - c33a7157e96f43ffa4a77a3ee6d43b74
+      X-Openstack-Nova-Api-Version:
+      - '2.12'
   response:
     status:
       code: 200
       message: OK
     headers:
       Content-Type:
-      - application/json; charset=UTF-8
+      - application/json
       Content-Length:
-      - '2559'
-      X-Openstack-Request-Id:
-      - req-e87f8ed0-75bd-4d75-ac96-20eb3dfacaa3
+      - '20'
+      X-Compute-Request-Id:
+      - req-11c06169-ca3c-4238-9f60-2e5f61f1208d
       Date:
-      - Thu, 01 Nov 2018 18:36:33 GMT
+      - Thu, 01 Nov 2018 18:36:43 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"stacks": [{"description": "Heat WordPress template to support F20,
-        using only Heat OpenStack-native resource types, and without the requirement
-        for heat-cfntools in the image. WordPress is web software you can use to create
-        a beautiful website or blog. This template installs a single-instance WordPress
-        deployment using a local MySQL database to store the data.\n", "parent": null,
-        "stack_status_reason": "Stack CREATE completed successfully", "stack_name":
-        "stack3", "stack_user_project_id": "334baf07bb9d466e8b5868dc1a1ffb5b", "tags":
-        null, "creation_time": "2016-11-11T13:50:12", "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack3/45d2af82-eff9-4483-a1f0-f19c44d96146",
-        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
-        "CREATE_COMPLETE", "id": "45d2af82-eff9-4483-a1f0-f19c44d96146"}, {"description":
-        "Heat WordPress template to support F20, using only Heat OpenStack-native
-        resource types, and without the requirement for heat-cfntools in the image.
-        WordPress is web software you can use to create a beautiful website or blog.
-        This template installs a single-instance WordPress deployment using a local
-        MySQL database to store the data.\n", "parent": null, "stack_status_reason":
-        "Stack CREATE completed successfully", "stack_name": "stack2", "stack_user_project_id":
-        "5a0ed3f20bb741dbbd70b957fd6b462b", "tags": null, "creation_time": "2016-11-11T13:50:10",
-        "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack2/4cf24b12-29fc-4529-a8ed-6b079dea7c17",
-        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
-        "CREATE_COMPLETE", "id": "4cf24b12-29fc-4529-a8ed-6b079dea7c17"}, {"description":
-        "Heat WordPress template to support F20, using only Heat OpenStack-native
-        resource types, and without the requirement for heat-cfntools in the image.
-        WordPress is web software you can use to create a beautiful website or blog.
-        This template installs a single-instance WordPress deployment using a local
-        MySQL database to store the data.\n", "parent": null, "stack_status_reason":
-        "Stack CREATE completed successfully", "stack_name": "stack1", "stack_user_project_id":
-        "8aa9524c3bfa41669b9e0837fc091e22", "tags": null, "creation_time": "2016-11-11T13:50:09",
-        "links": [{"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c",
-        "rel": "self"}], "updated_time": null, "stack_owner": null, "stack_status":
-        "CREATE_COMPLETE", "id": "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"}]}'
+      string: '{"floating_ips": []}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:33 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:43 GMT
 - request:
     method: get
-    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/template
+    uri: http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a/servers/ca4f3a16-bae3-4407-83e9-f77b28af0f2b/os-volume_attachments
     body:
       encoding: US-ASCII
       string: ''
@@ -398,116 +519,28 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - d4ddb4cfda924ba6aab211031061ca8d
+      - c33a7157e96f43ffa4a77a3ee6d43b74
+      X-Openstack-Nova-Api-Version:
+      - '2.12'
   response:
     status:
       code: 200
       message: OK
     headers:
       Content-Type:
-      - application/json; charset=UTF-8
+      - application/json
       Content-Length:
-      - '4249'
-      X-Openstack-Request-Id:
-      - req-004e2240-d1f5-4a54-8797-beb89d17364b
+      - '197'
+      X-Compute-Request-Id:
+      - req-a110e671-8db4-4163-8d69-191c8ac6faf6
       Date:
-      - Thu, 01 Nov 2018 18:36:33 GMT
+      - Thu, 01 Nov 2018 18:36:43 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"outputs": {"WebsiteURL": {"description": "URL for Wordpress wiki",
-        "value": {"str_replace": {"params": {"host": {"get_attr": ["wordpress_instance",
-        "first_address"]}}, "template": "http://host/wordpress"}}}}, "heat_template_version":
-        "2013-05-23", "description": "Heat WordPress template to support F20, using
-        only Heat OpenStack-native resource types, and without the requirement for
-        heat-cfntools in the image. WordPress is web software you can use to create
-        a beautiful website or blog. This template installs a single-instance WordPress
-        deployment using a local MySQL database to store the data.\n", "parameters":
-        {"instance_type": {"default": "m1.small", "type": "string", "description":
-        "Instance type for WordPress server", "constraints": [{"description": "instance_type
-        must be one of m1.small, m1.medium or m1.large", "allowed_values": ["m1.tiny",
-        "m1.small", "m1.medium", "m1.large"]}]}, "network_id": {"type": "string",
-        "description": "Name or ID of the network to use"}, "db_password": {"default":
-        "admin", "hidden": true, "type": "string", "description": "The WordPress database
-        admin account password", "constraints": [{"length": {"max": 41, "min": 1},
-        "description": "db_password must be between 1 and 41 characters"}, {"allowed_pattern":
-        "[a-zA-Z0-9]*", "description": "db_password must contain only alphanumeric
-        characters"}]}, "image_id": {"default": "fedora-20.x86_64", "type": "string",
-        "description": "Name or ID of the image to use for the WordPress server. Recommended
-        values are fedora-20.i386 or fedora-20.x86_64; get them from http://cloud.fedoraproject.org/fedora-20.i386.qcow2
-        or http://cloud.fedoraproject.org/fedora-20.x86_64.qcow2 .\n"}, "db_name":
-        {"default": "wordpress", "type": "string", "description": "WordPress database
-        name", "constraints": [{"length": {"max": 64, "min": 1}, "description": "db_name
-        must be between 1 and 64 characters"}, {"allowed_pattern": "[a-zA-Z][a-zA-Z0-9]*",
-        "description": "db_name must begin with a letter and contain only alphanumeric
-        characters\n"}]}, "db_username": {"default": "admin", "hidden": true, "type":
-        "string", "description": "The WordPress database admin account username",
-        "constraints": [{"length": {"max": 16, "min": 1}, "description": "db_username
-        must be between 1 and 16 characters"}, {"allowed_pattern": "[a-zA-Z][a-zA-Z0-9]*",
-        "description": "db_username must begin with a letter and contain only alphanumeric
-        characters\n"}]}, "db_root_password": {"default": "admin", "hidden": true,
-        "type": "string", "description": "Root password for MySQLMultiple possible",
-        "constraints": [{"length": {"max": 41, "min": 1}, "description": "db_root_password
-        must be between 1 and 41 characters"}, {"allowed_pattern": "[a-zA-Z0-9]*",
-        "description": "db_root_password must contain only alphanumeric characters"}]},
-        "key_name": {"type": "string", "description": "Name of a KeyPair to enable
-        SSH access to the instance"}}, "resources": {"wordpress_instance": {"type":
-        "OS::Nova::Server", "properties": {"key_name": {"get_param": "key_name"},
-        "image": {"get_param": "image_id"}, "user_data": {"str_replace": {"params":
-        {"db_password": {"get_param": "db_password"}, "db_name": {"get_param": "db_name"},
-        "db_rootpassword": {"get_param": "db_root_password"}, "db_user": {"get_param":
-        "db_username"}}, "template": "#!/bin/bash -v\n\nyum -y install mariadb mariadb-server
-        httpd wordpress\ntouch /var/log/mariadb/mariadb.log\nchown mysql.mysql /var/log/mariadb/mariadb.log\nsystemctl
-        start mariadb.service\n\n# Setup MySQL root password and create a user\nmysqladmin
-        -u root password db_rootpassword\ncat << EOF | mysql -u root --password=db_rootpassword\nCREATE
-        DATABASE db_name;\nGRANT ALL PRIVILEGES ON db_name.* TO \"db_user\"@\"localhost\"\nIDENTIFIED
-        BY \"db_password\";\nFLUSH PRIVILEGES;\nEXIT\nEOF\n\nsed -i \"/Deny from All/d\"
-        /etc/httpd/conf.d/wordpress.conf\nsed -i \"s/Require local/Require all granted/\"
-        /etc/httpd/conf.d/wordpress.conf\nsed -i s/database_name_here/db_name/ /etc/wordpress/wp-config.php\nsed
-        -i s/username_here/db_user/ /etc/wordpress/wp-config.php\nsed -i s/password_here/db_password/
-        /etc/wordpress/wp-config.php\n\nsystemctl start httpd.service\n"}}, "flavor":
-        {"get_param": "instance_type"}, "networks": [{"uuid": {"get_param": "network_id"}}]}}}}'
+      string: '{"volumeAttachments": [{"device": "/dev/vdd", "serverId": "ca4f3a16-bae3-4407-83e9-f77b28af0f2b",
+        "id": "0a55c0d5-c780-4e7d-9d09-47f5520c7448", "volumeId": "0a55c0d5-c780-4e7d-9d09-47f5520c7448"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:33 GMT
-- request:
-    method: get
-    uri: http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/resources
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - d4ddb4cfda924ba6aab211031061ca8d
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '700'
-      X-Openstack-Request-Id:
-      - req-38df9b22-dc54-4a37-b6a6-b2e8f83889cc
-      Date:
-      - Thu, 01 Nov 2018 18:36:33 GMT
-    body:
-      encoding: ASCII-8BIT
-      string: '{"resources": [{"resource_name": "wordpress_instance", "links": [{"href":
-        "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c/resources/wordpress_instance",
-        "rel": "self"}, {"href": "http://10.8.99.233:8004/v1/69f8f7205ade4aa59084c32c83e60b5a/stacks/stack1/091e1e54-e01c-4ec5-a0ab-b00bee4d425c",
-        "rel": "stack"}], "logical_resource_id": "wordpress_instance", "creation_time":
-        "2016-11-11T13:50:09", "resource_status": "CREATE_COMPLETE", "updated_time":
-        "2016-11-11T13:50:09", "required_by": [], "resource_status_reason": "state
-        changed", "physical_resource_id": "b686353f-0da0-48bf-bc35-8ea411a67dfd",
-        "resource_type": "OS::Nova::Server"}]}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:33 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:43 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -525,13 +558,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:33 GMT
+      - Thu, 01 Nov 2018 18:36:44 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-83dd5594-135f-40ef-8933-06a1c43d21d8
+      - req-4e0095fd-db81-47d0-945e-f6a1aaecbb1b
       Content-Length:
       - '4170'
       Connection:
@@ -540,10 +573,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:33.578177", "expires":
-        "2018-11-01T19:36:33Z", "id": "0e20c2d604524719a4906c872861ca28", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:44.465031", "expires":
+        "2018-11-01T19:36:44Z", "id": "c60b0dc1f7dd4dbd861827e91718299f", "tenant":
         {"description": "admin tenant", "enabled": true, "id": "e54e5c3c19e34720b05661f2ea1ea00a",
-        "name": "admin"}, "audit_ids": ["hy3s7YhVRpGw6A1WnkanKQ"]}, "serviceCatalog":
+        "name": "admin"}, "audit_ids": ["O1p-rMy2Q96Lk4Ye5P_qvg"]}, "serviceCatalog":
         [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e54e5c3c19e34720b05661f2ea1ea00a"}],
@@ -588,7 +621,7 @@ http_interactions:
         {"is_admin": 0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "9fe2ff9ee4384b1894a90878d3e92bab",
         "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:33 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:44 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -606,13 +639,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:34 GMT
+      - Thu, 01 Nov 2018 18:36:44 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-1ed76f39-ace9-48da-a070-06fc0d13a09b
+      - req-94141b81-2f3f-4a6c-88df-16427459032c
       Content-Length:
       - '370'
       Connection:
@@ -621,13 +654,13 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:34.731966", "expires":
-        "2018-11-01T19:36:34Z", "id": "3a3e431a2fd245149ad695adf8faf89b", "audit_ids":
-        ["zhP-x3VhTZScnkc0bzVRAg"]}, "serviceCatalog": [], "user": {"username": "admin",
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:44.622442", "expires":
+        "2018-11-01T19:36:44Z", "id": "84a9cda44adc4a1bb7385054ac18f8e4", "audit_ids":
+        ["Q7PhIHdwR_CNSvexVr0pVg"]}, "serviceCatalog": [], "user": {"username": "admin",
         "roles_links": [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [],
         "name": "admin"}, "metadata": {"is_admin": 0, "roles": []}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:36 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:44 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v2.0/tenants
@@ -642,20 +675,20 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 3a3e431a2fd245149ad695adf8faf89b
+      - 84a9cda44adc4a1bb7385054ac18f8e4
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:36 GMT
+      - Thu, 01 Nov 2018 18:36:44 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-260d456f-2480-4451-9dca-ec1c710028ff
+      - req-602284f9-2ee4-4574-8426-151bf63c707a
       Content-Length:
       - '500'
       Connection:
@@ -672,7 +705,7 @@ http_interactions:
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
         "name": "EmsRefreshSpec-Project2"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:36 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:44 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -690,13 +723,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:36 GMT
+      - Thu, 01 Nov 2018 18:36:44 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-45a956a3-6e5f-4830-ab9e-c9aafac2e728
+      - req-cd225e74-46bb-40e9-991a-c79cc158ea13
       Content-Length:
       - '4117'
       Connection:
@@ -705,10 +738,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:36.720537", "expires":
-        "2018-11-01T19:36:36Z", "id": "21228954dbb14c5c833d9a66af46a377", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:44.959657", "expires":
+        "2018-11-01T19:36:44Z", "id": "da7cca20ecf844a4898dae2916d8d12c", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["uaSkzR0TQSuu4amSfQH8kQ"]},
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["BJhqIOr8SHWUPFKvTyr1qg"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -752,7 +785,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:36 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:44 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8774/
@@ -767,7 +800,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 21228954dbb14c5c833d9a66af46a377
+      - da7cca20ecf844a4898dae2916d8d12c
   response:
     status:
       code: 200
@@ -778,7 +811,7 @@ http_interactions:
       Content-Length:
       - '371'
       Date:
-      - Thu, 01 Nov 2018 18:36:36 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "SUPPORTED", "updated": "2011-01-21T11:33:21Z",
@@ -787,7 +820,7 @@ http_interactions:
         "links": [{"href": "http://10.8.99.233:8774/v2.1/", "rel": "self"}], "min_version":
         "2.1", "version": "2.12", "id": "v2.1"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:36 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -805,13 +838,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:36 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-ccca72a8-2c3a-402d-98f0-db7e55da14f7
+      - req-c82c2f69-5111-4ba2-a64d-8876a3ec2dab
       Content-Length:
       - '4131'
       Connection:
@@ -820,10 +853,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:36.990303", "expires":
-        "2018-11-01T19:36:36Z", "id": "95ec0f6f61e94df68a0991741a23d8a8", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:45.240814", "expires":
+        "2018-11-01T19:36:45Z", "id": "0f63bfacc4a64ea5978352c4cef9b7a6", "tenant":
         {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
-        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["_WMlKWgKQracvnzLD92vpw"]},
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["KgTf3_wlSCWnJdIvjza6Nw"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8"}],
@@ -867,7 +900,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8774/
@@ -882,7 +915,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 95ec0f6f61e94df68a0991741a23d8a8
+      - 0f63bfacc4a64ea5978352c4cef9b7a6
   response:
     status:
       code: 200
@@ -893,7 +926,7 @@ http_interactions:
       Content-Length:
       - '371'
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "SUPPORTED", "updated": "2011-01-21T11:33:21Z",
@@ -902,7 +935,7 @@ http_interactions:
         "links": [{"href": "http://10.8.99.233:8774/v2.1/", "rel": "self"}], "min_version":
         "2.1", "version": "2.12", "id": "v2.1"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -920,13 +953,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-35893fef-5b7f-4962-b835-c51626e7af70
+      - req-8508915d-d019-4dd8-b188-08696efa7f68
       Content-Length:
       - '4118'
       Connection:
@@ -935,10 +968,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:37.281471", "expires":
-        "2018-11-01T19:36:37Z", "id": "18f833c6126f40e780dec498043f784b", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:45.518873", "expires":
+        "2018-11-01T19:36:45Z", "id": "394713e42c234e6ba8c506a7524792e7", "tenant":
         {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
-        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["pWqrU9N-QCK8yCQVdX8JPQ"]},
+        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["cPsRFkxLSmGh9XiinFSRKA"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608"}],
@@ -982,7 +1015,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: get
     uri: http://10.8.99.233:8774/
@@ -997,7 +1030,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 18f833c6126f40e780dec498043f784b
+      - 394713e42c234e6ba8c506a7524792e7
   response:
     status:
       code: 200
@@ -1008,7 +1041,7 @@ http_interactions:
       Content-Length:
       - '371'
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"status": "SUPPORTED", "updated": "2011-01-21T11:33:21Z",
@@ -1017,7 +1050,7 @@ http_interactions:
         "links": [{"href": "http://10.8.99.233:8774/v2.1/", "rel": "self"}], "min_version":
         "2.1", "version": "2.12", "id": "v2.1"}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v2.0/tokens
@@ -1035,13 +1068,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
       Server:
       - Apache/2.4.6 (Red Hat Enterprise Linux)
       Vary:
       - X-Auth-Token,Accept-Encoding
       X-Openstack-Request-Id:
-      - req-2e40bd5d-db33-4c6f-a32e-e8c007177b79
+      - req-449dbd40-c0ec-4a5f-a29a-8ccb5d85c7b1
       Content-Length:
       - '4117'
       Connection:
@@ -1050,10 +1083,10 @@ http_interactions:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:37.554552", "expires":
-        "2018-11-01T19:36:37Z", "id": "2741acb0c1aa443b9e529587c3cef53a", "tenant":
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:45.798674", "expires":
+        "2018-11-01T19:36:45Z", "id": "ed2ae7e9b8a441e792ca8db8ab304aff", "tenant":
         {"description": "", "enabled": true, "id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["Rz36Gu8uS76OeDE3kEljUw"]},
+        "name": "EmsRefreshSpec-Project"}, "audit_ids": ["OrBh8ILgQ1mzQS4j4A9-ZA"]},
         "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a",
         "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/69f8f7205ade4aa59084c32c83e60b5a"}],
@@ -1097,7 +1130,7 @@ http_interactions:
         {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
         0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:45 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
@@ -1112,7 +1145,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2741acb0c1aa443b9e529587c3cef53a
+      - ed2ae7e9b8a441e792ca8db8ab304aff
   response:
     status:
       code: 200
@@ -1123,9 +1156,353 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-ab897bf6-1470-4c94-ada3-09208bd541aa
+      - req-c5f75bab-5a6a-4476-9823-921c369665a9
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:45 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
+        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
+        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
+        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
+        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
+        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
+        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:46 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - ed2ae7e9b8a441e792ca8db8ab304aff
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-e19ff39a-74e7-4151-9d7b-e958deaf3cf1
+      Date:
+      - Thu, 01 Nov 2018 18:36:46 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
+        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
+        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
+        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
+        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
+        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
+        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:46 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project-No-Admin-Role"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Nov 2018 18:36:46 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-ee31e7ec-a438-4bf0-81e0-ef05822fb3c2
+      Content-Length:
+      - '4131'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:46.448418", "expires":
+        "2018-11-01T19:36:46Z", "id": "eff304abb8e84738ba212d901da611ef", "tenant":
+        {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
+        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["8Lf-aYbXQG69rt9Y42ZlCA"]},
+        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_b458a5c25c3749758f4c0661940b3ba8", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_b458a5c25c3749758f4c0661940b3ba8"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
+        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:46 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - eff304abb8e84738ba212d901da611ef
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-1016454a-2e0b-4c30-a61d-3b95537e0bcb
+      Date:
+      - Thu, 01 Nov 2018 18:36:46 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
@@ -1229,7 +1606,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
         "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:37 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:46 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=d53802a5-f0f6-48ba-9207-dbd9b13acac3
@@ -1244,7 +1621,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2741acb0c1aa443b9e529587c3cef53a
+      - eff304abb8e84738ba212d901da611ef
   response:
     status:
       code: 200
@@ -1255,9 +1632,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-b172d133-c64d-467a-9692-94bd2a4673f6
+      - req-8899bfa1-93c4-49b7-b229-475cd91147ed
       Date:
-      - Thu, 01 Nov 2018 18:36:37 GMT
+      - Thu, 01 Nov 2018 18:36:46 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
@@ -1361,7 +1738,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:46 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
@@ -1376,7 +1753,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - 2741acb0c1aa443b9e529587c3cef53a
+      - eff304abb8e84738ba212d901da611ef
   response:
     status:
       code: 200
@@ -1387,9 +1764,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-aca20832-d677-414f-9b53-ffc107969504
+      - req-a8aa555f-70a5-414b-b50a-5f361aad7c0f
       Date:
-      - Thu, 01 Nov 2018 18:36:38 GMT
+      - Thu, 01 Nov 2018 18:36:47 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
@@ -1493,87 +1870,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
-- request:
-    method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project-No-Admin-Role"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 01 Nov 2018 18:36:38 GMT
-      Server:
-      - Apache/2.4.6 (Red Hat Enterprise Linux)
-      Vary:
-      - X-Auth-Token,Accept-Encoding
-      X-Openstack-Request-Id:
-      - req-ce4a3897-b23c-48dd-9943-d2700fef7121
-      Content-Length:
-      - '4131'
-      Connection:
-      - close
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:38.349001", "expires":
-        "2018-11-01T19:36:38Z", "id": "df937615826e490fa9f91b6fd75d9fc3", "tenant":
-        {"description": "", "enabled": true, "id": "b458a5c25c3749758f4c0661940b3ba8",
-        "name": "EmsRefreshSpec-Project-No-Admin-Role"}, "audit_ids": ["-7Fr-sTHSOiUpGyMMET12g"]},
-        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8",
-        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/b458a5c25c3749758f4c0661940b3ba8"}],
-        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
-        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
-        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
-        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8",
-        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/b458a5c25c3749758f4c0661940b3ba8"}],
-        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
-        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
-        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
-        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
-        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
-        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
-        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
-        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
-        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8",
-        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/b458a5c25c3749758f4c0661940b3ba8"}],
-        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
-        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
-        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
-        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8",
-        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/b458a5c25c3749758f4c0661940b3ba8"}],
-        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:8080/v1/AUTH_b458a5c25c3749758f4c0661940b3ba8", "id":
-        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_b458a5c25c3749758f4c0661940b3ba8"}],
-        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
-        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
-        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
-        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
-        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
-        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:47 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
@@ -1588,7 +1885,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - df937615826e490fa9f91b6fd75d9fc3
+      - c60b0dc1f7dd4dbd861827e91718299f
   response:
     status:
       code: 200
@@ -1599,9 +1896,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-d4156c18-75bd-4dd7-8b8f-99a932047fba
+      - req-83022e2c-3d08-4e5b-907b-3417b3734d31
       Date:
-      - Thu, 01 Nov 2018 18:36:38 GMT
+      - Thu, 01 Nov 2018 18:36:47 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
@@ -1705,7 +2002,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:47 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
@@ -1720,7 +2017,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - df937615826e490fa9f91b6fd75d9fc3
+      - c60b0dc1f7dd4dbd861827e91718299f
   response:
     status:
       code: 200
@@ -1731,617 +2028,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-8668d0ed-28cd-4f2d-b7a0-014f6c6125c7
+      - req-ac81066f-a38e-4e2a-88df-6da4a89ed6bf
       Date:
-      - Thu, 01 Nov 2018 18:36:38 GMT
-    body:
-      encoding: ASCII-8BIT
-      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
-        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
-        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
-        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
-        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
-        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
-        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
-        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
-        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
-        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
-        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
-        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
-        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
-        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
-        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
-        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
-        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
-        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
-        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
-        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
-        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
-        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
-        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
-        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
-        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
-        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
-        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
-        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
-        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
-        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
-        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
-        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
-        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
-        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
-- request:
-    method: get
-    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - 0e20c2d604524719a4906c872861ca28
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '8299'
-      X-Openstack-Request-Id:
-      - req-bbb1687e-fbc9-40eb-a9f7-64ffe3040933
-      Date:
-      - Thu, 01 Nov 2018 18:36:38 GMT
-    body:
-      encoding: ASCII-8BIT
-      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
-        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
-        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
-        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
-        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
-        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
-        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
-        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
-        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
-        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
-        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
-        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
-        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
-        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
-        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
-        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
-        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
-        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
-        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
-        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
-        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
-        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
-        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
-        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
-        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
-        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
-        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
-        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
-        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
-        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
-        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
-        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
-        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
-        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:38 GMT
-- request:
-    method: get
-    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - 0e20c2d604524719a4906c872861ca28
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '8299'
-      X-Openstack-Request-Id:
-      - req-a3c10b4c-9ece-4e1c-b9d6-5d59092d6f82
-      Date:
-      - Thu, 01 Nov 2018 18:36:39 GMT
-    body:
-      encoding: ASCII-8BIT
-      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
-        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
-        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
-        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
-        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
-        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
-        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
-        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
-        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
-        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
-        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
-        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
-        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
-        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
-        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
-        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
-        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
-        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
-        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
-        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
-        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
-        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
-        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
-        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
-        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
-        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
-        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
-        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
-        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
-        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
-        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
-        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
-        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
-        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:39 GMT
-- request:
-    method: post
-    uri: http://11.22.33.44:5000/v2.0/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project2"}}'
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 01 Nov 2018 18:36:39 GMT
-      Server:
-      - Apache/2.4.6 (Red Hat Enterprise Linux)
-      Vary:
-      - X-Auth-Token,Accept-Encoding
-      X-Openstack-Request-Id:
-      - req-0ef3bc49-20d8-4627-9c84-87a45a493e46
-      Content-Length:
-      - '4118'
-      Connection:
-      - close
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:39.277556", "expires":
-        "2018-11-01T19:36:39Z", "id": "bf7c8b14f5b54168bfcddb73c91a6fa0", "tenant":
-        {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
-        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["AqwZPVx2RlSjKNJme4uybQ"]},
-        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
-        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608"}],
-        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
-        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
-        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
-        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608",
-        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608"}],
-        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
-        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
-        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
-        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
-        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
-        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
-        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
-        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
-        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608",
-        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608"}],
-        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
-        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
-        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
-        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608",
-        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608",
-        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608"}],
-        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:8080/v1/AUTH_e8f744b1fc6a487681d35fb275252608", "id":
-        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_e8f744b1fc6a487681d35fb275252608"}],
-        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
-        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
-        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
-        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
-        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
-        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
-        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
-        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:39 GMT
-- request:
-    method: get
-    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - bf7c8b14f5b54168bfcddb73c91a6fa0
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '8299'
-      X-Openstack-Request-Id:
-      - req-3ee22298-2924-49cb-8a09-9da33c664ac6
-      Date:
-      - Thu, 01 Nov 2018 18:36:39 GMT
-    body:
-      encoding: ASCII-8BIT
-      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
-        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
-        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
-        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
-        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
-        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
-        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
-        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
-        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
-        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
-        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
-        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
-        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
-        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
-        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
-        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
-        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
-        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
-        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
-        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
-        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
-        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
-        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
-        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
-        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
-        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
-        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
-        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
-        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
-        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
-        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
-        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
-        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
-        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
-        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
-        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
-        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
-        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
-        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
-        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
-        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
-        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
-        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
-        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
-        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
-    http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:39 GMT
-- request:
-    method: get
-    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog-core/1.45.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token:
-      - bf7c8b14f5b54168bfcddb73c91a6fa0
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Content-Length:
-      - '8299'
-      X-Openstack-Request-Id:
-      - req-9c4dabb5-f8fd-4fd3-b905-6302178849d7
-      Date:
-      - Thu, 01 Nov 2018 18:36:39 GMT
+      - Thu, 01 Nov 2018 18:36:47 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
@@ -2445,7 +2134,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
         "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:39 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:47 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=d53802a5-f0f6-48ba-9207-dbd9b13acac3
@@ -2460,7 +2149,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - bf7c8b14f5b54168bfcddb73c91a6fa0
+      - c60b0dc1f7dd4dbd861827e91718299f
   response:
     status:
       code: 200
@@ -2471,9 +2160,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-d13cc5a9-aa0f-42bf-9a1a-7ba865b437f5
+      - req-c1726cce-cd06-4ebc-adce-f6cd775de321
       Date:
-      - Thu, 01 Nov 2018 18:36:39 GMT
+      - Thu, 01 Nov 2018 18:36:47 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
@@ -2577,7 +2266,7 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:39 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:47 GMT
 - request:
     method: get
     uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
@@ -2592,7 +2281,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - bf7c8b14f5b54168bfcddb73c91a6fa0
+      - c60b0dc1f7dd4dbd861827e91718299f
   response:
     status:
       code: 200
@@ -2603,9 +2292,9 @@ http_interactions:
       Content-Length:
       - '8299'
       X-Openstack-Request-Id:
-      - req-62f7c197-a9f4-40c7-967c-5f81ed17bb45
+      - req-94eaf8cd-7140-44d5-a07d-64d0d093a8fc
       Date:
-      - Thu, 01 Nov 2018 18:36:40 GMT
+      - Thu, 01 Nov 2018 18:36:47 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
@@ -2709,5 +2398,745 @@ http_interactions:
         "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
         "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
     http_version: 
-  recorded_at: Thu, 01 Nov 2018 18:36:40 GMT
+  recorded_at: Thu, 01 Nov 2018 18:36:47 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"passwordCredentials":{"username":"admin","password":"password_2WpEraURh"},"tenantName":"EmsRefreshSpec-Project2"}}'
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 01 Nov 2018 18:36:47 GMT
+      Server:
+      - Apache/2.4.6 (Red Hat Enterprise Linux)
+      Vary:
+      - X-Auth-Token,Accept-Encoding
+      X-Openstack-Request-Id:
+      - req-423cf5aa-9f2d-4e32-911f-8fcf93949af3
+      Content-Length:
+      - '4118'
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"access": {"token": {"issued_at": "2018-11-01T18:36:48.026491", "expires":
+        "2018-11-01T19:36:48Z", "id": "6c910bfadfda483db6f3c83f1ba37b90", "tenant":
+        {"description": "", "enabled": true, "id": "e8f744b1fc6a487681d35fb275252608",
+        "name": "EmsRefreshSpec-Project2"}, "audit_ids": ["4wXh5riyT0Cgw4D_LtfLcw"]},
+        "serviceCatalog": [{"endpoints": [{"adminURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608",
+        "id": "33f58c6950134a2381bb3668fae5a325", "publicURL": "http://10.8.99.233:8774/v2/e8f744b1fc6a487681d35fb275252608"}],
+        "endpoints_links": [], "type": "compute", "name": "nova"}, {"endpoints": [{"adminURL":
+        "http://10.8.99.233:9696", "region": "RegionOne", "internalURL": "http://10.8.99.233:9696",
+        "id": "5b097055aff24a40aa4cd2d7317c9108", "publicURL": "http://10.8.99.233:9696"}],
+        "endpoints_links": [], "type": "network", "name": "neutron"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608",
+        "id": "13c4208d548d4bcdaedfe8296b6559ee", "publicURL": "http://10.8.99.233:8776/v2/e8f744b1fc6a487681d35fb275252608"}],
+        "endpoints_links": [], "type": "volumev2", "name": "cinderv2"}, {"endpoints":
+        [{"adminURL": "http://127.0.0.1:8774/v3", "region": "RegionOne", "internalURL":
+        "http://127.0.0.1:8774/v3", "id": "3874f107e1a0461596883a12743dbcc0", "publicURL":
+        "http://127.0.0.1:8774/v3"}], "endpoints_links": [], "type": "computev3",
+        "name": "novav3"}, {"endpoints": [{"adminURL": "http://10.8.99.233:9292",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:9292", "id": "75fcb24891654062ae1703e6b92f6018",
+        "publicURL": "http://10.8.99.233:9292"}], "endpoints_links": [], "type": "image",
+        "name": "glance"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8777",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8777", "id": "2c972a2880d1453aad86104dcda88a55",
+        "publicURL": "http://10.8.99.233:8777"}], "endpoints_links": [], "type": "metering",
+        "name": "ceilometer"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608",
+        "id": "410c753013fb430c9998f22f68c4cb18", "publicURL": "http://10.8.99.233:8776/v1/e8f744b1fc6a487681d35fb275252608"}],
+        "endpoints_links": [], "type": "volume", "name": "cinder"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8773/services/Admin", "region": "RegionOne",
+        "internalURL": "http://10.8.99.233:8773/services/Cloud", "id": "2833b001aa814ddf9216479d379cdac1",
+        "publicURL": "http://10.8.99.233:8773/services/Cloud"}], "endpoints_links":
+        [], "type": "ec2", "name": "nova_ec2"}, {"endpoints": [{"adminURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608",
+        "region": "RegionOne", "internalURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608",
+        "id": "a29a931a5667478c8b3724506a286144", "publicURL": "http://10.8.99.233:8004/v1/e8f744b1fc6a487681d35fb275252608"}],
+        "endpoints_links": [], "type": "orchestration", "name": "heat"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:8080", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:8080/v1/AUTH_e8f744b1fc6a487681d35fb275252608", "id":
+        "7a2262abf515414ea08b3beedc87e51e", "publicURL": "http://10.8.99.233:8080/v1/AUTH_e8f744b1fc6a487681d35fb275252608"}],
+        "endpoints_links": [], "type": "object-store", "name": "swift"}, {"endpoints":
+        [{"adminURL": "http://10.8.99.233:35357/v2.0", "region": "RegionOne", "internalURL":
+        "http://10.8.99.233:5000/v2.0", "id": "5d1b7edf24e14ce29abaeee69e84e529",
+        "publicURL": "http://10.8.99.233:5000/v2.0"}], "endpoints_links": [], "type":
+        "identity", "name": "keystone"}], "user": {"username": "admin", "roles_links":
+        [], "id": "80ea157498b44d08aa6d6f54b8a7c3e7", "roles": [{"name": "admin"},
+        {"name": "heat_stack_owner"}], "name": "admin"}, "metadata": {"is_admin":
+        0, "roles": ["bafabff3f3174e6ab41388bde984e1e5", "725d26e4ae494cc689c60f857e347267"]}}}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:48 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 6c910bfadfda483db6f3c83f1ba37b90
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-5d8debfa-0162-4461-b3e4-915a86b93dba
+      Date:
+      - Thu, 01 Nov 2018 18:36:48 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic", "enable_dhcp":
+        false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.17.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.11", "end":
+        "172.16.17.19"}, {"start": "172.16.17.2", "end": "172.16.17.9"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp": false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.21.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2",
+        "end": "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.0.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.0.3", "end": "192.168.0.5"},
+        {"start": "192.168.0.8", "end": "192.168.0.8"}], "host_routes": [], "ip_version":
+        4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24", "id": "104c081f-97dd-42b7-8930-98abbd015c74",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:48 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=d53802a5-f0f6-48ba-9207-dbd9b13acac3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 6c910bfadfda483db6f3c83f1ba37b90
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-bb719898-e2fb-4251-a977-b756909ba39c
+      Date:
+      - Thu, 01 Nov 2018 18:36:48 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
+        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
+        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
+        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
+        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
+        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
+        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:48 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 6c910bfadfda483db6f3c83f1ba37b90
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-b0a9add2-6ad0-4c70-b376-6aacd8895330
+      Date:
+      - Thu, 01 Nov 2018 18:36:48 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic", "enable_dhcp":
+        false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.17.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.11", "end":
+        "172.16.17.19"}, {"start": "172.16.17.2", "end": "172.16.17.9"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp": false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.21.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2",
+        "end": "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.0.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.0.3", "end": "192.168.0.5"},
+        {"start": "192.168.0.8", "end": "192.168.0.8"}], "host_routes": [], "ip_version":
+        4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24", "id": "104c081f-97dd-42b7-8930-98abbd015c74",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:48 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=d53802a5-f0f6-48ba-9207-dbd9b13acac3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 6c910bfadfda483db6f3c83f1ba37b90
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-0ba39912-74fe-49aa-ba4d-ed5fd332d925
+      Date:
+      - Thu, 01 Nov 2018 18:36:48 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
+        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
+        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
+        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
+        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
+        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
+        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:48 GMT
+- request:
+    method: get
+    uri: http://10.8.99.233:9696/v2.0/subnets?limit=1000&marker=104c081f-97dd-42b7-8930-98abbd015c74
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/1.45.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - 6c910bfadfda483db6f3c83f1ba37b90
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '8299'
+      X-Openstack-Request-Id:
+      - req-45c0882a-b2d4-460a-a42f-5be9b622b917
+      Date:
+      - Thu, 01 Nov 2018 18:36:49 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets": [{"name": "EmsRefreshSpec-SubnetPublic_40", "enable_dhcp":
+        false, "network_id": "68259081-a5ca-425f-9d9b-816eb62148a3", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.21.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.21.2", "end":
+        "172.16.21.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.21.0/24", "id": "d0065ae4-dffb-4dcc-9e44-a0b1166337f3",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-IsolatedSubnetPrivate_2",
+        "enable_dhcp": true, "network_id": "6ad8942f-11ef-4419-bdf5-9ba3561b6281",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.50.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.50.2",
+        "end": "192.168.50.2"}, {"start": "192.168.50.4", "end": "192.168.50.4"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.50.0/24",
+        "id": "826fd5a9-7a7a-4c40-a9b1-bd69041bbad4", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic", "enable_dhcp": false, "network_id": "20af6027-7aeb-432a-ab3b-d7217faa2f1c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.17.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.17.2",
+        "end": "172.16.17.9"}, {"start": "172.16.17.11", "end": "172.16.17.19"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "172.16.17.0/24",
+        "id": "33da95a6-bded-44d8-be36-6cc97f3d72bd", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPublic_20", "enable_dhcp": false, "network_id": "8da920f8-705d-4777-a938-e081b01ad41c",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "172.16.19.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.19.21",
+        "end": "172.16.19.23"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.19.0/24", "id": "c68ac5c0-9d9e-438b-a10f-6d0faeee0790",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_20", "enable_dhcp":
+        true, "network_id": "9e63fc1a-c0d4-4a1d-b91c-07e6c9c85076", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.20.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.20.2", "end": "192.168.20.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.20.0/24",
+        "id": "2092b802-1034-4fb8-9c5e-1ec61d1e463f", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_2", "enable_dhcp": true, "network_id": "4fadcfb0-493b-4a00-a2a8-e357f8115d96",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.2.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.2.2",
+        "end": "192.168.2.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.2.0/24", "id": "bb23bb48-804d-4416-bac3-231db23841e8",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_51", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.51.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.51.2", "end":
+        "172.16.51.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.51.0/24", "id": "68682f0f-b0e4-4f6d-9f96-d1dfb6a6c2b2",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_10", "enable_dhcp":
+        false, "network_id": "83e63648-5a43-4db0-907c-cf9ca0150336", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.18.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.18.2", "end":
+        "172.16.18.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.18.0/24", "id": "93c2f53c-df39-491e-b45b-ce8b36b29437",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_30", "enable_dhcp":
+        false, "network_id": "64bf0546-b600-4bd7-a519-9353bde2e235", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.20.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.20.2", "end":
+        "172.16.20.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.20.0/24", "id": "4d8b0801-addf-4ad4-8f46-e5bffa6a1002",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_31", "enable_dhcp":
+        true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.31.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.31.2", "end": "192.168.31.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.31.0/24",
+        "id": "841b5584-f86f-4abd-9bc2-f445b8bc860b", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_1", "enable_dhcp": true, "network_id":
+        "560b4210-2b5a-4439-8d24-203e09478f48", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.40.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.40.2", "end": "192.168.40.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.40.0/24",
+        "id": "448a986a-19a9-4684-ab6e-25cbf19ae30d", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-IsolatedSubnetPrivate_21", "enable_dhcp": true, "network_id":
+        "6ad8942f-11ef-4419-bdf5-9ba3561b6281", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": [], "gateway_ip": "192.168.51.1", "ipv6_ra_mode": null,
+        "allocation_pools": [{"start": "192.168.51.2", "end": "192.168.51.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.51.0/24",
+        "id": "edfcb49b-e917-4897-b8ae-859ef3dae2de", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_3", "enable_dhcp": true, "network_id": "1c785619-a768-4788-b3b5-ac39ebc2cea1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.3.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.3.2",
+        "end": "192.168.3.6"}, {"start": "192.168.3.8", "end": "192.168.3.10"}], "host_routes":
+        [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.3.0/24",
+        "id": "82ca5926-43cb-4312-a23f-727d5c0f5bae", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate_30", "enable_dhcp": true, "network_id": "c82b70e9-0847-43e9-9bde-b98b1ae445e9",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip":
+        "192.168.30.1", "ipv6_ra_mode": null, "allocation_pools": [{"start": "192.168.30.2",
+        "end": "192.168.30.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "192.168.30.0/24", "id": "39628ee0-d5ff-4a88-ae66-80442e5feefd",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPublic_50", "enable_dhcp":
+        false, "network_id": "6b46d522-85a1-4ce2-a276-2fab7cde0946", "tenant_id":
+        "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": [], "gateway_ip": "172.16.50.1",
+        "ipv6_ra_mode": null, "allocation_pools": [{"start": "172.16.50.2", "end":
+        "172.16.50.254"}], "host_routes": [], "ip_version": 4, "ipv6_address_mode":
+        null, "cidr": "172.16.50.0/24", "id": "d71653c5-34d2-47bd-9cd2-d93330a34d44",
+        "subnetpool_id": null}, {"name": "EmsRefreshSpec-SubnetPrivate_12", "enable_dhcp":
+        true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1", "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a",
+        "dns_nameservers": ["8.8.8.8"], "gateway_ip": "192.168.1.1", "ipv6_ra_mode":
+        null, "allocation_pools": [{"start": "192.168.1.2", "end": "192.168.1.254"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.1.0/24",
+        "id": "d53802a5-f0f6-48ba-9207-dbd9b13acac3", "subnetpool_id": null}, {"name":
+        "EmsRefreshSpec-SubnetPrivate", "enable_dhcp": true, "network_id": "c0e8e42b-005e-4183-8f25-fa91b3e441c1",
+        "tenant_id": "69f8f7205ade4aa59084c32c83e60b5a", "dns_nameservers": ["8.8.8.8"],
+        "gateway_ip": "192.168.0.1", "ipv6_ra_mode": null, "allocation_pools": [{"start":
+        "192.168.0.3", "end": "192.168.0.5"}, {"start": "192.168.0.8", "end": "192.168.0.8"}],
+        "host_routes": [], "ip_version": 4, "ipv6_address_mode": null, "cidr": "192.168.0.0/24",
+        "id": "104c081f-97dd-42b7-8930-98abbd015c74", "subnetpool_id": null}]}'
+    http_version: 
+  recorded_at: Thu, 01 Nov 2018 18:36:49 GMT
 recorded_with: VCR 3.0.3
