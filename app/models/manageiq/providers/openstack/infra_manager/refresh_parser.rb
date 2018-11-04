@@ -278,7 +278,7 @@ module ManageIQ
             :controller_type => 'scsi',
             :present         => true,
             :filename        => disks.fetch_path(disk, 'id') || disks.fetch_path(disk, 'scsi-id'),
-            :location        => nil,
+            :location        => disk,
             :size            => disk_size,
             :disk_type       => nil,
             :mode            => 'persistent'
