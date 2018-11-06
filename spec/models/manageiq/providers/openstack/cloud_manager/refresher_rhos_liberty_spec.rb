@@ -133,6 +133,26 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       end
     end
 
+    # attached to ca4f3a16-bae3-4407-83e9-f77b28af0f2b
+    it "will perform a targeted volume refresh against RHOS #{@environment}" do
+      volume_target = InventoryRefresh::Target.new(:manager     => @ems,
+                                                   :association => :cloud_volumes,
+                                                   :manager_ref => {:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448"})
+
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_volume_targeted_refresh", @ems) do
+          EmsRefresh.refresh(volume_target)
+          expect(CloudVolume.count).to eq(1)
+          volume = CloudVolume.find_by(:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448")
+          expect(volume.ext_management_system).to eq(@ems.cinder_manager)
+          expect(VmCloud.count).to eq(1)
+          vm = VmCloud.find_by(:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b")
+          expect(vm.ext_management_system).to eq(@ems)
+          expect(volume.vms.include?(vm)).to be true
+        end
+      end
+    end
+
     it "will perform a targeted port refresh against RHOS #{@environment}" do
       port_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                :association => :network_ports,
