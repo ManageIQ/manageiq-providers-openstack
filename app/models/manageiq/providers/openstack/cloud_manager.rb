@@ -54,9 +54,17 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                 :ensure_swift_managers
 
   before_update :ensure_managers_zone_and_provider_region
+  after_save :refresh_parent_infra_provider
 
   def hostname_required?
     enabled?
+  end
+
+  def refresh_parent_infra_provider
+    if provider
+      EmsRefresh.queue_refresh(provider)
+      _log.info("EMS: [#{name}] refreshing attached infra provider [#{provider.name}]")
+    end
   end
 
   def ensure_managers_zone_and_provider_region
