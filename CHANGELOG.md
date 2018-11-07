@@ -5,10 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 97 ending 2018-10-22
+## Unreleased as of Sprint 98 ending 2018-11-05
+
+### Added
+- When doing targeted refresh of a volume refresh any attached VMs [(#386)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/386)
+
+## Gaprindashvili-6 - Released 2018-11-02
+
+### Fixed
+- Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
+- Filter Keystone Projects by domain_id [(#342)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/342)
+- Use empty name for volume if only size provided [(#344)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/344)
+
+## Hammer Beta-2 - Released 2018-10-29
 
 ### Fixed
 - Format error when physical network is in use [(#370)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/370)
+
+## Unreleased as of Sprint 97 ending 2018-10-22
+
+### Fixed
 - Don't use string interpolations inside gettext strings [(#369)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/369)
 - Direct attribute access for `cloud_volume_types` via cloud_tenants API [(#366)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/366)
 
