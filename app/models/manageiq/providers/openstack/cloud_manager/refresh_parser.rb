@@ -123,7 +123,7 @@ module ManageIQ::Providers
     end
 
     def get_tenants
-      @tenants = @os_handle.accessible_tenants.select { |t| t.name != "services" }
+      @tenants = @os_handle.tenants.select { |t| t.name != "services" }
       process_collection(@tenants, :cloud_tenants) { |tenant| parse_tenant(tenant) }
     end
 

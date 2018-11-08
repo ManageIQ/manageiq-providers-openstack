@@ -21,7 +21,7 @@ describe OpenstackHandle::Handle do
       @openstack_project = double('project')
 
       @handle = OpenstackHandle::Handle.new("dummy", "dummy", "dummy")
-      allow(@handle).to receive(:service_for_each_accessible_tenant).and_yield(@openstack_svc, @openstack_project)
+      allow(@handle).to receive(:service_for_each_accessible_tenant).and_return([[@openstack_svc, @openstack_project]])
     end
 
     it "ignores 404 errors from services" do
