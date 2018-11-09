@@ -182,13 +182,27 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
   end
 
-  it "event_monitor_options" do
+  it "event_monitor_options with 1 amqp hostname" do
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
     @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
     @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
     require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 
     expect(@ems.event_monitor_options[:hostname]).to eq("amqp_hostname")
+    expect(@ems.event_monitor_options[:port]).to eq(5672)
+  end
+
+  it "event_monitor_options with multiple amqp hostnames" do
+    allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
+    @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
+    @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
+    @ems.endpoints << Endpoint.create(:role => 'amqp_fallback1', :hostname => 'amqp_fallback_hostname1', :port => '5672')
+    @ems.endpoints << Endpoint.create(:role => 'amqp_fallback2', :hostname => 'amqp_fallback_hostname2', :port => '5672')
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
+
+    expect(@ems.event_monitor_options[:hostname]).to eq("amqp_hostname")
+    expect(@ems.event_monitor_options[:amqp_fallback_hostname1]).to eq("amqp_fallback_hostname1")
+    expect(@ems.event_monitor_options[:amqp_fallback_hostname2]).to eq("amqp_fallback_hostname2")
     expect(@ems.event_monitor_options[:port]).to eq(5672)
   end
 

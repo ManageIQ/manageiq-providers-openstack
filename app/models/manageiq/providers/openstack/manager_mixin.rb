@@ -143,6 +143,14 @@ module ManageIQ::Providers::Openstack::ManagerMixin
           opts[:username] = authentication.userid
           opts[:password] = authentication.password
         end
+
+        if (amqp_fallback1_endpoint = connection_configuration_by_role("amqp_fallback1").try(:endpoint))
+          opts[:amqp_fallback_hostname1] = amqp_fallback1_endpoint.hostname
+        end
+
+        if (amqp_fallback2_endpoint = connection_configuration_by_role("amqp_fallback2").try(:endpoint))
+          opts[:amqp_fallback_hostname2] = amqp_fallback2_endpoint.hostname
+        end
       end
       opts
     end
