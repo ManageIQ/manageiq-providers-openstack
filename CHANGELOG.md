@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer Beta-2
+## Hammer RC-1
+
+### Fixed
+- Avoid uniqueness constraint violations in sync_users [(#373)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/373)
+- For OpenStack infra validation, validate presence of Ironic [(#379)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/379)
+- New Cloud provider: Fix event creds validation for AMQP [(#324)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/324)
+
+## Hammer Beta-2 - Released 2018-10-29
 
 ### Fixed
 - Format error when physical network is in use [(#370)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/370)
