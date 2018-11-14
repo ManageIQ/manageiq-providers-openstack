@@ -44,6 +44,20 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
   end
 
   def deployment_options(_manager_class = nil)
+    tenant_opt = OrchestrationTemplate::OrchestrationParameter.new(
+      :name           => "tenant_name",
+      :label          => "Tenant",
+      :data_type      => "string",
+      :description    => "Tenant where the stack will be deployed",
+      :required       => true,
+      :reconfigurable => false,
+      :constraints    => [
+        OrchestrationTemplate::OrchestrationParameterAllowedDynamic.new(
+          :fqname => "/Cloud/Orchestration/Operations/Methods/Available_Tenants"
+        )
+      ]
+    )
+
     onfailure_opt = OrchestrationTemplate::OrchestrationParameter.new(
       :name        => "stack_onfailure",
       :label       => "On Failure",
@@ -63,7 +77,7 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
       :description => "Abort the creation if it does not complete in a proper time window",
     )
 
-    super << onfailure_opt << timeout_opt
+    [tenant_opt] + super << onfailure_opt << timeout_opt
   end
 
   def self.eligible_manager_types
