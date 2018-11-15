@@ -12,7 +12,12 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
   # This ensures that the amqp server is indeed rabbit (and not another amqp
   # implementation).
   def self.available?(options = {})
-    test_connection(options)
+    hostnames = [options.delete(:hostname), options.delete(:amqp_fallback_hostname1), options.delete(:amqp_fallback_hostname2)]
+    hostnames.each do |hostname|
+      options[:hostname] = hostname
+      return true if test_connection(options)
+    end
+    false
   end
 
   def self.plugin_priority
@@ -48,18 +53,18 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
       return true
     rescue Bunny::AuthenticationFailureError => e
       $log.info("MIQ(#{name}.#{__method__}) Failed testing rabbit amqp connection: #{e.message}")
-      raise MiqException::MiqInvalidCredentialsError.new "Login failed due to a bad username or password."
+      $log.error("Credentials Error: Login failed due to a bad username or password.") if $log
     rescue Bunny::TCPConnectionFailedForAllHosts => e
-      raise MiqException::MiqHostError.new "Socket error: #{e.message}"
+      $log.error("Socket error: #{e.message}") if $log
     rescue => e
       log_prefix = "MIQ(#{name}.#{__method__}) Failed testing rabbit amqp connection for #{options[:hostname]}. "
       $log.info("#{log_prefix} The Openstack AMQP service may be using a different provider."\
                 " Enable debug logging to see connection exception.") if $log
       $log.debug("#{log_prefix} Exception: #{e}") if $log
-      raise
     ensure
       connection.close if connection.respond_to? :close
     end
+    false
   end
 
   def initialize(options = {})
