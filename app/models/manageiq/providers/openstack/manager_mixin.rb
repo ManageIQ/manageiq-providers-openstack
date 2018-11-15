@@ -12,12 +12,12 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   # OpenStack interactions
   #
   module ClassMethods
-    def amqp_available?(params)
+    def amqp_available?(password, params)
       require 'manageiq/providers/openstack/legacy/events/openstack_rabbit_event_monitor'
       OpenstackRabbitEventMonitor.available?(
         :hostname => params[:amqp_hostname],
         :username => params[:amqp_userid],
-        :password => params[:amqp_password],
+        :password => MiqPassword.try_decrypt(password),
         :port     => params[:amqp_api_port]
       )
     end
@@ -51,8 +51,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     private :ems_connect?
 
     def raw_connect(password, params, service = "Compute")
-      if params[:cred_type] == 'amqp'
-        amqp_available?(params)
+      if params[:event_stream_selection] == 'amqp'
+        amqp_available?(password, params)
       else
         ems_connect?(password, params, service)
       end
