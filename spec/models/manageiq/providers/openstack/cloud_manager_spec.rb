@@ -223,8 +223,8 @@ describe ManageIQ::Providers::Openstack::CloudManager do
   context "availability zone disk usage" do
     before do
       @provider = FactoryGirl.create(:provider_openstack, :name => "undercloud")
-      @cloud = FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => @provider)
       @infra = FactoryGirl.create(:ems_openstack_infra_with_stack, :name => "undercloud", :provider => @provider)
+      @cloud = FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => @provider)
       @az = FactoryGirl.create(:availability_zone_openstack, :ext_management_system => @cloud, :name => "nova")
       @cluster = FactoryGirl.create(:ems_cluster_openstack, :ext_management_system => @infra, :name => "BlockStorage")
       @host = FactoryGirl.create(:host_openstack_infra)
