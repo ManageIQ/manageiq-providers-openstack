@@ -125,9 +125,14 @@ module OpenstackHandle
       @api_version       = api_version || 'v2'
       @security_protocol = security_protocol || 'ssl'
       @extra_options     = extra_options
+      @thread_limit      = Settings.ems_refresh.openstack.parallel_thread_limit || 0
 
       @connection_cache   = {}
       @connection_options = self.class.connection_options
+    end
+
+    def thread_limit
+      Rails.env.test? ? 0 : @thread_limit
     end
 
     def ssl_options
@@ -365,21 +370,6 @@ module OpenstackHandle
       end
     end
 
-    def accessible_tenants
-      @accessible_tenants ||= tenants.select do |t|
-        # avoid 401 Unauth errors when checking for accessible tenants
-        # the "services" tenant is a special tenant in openstack reserved
-        # specifically for the various services
-        next if t.name == "services"
-        # disabled and non-accessible tenants are skipped
-        t.enabled && tenant_accessible?(t.name)
-      end
-    end
-
-    def accessible_tenant_names
-      @accessible_tenant_names ||= accessible_tenants.collect(&:name)
-    end
-
     def default_tenant_name
       return @default_tenant_name ||= "admin" if tenant_accessible?("admin")
       tenant_names.each do |name|
@@ -388,59 +378,57 @@ module OpenstackHandle
       end
     end
 
-    def service_for_each_accessible_tenant(service_name, &block)
-      accessible_tenants.each do |tenant|
+    def service_for_each_accessible_tenant(service_name)
+      services = []
+      all_tenants = tenants
+      all_tenants.delete("services")
+      Parallel.each(all_tenants, :in_threads => thread_limit) do |tenant|
         service = detect_service(service_name, tenant.name)
         if service
-          case block.arity
-          when 1 then block.call(service)
-          when 2 then block.call(service, tenant)
-          else        raise "Unexpected number of block args: #{block.arity}"
-          end
+          services << [service, tenant]
         else
           $fog_log.warn("MIQ(#{self.class.name}##{__method__}) "\
                         "Could not access service #{service_name} for tenant #{tenant.name} on OpenStack #{@address}")
         end
       end
+      services
     end
 
-    def accessor_for_accessible_tenants(service, accessor, uniq_id, array_accessor = true)
-      ra = []
-      service_for_each_accessible_tenant(service) do |svc, project|
-        not_found_error = Fog.const_get(service)::OpenStack::NotFound
+    def accessor_for_accessible_tenants(service, accessor, unique_id, array_accessor = true)
+      results = []
+      not_found_error = Fog.const_get(service)::OpenStack::NotFound
+      Parallel.each(service_for_each_accessible_tenant(service), :in_threads => thread_limit) do |svc, project|
 
-        rv = begin
+        response = begin
           if accessor.kind_of?(Proc)
             accessor.call(svc)
           else
             array_accessor ? svc.send(accessor).to_a : svc.send(accessor)
           end
-
-        rescue not_found_error => e
+        rescue not_found_error, Excon::Errors::NotFound => e
           $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
                         "Skipping inventory item #{service} #{accessor}\n#{e}")
           nil
         end
 
-        if !rv.blank? && array_accessor && rv.last.kind_of?(Fog::Model)
-          # If possible, store which project(tenant) was used for obtaining of the Fog::Model
-          rv.map { |x| x.project = project }
+        if !response.nil? && array_accessor && response.last.kind_of?(Fog::Model)
+          response.map { |item| item.project = project }
         end
 
-        if rv
-          array_accessor ? ra.concat(rv) : ra << rv
+        if response
+          array_accessor ? results.concat(response) : results << response
         end
       end
 
-      if uniq_id.blank? && array_accessor && !ra.blank?
-        # Take uniq ID from Fog::Model definition
-        last_object = ra.last
-        # TODO(lsmola) change to last_object.identity_name once the new fog-core is released
-        uniq_id = last_object.class.instance_variable_get("@identity") if last_object.kind_of?(Fog::Model)
+      if unique_id.blank? && array_accessor && !results.nil?
+        last_object = results.last
+        unique_id = last_object.identity_name if last_object.kind_of?(Fog::Model)
       end
 
-      return ra unless uniq_id
-      ra.uniq { |i| i.kind_of?(Hash) ? i[uniq_id] : i.send(uniq_id) }
+      if unique_id
+        results.uniq! { |item| item.kind_of?(Hash) ? item[unique_id] : item.send(unique_id) }
+      end
+      results
     end
   end
 end

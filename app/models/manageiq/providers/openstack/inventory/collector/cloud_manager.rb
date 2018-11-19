@@ -83,17 +83,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def tenants
     return @tenants if @tenants.any?
-    @tenants = if openstack_admin?
-                 identity_service.visible_tenants.select do |t|
-                   # avoid 401 Unauth errors when checking for accessible tenants
-                   # the "services" tenant is a special tenant in openstack reserved
-                   # specifically for the various services
-                   next if t.name == "services"
-                   true
-                 end
-               else
-                 manager.openstack_handle.accessible_tenants
-               end
+    @tenants = manager.openstack_handle.tenants.select do |t|
+      # avoid 401 Unauth errors when checking for accessible tenants
+      # the "services" tenant is a special tenant in openstack reserved
+      # specifically for the various services
+      next if t.name == "services"
+      true
+    end
   end
 
   def vnfs
