@@ -275,7 +275,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       infer_related_orchestration_stacks_ems_refs_api!
     end
     unless references(:cloud_volumes).blank?
-      infer_related_orchestration_stacks_ems_refs_db!
+      infer_related_cloud_volumes_ems_refs_db!
       infer_related_cloud_volumes_ems_refs_api!
     end
   end
