@@ -95,6 +95,10 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
       'field' => 'start_timestamp',
       'op'    => 'ge',
       'value' => latest_event_timestamp || ''
+    },
+    {
+      'field' => 'all_tenants',
+      'value' => 'True'
     }]
   end
 
