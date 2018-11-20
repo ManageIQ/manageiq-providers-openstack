@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 99 ending 2018-11-19
+
+### Added
+- Add support for multiple amqp endpoints [(#394)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/394)
+- Refresh an attached undercloud when saving changes to an overcloud [(#393)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/393)
+- Parallelize OpenstackHandle [(#374)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/374)
+
+### Fixed
+- New Cloud provider: Fix event creds validation for AMQP [(#399)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/399)
+- Service dialog for orchestration template needs tenant selection [(#397)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/397)
+
 ## Unreleased as of Sprint 98 ending 2018-11-05
 
 ### Added
