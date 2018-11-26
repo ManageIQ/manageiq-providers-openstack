@@ -557,4 +557,28 @@ openstack-keystone:                     active
       expect(MiqQueue.where(:method_name => "refresh").count).to eq(1)
     end
   end
+
+  describe 'after create callback' do
+    let(:ext_management_system) { FactoryGirl.create(:ems_openstack_infra) }
+
+    it "assigns scale out event fot host" do
+      payload = { "instance_id" => "openstack-perf-host-nova-instance" }
+
+      event_hash = {
+        :event_type => "compute.instance.create.end",
+        :source     => "OPENSTACK",
+        :message    => payload,
+        :timestamp  => "2016-03-13T16:59:01.760000",
+        :username   => "",
+        :full_data  => {:content => {'payload' => payload}},
+        :ems_id     => ext_management_system.id,
+        :host_name  => "openstack-perf-host-nova-instance"
+      }
+
+      EmsEvent.add(ext_management_system.id, event_hash)
+      host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => ext_management_system)
+      host.update_create_event
+      expect(ext_management_system.ems_events.first.host_id).to eq(host.id)
+    end
+  end
 end
