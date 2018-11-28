@@ -1,4 +1,5 @@
 require 'fog/openstack'
+require 'parallel'
 
 require 'manageiq/providers/openstack/legacy/openstack_handle/handled_list'
 require 'manageiq/providers/openstack/legacy/openstack_handle/handle'
