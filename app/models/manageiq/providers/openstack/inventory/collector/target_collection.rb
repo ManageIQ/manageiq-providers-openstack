@@ -246,6 +246,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
         add_simple_target!(:cloud_tenants, t.ems_ref)
       when OrchestrationStack
         add_simple_target!(:orchestration_stacks, t.ems_ref)
+      when CloudVolume
+        add_simple_target!(:cloud_volumes, t.ems_ref)
       end
     end
   end
@@ -272,6 +274,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       infer_related_orchestration_stacks_ems_refs_db!
       infer_related_orchestration_stacks_ems_refs_api!
     end
+    unless references(:cloud_volumes).blank?
+      infer_related_cloud_volumes_ems_refs_db!
+      infer_related_cloud_volumes_ems_refs_api!
+    end
   end
 
   def infer_related_orchestration_stacks_ems_refs_db!
@@ -286,6 +292,27 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     orchestration_stacks.each do |stack|
       add_simple_target!(:orchestration_stacks, stack.parent, :tenant_id => stack.service.current_tenant["id"]) unless stack.parent.blank?
       add_simple_target!(:cloud_tenants, stack.service.current_tenant["id"]) unless stack.service.current_tenant["id"].blank?
+    end
+  end
+
+  def infer_related_cloud_volumes_ems_refs_db!
+    changed_volumes = manager.cloud_volumes.where(:ems_ref => references(:cloud_volumes))
+    changed_volumes.each do |volume|
+      add_simple_target!(:cloud_tenants, volume.cloud_tenant.ems_ref) unless volume.cloud_tenant.nil?
+      volume.vms.each do |vm|
+        add_simple_target!(:vms, vm.ems_ref, :tenant_id => vm.cloud_tenant.try(:ems_ref))
+      end
+    end
+  end
+
+  def infer_related_cloud_volumes_ems_refs_api!
+    cloud_volumes.each do |volume|
+      add_simple_target!(:cloud_tenants, volume.tenant_id)
+      volume.attachments.each do |attachment|
+        unless attachment['server_id'].blank?
+          add_simple_target!(:vms, attachment['server_id'], :tenant_id => volume.tenant_id)
+        end
+      end
     end
   end
 
