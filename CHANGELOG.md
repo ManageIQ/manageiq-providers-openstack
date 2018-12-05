@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 100 ending 2018-12-03
+
+### Added
+- Add supports_conversion_host to Vm [(#407)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/407)
+- Add a default parallel thread limit to the settings yaml [(#405)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/405)
+
+### Fixed
+- Require 'parallel' in the OpenstackHandle [(#404)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/404)
+- Add explicit runtime dependency on the "parallel" gem [(#403)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/403)
+- Collect Panko events for all tenants. [(#402)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/402)
+- Fix autocomplete error in targeted Cloud Volume collection [(#400)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/400)
+- Check if host create event exists and assign host to it [(#380)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/380)
+
 ## Unreleased as of Sprint 99 ending 2018-11-19
 
 ### Added
