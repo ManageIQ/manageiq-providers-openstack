@@ -173,6 +173,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
   end
 
   def miq_templates
+    @vm_or_template_hash ||= last_scan_hash
+
     collector.images.each do |i|
       parent_server_uid = parse_image_parent_id(i)
       image = persister.miq_templates.find_or_build(i.id)
@@ -201,10 +203,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware.virtualization_type = i.properties.try(:[], 'hypervisor_type') || i.attributes['hypervisor_type']
 
       operating_system = persister.operating_systems.find_or_build(image)
-      operating_system.vm_or_template = image
-      operating_system.product_name = guest_os
-      operating_system.distribution = i.try(:os_distro)
-      operating_system.version = i.try(:os_version)
+
+      unless find_scan_info(@vm_or_template_hash, i.id)
+        operating_system.vm_or_template = image
+        operating_system.product_name = guest_os
+        operating_system.distribution = i.try(:os_distro)
+        operating_system.version = i.try(:os_version)
+      end
     end
   end
 
@@ -292,6 +297,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
   def vms
     related_infra_ems = collector.manager.provider.try(:infra_ems)
     hosts = related_infra_ems.try(:hosts)
+    @vm_or_template_hash ||= last_scan_hash
 
     collector.vms.each do |s|
       if hosts && !s.os_ext_srv_attr_host.blank?
@@ -340,10 +346,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       hardware.guest_os = persister.hardwares.lazy_find(miq_template_lazy, :key => :guest_os)
 
       operating_system = persister.operating_systems.find_or_build(server)
-      operating_system.vm_or_template = server
-      operating_system.product_name = persister.operating_systems.lazy_find(miq_template_lazy, :key => :product_name)
-      operating_system.distribution = persister.operating_systems.lazy_find(miq_template_lazy, :key => :distribution)
-      operating_system.version = persister.operating_systems.lazy_find(miq_template_lazy, :key => :version)
+
+      unless find_scan_info(@vm_or_template_hash, s.id)
+        operating_system.vm_or_template = server
+        operating_system.product_name = persister.operating_systems.lazy_find(miq_template_lazy, :key => :product_name)
+        operating_system.distribution = persister.operating_systems.lazy_find(miq_template_lazy, :key => :distribution)
+        operating_system.version = persister.operating_systems.lazy_find(miq_template_lazy, :key => :version)
+      end
 
       unless s.private_ip_address.blank?
         private_network = persister.networks.find_or_build_by(
@@ -527,5 +536,16 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       end
     end
     tenants
+  end
+
+  def find_scan_info(vm_or_template_hash, ems_ref)
+    scan_time = vm_or_template_hash.select { |vm_or_template| vm_or_template["ems_ref"] == ems_ref }
+    scan_time[0]["last_scan_on"] unless scan_time.empty?
+  end
+
+  private
+
+  def last_scan_hash
+    VmOrTemplate.select(:ems_ref, :last_scan_on).where(:ems_id => collector.manager.id)
   end
 end
