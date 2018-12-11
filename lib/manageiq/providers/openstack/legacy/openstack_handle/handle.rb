@@ -7,16 +7,6 @@ module OpenstackHandle
     attr_reader :project_name
     attr_writer   :default_tenant_name
 
-    SERVICE_FALL_BACK = {
-      "Network"  => "Compute",
-      "Image"    => "Compute",
-      "Volume"   => "Compute",
-      "Storage"  => nil,
-      "Metering" => nil,
-      "Metric"   => nil,
-      "Event"    => nil,
-    }
-
     SERVICE_NAME_MAP = {
       "Compute"       => :nova,
       "Network"       => :neutron,
@@ -327,10 +317,7 @@ module OpenstackHandle
     def detect_service(service, tenant_name = nil)
       connect(:service => service, :tenant_name => tenant_name)
     rescue MiqException::ServiceNotAvailable
-      unless (fbs = SERVICE_FALL_BACK[service])
-        return nil
-      end
-      svc = connect(:service => fbs, :tenant_name => tenant_name)
+      return nil
     end
 
     def tenants

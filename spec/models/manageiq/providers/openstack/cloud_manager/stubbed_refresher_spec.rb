@@ -192,8 +192,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_templates).and_return(mocked_volume_templates)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:volume_snapshot_templates).and_return(mocked_volume_snapshot_templates)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:volume_service).and_return(double(:name => "not-cinder"))
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_volume_backups).and_return(mocked_cloud_volume_backups)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:image_service).and_return(double(:name => "not-glance"))
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:orchestration_service).and_return(double(:name => "not-heat"))
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_service).and_return(double(:name => "not-neutron"))
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_volume_backups).and_return(mocked_cloud_volume_backups)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:key_pairs).and_return(mocked_key_pairs)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_subnets).and_return([])
     end
