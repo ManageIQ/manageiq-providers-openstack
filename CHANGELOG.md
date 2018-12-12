@@ -5,14 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Gaprindashvili-6
+## Gaprindashvili-7
+
+### Fixed
+- Avoid uniqueness constraint violations in sync_users [(#373)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/373)
+- Instances workflow: Allow flavors with disk size of 0 [(#314)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/314)
+- Service dialog for orchestration template needs tenant selection [(#397)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/397)
+
+## Gaprindashvili-6 - Released 2018-11-06
 
 ### Fixed
 - Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
 - Filter Keystone Projects by domain_id [(#342)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/342)
 - Use empty name for volume if only size provided [(#344)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/344)
 
-## Gaprindashvili-5
+## Gaprindashvili-5 - Released 2018-09-07
 
 ### Added
 - Add configurable vhost to AMQP monitor [(#221)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/221)
