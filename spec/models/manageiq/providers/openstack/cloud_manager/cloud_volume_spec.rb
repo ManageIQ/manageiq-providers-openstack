@@ -144,5 +144,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
     it "supports attachment to only those instances that are in the same tenant" do
       expect(cloud_volume.available_vms).to contain_exactly(first_instance, second_instance)
     end
+
+    it "should exclude instances that are already attached to the volume" do
+      attached_instance = FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "attached_instance", :cloud_tenant => tenant)
+      allow(cloud_volume).to receive(:vms).and_return([attached_instance])
+      expect(cloud_volume.available_vms).to contain_exactly(first_instance, second_instance)
+    end
   end
 end
