@@ -137,7 +137,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   end
 
   def available_vms
-    cloud_tenant.vms
+    cloud_tenant.vms.where.not(:id => vms.select(&:id))
   end
 
   def provider_object(connection)
