@@ -5,9 +5,9 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudV
   supports :delete
   supports :backup_restore
 
-  def raw_restore(volumeid)
+  def raw_restore(volumeid = nil, name = nil)
     with_provider_object do |backup|
-      backup.restore(volumeid)
+      backup.restore(volumeid, name)
     end
   rescue => e
     _log.error("backup=[#{name}], error: #{e}")
