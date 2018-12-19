@@ -17,7 +17,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::Cind
        disks).each do |name|
 
       add_collection(cloud, name, shared_cloud_properties) do |builder|
-        builder.add_properties(:strategy => :local_db_cache_all) unless name == :disks
+        builder.add_properties(:strategy => :local_db_find_references) unless name == :disks
         builder.add_properties(:complete => false) if name == :disks
       end
     end

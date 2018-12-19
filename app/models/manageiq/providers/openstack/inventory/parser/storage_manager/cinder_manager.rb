@@ -82,9 +82,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
 
       dev = File.basename(a['device'])
 
+      server = persister.vms.find(a["server_id"])
+      next unless server
+
       attachment_names = {'vda' => 'Root disk', 'vdb' => 'Ephemeral disk', 'vdc' => 'Swap disk'}
       persister.disks.find_or_build_by(
-        :hardware    => persister.hardwares.lazy_find(persister.vms.lazy_find(a["server_id"])),
+        :hardware    => persister.hardwares.lazy_find(server),
         :device_name => attachment_names.fetch(dev, dev)
       ).assign_attributes(
         :location        => dev,
