@@ -343,23 +343,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       operating_system.distribution = persister.operating_systems.lazy_find(s.image["id"], :key => :distribution)
       operating_system.version = persister.operating_systems.lazy_find(s.image["id"], :key => :version)
 
-      unless s.private_ip_address.blank?
-        private_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
-          :description => "private"
-        )
-        private_network.description = "private"
-        private_network.ipaddress = s.private_ip_address
-      end
-      unless s.public_ip_address.blank?
-        public_network = persister.networks.find_or_build_by(
-          :hardware    => persister.hardwares.lazy_find(s.id),
-          :description => "public"
-        )
-        public_network.description = "public"
-        public_network.ipaddress = s.public_ip_address
-      end
-
       disk_location = "vda"
       if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
         root_size = 1.gigabytes
