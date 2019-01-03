@@ -122,7 +122,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def tenants
     return [] if references(:cloud_tenants).blank?
-    return @tenants if @tenants.any?
     @tenants = references(:cloud_tenants).collect do |cloud_tenant_id|
       memoized_get_tenant(cloud_tenant_id)
     end.compact
@@ -266,10 +265,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       infer_related_vm_ems_refs_db!
       infer_related_vm_ems_refs_api!
     end
-    unless references(:cloud_tenants).blank?
-      infer_related_cloud_tenant_ems_refs_db!
-      infer_related_cloud_tenant_ems_refs_api!
-    end
     unless references(:orchestration_stacks).blank?
       infer_related_orchestration_stacks_ems_refs_db!
       infer_related_orchestration_stacks_ems_refs_api!
@@ -277,6 +272,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     unless references(:cloud_volumes).blank?
       infer_related_cloud_volumes_ems_refs_db!
       infer_related_cloud_volumes_ems_refs_api!
+    end
+    unless references(:cloud_tenants).blank?
+      infer_related_cloud_tenant_ems_refs_db!
+      # this hits the API and caches, so do this last
+      infer_related_cloud_tenant_ems_refs_api!
     end
   end
 
@@ -324,6 +324,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def infer_related_cloud_tenant_ems_refs_api!
+    # need to reset the association cache so that tenants added by the
+    # previous infer methods get picked up
+    target.manager_refs_by_association_reset
     tenants.each do |tenant|
       add_simple_target!(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
     end
