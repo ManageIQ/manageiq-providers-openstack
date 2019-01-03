@@ -857,19 +857,6 @@ module Openstack
         :device_type => "disk",
         :size        => flavor_expected[:swap].megabytes
       )
-
-      # TODO(lsmola) this is all bad, it should be done accoring to Builder's data, will change
-      # when clud network models are merged in and used for refresh
-      expect(vm.hardware.networks.size).to eq 2
-      network_public = vm.hardware.networks.where(:description => "public").first
-      expect(network_public).to have_attributes(
-        :description => "public",
-      )
-
-      network_private = vm.hardware.networks.where(:description => "private").first
-      expect(network_private).to have_attributes(
-        :description => "private",
-      )
     end
 
     # TODO(lsmola) specific checks below, do we need them?
@@ -1017,19 +1004,6 @@ module Openstack
         :location    => "vdc",
         :device_type => "disk",
         :size        => flavor_expected[:swap].megabytes
-      )
-
-      # TODO(lsmola) this is all bad, it should be done accoring to Builder's data, will change
-      # when cloud network models are merged in and used for refresh
-      expect(vm.hardware.networks.size).to eq 2
-      network_public = vm.hardware.networks.where(:description => "public").first
-      expect(network_public).to have_attributes(
-        :description => "public",
-      )
-
-      network_private = vm.hardware.networks.where(:description => "private").first
-      expect(network_private).to have_attributes(
-        :description => "private",
       )
 
       expect(vm.cloud_volumes.map(&:name)).to match_array ["EmsRefreshSpec-Volume", "EmsRefreshSpec-Volume-2"]
