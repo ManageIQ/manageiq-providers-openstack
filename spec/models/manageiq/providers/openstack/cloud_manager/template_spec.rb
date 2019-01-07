@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Template do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
   let(:image_attributes) { {'name' => 'test_image', 'description' => 'test_description'} }
-  let(:template_openstack) { FactoryGirl.create :template_openstack, :ext_management_system => ems, :ems_ref => 'one_id' }
+  let(:template_openstack) { FactoryBot.create :template_openstack, :ext_management_system => ems, :ems_ref => 'one_id' }
   let(:service) { double }
 
   context 'when create_image' do

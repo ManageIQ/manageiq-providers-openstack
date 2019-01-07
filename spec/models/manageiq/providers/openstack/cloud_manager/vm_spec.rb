@@ -1,15 +1,15 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Vm do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:vm) do
-    FactoryGirl.create(:vm_openstack,
+    FactoryBot.create(:vm_openstack,
                        :ext_management_system => ems,
                        :name                  => 'test',
                        :ems_ref               => 'one_id',
                        :cloud_tenant          => tenant)
   end
 
-  let(:terminated_vm) { FactoryGirl.create(:vm_openstack) }
+  let(:terminated_vm) { FactoryBot.create(:vm_openstack) }
 
   let(:handle) do
     double.tap do |handle|
@@ -22,9 +22,9 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
   end
 
   describe "with more tenants" do
-    let(:other_tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+    let(:other_tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
     let(:other_vm) do
-      FactoryGirl.create(:vm_openstack,
+      FactoryBot.create(:vm_openstack,
                          :ext_management_system => ems,
                          :name                  => 'other_test',
                          :ems_ref               => 'other_id',
@@ -165,8 +165,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
   end
 
   context "#is_available?" do
-    let(:ems) { FactoryGirl.create(:ems_openstack) }
-    let(:vm)  { FactoryGirl.create(:vm_openstack, :ext_management_system => ems) }
+    let(:ems) { FactoryBot.create(:ems_openstack) }
+    let(:vm)  { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
     let(:power_state_on)        { "ACTIVE" }
     let(:power_state_suspended) { "SUSPENDED" }
 
@@ -212,11 +212,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
   end
 
   context "when detroyed" do
-    let(:ems) { FactoryGirl.create(:ems_openstack) }
+    let(:ems) { FactoryBot.create(:ems_openstack) }
     let(:provider_object) do
       double("vm_openstack_provider_object", :destroy => nil).as_null_object
     end
-    let(:vm)  { FactoryGirl.create(:vm_openstack, :ext_management_system => ems) }
+    let(:vm)  { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
 
     it "sets the raw_power_state and not state" do
       expect(vm).to receive(:with_provider_object).and_yield(provider_object)
@@ -227,10 +227,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
   end
 
   context "when resized" do
-    let(:ems) { FactoryGirl.create(:ems_openstack) }
-    let(:cloud_tenant) { FactoryGirl.create(:cloud_tenant) }
-    let(:vm) { FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :cloud_tenant => cloud_tenant) }
-    let(:flavor) { FactoryGirl.create(:flavor_openstack, :ems_ref => '2') }
+    let(:ems) { FactoryBot.create(:ems_openstack) }
+    let(:cloud_tenant) { FactoryBot.create(:cloud_tenant) }
+    let(:vm) { FactoryBot.create(:vm_openstack, :ext_management_system => ems, :cloud_tenant => cloud_tenant) }
+    let(:flavor) { FactoryBot.create(:flavor_openstack, :ems_ref => '2') }
 
     it "initiate resize process" do
       service = double
@@ -265,7 +265,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
 
   describe "#raw_start" do
     it "sets the raw power state to 'ACTIVE'" do
-      vm = FactoryGirl.create(:vm_openstack,
+      vm = FactoryBot.create(:vm_openstack,
                               :ext_management_system => ems,
                               :cloud_tenant          => tenant,
                               :raw_power_state       => "SHUTOFF")

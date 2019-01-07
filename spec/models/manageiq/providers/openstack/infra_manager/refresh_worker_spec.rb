@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Openstack::InfraManager::RefreshWorker do
   context "EMS with children" do
-    let!(:network_manager) { FactoryGirl.create(:ems_network) }
-    let!(:storage_manager) { FactoryGirl.create(:ems_storage) }
+    let!(:network_manager) { FactoryBot.create(:ems_network) }
+    let!(:storage_manager) { FactoryBot.create(:ems_storage) }
     let(:ems) do
-      FactoryGirl.create(:ems_infra).tap do |ems|
+      FactoryBot.create(:ems_infra).tap do |ems|
         network_manager.update_attributes(:parent_ems_id => ems.id)
         storage_manager.update_attributes(:parent_ems_id => ems.id)
       end
@@ -17,7 +17,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::RefreshWorker do
   end
 
   context "EMS with no children" do
-    let(:ems) { FactoryGirl.create(:ems_infra) }
+    let(:ems) { FactoryBot.create(:ems_infra) }
 
     it ".queue_name_for_ems" do
       queue_name = described_class.queue_name_for_ems(ems)

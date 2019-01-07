@@ -1,10 +1,10 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Provision do
   let(:options)      { {:src_vm_id => [template.id, template.name]} }
-  let(:provider)     { FactoryGirl.create(:ems_openstack_with_authentication) }
-  let(:template)     { FactoryGirl.create(:template_openstack, :ext_management_system => provider) }
-  let(:user)         { FactoryGirl.create(:user) }
-  let(:vm_openstack) { FactoryGirl.create(:vm_openstack, :ext_management_system => provider, :ems_ref => "6b586084-6c37-11e4-b299-56847afe9799") }
-  let(:vm_prov)      { FactoryGirl.create(:miq_provision_openstack, :userid => user.userid, :source => template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => options) }
+  let(:provider)     { FactoryBot.create(:ems_openstack_with_authentication) }
+  let(:template)     { FactoryBot.create(:template_openstack, :ext_management_system => provider) }
+  let(:user)         { FactoryBot.create(:user) }
+  let(:vm_openstack) { FactoryBot.create(:vm_openstack, :ext_management_system => provider, :ems_ref => "6b586084-6c37-11e4-b299-56847afe9799") }
+  let(:vm_prov)      { FactoryBot.create(:miq_provision_openstack, :userid => user.userid, :source => template, :request_type => 'template', :state => 'pending', :status => 'Ok', :options => options) }
 
   before { subject.source = template }
 
@@ -14,7 +14,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision do
     end
 
     it "VM in different sub-class" do
-      FactoryGirl.create(:vm_amazon, :ext_management_system => provider, :ems_ref => "6b586084-6c37-11e4-b299-56847afe9799")
+      FactoryBot.create(:vm_amazon, :ext_management_system => provider, :ems_ref => "6b586084-6c37-11e4-b299-56847afe9799")
 
       expect(subject.find_destination_in_vmdb("6b586084-6c37-11e4-b299-56847afe9799")).to be_nil
     end
@@ -41,13 +41,13 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision do
   end
 
   context "#prepare_for_clone_task" do
-    let(:flavor)  { FactoryGirl.create(:flavor_openstack) }
+    let(:flavor)  { FactoryBot.create(:flavor_openstack) }
 
     before { allow(subject).to receive_messages(:instance_type => flavor, :validate_dest_name => nil) }
 
     context "availability zone" do
-      let(:az)      { FactoryGirl.create(:availability_zone_openstack,      :ems_ref => "64890ac2-6c34-11e4-b72d-56847afe9799") }
-      let(:az_null) { FactoryGirl.create(:availability_zone_openstack_null, :ems_ref => "6fd878d6-6c34-11e4-b72d-56847afe9799") }
+      let(:az)      { FactoryBot.create(:availability_zone_openstack,      :ems_ref => "64890ac2-6c34-11e4-b72d-56847afe9799") }
+      let(:az_null) { FactoryBot.create(:availability_zone_openstack_null, :ems_ref => "6fd878d6-6c34-11e4-b72d-56847afe9799") }
 
       it "with valid Availability Zone" do
         subject.options[:dest_availability_zone] = [az.id, az.name]
@@ -63,8 +63,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision do
     end
 
     context "security_groups" do
-      let(:security_group_1) { FactoryGirl.create(:security_group_openstack, :ems_ref => "340c315c-6c30-11e4-a103-56847afe9799") }
-      let(:security_group_2) { FactoryGirl.create(:security_group_openstack, :ems_ref => "41a73064-6c30-11e4-a103-56847afe9799") }
+      let(:security_group_1) { FactoryBot.create(:security_group_openstack, :ems_ref => "340c315c-6c30-11e4-a103-56847afe9799") }
+      let(:security_group_2) { FactoryBot.create(:security_group_openstack, :ems_ref => "41a73064-6c30-11e4-a103-56847afe9799") }
 
       it "with no security groups" do
         expect(subject.prepare_for_clone_task[:security_groups]).to eq([])

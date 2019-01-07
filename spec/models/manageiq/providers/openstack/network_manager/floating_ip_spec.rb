@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:ems_network) { ems.network_manager }
   let(:cloud_network) do
-    FactoryGirl.create(:cloud_network_openstack,
+    FactoryBot.create(:cloud_network_openstack,
                        :ext_management_system => ems_network,
                        :name                  => 'test_network',
                        :ems_ref               => 'network_id',
@@ -11,7 +11,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
   end
 
   let(:floating_ip) do
-    FactoryGirl.create(:floating_ip_openstack,
+    FactoryBot.create(:floating_ip_openstack,
                        :ext_management_system => ems_network,
                        :address               => '10.10.10.10',
                        :ems_ref               => 'one_id',

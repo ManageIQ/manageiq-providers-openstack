@@ -1,8 +1,8 @@
 describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:cloud_volume) do
-    FactoryGirl.create(:cloud_volume_openstack,
+    FactoryBot.create(:cloud_volume_openstack,
                        :ext_management_system => ems,
                        :name                  => 'test',
                        :ems_ref               => 'one_id',
@@ -136,17 +136,17 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
   end
 
   describe "instance linsting for attaching volumes" do
-    let(:first_instance) { FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_0", :cloud_tenant => tenant) }
-    let(:second_instance) { FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_1", :cloud_tenant => tenant) }
-    let(:other_tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
-    let(:other_instance) { FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_2", :cloud_tenant => other_tenant) }
+    let(:first_instance) { FactoryBot.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_0", :cloud_tenant => tenant) }
+    let(:second_instance) { FactoryBot.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_1", :cloud_tenant => tenant) }
+    let(:other_tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+    let(:other_instance) { FactoryBot.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "instance_2", :cloud_tenant => other_tenant) }
 
     it "supports attachment to only those instances that are in the same tenant" do
       expect(cloud_volume.available_vms).to contain_exactly(first_instance, second_instance)
     end
 
     it "should exclude instances that are already attached to the volume" do
-      attached_instance = FactoryGirl.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "attached_instance", :cloud_tenant => tenant)
+      attached_instance = FactoryBot.create(:vm_openstack, :ext_management_system => ems, :ems_ref => "attached_instance", :cloud_tenant => tenant)
       allow(cloud_volume).to receive(:vms).and_return([attached_instance])
       expect(cloud_volume.available_vms).to contain_exactly(first_instance, second_instance)
     end

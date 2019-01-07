@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:ems_network) { ems.network_manager }
   let(:cloud_network) do
-    FactoryGirl.create(:cloud_network_openstack,
+    FactoryBot.create(:cloud_network_openstack,
                        :ext_management_system => ems_network,
                        :name                  => 'test',
                        :ems_ref               => 'one_id',

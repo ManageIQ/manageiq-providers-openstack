@@ -1,15 +1,15 @@
 describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:cloud_volume) do
-    FactoryGirl.create(:cloud_volume_openstack,
+    FactoryBot.create(:cloud_volume_openstack,
                        :ext_management_system => ems,
                        :name                  => 'volume',
                        :ems_ref               => 'volume_id',
                        :cloud_tenant          => tenant)
   end
   let(:cloud_volume_snapshot) do
-    FactoryGirl.create(:cloud_volume_snapshot_openstack,
+    FactoryBot.create(:cloud_volume_snapshot_openstack,
                        :ext_management_system => ems,
                        :name                  => 'test',
                        :ems_ref               => 'cloud_id',

@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair do
-  let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
+  let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
   let(:key_pair_attributes) {
     {
       :name        => "key1",

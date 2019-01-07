@@ -12,10 +12,10 @@ describe ManageIQ::Providers::Openstack::CloudManager do
   end
 
   it "moves the child managers to the same zone and provider region as the cloud_manager" do
-    zone1 = FactoryGirl.create(:zone)
-    zone2 = FactoryGirl.create(:zone)
+    zone1 = FactoryBot.create(:zone)
+    zone2 = FactoryBot.create(:zone)
 
-    ems = FactoryGirl.create(:ems_openstack, :zone => zone1, :provider_region => "region1")
+    ems = FactoryBot.create(:ems_openstack, :zone => zone1, :provider_region => "region1")
     expect(ems.network_manager.zone).to eq zone1
     expect(ems.network_manager.zone_id).to eq zone1.id
     expect(ems.network_manager.provider_region).to eq "region1"
@@ -103,7 +103,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   context "validation" do
     before :each do
-      @ems = FactoryGirl.create(:ems_openstack_with_authentication)
+      @ems = FactoryBot.create(:ems_openstack_with_authentication)
       require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     end
 
@@ -135,28 +135,28 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
 
     it "fails uniqueness check for same hostname with same or without domains and regions" do
-      dup_ems = FactoryGirl.build(:ems_openstack_with_authentication)
+      dup_ems = FactoryBot.build(:ems_openstack_with_authentication)
       taken_hostname = @ems.endpoints.first.hostname
       dup_ems.endpoints.first.hostname = taken_hostname
       expect(dup_ems.valid?).to be_falsey
     end
 
     it "passes uniqueness check for same hostname with different domain" do
-      dup_ems = FactoryGirl.build(:ems_openstack_with_authentication, :uid_ems => 'my_domain')
+      dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :uid_ems => 'my_domain')
       taken_hostname = @ems.endpoints.first.hostname
       dup_ems.endpoints.first.hostname = taken_hostname
       expect(dup_ems.valid?).to be_truthy
     end
 
     it "passes uniqueness check for same hostname with different region" do
-      dup_ems = FactoryGirl.build(:ems_openstack_with_authentication, :provider_region => 'RegionTwo')
+      dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :provider_region => 'RegionTwo')
       taken_hostname = @ems.endpoints.first.hostname
       dup_ems.endpoints.first.hostname = taken_hostname
       expect(dup_ems.valid?).to be_truthy
     end
 
     it "passes uniqueness check for same hostname with different domain and region" do
-      dup_ems = FactoryGirl.build(:ems_openstack_with_authentication,
+      dup_ems = FactoryBot.build(:ems_openstack_with_authentication,
                                   :uid_ems => 'my_domain', :provider_region => 'RegionTwo')
       taken_hostname = @ems.endpoints.first.hostname
       dup_ems.endpoints.first.hostname = taken_hostname
@@ -166,8 +166,8 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   context "provider hooks" do
     it "related EmsOpenstack and ProviderOpenstack are left around on EmsOpenstackCloud destroy" do
-      @ems = FactoryGirl.create(:ems_openstack_infra_with_authentication)
-      @ems_cloud = FactoryGirl.create(:ems_openstack_with_authentication)
+      @ems = FactoryBot.create(:ems_openstack_infra_with_authentication)
+      @ems_cloud = FactoryBot.create(:ems_openstack_with_authentication)
       @ems.provider.cloud_ems << @ems_cloud
 
       # compare they both use the same provider
@@ -184,7 +184,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   it "event_monitor_options with 1 amqp hostname" do
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
-    @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
+    @ems = FactoryBot.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
     @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
     require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 
@@ -194,7 +194,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   it "event_monitor_options with multiple amqp hostnames" do
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive_messages(:worker_settings => {:amqp_port => 1234})
-    @ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
+    @ems = FactoryBot.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
     @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
     @ems.endpoints << Endpoint.create(:role => 'amqp_fallback1', :hostname => 'amqp_fallback_hostname1', :port => '5672')
     @ems.endpoints << Endpoint.create(:role => 'amqp_fallback2', :hostname => 'amqp_fallback_hostname2', :port => '5672')
@@ -208,7 +208,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   context "translate_exception" do
     it "preserves and logs message for unknown exceptions" do
-      ems = FactoryGirl.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
+      ems = FactoryBot.build(:ems_openstack, :hostname => "host", :ipaddress => "::1")
 
       creds = {:default => {:userid => "fake_user", :password => "fake_password"}}
       ems.update_authentication(creds, :save => false)
@@ -222,26 +222,26 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
   context "availability zone disk usage" do
     before do
-      @provider = FactoryGirl.create(:provider_openstack, :name => "undercloud")
-      @infra = FactoryGirl.create(:ems_openstack_infra_with_stack, :name => "undercloud", :provider => @provider)
-      @cloud = FactoryGirl.create(:ems_openstack, :name => "overcloud", :provider => @provider)
-      @az = FactoryGirl.create(:availability_zone_openstack, :ext_management_system => @cloud, :name => "nova")
-      @cluster = FactoryGirl.create(:ems_cluster_openstack, :ext_management_system => @infra, :name => "BlockStorage")
-      @host = FactoryGirl.create(:host_openstack_infra)
+      @provider = FactoryBot.create(:provider_openstack, :name => "undercloud")
+      @infra = FactoryBot.create(:ems_openstack_infra_with_stack, :name => "undercloud", :provider => @provider)
+      @cloud = FactoryBot.create(:ems_openstack, :name => "overcloud", :provider => @provider)
+      @az = FactoryBot.create(:availability_zone_openstack, :ext_management_system => @cloud, :name => "nova")
+      @cluster = FactoryBot.create(:ems_cluster_openstack, :ext_management_system => @infra, :name => "BlockStorage")
+      @host = FactoryBot.create(:host_openstack_infra)
       @cluster.hosts << @host
       expect(@az.block_storage_disk_usage).to eq(0)
     end
 
     it "block storage disk capacity" do
       expect(@az.block_storage_disk_capacity).to eq(0)
-      FactoryGirl.create(:hardware, :disk_capacity => "7", :host => @host)
+      FactoryBot.create(:hardware, :disk_capacity => "7", :host => @host)
       expect(@az.block_storage_disk_capacity).to eq(7)
     end
 
   end
 
   context "catalog types" do
-    let(:ems) { FactoryGirl.create(:ems_openstack) }
+    let(:ems) { FactoryBot.create(:ems_openstack) }
 
     it '#supported_catalog_types' do
       expect(ems.supported_catalog_types).to eq(%w(openstack))

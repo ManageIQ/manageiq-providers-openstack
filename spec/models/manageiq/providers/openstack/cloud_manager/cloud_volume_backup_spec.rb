@@ -1,10 +1,10 @@
 describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems, :name => 'test') }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems, :name => 'test') }
   let(:raw_cloud_volume_backup) { double }
 
   let(:cloud_volume) do
-    FactoryGirl.create(:cloud_volume_openstack,
+    FactoryBot.create(:cloud_volume_openstack,
                        :ext_management_system => ems,
                        :name                  => 'test',
                        :ems_ref               => 'one_id',
@@ -12,7 +12,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
   end
 
   let(:cloud_volume_backup) do
-    FactoryGirl.create(:cloud_volume_backup_openstack,
+    FactoryBot.create(:cloud_volume_backup_openstack,
                        :ext_management_system => ems,
                        :name                  => 'test backup',
                        :ems_ref               => 'two_id',

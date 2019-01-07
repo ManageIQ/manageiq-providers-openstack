@@ -188,14 +188,14 @@ image_cache_subdirectory_name = glance
 
   describe "#refresh_custom_attributes_from_conf_files" do
     let(:host) do
-      FactoryGirl.create(:host_openstack_infra).tap do |host|
-        host.system_services << FactoryGirl.create(:system_service, :name => 'openstack-nova')
+      FactoryBot.create(:host_openstack_infra).tap do |host|
+        host.system_services << FactoryBot.create(:system_service, :name => 'openstack-nova')
       end
     end
 
     describe "parse openstack conf nice format" do
       it "parses nice format" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_nice)]
+        files = [FactoryBot.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_nice)]
         host.refresh_custom_attributes_from_conf_files(files)
 
         assert_custom_attribute('novncproxy_base_url', standard_nice_format(
@@ -208,7 +208,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "ignores headers containing ====" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_ignore_header)]
+        files = [FactoryBot.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_ignore_header)]
         host.refresh_custom_attributes_from_conf_files(files)
 
         assert_custom_attribute('novncproxy_base_url', standard_nice_format)
@@ -218,7 +218,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "checks random spaces doesn't change the format" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_random_spaces)]
+        files = [FactoryBot.create(:filesystem_openstack_conf, :contents => filesystem_openstack_conf_random_spaces)]
         host.refresh_custom_attributes_from_conf_files(files)
 
         assert_custom_attribute('novncproxy_base_url', standard_nice_format)
@@ -227,7 +227,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "checks that only default value is present" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_just_default_value)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -240,7 +240,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "checks that only last defined value is taken" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_gets_last_occurrence_of_defined_attr)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -253,7 +253,7 @@ image_cache_subdirectory_name = glance
 
       it "check that colon as delimiter is not supported" do
         # !!! This is change of the standard python parser
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_not_supported_colon_as_delimiter)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -267,7 +267,7 @@ image_cache_subdirectory_name = glance
 
       it "check that continuation line of value works" do
         # !!! This is change of the standard python parser
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_continuation_line)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -279,7 +279,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "check that commented attr doesnt store continuation lines" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_commented_attribute_continuation_line)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -292,7 +292,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "check that commented continuation line of value is not stored" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_commented_continuation_line)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -306,7 +306,7 @@ image_cache_subdirectory_name = glance
 
     describe "parse interpolated attributes" do
       it "checks all types of interpolation and nested interpolation" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_interpolation_all)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -356,7 +356,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "checks not completed interpolation" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_interpolation_missing_links)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -371,7 +371,7 @@ image_cache_subdirectory_name = glance
       end
 
       it "checks cycles in interpolation logs warning and ends" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_interpolation_infinite_cycle)]
         host.refresh_custom_attributes_from_conf_files(files)
 
@@ -395,7 +395,7 @@ image_cache_subdirectory_name = glance
 
     describe "parse complex Python configparser examples" do
       it "parses complex continuation line example" do
-        files = [FactoryGirl.create(:filesystem_openstack_conf,
+        files = [FactoryBot.create(:filesystem_openstack_conf,
                                     :contents => filesystem_openstack_conf_complex_example)]
         host.refresh_custom_attributes_from_conf_files(files)
 

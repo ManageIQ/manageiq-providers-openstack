@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :orchestration_template_openstack_in_json,
           :parent => :orchestration_template,
           :class  => "ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate" do

@@ -11,10 +11,10 @@ describe ManageIQ::Providers::Openstack::InfraManager::MetricsCapture do
     allow(@metering).to receive(:list_meters).and_return(
       OpenstackApiResult.new(@mock_meter_list.list_meters("metadata_counters")))
 
-    @ems_openstack = FactoryGirl.create(:ems_openstack_infra, :zone => @zone)
+    @ems_openstack = FactoryBot.create(:ems_openstack_infra, :zone => @zone)
     allow(@ems_openstack).to receive(:connect).with(:service => "Metering").and_return(@metering)
 
-    @host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => @ems_openstack)
+    @host = FactoryBot.create(:host_openstack_infra, :ext_management_system => @ems_openstack)
   end
 
   context "with standard interval data" do

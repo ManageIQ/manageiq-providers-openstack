@@ -1,13 +1,13 @@
 describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
   include Spec::Support::WorkflowHelper
 
-  let(:admin)    { FactoryGirl.create(:user_with_group) }
+  let(:admin)    { FactoryBot.create(:user_with_group) }
   let(:provider) do
     allow_any_instance_of(User).to receive(:get_timezone).and_return(Time.zone)
-    FactoryGirl.create(:ems_openstack)
+    FactoryBot.create(:ems_openstack)
   end
 
-  let(:template) { FactoryGirl.create(:template_openstack, :ext_management_system => provider) }
+  let(:template) { FactoryBot.create(:template_openstack, :ext_management_system => provider) }
 
   context "without applied tags" do
     let(:workflow) do
@@ -17,7 +17,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
     end
     context "availability_zones" do
       it "#get_targets_for_ems" do
-        az = FactoryGirl.create(:availability_zone_amazon)
+        az = FactoryBot.create(:availability_zone_amazon)
         provider.availability_zones << az
         filtered = workflow.send(:get_targets_for_ems, provider, :cloud_filter, AvailabilityZone,
                                  'availability_zones.available')
@@ -35,7 +35,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
     context "security_groups" do
       context "non cloud network" do
         it "#get_targets_for_ems" do
-          sg = FactoryGirl.create(:security_group_openstack, :ext_management_system => provider.network_manager)
+          sg = FactoryBot.create(:security_group_openstack, :ext_management_system => provider.network_manager)
           filtered = workflow.send(:get_targets_for_ems, provider, :cloud_filter, SecurityGroup,
                                    'security_groups.non_cloud_network')
           expect(filtered.size).to eq(1)
@@ -45,8 +45,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
       context "cloud network" do
         it "#get_targets_for_ems" do
-          cn1 = FactoryGirl.create(:cloud_network, :ext_management_system => provider.network_manager)
-          sg_cn = FactoryGirl.create(:security_group_openstack, :ext_management_system => provider.network_manager, :cloud_network => cn1)
+          cn1 = FactoryBot.create(:cloud_network, :ext_management_system => provider.network_manager)
+          sg_cn = FactoryBot.create(:security_group_openstack, :ext_management_system => provider.network_manager, :cloud_network => cn1)
           filtered = workflow.send(:get_targets_for_ems, provider, :cloud_filter, SecurityGroup, 'security_groups')
           expect(filtered.size).to eq(1)
           expect(filtered.first.name).to eq(sg_cn.name)
@@ -56,7 +56,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
     context "Instance Type (Flavor)" do
       it "#get_targets_for_ems" do
-        flavor = FactoryGirl.create(:flavor_openstack)
+        flavor = FactoryBot.create(:flavor_openstack)
         provider.flavors << flavor
         filtered = workflow.send(:get_targets_for_ems, provider, :cloud_filter, Flavor, 'flavors')
         expect(filtered.size).to eq(1)
@@ -73,19 +73,19 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
     end
 
     before do
-      FactoryGirl.create(:classification_cost_center_with_tags)
+      FactoryBot.create(:classification_cost_center_with_tags)
       admin.current_group.entitlement = Entitlement.create!
       admin.current_group.entitlement.set_managed_filters([['/managed/cc/001']])
       admin.current_group.save!
 
-      2.times { FactoryGirl.create(:availability_zone_amazon, :ems_id => provider.id) }
-      2.times { FactoryGirl.create(:security_group_openstack, :ext_management_system => provider.network_manager) }
-      ct1 = FactoryGirl.create(:cloud_tenant)
-      ct2 = FactoryGirl.create(:cloud_tenant)
+      2.times { FactoryBot.create(:availability_zone_amazon, :ems_id => provider.id) }
+      2.times { FactoryBot.create(:security_group_openstack, :ext_management_system => provider.network_manager) }
+      ct1 = FactoryBot.create(:cloud_tenant)
+      ct2 = FactoryBot.create(:cloud_tenant)
       provider.cloud_tenants << ct1
       provider.cloud_tenants << ct2
-      provider.flavors << FactoryGirl.create(:flavor_openstack)
-      provider.flavors << FactoryGirl.create(:flavor_openstack)
+      provider.flavors << FactoryBot.create(:flavor_openstack)
+      provider.flavors << FactoryBot.create(:flavor_openstack)
 
       tagged_zone = provider.availability_zones.first
       tagged_sec = provider.security_groups.first
@@ -161,7 +161,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       end
 
       it "#allowed_instance_types" do
-        provider.flavors << FactoryGirl.create(:flavor_openstack)
+        provider.flavors << FactoryBot.create(:flavor_openstack)
 
         expect(workflow.allowed_instance_types).to eq({})
       end
@@ -175,16 +175,16 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       end
 
       context "#allowed_instance_types" do
-        let(:template) { FactoryGirl.create(:template_openstack, :hardware => hardware, :ext_management_system => provider) }
+        let(:template) { FactoryBot.create(:template_openstack, :hardware => hardware, :ext_management_system => provider) }
 
         context "with regular hardware" do
-          let(:hardware) { FactoryGirl.create(:hardware, :size_on_disk => 1.gigabyte, :memory_mb_minimum => 512) }
+          let(:hardware) { FactoryBot.create(:hardware, :size_on_disk => 1.gigabyte, :memory_mb_minimum => 512) }
 
           it "filters flavors too small" do
-            flavor = FactoryGirl.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.terabyte)
+            flavor = FactoryBot.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.terabyte)
             provider.flavors << flavor
-            provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.megabyte) # Disk too small
-            provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
+            provider.flavors << FactoryBot.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.megabyte) # Disk too small
+            provider.flavors << FactoryBot.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
 
             ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
             disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
@@ -195,12 +195,12 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
         end
 
         context "hardware with no size_on_disk" do
-          let(:hardware) { FactoryGirl.create(:hardware, :memory_mb_minimum => 512) }
+          let(:hardware) { FactoryBot.create(:hardware, :memory_mb_minimum => 512) }
 
           it "filters flavors too small" do
-            flavor = FactoryGirl.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.terabyte)
+            flavor = FactoryBot.create(:flavor_openstack, :memory => 1.gigabyte, :root_disk_size => 1.terabyte)
             provider.flavors << flavor
-            provider.flavors << FactoryGirl.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
+            provider.flavors << FactoryBot.create(:flavor_openstack, :memory => 1.megabyte, :root_disk_size => 1.terabyte) # Memory too small
 
             ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
             disk_size = ActionController::Base.helpers.number_to_human_size(flavor.root_disk_size)
@@ -227,14 +227,14 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
       context "with valid relationships" do
         it "#allowed_availability_zones" do
-          az = FactoryGirl.create(:availability_zone_openstack)
+          az = FactoryBot.create(:availability_zone_openstack)
           provider.availability_zones << az
           expect(workflow.allowed_availability_zones).to eq(az.id => az.name)
         end
 
         it "#allowed_availability_zones with NULL AZ" do
-          provider.availability_zones << az = FactoryGirl.create(:availability_zone_openstack)
-          provider.availability_zones << FactoryGirl.create(:availability_zone_openstack_null, :ems_ref => "null_az")
+          provider.availability_zones << az = FactoryBot.create(:availability_zone_openstack)
+          provider.availability_zones << FactoryBot.create(:availability_zone_openstack_null, :ems_ref => "null_az")
 
           azs = workflow.allowed_availability_zones
           expect(azs.length).to eq(1)
@@ -248,7 +248,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
         end
 
         it "#allowed_security_groups" do
-          sg = FactoryGirl.create(:security_group_openstack)
+          sg = FactoryBot.create(:security_group_openstack)
           provider.security_groups << sg
           expect(workflow.allowed_security_groups).to eq(sg.id => sg.name)
         end
@@ -256,14 +256,14 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
       context "availability_zone_to_cloud_network" do
         it "has one when it should" do
-          subnet = FactoryGirl.create(:cloud_subnet_openstack)
-          FactoryGirl.create(:cloud_network_openstack, :ext_management_system => provider.network_manager, :cloud_subnets => [subnet])
+          subnet = FactoryBot.create(:cloud_subnet_openstack)
+          FactoryBot.create(:cloud_network_openstack, :ext_management_system => provider.network_manager, :cloud_subnets => [subnet])
 
           expect(workflow.allowed_cloud_networks.size).to eq(1)
         end
 
         it "filters cloud networks without subnets" do
-          FactoryGirl.create(:cloud_network_openstack, :ext_management_system => provider.network_manager)
+          FactoryBot.create(:cloud_network_openstack, :ext_management_system => provider.network_manager)
 
           expect(workflow.allowed_cloud_networks.size).to eq(0)
         end
@@ -274,7 +274,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       end
 
       context "#display_name_for_name_description" do
-        let(:flavor) { FactoryGirl.create(:flavor_openstack) }
+        let(:flavor) { FactoryBot.create(:flavor_openstack) }
 
         it "with name and description" do
           ram = ActionController::Base.helpers.number_to_human_size(flavor.memory)
@@ -286,38 +286,38 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
       context "tenant filtering" do
         before do
-          @ct1 = FactoryGirl.create(:cloud_tenant_openstack)
-          @ct2 = FactoryGirl.create(:cloud_tenant_openstack)
+          @ct1 = FactoryBot.create(:cloud_tenant_openstack)
+          @ct2 = FactoryBot.create(:cloud_tenant_openstack)
           provider.cloud_tenants << @ct1
           provider.cloud_tenants << @ct2
         end
 
         context "cloud networks" do
           before do
-            subnet1 = FactoryGirl.create(:cloud_subnet_openstack)
-            subnet2 = FactoryGirl.create(:cloud_subnet_openstack)
-            subnet3 = FactoryGirl.create(:cloud_subnet_openstack)
-            subnet4 = FactoryGirl.create(:cloud_subnet_openstack)
-            subnet5 = FactoryGirl.create(:cloud_subnet_openstack)
-            @cn1 = FactoryGirl.create(:cloud_network_private_openstack,
+            subnet1 = FactoryBot.create(:cloud_subnet_openstack)
+            subnet2 = FactoryBot.create(:cloud_subnet_openstack)
+            subnet3 = FactoryBot.create(:cloud_subnet_openstack)
+            subnet4 = FactoryBot.create(:cloud_subnet_openstack)
+            subnet5 = FactoryBot.create(:cloud_subnet_openstack)
+            @cn1 = FactoryBot.create(:cloud_network_private_openstack,
                                       :cloud_tenant          => @ct1,
                                       :ext_management_system => provider.network_manager,
                                       :cloud_subnets         => [subnet1])
-            @cn2 = FactoryGirl.create(:cloud_network_private_openstack,
+            @cn2 = FactoryBot.create(:cloud_network_private_openstack,
                                       :cloud_tenant          => @ct2,
                                       :ext_management_system => provider.network_manager,
                                       :cloud_subnets         => [subnet2])
-            @cn3 = FactoryGirl.create(:cloud_network_public_openstack,
+            @cn3 = FactoryBot.create(:cloud_network_public_openstack,
                                       :cloud_tenant          => @ct2,
                                       :ext_management_system => provider.network_manager,
                                       :cloud_subnets         => [subnet3])
 
-            @cn_shared        = FactoryGirl.create(:cloud_network_private_openstack,
+            @cn_shared        = FactoryBot.create(:cloud_network_private_openstack,
                                                    :shared                => true,
                                                    :cloud_tenant          => @ct2,
                                                    :ext_management_system => provider.network_manager,
                                                    :cloud_subnets         => [subnet4])
-            @cn_public_shared = FactoryGirl.create(:cloud_network_public_openstack,
+            @cn_public_shared = FactoryBot.create(:cloud_network_public_openstack,
                                                    :shared                => true,
                                                    :cloud_tenant          => @ct2,
                                                    :ext_management_system => provider.network_manager,
@@ -344,8 +344,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
         context "security groups" do
           before do
-            @sg1 = FactoryGirl.create(:security_group_openstack)
-            @sg2 = FactoryGirl.create(:security_group_openstack)
+            @sg1 = FactoryBot.create(:security_group_openstack)
+            @sg2 = FactoryBot.create(:security_group_openstack)
             provider.network_manager.security_groups << @sg1
             provider.network_manager.security_groups << @sg2
             @ct1.security_groups << @sg1
@@ -366,28 +366,28 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
 
         context "floating ip" do
           before do
-            cloud_network_public   = FactoryGirl.create(:cloud_network_public_openstack)
-            cloud_network_public_2 = FactoryGirl.create(:cloud_network_public_openstack)
-            router                 = FactoryGirl.create(:network_router_openstack,
+            cloud_network_public   = FactoryBot.create(:cloud_network_public_openstack)
+            cloud_network_public_2 = FactoryBot.create(:cloud_network_public_openstack)
+            router                 = FactoryBot.create(:network_router_openstack,
                                                         :cloud_network => cloud_network_public)
-            @cloud_network         = FactoryGirl.create(:cloud_network_private_openstack,
+            @cloud_network         = FactoryBot.create(:cloud_network_private_openstack,
                                                         :cloud_tenant => @ct2)
-            @cloud_network_2       = FactoryGirl.create(:cloud_network_private_openstack,
+            @cloud_network_2       = FactoryBot.create(:cloud_network_private_openstack,
                                                         :cloud_tenant => @ct2)
-            _subnet                = FactoryGirl.create(:cloud_subnet_openstack,
+            _subnet                = FactoryBot.create(:cloud_subnet_openstack,
                                                         :network_router        => router,
                                                         :cloud_network         => @cloud_network,
                                                         :ext_management_system => provider.network_manager)
 
-            @ip1 = FactoryGirl.create(:floating_ip,
+            @ip1 = FactoryBot.create(:floating_ip,
                                       :address       => "1.1.1.1",
                                       :cloud_tenant  => @ct1,
                                       :cloud_network => cloud_network_public)
-            @ip2 = FactoryGirl.create(:floating_ip,
+            @ip2 = FactoryBot.create(:floating_ip,
                                       :address       => "2.2.2.2",
                                       :cloud_tenant  => @ct2,
                                       :cloud_network => cloud_network_public)
-            @ip3 = FactoryGirl.create(:floating_ip,
+            @ip3 = FactoryBot.create(:floating_ip,
                                       :address       => "2.2.2.3",
                                       :cloud_tenant  => @ct2,
                                       :cloud_network => cloud_network_public_2)
@@ -465,7 +465,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
   end
 
   describe "#make_request" do
-    let(:alt_user) { FactoryGirl.create(:user_with_group) }
+    let(:alt_user) { FactoryBot.create(:user_with_group) }
 
     it "creates and update a request" do
       EvmSpecHelper.local_miq_server
