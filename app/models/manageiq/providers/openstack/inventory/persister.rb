@@ -30,20 +30,4 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManageIQ::Providers
     @tag_mapper = ContainerLabelTagMapping.mapper
     collections[:tags_to_resolve] = @tag_mapper.tags_to_resolve_collection
   end
-
-  def strategy
-    nil
-  end
-
-  def parent
-    manager.presence
-  end
-
-  def shared_options
-    {
-      :parent   => parent,
-      :strategy => strategy,
-      :targeted => targeted?
-    }
-  end
 end
