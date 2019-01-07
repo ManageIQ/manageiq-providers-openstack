@@ -5,7 +5,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
 
   describe "refresh" do
     before do
-      @ems = FactoryGirl.create(:ems_openstack_with_authentication)
+      @ems = FactoryBot.create(:ems_openstack_with_authentication)
       EvmSpecHelper.local_miq_server(:zone => Zone.seed)
     end
 

@@ -1,11 +1,11 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment do
   before do
-    @ems = FactoryGirl.create(:ems_openstack_with_authentication)
-    @template = FactoryGirl.create(:template_openstack, :ext_management_system => @ems)
-    @flavor = FactoryGirl.create(:flavor_openstack)
-    @volume = FactoryGirl.create(:cloud_volume_openstack)
+    @ems = FactoryBot.create(:ems_openstack_with_authentication)
+    @template = FactoryBot.create(:template_openstack, :ext_management_system => @ems)
+    @flavor = FactoryBot.create(:flavor_openstack)
+    @volume = FactoryBot.create(:cloud_volume_openstack)
 
-    @task = FactoryGirl.create(:miq_provision_openstack,
+    @task = FactoryBot.create(:miq_provision_openstack,
                                :source  => @template,
                                :state   => 'pending',
                                :status  => 'Ok',
@@ -37,7 +37,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
     it "status pending" do
       pending_volume_attrs = {:source_type => "volume"}
       service = double
-      allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
+      allow(service).to receive_message_chain('volumes.get').and_return FactoryBot.build(:cloud_volume_openstack,
                                                                                           :status => "pending")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
         .with(:service => 'volume', :tenant_name => nil).and_yield(service)
@@ -48,7 +48,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
     it "check creation status available" do
       pending_volume_attrs = {:source_type => "volume"}
       service = double
-      allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
+      allow(service).to receive_message_chain('volumes.get').and_return FactoryBot.build(:cloud_volume_openstack,
                                                                                           :status => "available")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
         .with(:service => 'volume', :tenant_name => nil).and_yield(service)
@@ -69,7 +69,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
     it "status error" do
       pending_volume_attrs = {:source_type => "volume"}
       service = double
-      allow(service).to receive_message_chain('volumes.get').and_return FactoryGirl.build(:cloud_volume_openstack,
+      allow(service).to receive_message_chain('volumes.get').and_return FactoryBot.build(:cloud_volume_openstack,
                                                                                           :status => "error")
       allow(@task.source.ext_management_system).to receive(:with_provider_connection)\
         .with(:service => 'volume', :tenant_name => nil).and_yield(service)

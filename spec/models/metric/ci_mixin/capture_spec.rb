@@ -13,10 +13,10 @@ describe Metric::CiMixin::Capture do
       OpenstackApiResult.new((@mock_meter_list.list_meters("resource_counters") +
                               @mock_meter_list.list_meters("metadata_counters"))))
 
-    @ems_openstack = FactoryGirl.create(:ems_openstack, :zone => @zone)
+    @ems_openstack = FactoryBot.create(:ems_openstack, :zone => @zone)
     allow(@ems_openstack).to receive(:connect).with(:service => "Metering").and_return(@metering)
 
-    @vm = FactoryGirl.create(:vm_perf_openstack, :ext_management_system => @ems_openstack)
+    @vm = FactoryBot.create(:vm_perf_openstack, :ext_management_system => @ems_openstack)
   end
 
   before do

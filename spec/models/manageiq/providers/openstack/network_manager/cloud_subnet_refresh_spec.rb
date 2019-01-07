@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
   describe "refresh" do
     before do
-      parent_ems = FactoryGirl.create(:ems_openstack_with_authentication)
+      parent_ems = FactoryBot.create(:ems_openstack_with_authentication)
       @ems = parent_ems.network_manager
       EvmSpecHelper.local_miq_server(:zone => Zone.seed)
     end

@@ -1,5 +1,5 @@
 describe ManageIQ::Providers::Openstack::InfraManager::HostServiceGroup do
-  let(:host_service_group) { FactoryGirl.create(:host_service_group_openstack) }
+  let(:host_service_group) { FactoryBot.create(:host_service_group_openstack) }
 
   describe "return scopes" do
     it "calls Filesystem scope" do

@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
-  let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
+  let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
   let(:flavor_attributes) { {:name => 'flavor', :ram => '1', 'cloud_tenant_refs' => %w(1 2) } }
-  let(:flavor_openstack) { FactoryGirl.create :flavor_openstack, :ext_management_system => ems }
+  let(:flavor_openstack) { FactoryBot.create :flavor_openstack, :ext_management_system => ems }
   let(:service) { double }
 
   context 'when raw_create_flavor' do

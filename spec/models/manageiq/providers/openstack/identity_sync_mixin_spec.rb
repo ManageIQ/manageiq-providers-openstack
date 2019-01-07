@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
-  let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
-  let(:parent_tenant) { FactoryGirl.create(:tenant, :source_type => "ExtManagementSystem", :source_id => ems.id) }
+  let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
+  let(:parent_tenant) { FactoryBot.create(:tenant, :source_type => "ExtManagementSystem", :source_id => ems.id) }
 
   before do
     keystone = instance_double("keystone")
@@ -17,14 +17,14 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       user_projects_data = [{"description" => nil, "enabled" => true, "id" => "6f4a2d27d0454ec1a100109b38cbfa09", "name" => "project1"}]
       allow(ems.keystone).to receive(:list_user_projects_tenants).and_return(user_projects_data)
       expect(User.find_by(:userid => "project1-admin")).to be_nil
-      cloud_tenant = FactoryGirl.create(:cloud_tenant_openstack, :name => 'project1', :ems_id => ems.id)
-      tenant = FactoryGirl.create(:tenant, :source_id => cloud_tenant.id, :source_type => 'CloudTenant')
+      cloud_tenant = FactoryBot.create(:cloud_tenant_openstack, :name => 'project1', :ems_id => ems.id)
+      tenant = FactoryBot.create(:tenant, :source_id => cloud_tenant.id, :source_type => 'CloudTenant')
       expect(CloudTenant.find_by(:name => 'project1', :ems_id => ems.id)).not_to be_nil
       expect(Tenant.find_by(:source_id => cloud_tenant.id, :source_type => 'CloudTenant')).not_to be_nil
       user_roles = [{"domain_id" => nil, "name" => "admin", "id" => "4e918d9808d34e658a3a647ed49b53f5"}, {"domain_id" => nil, "name" => "_member_", "id" => "9fe2ff9ee4384b1894a90878d3e92bab"}]
       allow(ems.keystone).to receive(:list_project_tenant_user_roles).and_return(user_roles)
-      admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
-      member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
+      admin_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
+      member_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-user")
 
       ems.sync_users(admin_role.id, member_role.id, "changeme")
       user = User.find_by(:userid => "project1-admin")
@@ -48,8 +48,8 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
       # switch roles in sync should unmap user from old groups and roles
       user = User.find_by(:userid => "project1-admin")
       expect(user.current_group.miq_user_role.id).to eq(admin_role.id)
-      new_admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-operator")
-      new_member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-vm_user")
+      new_admin_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-operator")
+      new_member_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-vm_user")
       ems.sync_users(new_admin_role.id, new_member_role.id, "changeme")
       user = User.find_by(:userid => "project1-admin")
       expect(user.miq_groups.count).to eq(2)
@@ -103,10 +103,10 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
   context "create_or_find_miq_group_add_user" do
     it "should create new group and add user as member" do
       user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
-      tenant = FactoryGirl.create(:tenant, :name => "project1")
+      tenant = FactoryBot.create(:tenant, :name => "project1")
 
-      admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
-      member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
+      admin_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
+      member_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-user")
 
       # admin
       miq_group = MiqGroup.joins(:entitlement).where(:tenant_id => tenant.id).where('entitlements.miq_user_role_id' => admin_role.id).take
@@ -132,9 +132,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     it "group should be named <provider>-<domainID>-<tenant>-<role> for keystone v3" do
       user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
       ems.keystone_v3_domain_id = "domain_id1"
-      tenant = FactoryGirl.create(:tenant, :name => "project1")
-      admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
-      member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
+      tenant = FactoryBot.create(:tenant, :name => "project1")
+      admin_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
+      member_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-user")
       ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_ADMIN_ROLE_ID_NEW, admin_role.id)
       ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_MEMBER_ROLE_ID_NEW, member_role.id)
       miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin")
@@ -143,9 +143,9 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
 
     it "group should be named <provider-<tenant>-<role> for keystone v2" do
       user = ems.create_or_find_user(101, "dummy_user1", "dummy1@test.com", "changeme")
-      tenant = FactoryGirl.create(:tenant, :name => "project1")
-      admin_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
-      member_role = FactoryGirl.create(:miq_user_role, :name => "EvmRole-user")
+      tenant = FactoryBot.create(:tenant, :name => "project1")
+      admin_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-tenant_administrator")
+      member_role = FactoryBot.create(:miq_user_role, :name => "EvmRole-user")
       ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_ADMIN_ROLE_ID_NEW, admin_role.id)
       ems.miq_custom_set(ManageIQ::Providers::Openstack::IdentitySyncMixin::IDENTITY_SYNC_MEMBER_ROLE_ID_NEW, member_role.id)
       miq_group = ems.create_or_find_miq_group_and_add_user(user, tenant, "admin")
@@ -158,7 +158,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
   end
 
   context "new_users" do
-    let(:ems) { FactoryGirl.create(:ems_openstack_with_authentication) }
+    let(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
 
     it "finds new users from keystone" do
       users_data = [{"name" => "newuser1", "links" => {"self" =>" http://127.0.0.1:5002/v3/users/009cfe67e1984e4dae36af5625c2fe92"}, "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "newuser1@localhost", "password_expires_at" => nil}, {"name" => "newuser2", "links" => {"self" => "http://127.0.0.1:5002/v3/users/0dab7200c18945f0ad96abdcfcc59716"}, "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "newuser2@localhost", "password_expires_at" => nil}]

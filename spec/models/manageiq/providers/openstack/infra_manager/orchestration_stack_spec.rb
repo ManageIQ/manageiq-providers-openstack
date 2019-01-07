@@ -1,8 +1,8 @@
 describe ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack do
-  let(:ems) { FactoryGirl.create(:ems_openstack_infra) }
-  let(:template) { FactoryGirl.create(:orchestration_template) }
+  let(:ems) { FactoryBot.create(:ems_openstack_infra) }
+  let(:template) { FactoryBot.create(:orchestration_template) }
   let(:orchestration_stack) do
-    FactoryGirl.create(:orchestration_stack_openstack_infra, :ext_management_system => ems, :name => 'test', :ems_ref => 'one_id')
+    FactoryBot.create(:orchestration_stack_openstack_infra, :ext_management_system => ems, :name => 'test', :ems_ref => 'one_id')
   end
 
   let(:the_raw_stack) do

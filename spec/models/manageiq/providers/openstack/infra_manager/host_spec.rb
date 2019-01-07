@@ -36,46 +36,46 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
     end
 
     let(:host) do
-      FactoryGirl.create(:host_openstack_infra).tap do |host|
+      FactoryBot.create(:host_openstack_infra).tap do |host|
         allow(host).to receive(:connect_ssh).and_yield(ssu)
 
         # create generic SystemService
-        host.system_services << FactoryGirl.create(:system_service)
+        host.system_services << FactoryBot.create(:system_service)
         # create OpenStack related SystemService to test against
-        host.system_services << FactoryGirl.create(:system_service, :name => 'openstack-nova-api')
+        host.system_services << FactoryBot.create(:system_service, :name => 'openstack-nova-api')
         # create generic Filesystem
-        host.filesystems << FactoryGirl.create(:filesystem)
+        host.filesystems << FactoryBot.create(:filesystem)
         # create OpenStack related Filesystems to test against
-        host.filesystems << FactoryGirl.create(:filesystem, :name => '/etc/nova.conf')
-        host.filesystems << FactoryGirl.create(:filesystem, :name => '/etc/nova/api.conf')
+        host.filesystems << FactoryBot.create(:filesystem, :name => '/etc/nova.conf')
+        host.filesystems << FactoryBot.create(:filesystem, :name => '/etc/nova/api.conf')
 
         # create HostServiceGroupOpenstack existing prior to calling HostOpenstackInfra#refresh_openstack_services
-        glance = FactoryGirl.create(:host_service_group_openstack, :name => 'Glance services')
+        glance = FactoryBot.create(:host_service_group_openstack, :name => 'Glance services')
         # create glance_api and add it to both Host and HostServiceGroupOpenstack objects
-        glance_api = FactoryGirl.create(:system_service, :name => 'openstack-glance-api')
+        glance_api = FactoryBot.create(:system_service, :name => 'openstack-glance-api')
         glance.system_services << glance_api
         host.system_services << glance_api
         # create glance_registry and add it to Host object only
-        glance_registry = FactoryGirl.create(:system_service, :name => 'openstack-glance-registry')
+        glance_registry = FactoryBot.create(:system_service, :name => 'openstack-glance-registry')
         host.system_services << glance_registry
 
         # create glance_conf and add it both Host and HostServiceGroupOpenstack objects
-        glance_conf = FactoryGirl.create(:filesystem, :name => '/etc/glance.conf')
+        glance_conf = FactoryBot.create(:filesystem, :name => '/etc/glance.conf')
         glance.filesystems << glance_conf
         host.filesystems << glance_conf
         # create glance_conf_2 and add it to Host object only
-        glance_conf_2 = FactoryGirl.create(:filesystem, :name => '/etc/glance/2.conf')
+        glance_conf_2 = FactoryBot.create(:filesystem, :name => '/etc/glance/2.conf')
         host.filesystems << glance_conf_2
 
         host.host_service_group_openstacks << glance
 
         # create keystone system service on host
-        host.system_services << FactoryGirl.create(:system_service, :name => 'openstack-keystone')
+        host.system_services << FactoryBot.create(:system_service, :name => 'openstack-keystone')
       end
     end
 
     before do
-      FactoryGirl.create(:host_service_group_openstack, :host => host, :name => 'Keystone')
+      FactoryBot.create(:host_service_group_openstack, :host => host, :name => 'Keystone')
     end
 
     context "with stubbed MiqLinux::Utils" do
@@ -243,16 +243,16 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
   describe "Overriden auth methods for ssh fleecing," do
     let(:ext_management_system) do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      FactoryGirl.create(:ems_openstack_infra, :zone => zone).tap do |ems|
-        ems.authentications << FactoryGirl.create(:authentication_ssh_keypair)
-        ems.authentications << FactoryGirl.create(:authentication)
+      FactoryBot.create(:ems_openstack_infra, :zone => zone).tap do |ems|
+        ems.authentications << FactoryBot.create(:authentication_ssh_keypair)
+        ems.authentications << FactoryBot.create(:authentication)
       end
     end
 
     let(:host) do
-      FactoryGirl.create(:host_openstack_infra).tap do |host|
+      FactoryBot.create(:host_openstack_infra).tap do |host|
         host.ext_management_system = ext_management_system
-        host.authentications << FactoryGirl.create(:authentication_ssh_keypair_without_key)
+        host.authentications << FactoryBot.create(:authentication_ssh_keypair_without_key)
         host.save
       end
     end
@@ -285,7 +285,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         host_ssh_keypair_auth.status = 'host_ssh_keypair_auth_status'
         host_ssh_keypair_auth.save
 
-        host_default_auth = FactoryGirl.create(:authentication,
+        host_default_auth = FactoryBot.create(:authentication,
                                                :password => 'pass',
                                                :status   => 'host_default_auth_status')
         host_default_auth.password = 'pass'
@@ -302,7 +302,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         host_ssh_keypair_auth.status = 'host_ssh_keypair_auth_status'
         host_ssh_keypair_auth.save
 
-        host_default_auth = FactoryGirl.create(:authentication,
+        host_default_auth = FactoryBot.create(:authentication,
                                                :password => 'pass',
                                                :status   => 'host_default_auth_status')
         host.authentications << host_default_auth
@@ -316,9 +316,9 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         host_ssh_keypair_auth.status = 'host_ssh_keypair_auth_status'
         host_ssh_keypair_auth.save
 
-        host.authentications << FactoryGirl.create(:authentication_ipmi, :status => 'host_ipmi_auth_status')
-        host.authentications << FactoryGirl.create(:authentication_ws, :status => 'host_ws_auth_status')
-        host_default_auth = FactoryGirl.create(:authentication, :status => 'host_default_auth_status')
+        host.authentications << FactoryBot.create(:authentication_ipmi, :status => 'host_ipmi_auth_status')
+        host.authentications << FactoryBot.create(:authentication_ws, :status => 'host_ws_auth_status')
+        host_default_auth = FactoryBot.create(:authentication, :status => 'host_default_auth_status')
         host.authentications << host_default_auth
 
         expect(host.authentication_status).to eq host_ssh_keypair_auth.status
@@ -349,7 +349,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
       it "passes passwordless sudo parameter if user is not 'root'" do
         # Switch to auth with root user
         ext_management_system.authentications.where(:authtype => :ssh_keypair).first.destroy
-        ext_management_system.authentications << FactoryGirl.create(:authentication_ssh_keypair_root)
+        ext_management_system.authentications << FactoryBot.create(:authentication_ssh_keypair_root)
 
         auth = ext_management_system.authentications.where(:authtype => :ssh_keypair).first
 
@@ -371,7 +371,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         ems_auth  = ext_management_system.authentications.where(:authtype => :ssh_keypair).first
         host_ssh_keypair_auth = host.authentications.where(:authtype => :ssh_keypair).first
 
-        host_default_auth = FactoryGirl.create(:authentication)
+        host_default_auth = FactoryBot.create(:authentication)
         host_default_auth.password = ''
         host_default_auth.save
         host.authentications << host_default_auth
@@ -389,7 +389,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
       end
 
       it "checks that if host's default auth password is not nil, host's auth is returned" do
-        host_default_auth = FactoryGirl.create(:authentication)
+        host_default_auth = FactoryBot.create(:authentication)
         host.authentications << host_default_auth
 
         expect(host.authentication_best_fit).to eq host_default_auth
@@ -400,7 +400,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         host_ssh_keypair_auth.auth_key = 'host_private_key_content'
         host_ssh_keypair_auth.save
 
-        host_auth = FactoryGirl.create(:authentication)
+        host_auth = FactoryBot.create(:authentication)
         host.authentications << host_auth
 
         expect(host.authentication_best_fit).to eq host_ssh_keypair_auth
@@ -412,9 +412,9 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
         host_ssh_keypair_auth.status = 'host_ssh_keypair_auth_status'
         host_ssh_keypair_auth.save
 
-        host.authentications << FactoryGirl.create(:authentication_ipmi, :status => 'host_ipmi_auth_status')
-        host.authentications << FactoryGirl.create(:authentication_ws, :status => 'host_ws_auth_status')
-        host.authentications << FactoryGirl.create(:authentication, :status => 'host_default_auth_status')
+        host.authentications << FactoryBot.create(:authentication_ipmi, :status => 'host_ipmi_auth_status')
+        host.authentications << FactoryBot.create(:authentication_ws, :status => 'host_ws_auth_status')
+        host.authentications << FactoryBot.create(:authentication, :status => 'host_default_auth_status')
 
         # All credentials filled, ssh_keypair takes precedence
         expect(host.authentication_best_fit).to eq host_ssh_keypair_auth
@@ -490,11 +490,11 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
   describe "ironic tasks" do
     let(:ext_management_system) do
       _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-      FactoryGirl.create(:ems_openstack_infra, :zone => zone)
+      FactoryBot.create(:ems_openstack_infra, :zone => zone)
     end
 
     let(:host) do
-      FactoryGirl.create(:host_openstack_infra).tap do |host|
+      FactoryBot.create(:host_openstack_infra).tap do |host|
         host.ext_management_system = ext_management_system
         host.save
       end
@@ -580,7 +580,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
   end
 
   describe 'after create callback' do
-    let(:ext_management_system) { FactoryGirl.create(:ems_openstack_infra) }
+    let(:ext_management_system) { FactoryBot.create(:ems_openstack_infra) }
 
     it "assigns scale out event fot host" do
       payload = { "instance_id" => "openstack-perf-host-nova-instance" }
@@ -597,7 +597,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
       }
 
       EmsEvent.add(ext_management_system.id, event_hash)
-      host = FactoryGirl.create(:host_openstack_infra, :ext_management_system => ext_management_system)
+      host = FactoryBot.create(:host_openstack_infra, :ext_management_system => ext_management_system)
       host.update_create_event
       expect(ext_management_system.ems_events.first.host_id).to eq(host.id)
     end

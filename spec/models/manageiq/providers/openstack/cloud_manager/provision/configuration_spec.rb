@@ -1,13 +1,13 @@
 describe ManageIQ::Providers::Openstack::CloudManager::Provision::Configuration do
   context "#configure_network_adapters" do
     before do
-      @ems      = FactoryGirl.create(:ems_openstack_with_authentication)
-      @template = FactoryGirl.create(:template_openstack, :ext_management_system => @ems)
-      @vm       = FactoryGirl.create(:vm_openstack)
-      @net1     = FactoryGirl.create(:cloud_network)
-      @net2     = FactoryGirl.create(:cloud_network)
+      @ems      = FactoryBot.create(:ems_openstack_with_authentication)
+      @template = FactoryBot.create(:template_openstack, :ext_management_system => @ems)
+      @vm       = FactoryBot.create(:vm_openstack)
+      @net1     = FactoryBot.create(:cloud_network)
+      @net2     = FactoryBot.create(:cloud_network)
 
-      @task = FactoryGirl.create(:miq_provision_openstack,
+      @task = FactoryBot.create(:miq_provision_openstack,
                                  :source      => @template,
                                  :destination => @vm,
                                  :state       => 'pending',

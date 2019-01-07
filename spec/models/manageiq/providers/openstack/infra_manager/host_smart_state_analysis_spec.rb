@@ -65,16 +65,16 @@ describe Host do
       end
     end
 
-    let(:ems) { FactoryGirl.create(:ems_openstack_infra) }
+    let(:ems) { FactoryBot.create(:ems_openstack_infra) }
 
-    let(:vlan10) { FactoryGirl.create(:cloud_network_openstack, :name => "vlan10") }
-    let(:vlan20) { FactoryGirl.create(:cloud_network_openstack, :name => "vlan20") }
-    let(:vlan30) { FactoryGirl.create(:cloud_network_openstack, :name => "vlan30") }
-    let(:vlan40) { FactoryGirl.create(:cloud_network_openstack, :name => "vlan40") }
-    let(:vlan50) { FactoryGirl.create(:cloud_network_openstack, :name => "vlan50") }
+    let(:vlan10) { FactoryBot.create(:cloud_network_openstack, :name => "vlan10") }
+    let(:vlan20) { FactoryBot.create(:cloud_network_openstack, :name => "vlan20") }
+    let(:vlan30) { FactoryBot.create(:cloud_network_openstack, :name => "vlan30") }
+    let(:vlan40) { FactoryBot.create(:cloud_network_openstack, :name => "vlan40") }
+    let(:vlan50) { FactoryBot.create(:cloud_network_openstack, :name => "vlan50") }
 
     let(:host) do
-      FactoryGirl.create(:host_openstack_infra).tap do |host|
+      FactoryBot.create(:host_openstack_infra).tap do |host|
         allow(host).to receive(:connect_ssh).and_yield(ssu)
         # Define EMS
         host.ext_management_system = ems
@@ -86,19 +86,19 @@ describe Host do
         network_ems.cloud_networks << vlan40
         network_ems.cloud_networks << vlan50
         # Define subnets
-        FactoryGirl.create(
+        FactoryBot.create(
           :cloud_subnet_openstack, :name => "vlan10", :cidr => "172.16.23.0/24", :cloud_network => vlan10,
           :ip_version => 4, :ext_management_system => network_ems)
-        FactoryGirl.create(
+        FactoryBot.create(
           :cloud_subnet_openstack, :name => "vlan20", :cidr => "172.16.20.0/24", :cloud_network => vlan20,
           :ip_version => 4, :ext_management_system => network_ems)
-        FactoryGirl.create(
+        FactoryBot.create(
           :cloud_subnet_openstack, :name => "vlan30", :cidr => "172.16.21.0/24", :cloud_network => vlan30,
           :ip_version => 4, :ext_management_system => network_ems)
-        FactoryGirl.create(
+        FactoryBot.create(
           :cloud_subnet_openstack, :name => "vlan40", :cidr => "172.16.19.0/24", :cloud_network => vlan40,
           :ip_version => 4, :ext_management_system => network_ems)
-        FactoryGirl.create(
+        FactoryBot.create(
           :cloud_subnet_openstack, :name => "vlan50", :cidr => "172.16.22.0/24", :cloud_network => vlan50,
           :ip_version => 4, :ext_management_system => network_ems)
       end
@@ -211,7 +211,7 @@ describe Host do
     describe "when there are existing records created by refresh" do
       it "updates existing record name when it's nil" do
         host.ext_management_system.network_ports <<
-          FactoryGirl.create(:network_port_openstack, :name => "", :mac_address => "be:0b:0f:3d:3e:97",
+          FactoryBot.create(:network_port_openstack, :name => "", :mac_address => "be:0b:0f:3d:3e:97",
                              :source => :refresh, :device => host)
 
         host.refresh_network_interfaces(ssu)
@@ -229,7 +229,7 @@ describe Host do
 
       it "do not change existing record name when it's not nil" do
         host.ext_management_system.network_ports <<
-          FactoryGirl.create(:network_port_openstack, :name => "vlan10_new", :mac_address => "be:0b:0f:3d:3e:97",
+          FactoryBot.create(:network_port_openstack, :name => "vlan10_new", :mac_address => "be:0b:0f:3d:3e:97",
                              :source => :refresh, :device => host)
 
         host.refresh_network_interfaces(ssu)

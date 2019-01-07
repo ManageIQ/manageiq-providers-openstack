@@ -1,9 +1,9 @@
 describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack do
-  let(:ems) { FactoryGirl.create(:ems_openstack) }
-  let(:template) { FactoryGirl.create(:orchestration_template) }
-  let(:tenant) { FactoryGirl.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+  let(:ems) { FactoryBot.create(:ems_openstack) }
+  let(:template) { FactoryBot.create(:orchestration_template) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:orchestration_stack) do
-    FactoryGirl.create(:orchestration_stack_openstack,
+    FactoryBot.create(:orchestration_stack_openstack,
       :ext_management_system => ems, :name => 'test', :ems_ref => 'one_id', :cloud_tenant => tenant)
   end
 
@@ -109,7 +109,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack do
   end
 
   describe '.transform_parameters' do
-    let(:template) { FactoryGirl.create(:orchestration_template_openstack_in_yaml) }
+    let(:template) { FactoryBot.create(:orchestration_template_openstack_in_yaml) }
     it 'converts multiline text into one comma delimitered string' do
       parameters = {'cartridges' => "test1\ntest2\n\n"}
 

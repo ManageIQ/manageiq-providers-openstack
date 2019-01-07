@@ -3,7 +3,7 @@ require 'fog/openstack'
 describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems = FactoryGirl.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
+    @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(

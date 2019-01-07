@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::InfraManager::EventCatcher do
   before do
-    @ems = FactoryGirl.create(:ems_openstack_infra)
+    @ems = FactoryBot.create(:ems_openstack_infra)
     allow(@ems).to receive(:authentication_status_ok?).and_return(true)
     allow(ManageIQ::Providers::Openstack::InfraManager::EventCatcher).to receive(:all_ems_in_zone).and_return([@ems])
   end
