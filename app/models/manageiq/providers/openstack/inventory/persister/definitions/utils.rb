@@ -20,4 +20,17 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
     ems = targeted? ? manager.network_manager : manager
     builder.add_default_values(:ems_id => ems.id)
   end
+
+  def add_orchestration_templates(type)
+    add_collection(type, :orchestration_templates) do |builder|
+      builder.add_properties(:model_class => ::OrchestrationTemplate)
+    end
+  end
+
+  # Shortcut for better code readability
+  def add_orchestration_stacks_with_ems_param
+    add_orchestration_stacks do |builder|
+      builder.add_default_values(:ems_id => manager.id)
+    end
+  end
 end
