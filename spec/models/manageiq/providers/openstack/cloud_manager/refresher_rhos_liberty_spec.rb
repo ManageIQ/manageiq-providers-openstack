@@ -189,5 +189,26 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
         end
       end
     end
+
+    # BZ 1662126
+    it "will reset the cache before collecting tenants during targeted refresh against RHOS #{@environment}" do
+      volume_target = InventoryRefresh::Target.new(:manager     => @ems,
+                                                   :association => :cloud_volumes,
+                                                   :manager_ref => {:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448"})
+      tenant_target = InventoryRefresh::Target.new(:manager     => @ems,
+                                                   :association => :cloud_tenants,
+                                                   :manager_ref => {:ems_ref => "e8f744b1fc6a487681d35fb275252608"})
+
+      2.times do # Run twice to verify that a second run with existing data does not change anything
+        with_cassette("#{@environment}_volume_targeted_refresh", @ems) do
+          EmsRefresh.refresh([tenant_target, volume_target])
+          expect(CloudVolume.count).to eq(1)
+          volume = CloudVolume.find_by(:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448")
+          expect(CloudTenant.all.count).to eq(2)
+          expect(CloudTenant.find_by(:ems_ref => "e8f744b1fc6a487681d35fb275252608")).to be_truthy
+          expect(CloudTenant.find_by(:ems_ref => "69f8f7205ade4aa59084c32c83e60b5a")).to be_truthy
+        end
+      end
+    end
   end
 end
