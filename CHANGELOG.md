@@ -5,59 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Unreleased as of Sprint 101 ending 2018-12-17
-
-### Fixed
-- Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
-
-## Unreleased as of Sprint 100 ending 2018-12-03
-
-### Added
-- Add supports_conversion_host to Vm [(#407)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/407)
-- Add a default parallel thread limit to the settings yaml [(#405)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/405)
-
-### Fixed
-- Require 'parallel' in the OpenstackHandle [(#404)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/404)
-- Add explicit runtime dependency on the "parallel" gem [(#403)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/403)
-- Collect Panko events for all tenants. [(#402)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/402)
-- Fix autocomplete error in targeted Cloud Volume collection [(#400)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/400)
-- Check if host create event exists and assign host to it [(#380)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/380)
-
-## Unreleased as of Sprint 99 ending 2018-11-19
-
-### Added
-- Add support for multiple amqp endpoints [(#394)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/394)
-- Refresh an attached undercloud when saving changes to an overcloud [(#393)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/393)
-- Parallelize OpenstackHandle [(#374)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/374)
-
-### Fixed
-- New Cloud provider: Fix event creds validation for AMQP [(#399)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/399)
-- Service dialog for orchestration template needs tenant selection [(#397)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/397)
-
-## Unreleased as of Sprint 98 ending 2018-11-05
-
-### Added
-- When doing targeted refresh of a volume refresh any attached VMs [(#386)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/386)
-
-## Gaprindashvili-6 - Released 2018-11-02
-
-### Fixed
-- Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
-- Filter Keystone Projects by domain_id [(#342)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/342)
-- Use empty name for volume if only size provided [(#344)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/344)
-
-## Hammer Beta-2 - Released 2018-10-29
-
-### Fixed
-- Format error when physical network is in use [(#370)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/370)
-
-## Unreleased as of Sprint 97 ending 2018-10-22
-
-### Fixed
-- Don't use string interpolations inside gettext strings [(#369)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/369)
-- Direct attribute access for `cloud_volume_types` via cloud_tenants API [(#366)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/366)
-
-## Hammer Beta-1 - Released 2018-10-12
+## Hammer-1
 
 ### Added
 - Pass openstack_admin? flag to volume snapshot template collection [(#359)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/359)
@@ -119,10 +67,53 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Direct attribute access for `cloud_volume_types` via cloud_tenants API [(#366)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/366)
 - Get images with pagination loop [(#363)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/363)
 - Don't use string interpolations inside gettext strings [(#369)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/369)
+- New Cloud provider: Fix event creds validation for AMQP [(#399)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/399)
+- Better neutron exception handling condition [(#371)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/371)
+- Service dialog for orchestration template needs tenant selection [(#397)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/397)
+- Check if host create event exists and assign host to it [(#380)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/380)
+- Add explicit runtime dependency on the "parallel" gem [(#403)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/403)
+- Require 'parallel' in the OpenstackHandle [(#404)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/404)
+- Avoid uniqueness constraint violations in sync_users [(#373)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/373)
+- For OpenStack infra validation, validate presence of Ironic [(#379)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/379)
+- New Cloud provider: Fix event creds validation for AMQP [(#324)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/324)
+- Format error when physical network is in use [(#370)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/370)
+- Collect Panko events for all tenants. [(#402)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/402)
 
 ### Removed
 - Remove useless EmsRefresherMixin [(#304)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/304)
 
+## Unreleased as of Sprint 101 ending 2018-12-17
+
+### Fixed
+- Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
+
+## Unreleased as of Sprint 100 ending 2018-12-03
+
+### Added
+- Add supports_conversion_host to Vm [(#407)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/407)
+- Add a default parallel thread limit to the settings yaml [(#405)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/405)
+
+### Fixed
+- Fix autocomplete error in targeted Cloud Volume collection [(#400)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/400)
+
+## Unreleased as of Sprint 99 ending 2018-11-19
+
+### Added
+- Add support for multiple amqp endpoints [(#394)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/394)
+- Refresh an attached undercloud when saving changes to an overcloud [(#393)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/393)
+- Parallelize OpenstackHandle [(#374)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/374)
+
+## Unreleased as of Sprint 98 ending 2018-11-05
+
+### Added
+- When doing targeted refresh of a volume refresh any attached VMs [(#386)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/386)
+
+## Gaprindashvili-6 - Released 2018-11-02
+
+### Fixed
+- Require hostname if provider is enabled [(#322)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/322)
+- Filter Keystone Projects by domain_id [(#342)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/342)
+- Use empty name for volume if only size provided [(#344)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/344)
 
 ## Gaprindashvili-5 - Released 2018-09-07
 
