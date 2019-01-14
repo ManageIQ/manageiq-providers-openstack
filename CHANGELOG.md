@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 102 ending 2019-01-07
+
+### Fixed
+- Targeted refresh: Collect tenant ems references last [(#422)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/422)
+- Remove legacy network collection from CloudManager graph refresh [(#421)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/421)
+
 ## Hammer-1
 
 ### Added
