@@ -281,7 +281,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       o.status_reason = stack.stack_status_reason
       o.parent = persister.orchestration_stacks.lazy_find(stack.parent)
       o.orchestration_template = orchestration_template(stack)
-      o.cloud_tenant = persister.cloud_tenants.lazy_find(stack.service.current_tenant["id"])
+      # stack parameters can miss tenant_id, so we make admin default tenant
+      tenant_id = if stack.parameters && stack.parameters["OS::project_id"]
+                    stack.parameters["OS::project_id"]
+                  else
+                    stack.service.current_tenant["id"]
+                  end
+      o.cloud_tenant = persister.cloud_tenants.lazy_find(tenant_id)
 
       orchestration_stack_resources(stack, o)
       orchestration_stack_outputs(stack, o)

@@ -179,9 +179,8 @@ module OpenstackStubs
           'output_value' => "output_value_#{i}",
           'description'  => "output_description_#{i}"
         }],
-        :parameters          => [{
-          "parameter_#{i}" => "key_#{i}"
-        }],
+        :parameters          => {"OS::project_id" => "project_id_#{i}"},
+        :links               => [{"href"=>"http://42.42.42.42:4242/v1/project_id_#{i}/stacks/orchestration_stack_#{i}/#{i}"}],
         :resources           => [OpenStruct.new(
           :physical_resource_id   => "vm_#{i}",
           :logical_resource_id    => "logical_resource_#{i}",
