@@ -31,6 +31,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_networks
+    return [] unless network_service
     return [] if references(:cloud_networks).blank?
     return @cloud_networks if @cloud_networks.any?
     @cloud_networks = references(:cloud_networks).collect do |network_id|
@@ -39,11 +40,13 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_subnets
+    return [] unless network_service
     return @cloud_subnets if @cloud_subnets.any?
     @cloud_subnets = network_service.handled_list(:subnets, {}, openstack_network_admin?)
   end
 
   def network_ports
+    return [] unless network_service
     return [] if references(:network_ports).blank?
     return @network_ports if @network_ports.any?
     @network_ports = (references(:network_ports).collect do |port_id|
@@ -54,6 +57,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def network_routers
+    return [] unless network_service
     return [] if references(:network_routers).blank?
     return @network_routers if @network_routers.any?
     @network_routers = references(:network_routers).collect do |router_id|
@@ -62,6 +66,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def security_groups
+    return [] unless network_service
     return [] if references(:security_groups).blank?
     return @security_groups if @security_groups.any?
     @security_groups = references(:security_groups).collect do |security_group_id|
@@ -70,6 +75,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def floating_ips
+    return [] unless network_service
     return [] if references(:floating_ips).blank? && references(:floating_ips_by_address).blank?
     return @floating_ips if @floating_ips.any?
     @floating_ips = references(:floating_ips_by_address).collect do |floating_ip|
@@ -80,6 +86,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def orchestration_stacks
+    return [] unless orchestration_service
     return [] if targets_by_association(:orchestration_stacks).blank?
     return @orchestration_stacks unless @orchestration_stacks.nil?
     @orchestration_stacks = targets_by_association(:orchestration_stacks).collect do |target|
@@ -113,6 +120,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def images
+    return [] unless image_service
     return [] if references(:images).blank?
     return @images if @images.any?
     @images = references(:images).collect do |image_id|
@@ -196,6 +204,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_volumes
+    return [] unless volume_service
     return [] if references(:cloud_volumes).blank?
     return @cloud_volumes if @cloud_volumes.any?
     @cloud_volumes = targets_by_association(:cloud_volumes).collect do |target|
@@ -204,6 +213,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_volume_snapshots
+    return [] unless volume_service
     return [] if references(:cloud_volume_snapshots).blank?
     return @cloud_volume_snapshots if @cloud_volume_snapshots.any?
     @cloud_volume_snapshots = targets_by_association(:cloud_volume_snapshots).collect do |target|
@@ -212,6 +222,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def cloud_volume_backups
+    return [] unless volume_service
     # backup notifications from panko don't include ids, so
     # we will just refresh all the backups if we get an event.
     return [] if references(:cloud_volume_backups).blank?

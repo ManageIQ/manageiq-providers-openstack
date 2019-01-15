@@ -6,6 +6,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def availability_zones_volume
+    return [] unless volume_service
     @availability_zones_volume ||= safe_list { volume_service.availability_zones.summary }
   end
 
@@ -51,6 +52,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def images
+    return [] unless image_service
     return @images if @images.any?
     @images = if openstack_admin?
                 image_service.images_with_pagination_loop
@@ -66,9 +68,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
 
   def quotas
     quotas = safe_list { compute_service.quotas_for_accessible_tenants }
-    quotas.concat(safe_list { volume_service.quotas_for_accessible_tenants }) if volume_service.name == :cinder
+    quotas.concat(safe_list { volume_service.quotas_for_accessible_tenants }) if volume_service
     # TODO(lsmola) can this somehow be moved under NetworkManager
-    quotas.concat(safe_list { network_service.quotas_for_accessible_tenants }) if network_service.name == :neutron
+    quotas.concat(safe_list { network_service.quotas_for_accessible_tenants }) if network_service
     quotas
   end
 
@@ -144,6 +146,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
   end
 
   def volumes_by_id
+    return [] unless volume_service
     # collect even unavailable volumes since they're just being used to identify
     # whether a given snapshot is based on a bootable volume-- the volume's current
     # status doesn't matter.

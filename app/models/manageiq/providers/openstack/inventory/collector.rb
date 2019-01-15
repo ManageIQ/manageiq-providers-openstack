@@ -76,10 +76,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     connection
   end
 
-  def cinder_service
-    @cinder_service ||= manager.openstack_handle.cinder_service
-  end
-
   def identity_service
     @identity_service ||= manager.openstack_handle.identity_service
   end
