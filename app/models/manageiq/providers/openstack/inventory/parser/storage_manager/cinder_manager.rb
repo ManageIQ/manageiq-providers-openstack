@@ -17,6 +17,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
       volume.description = volume_description(v)
       volume.volume_type = v.volume_type
       volume.size = v.size.to_i.gigabytes
+      volume.encrypted = v.attributes['encrypted']
+      volume.multi_attachment = v.attributes['multiattach']
       volume.base_snapshot = persister.cloud_volume_snapshots.lazy_find(v.snapshot_id)
       volume.cloud_tenant = persister.cloud_tenants.lazy_find(v.tenant_id)
       volume.availability_zone = persister.availability_zones.lazy_find(v.availability_zone || "null_az")
