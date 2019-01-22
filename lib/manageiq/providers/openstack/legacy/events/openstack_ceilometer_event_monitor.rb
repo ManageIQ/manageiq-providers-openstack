@@ -43,11 +43,20 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
     end
   end
 
+  def event_backread_seconds
+    event_backread = Settings.fetch_path(:ems, :ems_openstack, :event_handling, :event_backread_seconds) || 0
+    event_backread.seconds
+  end
+
   def each_batch
     while @monitor_events
       $log.info("Querying OpenStack for events newer than #{latest_event_timestamp}...") if $log
       events = list_events(query_options).sort_by(&:generated)
-      @since = events.last.generated unless events.empty?
+
+      # count back a few seconds to catch events that may have arrived in panko
+      # out of order.
+      last_seen = events.last.generated unless events.empty?
+      @since = (Time.iso8601(last_seen) - event_backread_seconds).iso8601 if last_seen
 
       amqp_events = filter_unwanted_events(events).map do |event|
         converted_event = OpenstackCeilometerEventConverter.new(event)
