@@ -74,6 +74,16 @@ describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
         )
       )
     end
+
+    it "doesn't create duplicate events" do
+      create_ems_event("compute.instance.create.start", "service" => "compute")
+      # these two should have identical timestamps, event_types, and ems_ids,
+      # so they are probably duplicate events. As such, only one EmsEvent
+      # should be created.
+      create_ems_event("compute.instance.create.end", "service" => "compute")
+      create_ems_event("compute.instance.create.end", "service" => "compute")
+      expect(EmsEvent.all.count).to eq(2)
+    end
   end
 
   def target_references(parsed_targets)
