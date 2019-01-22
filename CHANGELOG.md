@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 103 ending 2019-01-21
+
+### Added
+- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
+
+### Changed
+- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
+
+### Fixed
+- Read back to catch events that may have reached Panko out of order [(#433)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/433)
+- Get tenant for stack from parameters [(#417)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/417)
+
 ## Unreleased as of Sprint 102 ending 2019-01-07
 
 ### Fixed
