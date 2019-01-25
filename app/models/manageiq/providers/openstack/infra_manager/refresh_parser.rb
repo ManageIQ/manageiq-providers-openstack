@@ -47,8 +47,9 @@ module ManageIQ
           raise MiqException::MiqOpenstackGlanceServiceMissing, "Required service Glance is missing in the catalog."
         end
 
+        # log a warning but don't fail on missing Ironicggg
         unless @baremetal_service
-          raise MiqException::MiqOpenstackIronicServiceMissing, "Required service Ironic is missing in the catalog."
+          _log.warn "Ironic service is missing in the catalog. No host data will be synced."
         end
       end
 
@@ -119,7 +120,7 @@ module ManageIQ
       end
 
       def hosts
-        @hosts ||= uniques(@baremetal_service.handled_list(:nodes))
+        @hosts ||= @baremetal_service && uniques(@baremetal_service.handled_list(:nodes))
       end
 
       def clouds

@@ -200,7 +200,8 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
       error_message = task.message
     end
 
-    [error_message.blank?, error_message]
+    # Don't fail if ironic isn't found, but provide warning message for user.
+    [(error_message.blank? || error_message[0, 9] == "Baremetal"), error_message]
   end
 
   # For infra, validate primary endpoint *and* verify presence of ironic
@@ -209,7 +210,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
       begin
         !!raw_connect(*params, "Baremetal")
       rescue MiqException::ServiceNotAvailable
-        raise MiqException::ServiceNotAvailable, "Baremetal service not found. Not an OpenStack Infrastructure provider."
+        raise MiqException::ServiceNotAvailable, "Baremetal(Ironic) service not found. Some infrastructure features may be disabled."
       end
     end
   end
