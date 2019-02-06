@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 104 ending 2019-02-04
+
+### Fixed
+- Warn but still allow infra without ironic [(#436)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/436)
+
 ## Unreleased as of Sprint 103 ending 2019-01-21
 
 ### Added
