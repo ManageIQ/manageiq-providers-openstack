@@ -164,6 +164,15 @@
           :required: true
           :display: :edit
           :data_type: :integer
+        :cloud_network_selection_method:
+          :values:
+            network: Cloud Network
+            port: Network Port
+          :description: Network Selection Method
+          :required: false
+          :display: :edit
+          :default: network
+          :data_type: :string
         :cloud_network:
           :values_from:
             :method: :allowed_cloud_networks
@@ -171,6 +180,15 @@
           :auto_select_single: false
           :required: true
           :required_method: :validate_cloud_network
+          :display: :edit
+          :data_type: :integer
+        :network_port:
+          :values_from:
+            :method: :allowed_network_ports
+          :description: Network Port
+          :auto_select_single: false
+          :required: true
+          :required_method: :validate_network_port
           :display: :edit
           :data_type: :integer
         :security_groups:

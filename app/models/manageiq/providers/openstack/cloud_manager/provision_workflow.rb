@@ -83,16 +83,25 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     end
   end
 
-  def validate_cloud_network(field, values, dlg, fld, value)
-    return nil if allowed_cloud_networks.length <= 1
-    validate_placement(field, values, dlg, fld, value)
-  end
-
   def allowed_cloud_networks(_options = {})
     return {} unless (src = provider_or_tenant_object)
     targets = get_targets_for_source(src, :cloud_filter, CloudNetwork, 'all_cloud_networks')
     targets = filter_cloud_networks(targets)
     allowed_ci(:cloud_network, [:availability_zone], targets.map(&:id))
+  end
+
+  def allowed_network_ports(_options = {})
+    return {} unless (src = provider_or_tenant_object)
+    cloud_networks = get_targets_for_source(src, :cloud_filter, CloudNetwork, 'all_cloud_networks')
+    network_ports = []
+    cloud_networks.each do |cloud_network|
+      cloud_network.cloud_subnets.each do |cloud_subnet|
+        network_ports.push(*cloud_subnet.network_ports.where(:device_owner => [nil, ""]).to_a)
+      end
+    end
+    network_ports.each_with_object({}) do |port, h|
+      h[port.id] = "#{port.name} (#{port.fixed_ip_addresses.first})"
+    end
   end
 
   private
