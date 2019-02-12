@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,lib}/**/*"]
 
-  s.add_runtime_dependency "activesupport",        ">= 5.0", "< 5.2"
+  s.add_runtime_dependency "activesupport",        ">= 5.0", "< 5.3"
   s.add_runtime_dependency "bunny",                "~> 2.1.0"
   s.add_runtime_dependency "excon",                "~> 0.40"
   s.add_runtime_dependency "fog-openstack",        ">= 0.3.10"
