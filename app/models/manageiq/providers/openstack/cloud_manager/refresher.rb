@@ -1,5 +1,5 @@
 module ManageIQ::Providers
-  class Openstack::CloudManager::Refresher < ManageIQ::Providers::BaseManager::ManagerRefresher
+  class Openstack::CloudManager::Refresher < ManageIQ::Providers::BaseManager::Refresher
     def save_inventory(ems, target, inventory_collections)
       super
       EmsRefresh.queue_refresh(ems.network_manager) if target.kind_of?(ManageIQ::Providers::BaseManager)
