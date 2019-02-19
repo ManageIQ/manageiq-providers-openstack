@@ -1,5 +1,5 @@
 module ManageIQ::Providers
-  class Openstack::NetworkManager::Refresher < ManageIQ::Providers::BaseManager::ManagerRefresher
+  class Openstack::NetworkManager::Refresher < ManageIQ::Providers::BaseManager::Refresher
     def post_process_refresh_classes
       []
     end
