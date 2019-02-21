@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 105 ending 2019-02-18
+
+### Added
+- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#441)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/441)
+
 ## Unreleased as of Sprint 104 ending 2019-02-04
 
 ### Fixed
@@ -28,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 - Targeted refresh: Collect tenant ems references last [(#422)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/422)
 - Remove legacy network collection from CloudManager graph refresh [(#421)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/421)
 
-## Hammer-1
+## Hammer-1 - Released 2019-01-15
 
 ### Added
 - Pass openstack_admin? flag to volume snapshot template collection [(#359)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/359)
