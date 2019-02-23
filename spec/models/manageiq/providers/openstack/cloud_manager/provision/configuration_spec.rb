@@ -6,6 +6,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::Configuration 
       @vm       = FactoryBot.create(:vm_openstack)
       @net1     = FactoryBot.create(:cloud_network)
       @net2     = FactoryBot.create(:cloud_network)
+      @port     = FactoryBot.create(:network_port_openstack)
 
       @task = FactoryBot.create(:miq_provision_openstack,
                                  :source      => @template,
@@ -13,10 +14,20 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::Configuration 
                                  :state       => 'pending',
                                  :status      => 'Ok',
                                  :options     => {
-                                   :src_vm_id     => @template.id,
-                                   :cloud_network => [@net1.id, @net1.name]
-                                 }
-                                )
+                                   :src_vm_id                      => @template.id,
+                                   :cloud_network_selection_method => "network",
+                                   :cloud_network                  => [@net1.id, @net1.name]
+                                 })
+      @port_task = FactoryGirl.create(:miq_provision_openstack,
+                                      :source      => @template,
+                                      :destination => @vm,
+                                      :state       => 'pending',
+                                      :status      => 'Ok',
+                                      :options     => {
+                                        :src_vm_id                      => @template.id,
+                                        :cloud_network_selection_method => "port",
+                                        :network_port                   => [@port.id, @port.name]
+                                      })
       allow(@task).to receive_messages(:miq_request => double("MiqRequest").as_null_object)
     end
 
@@ -24,6 +35,12 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::Configuration 
       @task.configure_network_adapters
 
       expect(@task.options[:networks]).to eq([{"net_id" => @net1.ems_ref}])
+    end
+
+    it "sets nic from dialog specifying network port" do
+      @port_task.configure_network_adapters
+
+      expect(@port_task.options[:networks]).to eq([{"port_id" => @port.ems_ref}])
     end
 
     it "sets nic from dialog with additional nic from automate" do
