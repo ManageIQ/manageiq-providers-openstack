@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-3
+
+### Fixed
+- Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
+
 ## Unreleased as of Sprint 105 ending 2019-02-18
 
 ### Added
