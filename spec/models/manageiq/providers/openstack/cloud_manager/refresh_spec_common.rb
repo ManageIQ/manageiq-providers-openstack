@@ -243,7 +243,7 @@ module Openstack
     def assert_table_counts
       expect(ExtManagementSystem.count).to               eq 4 # Can this be not hardcoded? self/network/cinder/swift
       expect(Flavor.count).to                            eq compute_data.flavors.count
-      expect(AvailabilityZone.count).to                  eq availability_zones_count
+      expect(@ems.availability_zones.count).to           eq availability_zones_count
       expect(FloatingIp.count).to                        eq network_data.floating_ips.sum
       expect(AuthPrivateKey.count).to                    eq compute_data.key_pairs.count
       expect(security_groups_without_defaults.count).to  eq security_groups_count
