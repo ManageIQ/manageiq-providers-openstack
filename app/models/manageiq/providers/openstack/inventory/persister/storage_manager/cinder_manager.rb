@@ -11,7 +11,6 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::StorageManager::Cind
 
   def initialize_cloud_inventory_collections
     %i(vms
-       availability_zones
        hardwares
        cloud_tenants
        disks).each do |name|

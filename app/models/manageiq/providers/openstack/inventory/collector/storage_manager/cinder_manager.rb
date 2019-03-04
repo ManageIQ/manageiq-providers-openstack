@@ -1,6 +1,12 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Collector
   include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
 
+  def availability_zones
+    return [] unless volume_service
+    return @availability_zones if @availability_zones.any?
+    @availability_zones = safe_list { volume_service.availability_zones.summary }
+  end
+
   def cloud_volumes
     return [] unless volume_service
     return @cloud_volumes if @cloud_volumes.any?

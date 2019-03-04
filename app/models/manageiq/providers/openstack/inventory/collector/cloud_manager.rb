@@ -1,17 +1,9 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < ManageIQ::Providers::Openstack::Inventory::Collector
   include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
 
-  def availability_zones_compute
-    @availability_zones_compute ||= safe_list { compute_service.availability_zones.summary }
-  end
-
-  def availability_zones_volume
-    return [] unless volume_service
-    @availability_zones_volume ||= safe_list { volume_service.availability_zones.summary }
-  end
-
   def availability_zones
-    (availability_zones_compute + availability_zones_volume).uniq(&:zoneName)
+    return @availability_zones if @availability_zones.any?
+    @availability_zones = safe_list { compute_service.availability_zones.summary }
   end
 
   def cloud_services

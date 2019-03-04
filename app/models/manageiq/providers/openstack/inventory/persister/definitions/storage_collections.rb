@@ -2,7 +2,8 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Storag
   extend ActiveSupport::Concern
 
   def initialize_storage_inventory_collections
-    %i(cloud_volumes
+    %i(availability_zones
+       cloud_volumes
        cloud_volume_snapshots
        cloud_volume_types
        ).each do |name|

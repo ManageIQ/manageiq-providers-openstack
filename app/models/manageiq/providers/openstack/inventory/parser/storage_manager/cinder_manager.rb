@@ -1,9 +1,18 @@
 class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderManager < ManageIQ::Providers::Openstack::Inventory::Parser
   def parse
+    availability_zones
     cloud_volumes
     cloud_volume_snapshots
     cloud_volume_backups
     cloud_volume_types
+  end
+
+  def availability_zones
+    collector.availability_zones.each do |az|
+      availability_zone = persister.availability_zones.find_or_build(az.zoneName)
+      availability_zone.ems_ref = az.zoneName
+      availability_zone.name = az.zoneName
+    end
   end
 
   def cloud_volumes
@@ -19,7 +28,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
       volume.size = v.size.to_i.gigabytes
       volume.base_snapshot = persister.cloud_volume_snapshots.lazy_find(v.snapshot_id)
       volume.cloud_tenant = persister.cloud_tenants.lazy_find(v.tenant_id)
-      volume.availability_zone = persister.availability_zones.lazy_find(v.availability_zone || "null_az")
+      volume.availability_zone = persister.availability_zones.lazy_find(v.availability_zone)
 
       volume_attachments(volume, v.attachments)
     end
@@ -54,7 +63,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
       backup.name = b['display_name'] || b['name']
       backup.description = b['display_description'] || b['description']
       backup.cloud_volume = persister.cloud_volumes.lazy_find(b['volume_id'])
-      backup.availability_zone = persister.availability_zones.lazy_find(b['availability_zone'] || "null_az")
+      backup.availability_zone = persister.availability_zones.lazy_find(b['availability_zone'])
     end
   end
 

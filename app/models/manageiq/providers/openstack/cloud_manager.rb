@@ -407,6 +407,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     ManageIQ::Providers::Openstack::CloudManager::EventCatcher
   end
 
+  def volume_availability_zones
+    cinder_manager.availability_zones
+  end
+
   #
   # Statistics
   #
