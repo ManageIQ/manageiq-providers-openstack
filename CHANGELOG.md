@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 106 ending 2019-03-04
+
+### Added
+- Allow user to select Network Port for provisioning [(#416)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/416)
+
 ## Hammer-3
 
 ### Fixed
