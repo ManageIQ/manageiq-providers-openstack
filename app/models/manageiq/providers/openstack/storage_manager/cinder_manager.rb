@@ -9,6 +9,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   supports :cinder_volume_types
   supports :volume_multiattachment
   supports :volume_resizing
+  supports :volume_availability_zones
 
   # Auth and endpoints delegations, editing of this type of manager must be disabled
   delegate :authentication_check,

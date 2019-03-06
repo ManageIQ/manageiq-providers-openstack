@@ -39,32 +39,33 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
 
   def initialize_inventory_sources
     # cloud
-    @availability_zones        = []
-    @cloud_services            = []
-    @tenants                   = []
-    @flavors                   = []
-    @host_aggregates           = []
-    @key_pairs                 = []
-    @images                    = []
-    @orchestration_stacks      = nil
-    @quotas                    = []
-    @vms                       = []
-    @vnfs                      = []
-    @vnfds                     = []
-    @volume_templates          = []
-    @volume_snapshot_templates = []
+    @availability_zones_compute = []
+    @availability_zones_volume  = []
+    @cloud_services             = []
+    @tenants                    = []
+    @flavors                    = []
+    @host_aggregates            = []
+    @key_pairs                  = []
+    @images                     = []
+    @orchestration_stacks       = nil
+    @quotas                     = []
+    @vms                        = []
+    @vnfs                       = []
+    @vnfds                      = []
+    @volume_templates           = []
+    @volume_snapshot_templates  = []
     # network
-    @cloud_networks            = []
-    @cloud_subnets             = []
-    @floating_ips              = []
-    @network_ports             = []
-    @network_routers           = []
-    @security_groups           = []
+    @cloud_networks             = []
+    @cloud_subnets              = []
+    @floating_ips               = []
+    @network_ports              = []
+    @network_routers            = []
+    @security_groups            = []
     # cinder
-    @cloud_volumes             = []
-    @cloud_volume_snapshots    = []
-    @cloud_volume_backups      = []
-    @cloud_volume_types        = []
+    @cloud_volumes              = []
+    @cloud_volume_snapshots     = []
+    @cloud_volume_backups       = []
+    @cloud_volume_types         = []
   end
 
   def connection

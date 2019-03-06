@@ -45,14 +45,23 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
   def availability_zones
     collector.availability_zones.each do |az|
-      availability_zone = persister.availability_zones.find_or_build(az.zoneName)
-      availability_zone.ems_ref = az.zoneName
-      availability_zone.name = az.zoneName
+      availability_zone = persister.availability_zones.find_or_build(az)
+      availability_zone.ems_ref = az
+      availability_zone.name = az
+      availability_zone.provider_services_supported = []
+      if collector.availability_zones_compute.include?(az)
+        availability_zone.provider_services_supported.append("compute")
+      end
+      if collector.availability_zones_volume.include?(az)
+        availability_zone.provider_services_supported.append("volume")
+      end
     end
+
     # ensure the null az exists
     null_az = persister.availability_zones.find_or_build("null_az")
     null_az.type = "ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull"
     null_az.ems_ref = "null_az"
+    null_az.provider_services_supported = ["compute"]
   end
 
   def cloud_services

@@ -175,6 +175,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     def setup_mocked_collector
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:image_service).and_return(double(:name => "not-glance"))
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones).and_return(mocked_availability_zones)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones_compute).and_return(mocked_availability_zones)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones_volume).and_return(mocked_availability_zones)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:cloud_services).and_return(mocked_cloud_services)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:flavors).and_return(mocked_flavors)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:host_aggregates).and_return(mocked_host_aggregates)

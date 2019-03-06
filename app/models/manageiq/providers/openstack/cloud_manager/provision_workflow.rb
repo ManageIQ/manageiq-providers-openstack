@@ -104,6 +104,12 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     end
   end
 
+  def allowed_availability_zones(_options = {})
+    source = load_ar_obj(get_source_vm)
+    targets = get_targets_for_ems(source, :cloud_filter, AvailabilityZone, 'availability_zones.available')
+    targets.each_with_object({}) { |az, h| h[az.id] = az.name if az.provider_services_supported.include?("compute") }
+  end
+
   private
 
   def dialog_name_from_automate(message = 'get_dialog_name')

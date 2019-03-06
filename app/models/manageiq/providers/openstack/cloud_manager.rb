@@ -215,6 +215,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     authentication_for_providers.collect(&:authentication_type) - [:ssh_keypair]
   end
 
+  def volume_availability_zones
+    availability_zones.where("'volume' = ANY(provider_services_supported)")
+  end
+
   #
   # Operations
   #
