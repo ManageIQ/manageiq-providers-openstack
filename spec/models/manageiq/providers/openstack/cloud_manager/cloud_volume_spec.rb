@@ -78,6 +78,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
     context "#update_volume" do
       it 'updates the volume' do
         expect(the_raw_volume).to receive(:save)
+        expect(the_raw_volume).to receive(:size)
         cloud_volume.update_volume({})
       end
 
