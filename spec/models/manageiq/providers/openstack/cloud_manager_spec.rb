@@ -76,7 +76,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
         instance_of(Hash)
       )
 
-      described_class.raw_connect(MiqPassword.encrypt("dummy"), params, "Compute")
+      described_class.raw_connect(ManageIQ::Password.encrypt("dummy"), params, "Compute")
     end
 
     it "works with unencrypted passwords" do

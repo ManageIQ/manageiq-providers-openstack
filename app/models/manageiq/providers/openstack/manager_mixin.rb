@@ -17,7 +17,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       OpenstackRabbitEventMonitor.available?(
         :hostname => params[:amqp_hostname],
         :username => params[:amqp_userid],
-        :password => MiqPassword.try_decrypt(password),
+        :password => ManageIQ::Password.try_decrypt(password),
         :port     => params[:amqp_api_port]
       )
     end
@@ -34,7 +34,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
 
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
-      authentication = {:userid => user, :password => MiqPassword.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
+      authentication = {:userid => user, :password => ManageIQ::Password.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
       ems.connection_configurations = [{:endpoint       => endpoint,
                                         :authentication => authentication}]
 
