@@ -44,8 +44,10 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
                         :subject => self,
                       }) do
       with_provider_object do |volume|
+        size = options.delete(:size)
         volume.attributes.merge!(options)
         volume.save
+        volume.extend(size) if size.to_i != volume.size.to_i
       end
     end
   rescue => e
