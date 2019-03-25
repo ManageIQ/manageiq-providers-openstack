@@ -56,7 +56,7 @@ module ManageIQ::Providers::Openstack::InfraManager::Host::Operations
                                    power_state = "power off")
     task_opts = {
       :action  => "Set Ironic Node Power State",
-      :user_id => userid
+      :userid  => userid
     }
 
     queue_opts = {
