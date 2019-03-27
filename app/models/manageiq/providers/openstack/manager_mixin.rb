@@ -61,6 +61,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     def translate_exception(err)
       require 'excon'
       case err
+      when Excon::Errors::NotFound
+        MiqException::MiqHostError.new("Endpoint not found.")
       when Excon::Errors::Unauthorized
         MiqException::MiqInvalidCredentialsError.new("Login failed due to a bad username or password.")
       when Excon::Errors::Timeout
