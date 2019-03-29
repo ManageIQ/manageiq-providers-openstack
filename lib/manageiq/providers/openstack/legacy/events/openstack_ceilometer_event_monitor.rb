@@ -3,6 +3,8 @@ require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_converter'
 
 class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
+  include TimezoneMixin
+
   def self.available?(options = {})
     return connect_service_from_settings(options[:ems]) if event_services.keys.include? event_service_settings
     begin
@@ -54,9 +56,11 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
       events = list_events(query_options).sort_by(&:generated)
 
       # count back a few seconds to catch events that may have arrived in panko
-      # out of order.
-      last_seen = events.last.generated unless events.empty?
-      @since = (Time.iso8601(last_seen) - event_backread_seconds).iso8601 if last_seen
+      # out of order. OSP recommends return time in UTC.
+      with_a_timezone('UTC') do
+        last_seen = events.last.generated unless events.empty?
+        @since = (Time.zone.parse(last_seen) - event_backread_seconds).iso8601 if last_seen
+      end
 
       amqp_events = filter_unwanted_events(events).map do |event|
         converted_event = OpenstackCeilometerEventConverter.new(event)
