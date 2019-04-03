@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-4
+## Unreleased as of Sprint 108 ending 2019-04-01
+
+### Added
+- Support Cinder's volume-extend action [(#448)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/448)
+
+### Fixed
+- Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
+- Add case for 404 error to ManagerMixin:translate_exception [(#456)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/456)
+- Fix invalid field user_id on Miqtask [(#452)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/452)
+
+## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Read back to catch events that may have reached Panko out of order [(#433)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/433)
@@ -20,7 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Added
 - Allow user to select Network Port for provisioning [(#416)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/416)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
