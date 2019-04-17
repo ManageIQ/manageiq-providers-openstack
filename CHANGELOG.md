@@ -5,13 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Hammer-5
+
+### Fixed
+- Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
+
 ## Unreleased as of Sprint 108 ending 2019-04-01
 
 ### Added
 - Support Cinder's volume-extend action [(#448)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/448)
 
 ### Fixed
-- Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
 - Add case for 404 error to ManagerMixin:translate_exception [(#456)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/456)
 - Fix invalid field user_id on Miqtask [(#452)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/452)
 
