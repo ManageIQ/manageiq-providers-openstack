@@ -5,12 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-4
+## Hammer-5
+
+### Fixed
+- Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
+
+## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Read back to catch events that may have reached Panko out of order [(#433)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/433)
 
-## Hammer-3
+## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
