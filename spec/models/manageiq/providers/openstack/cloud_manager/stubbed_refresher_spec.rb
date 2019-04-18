@@ -88,7 +88,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
           EmsRefresh.refresh(keypair_target)
           assert_do_not_delete
           expect(@ems.key_pairs.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
-          expect(AuthPrivateKey.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+          expect(ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
         end
       end
 
@@ -101,7 +101,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
                                                       :manager_ref => {:ems_ref => nil})
           EmsRefresh.refresh(keypair_target)
           expect(@ems.key_pairs.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
-          expect(AuthPrivateKey.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
+          expect(ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.count).to eq(test_counts(@data_scaling)[:key_pairs_count])
           @data_scaling -= 1
         end
       end
@@ -133,7 +133,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       image_count_plus_disconnect_inv           = image_count + test_counts(disconnect)[:miq_templates_count]
       volumes_and_snapshots_plus_disconnect_inv = volumes_and_snapshots_count + test_counts(disconnect)[:volume_templates_count] + test_counts(disconnect)[:volume_snapshot_templates_count]
       {
-        :auth_private_key              => test_counts(@data_scaling)[:key_pairs_count],
+        :auth_key_pair                 => test_counts(@data_scaling)[:key_pairs_count],
         :ext_management_system         => 4,
         :flavor                        => test_counts(@data_scaling)[:flavors_count],
         :host_aggregate                => test_counts(@data_scaling)[:host_aggregates_count],
@@ -153,7 +153,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
 
     def assert_table_counts
       actual = {
-        :auth_private_key              => AuthPrivateKey.count,
+        :auth_key_pair                 => ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.count,
         :ext_management_system         => ExtManagementSystem.count,
         :flavor                        => Flavor.count,
         :host_aggregate                => HostAggregate.count,

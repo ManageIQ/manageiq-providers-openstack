@@ -242,7 +242,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
         end
 
         it "#allowed_guest_access_key_pairs" do
-          kp = AuthPrivateKey.create(:name => "auth_1")
+          kp = ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.create(:name => "auth_1")
           provider.key_pairs << kp
           expect(workflow.allowed_guest_access_key_pairs).to eq(kp.id => kp.name)
         end

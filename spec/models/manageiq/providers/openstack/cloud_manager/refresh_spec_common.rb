@@ -62,8 +62,8 @@ module Openstack
       expect(CloudObjectStoreContainer.count).to   eq storage_data.directories.count
       expect(CloudObjectStoreObject.count).to      eq 0
       expect(CloudResourceQuota.count).to          eq 0
-      expect(AuthPrivateKey.count).to              eq 0
       expect(AvailabilityZone.count).to            eq 1 # just NoZone
+      expect(ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.count).to eq 0
 
       # We have broken flavor list, but there is fallback for private flavors using get, which will collect used flavors
       expect(Flavor.count).to eq 2
@@ -245,7 +245,7 @@ module Openstack
       expect(Flavor.count).to                            eq compute_data.flavors.count
       expect(AvailabilityZone.count).to                  eq availability_zones_count
       expect(FloatingIp.count).to                        eq network_data.floating_ips.sum
-      expect(AuthPrivateKey.count).to                    eq compute_data.key_pairs.count
+      expect(ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair.count).to eq compute_data.key_pairs.count
       expect(security_groups_without_defaults.count).to  eq security_groups_count
       expect(firewall_without_defaults.count).to         eq firewall_rules_count
       expect(CloudNetwork.count).to                      eq network_data.networks.count
