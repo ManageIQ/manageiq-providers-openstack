@@ -1,4 +1,4 @@
-# manageiq-providers-openstack
+##### manageiq-providers-openstack
 
 [![Gem Version](https://badge.fury.io/rb/manageiq-providers-openstack.svg)](http://badge.fury.io/rb/manageiq-providers-openstack)
 [![Build Status](https://travis-ci.org/ManageIQ/manageiq-providers-openstack.svg?branch=master)](https://travis-ci.org/ManageIQ/manageiq-providers-openstack)
