@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
+## Unreleased as of Sprint 110 ending 2019-04-29
+
+### Fixed
+- Create instance snapshots with the owner's project scope [(#462)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/462)
+
 ## Hammer-5
 
 ### Fixed
