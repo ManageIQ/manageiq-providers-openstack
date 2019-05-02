@@ -84,6 +84,7 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
 
   def self.connect_service_from_settings(ems)
     $log.debug "#{_log.prefix} Using events provided by \"#{event_service_settings}\" service, which was set in settings.yml."
+    @panko = (event_service_settings == "panko")
     ems.connect(:service => event_services[event_service_settings])
   end
 
