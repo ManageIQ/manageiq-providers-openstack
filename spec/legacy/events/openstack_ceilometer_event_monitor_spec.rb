@@ -1,6 +1,42 @@
 require 'manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_monitor'
 
 describe OpenstackCeilometerEventMonitor do
+  context "connecting to services" do
+    it 'sets query options for Panko' do
+      ems_double = double
+      allow(subject.class).to receive(:connect_service_from_settings).and_return nil
+      allow(ems_double).to receive(:connect).with(:service => 'Event')
+      subject.instance_variable_set(:@ems, ems_double)
+      allow(subject).to receive(:latest_event_timestamp).and_return nil
+
+      subject.provider_connection
+      expect(subject.send(:query_options)).to eq([{
+                                                   'field' => 'start_timestamp',
+                                                   'op'    => 'ge',
+                                                   'value' => ''
+                                                 }, {
+                                                   'field' => 'all_tenants',
+                                                   'value' => 'True'
+                                                 }])
+    end
+
+    it 'sets query options for Ceilometer' do
+      ems_double = double
+      allow(subject.class).to receive(:connect_service_from_settings).and_return nil
+      allow(ems_double).to receive(:connect).with(:service => 'Event').and_raise(MiqException::ServiceNotAvailable)
+      allow(ems_double).to receive(:connect).with(:service => 'Metering')
+      subject.instance_variable_set(:@ems, ems_double)
+      allow(subject).to receive(:latest_event_timestamp).and_return nil
+
+      subject.provider_connection
+      expect(subject.send(:query_options)).to eq([{
+                                                   'field' => 'start_timestamp',
+                                                   'op'    => 'ge',
+                                                   'value' => ''
+                                                 }])
+    end
+  end
+
   context "collecting events" do
     it 'query ceilometer nothing new' do
       connection = double
