@@ -8,9 +8,11 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   def self.available?(options = {})
     return connect_service_from_settings(options[:ems]) if event_services.keys.include? event_service_settings
     begin
+      @panko = true
       options[:ems].connect(:service => "Event")
       return true
     rescue MiqException::ServiceNotAvailable => ex
+      @panko = false
       $log.debug("Skipping Openstack Panko events. Availability check failed with #{ex}. Trying Ceilometer.") if $log
       options[:ems].connect(:service => "Metering")
     end
@@ -38,8 +40,10 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   def provider_connection
     return @provider_connection ||= self.class.connect_service_from_settings(@ems) if self.class.event_services.keys.include? self.class.event_service_settings
     begin
+      @panko = true
       @provider_connection ||= @ems.connect(:service => "Event")
     rescue MiqException::ServiceNotAvailable => ex
+      @panko = false
       $log.debug("Panko is not available, trying access events using Ceilometer (#{ex.inspect})") if $log
       @provider_connection = @ems.connect(:service => "Metering")
     end
@@ -104,15 +108,21 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   end
 
   def query_options
-    [{
+    options = [{
       'field' => 'start_timestamp',
       'op'    => 'ge',
       'value' => latest_event_timestamp || ''
-    },
-    {
-      'field' => 'all_tenants',
-      'value' => 'True'
     }]
+    if @panko
+      # all_tenants is not supported by ceilometer
+      # and will cause no results to be returned,
+      # so only include it if we're querying panko.
+      options << {
+        'field' => 'all_tenants',
+        'value' => 'True'
+      }
+    end
+    options
   end
 
   def list_events(query_options)
