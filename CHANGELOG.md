@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-5
+## Hammer-6
+
+### Added
+- Add supports_conversion_host to Vm [(#407)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/407)
+
+### Fixed
+- Create instance snapshots with the owner's project scope [(#462)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/462)
+
+## Hammer-5 - Released 2019-04-23
 
 ### Fixed
 - Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
