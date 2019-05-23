@@ -30,7 +30,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
            :foreign_key => :parent_ems_id,
            :class_name  => "ManageIQ::Providers::StorageManager",
            :autosave    => true
-
+  has_many :snapshots, :through => :vms_and_templates
   include ManageIQ::Providers::Openstack::CinderManagerMixin
   include SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
@@ -277,20 +277,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     log_prefix = "vm=[#{vm.name}]"
 
     compute_service = openstack_handle.compute_service(vm.cloud_tenant.name)
-    snapshot = compute_service.create_image(vm.ems_ref, options[:name], :description => options[:desc]).body["image"]
+    snapshot = compute_service.create_image(vm.ems_ref, options[:name], :description   => options[:desc],
+                                                                        :instance_uuid => vm.ems_ref).body["image"]
 
     Notification.create(:type => :vm_snapshot_success, :subject => vm, :options => {:snapshot_op => 'create'})
     snapshot_id = snapshot["id"]
-
-    # Add new snapshot to the snapshots table.
-    vm.snapshots.create!(
-      :name        => options[:name],
-      :description => options[:desc],
-      :uid         => snapshot_id,
-      :uid_ems     => snapshot_id,
-      :ems_ref     => snapshot_id,
-      :create_time => snapshot["created"]
-    )
 
     return snapshot_id
   rescue => err
