@@ -205,7 +205,29 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       operating_system.product_name = guest_os
       operating_system.distribution = i.try(:os_distro)
       operating_system.version = i.try(:os_version)
+
+      if snapshot?(i) && parent_server_uid
+        snapshot = persister.snapshots.find_or_build(i.id)
+        snapshot.name = i.name
+        snapshot.uid  = i.id
+        snapshot.uid_ems = i.id
+        snapshot.ems_ref = i.id
+        snapshot.create_time = i.created_at
+        snapshot.description = i.attributes[:description]
+        snapshot.vm_or_template = persister.vms.lazy_find(parent_server_uid)
+      end
     end
+  end
+
+  def snapshot?(image)
+    return true if image.image_type == 'snapshot'
+
+    block_device_mapping = image.attributes[:block_device_mapping]
+    source_type = JSON.parse(block_device_mapping)&.dig('source_type') if block_device_mapping
+
+    source_type == 'snapshot'
+  rescue JSON::ParserError
+    false
   end
 
   def orchestration_stack_resources(stack, stack_inventory_object)

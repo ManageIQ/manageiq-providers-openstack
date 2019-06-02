@@ -82,7 +82,7 @@ module Openstack
       expect(Hardware.count).to                          eq vms_count + images_count
       expect(Vm.count).to                                eq vms_count
       expect(OperatingSystem.count).to                   eq vms_count + images_count
-      expect(Snapshot.count).to                          eq 0
+      expect(Snapshot.count).to                          eq snapshots_count
       expect(SystemService.count).to                     eq 0
       expect(GuestDevice.count).to                       eq 0
       expect(CustomAttribute.count).to                   eq 0
@@ -175,6 +175,15 @@ module Openstack
       image_data.images.count + image_data.servers_snapshots.count + 1
     end
 
+    def snapshots_count
+      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
+        # number of snapshots + number of shelved instances
+        image_data.servers_snapshots.count + 1
+      else
+        0
+      end
+    end
+
     def expected_stack_parameters_count
       # We ignore AWS params added there by Heat
       OrchestrationStackParameter.all.to_a.delete_if { |x| x.name.include?("AWS::") || x.name.include?("OS::") }.count
@@ -260,7 +269,7 @@ module Openstack
       # neutron models, then the number of networks will fit the number of neutron networks
       # expect(Network.count).to           eq vms_count * 2
       expect(OperatingSystem.count).to                   eq vms_count + images_count
-      expect(Snapshot.count).to                          eq 0
+      expect(Snapshot.count).to                          eq snapshots_count
       expect(SystemService.count).to                     eq 0
       expect(GuestDevice.count).to                       eq 0
       expect(CustomAttribute.count).to                   eq 0
@@ -792,7 +801,6 @@ module Openstack
       expect(vm.genealogy_parent.name).to  eq vm_expected[:__image_name]
       expect(vm.operating_system).not_to   be_nil
       expect(vm.custom_attributes.size).to eq 0
-      expect(vm.snapshots.size).to         eq 0
 
       if neutron_networking?
         expect(vm.floating_ips.count).to    be > 0

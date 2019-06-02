@@ -45,6 +45,8 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
     add_orchestration_stack_ancestry
 
+    add_snapshots
+
     add_vm_and_template_labels
     add_vm_and_template_taggings
   end
@@ -141,6 +143,13 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
   def add_orchestration_stack_ancestry
     add_collection(cloud, :orchestration_stack_ancestry) do |builder|
       builder.remove_dependency_attributes(:orchestration_stacks_resources) unless targeted?
+    end
+  end
+
+  def add_snapshots
+    add_collection(cloud, :snapshots) do |builder|
+      builder.add_properties(:model_class => ::Snapshot)
+      builder.add_properties(:parent_inventory_collections => %i[vms miq_templates])
     end
   end
 
