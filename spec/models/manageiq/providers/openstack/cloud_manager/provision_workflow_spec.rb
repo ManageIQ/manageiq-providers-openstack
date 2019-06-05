@@ -228,12 +228,17 @@ describe ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow do
       context "with valid relationships" do
         it "#allowed_availability_zones" do
           az = FactoryBot.create(:availability_zone_openstack)
+          az.provider_services_supported = ["compute"]
+          excluded_az = FactoryBot.create(:availability_zone_openstack)
+          excluded_az.provider_services_supported = ["volume"]
           provider.availability_zones << az
           expect(workflow.allowed_availability_zones).to eq(az.id => az.name)
         end
 
         it "#allowed_availability_zones with NULL AZ" do
-          provider.availability_zones << az = FactoryBot.create(:availability_zone_openstack)
+          az = FactoryBot.create(:availability_zone_openstack)
+          az.provider_services_supported = ["compute"]
+          provider.availability_zones << az
           provider.availability_zones << FactoryBot.create(:availability_zone_openstack_null, :ems_ref => "null_az")
 
           azs = workflow.allowed_availability_zones

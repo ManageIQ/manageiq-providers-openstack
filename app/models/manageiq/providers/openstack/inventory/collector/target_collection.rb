@@ -24,10 +24,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def availability_zones
+    availability_zones_compute
+  end
+
+  def availability_zones_compute
     return [] if references(:availability_zones).blank?
-    @availability_zones = references(:availability_zones).collect do |az|
-      OpenStruct.new(:zoneName => az)
-    end
+    @availability_zones_compute = references(:availability_zones)
+  end
+
+  def availability_zones_volume
+    []
   end
 
   def cloud_networks

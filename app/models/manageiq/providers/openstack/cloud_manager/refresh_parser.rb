@@ -94,15 +94,19 @@ module ManageIQ::Providers
     end
 
     def availability_zones_compute
-      @availability_zones_compute ||= safe_list { @connection.availability_zones.summary }
+      return @availability_zones_compute unless @availability_zones_compute.nil?
+      response = safe_list { @connection.availability_zones.summary }
+      @availability_zones_compute = response.collect(&:zoneName)
     end
 
     def availability_zones_volume
-      @availability_zones_volume ||= safe_list { @volume_service.availability_zones.summary }
+      return @availability_zones_volume unless @availability_zones_volume.nil?
+      response = safe_list { @volume_service.availability_zones.summary }
+      @availability_zones_volume = response.collect(&:zoneName)
     end
 
     def availability_zones
-      @availability_zones ||= (availability_zones_compute + availability_zones_volume).uniq(&:zoneName)
+      @availability_zones ||= (availability_zones_compute + availability_zones_volume).to_set
     end
 
     def volumes
@@ -188,12 +192,19 @@ module ManageIQ::Providers
           :ems_ref => uid
         }
       else
-        name = uid = az.zoneName
+        name = uid = az
         new_result = {
           :type    => "ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone",
           :ems_ref => uid,
-          :name    => name
+          :name    => name,
+          :provider_services_supported => []
         }
+        if availability_zones_compute.include?(az)
+          new_result[:provider_services_supported].append("compute")
+        end
+        if availability_zones_volume.include?(az)
+          new_result[:provider_services_supported].append("volume")
+        end
       end
       return uid, new_result
     end

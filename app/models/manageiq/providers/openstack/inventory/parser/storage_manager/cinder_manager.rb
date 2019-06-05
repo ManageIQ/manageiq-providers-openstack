@@ -21,7 +21,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
       volume.multi_attachment = v.attributes['multiattach']
       volume.base_snapshot = persister.cloud_volume_snapshots.lazy_find(v.snapshot_id)
       volume.cloud_tenant = persister.cloud_tenants.lazy_find(v.tenant_id)
-      volume.availability_zone = persister.availability_zones.lazy_find(v.availability_zone || "null_az")
+      volume.availability_zone = persister.availability_zones.lazy_find(v.availability_zone)
 
       volume_attachments(volume, v.attachments)
     end
@@ -56,7 +56,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::StorageManager::CinderM
       backup.name = b['display_name'] || b['name']
       backup.description = b['display_description'] || b['description']
       backup.cloud_volume = persister.cloud_volumes.lazy_find(b['volume_id'])
-      backup.availability_zone = persister.availability_zones.lazy_find(b['availability_zone'] || "null_az")
+      backup.availability_zone = persister.availability_zones.lazy_find(b['availability_zone'])
     end
   end
 
