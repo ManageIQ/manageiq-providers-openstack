@@ -117,7 +117,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
 
       expect(miq_group.tenant).to eq(tenant)
       expect(miq_group.entitlement.miq_user_role).to eq(admin_role)
-      expect(miq_group.users.exists?(user)).to be true
+      expect(miq_group.users.exists?(user.id)).to be true
 
       # member
       miq_group = MiqGroup.joins(:entitlement).where(:tenant_id => tenant.id).where('entitlements.miq_user_role_id' => member_role.id).take
@@ -126,7 +126,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
 
       expect(miq_group.tenant).to eq(tenant)
       expect(miq_group.entitlement.miq_user_role).to eq(member_role)
-      expect(miq_group.users.exists?(user)).to be true
+      expect(miq_group.users.exists?(user.id)).to be true
     end
 
     it "group should be named <provider>-<domainID>-<tenant>-<role> for keystone v3" do
