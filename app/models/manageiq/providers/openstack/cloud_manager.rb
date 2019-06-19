@@ -63,7 +63,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   def refresh_parent_infra_manager
     # If the cloud manager had a new/different infra manager attached to it
     # during this save, refresh the infra manager.
-    if provider_id && (provider_id_was != provider_id) && provider.infra_ems
+    if provider_id && (attribute_before_last_save(:provider_id) != provider_id) && provider.infra_ems
       EmsRefresh.queue_refresh(provider.infra_ems)
       _log.info("EMS: [#{name}] refreshing attached infra manager [#{provider.infra_ems.name}]")
     end
