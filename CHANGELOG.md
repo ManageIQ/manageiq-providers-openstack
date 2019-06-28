@@ -5,7 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-6
+## Hammer-8
+
+### Fixed
+- Revert "Don't create a MIQ Snapshot record when creating an OSP Snapshot" [(#474)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/474)
+
+## Hammer-6 - Released 2019-05-22
 
 ### Added
 - Add supports_conversion_host to Vm [(#407)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/407)
