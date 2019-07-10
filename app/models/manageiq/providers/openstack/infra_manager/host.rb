@@ -139,7 +139,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def collect_services(ssu)
-    containers = ssu.shell_exec("docker ps --format 'table {{.Names}}\t{{.Status}}' | tail -n +2")
+    containers = ssu.shell_exec(list_all_service_containers_cmd)
     if containers
       containers = MiqLinux::Utils.parse_docker_ps_list(containers)
       return super(ssu).concat(containers)
@@ -149,7 +149,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   def refresh_openstack_services(ssu)
     openstack_status = ssu.shell_exec("systemctl -la --plain | awk '/openstack/ {gsub(/ +/, \" \"); gsub(\".service\", \":\"); gsub(\"not-found\",\"(disabled)\"); split($0,s,\" \"); print s[1],s[3],s[2]}' | sed \"s/ loaded//g\"")
-    openstack_containerized_status = ssu.shell_exec("docker ps --format 'table {{.Names}}\t{{.Status}}' | tail -n +2")
+    openstack_containerized_status = ssu.shell_exec(list_all_service_containers_cmd)
 
     services = MiqLinux::Utils.parse_openstack_status(openstack_status)
     if openstack_containerized_status.present?
@@ -185,6 +185,11 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   rescue => err
     _log.log_backtrace(err)
     raise err
+  end
+
+  def list_all_service_containers_cmd
+    'if [ -e /usr/bin/podman ]; then sudo podman ps --format "{{.Names}} {{.Status}}"; fi; '\
+    'if [ -e /usr/bin/docker ]; then docker ps --format "table {{.Names}}\t{{.Status}}" | tail -n +2; fi'
   end
 
   def refresh_custom_attributes_from_conf_files(files)
