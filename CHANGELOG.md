@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ## Hammer-8
 
 ### Fixed
+- Exclude 'all_tenants' option when querying Ceilometer for events [(#467)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/467)
+- Set panko flag when using settings.yml to define event service [(#468)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/468)
+
+## Hammer-8 - Released 2019-07-02
+
+### Fixed
 - Revert "Don't create a MIQ Snapshot record when creating an OSP Snapshot" [(#474)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/474)
 
 ## Hammer-6 - Released 2019-05-22
