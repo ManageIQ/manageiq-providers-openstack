@@ -94,8 +94,9 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def orchestration_stacks
     return [] unless orchestration_service
     return [] if targets_by_association(:orchestration_stacks).blank?
-    return @orchestration_stacks unless @orchestration_stacks.nil?
-    @orchestration_stacks = targets_by_association(:orchestration_stacks).collect do |target|
+    # Cache of this call is done on individual API results, because we call this method multiple times while chenging
+    # the targets_by_association(:orchestration_stacks). The list of targets grows after scanning.
+    targets_by_association(:orchestration_stacks).collect do |target|
       get_orchestration_stack(target.manager_ref[:ems_ref], target.options[:tenant_id])
     end.compact
   rescue Excon::Errors::Forbidden
@@ -104,9 +105,15 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     []
   end
 
-  def get_orchestration_stack(stack_id, tenant_id)
-    tenant = memoized_get_tenant(tenant_id)
-    safe_get { @os_handle.detect_orchestration_service(tenant.try(:name)).stacks.get(stack_id) }
+  def indexed_all_orchestration_stacks
+    @indexed_all_orchestration_stacks ||= all_orchestration_stacks.index_by(&:id)
+  end
+
+  def get_orchestration_stack(stack_id, _tenant_id = nil)
+    # TODO fog needs to implement /v1/{tenant_id}/stacks/{stack_identity} call, right now the only supported call
+    # excepts get(name, id). And when we do just get(id) it degrades to fetching all stacks and O(n) search in them.
+    # But the method for fetching all stack doesn't include nested stacks, so we were missing those.
+    indexed_all_orchestration_stacks[stack_id]
   end
 
   def vms
