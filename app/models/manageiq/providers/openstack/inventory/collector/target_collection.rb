@@ -118,10 +118,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def vms
     return [] if references(:vms).blank?
-    return @vms if @vms.any?
-    @vms = references(:vms).collect do |vm_id|
-      safe_get { compute_service.servers.get(vm_id) }
+    references(:vms).collect do |vm_id|
+      get_vm(vm_id)
     end.compact
+  end
+
+  def get_vm(uuid)
+    @indexes_vms ||= {}
+    return @indexes_vms[uuid] if @indexes_vms[uuid]
+
+    @indexes_vms[uuid] = safe_get { compute_service.servers.get(uuid) }
   end
 
   def flavors
@@ -319,7 +325,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       orchestration_resources(stack).each do |resource|
         case resource.resource_type
         when "OS::Nova::Server"
-          # TODO(lsmola) we need to cache vms also on individual level, so the calling vms again has also these vms
           add_simple_target!(:vms, resource.physical_resource_id)
         end
       end
