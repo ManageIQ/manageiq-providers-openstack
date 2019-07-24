@@ -98,10 +98,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def vms
     return [] if references(:vms).blank?
-    return @vms if @vms.any?
-    @vms = references(:vms).collect do |vm_id|
-      safe_get { compute_service.servers.get(vm_id) }
+    references(:vms).collect do |vm_id|
+      get_vm(vm_id)
     end.compact
+  end
+
+  def get_vm(uuid)
+    @indexes_vms ||= {}
+    return @indexes_vms[uuid] if @indexes_vms[uuid]
+
+    @indexes_vms[uuid] = safe_get { compute_service.servers.get(uuid) }
   end
 
   def flavors
@@ -290,7 +296,25 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
 
   def infer_related_orchestration_stacks_ems_refs_api!
     orchestration_stacks.each do |stack|
-      add_simple_target!(:orchestration_stacks, stack.parent, :tenant_id => stack.service.current_tenant["id"]) unless stack.parent.blank?
+      # Scan resources for VMs and add them as target, so the stack connects to vm, otherwise they don't connect on
+      # targeted refresh
+      orchestration_resources(stack).each do |resource|
+        case resource.resource_type
+        when "OS::Nova::Server"
+          add_simple_target!(:vms, resource.physical_resource_id)
+        end
+      end
+
+      # Load all parent stacks as targets (with max_depth)
+      max_depth     = 5
+      counter       = 0
+      current_stack = stack
+      while counter < max_depth && current_stack && current_stack.parent
+        add_simple_target!(:orchestration_stacks, current_stack.parent, :tenant_id => current_stack.service.current_tenant["id"])
+        counter       += 1
+        current_stack = get_orchestration_stack(current_stack.parent)
+      end
+
       add_simple_target!(:cloud_tenants, stack.service.current_tenant["id"]) unless stack.service.current_tenant["id"].blank?
     end
   end
