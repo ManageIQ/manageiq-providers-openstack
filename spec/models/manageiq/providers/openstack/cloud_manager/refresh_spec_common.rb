@@ -176,12 +176,8 @@ module Openstack
     end
 
     def snapshots_count
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        # number of snapshots + number of shelved instances
-        image_data.servers_snapshots.count + 1
-      else
-        0
-      end
+      # number of snapshots + number of shelved instances
+      image_data.servers_snapshots.count + 1
     end
 
     def expected_stack_parameters_count
@@ -281,14 +277,9 @@ module Openstack
       expect(CloudService.count).to        be > 0
       expect(CloudResourceQuota.count).to  be > 0
 
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
-        expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
-        expect(CloudVolumeType.count).to                 eq volume_types_count
-      else
-        expect(VmOrTemplate.count).to                    eq vms_count + images_count
-        expect(MiqTemplate.count).to                     eq images_count
-      end
+      expect(VmOrTemplate.count).to                    eq vms_count + images_count + volume_and_snapshot_templates_count
+      expect(MiqTemplate.count).to                     eq images_count + volume_and_snapshot_templates_count
+      expect(CloudVolumeType.count).to                 eq volume_types_count
     end
 
     def assert_table_counts_orchestration
@@ -321,17 +312,9 @@ module Openstack
       expect(@ems.key_pairs.size).to           eq compute_data.key_pairs.count
       security_groups_count = @ems.security_groups.count { |x| x.name != 'default' }
       expect(security_groups_count).to         eq security_groups_count
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        expect(@ems.vms_and_templates.size).to eq vms_count + images_count + volume_and_snapshot_templates_count
-      else
-        expect(@ems.vms_and_templates.size).to eq vms_count + images_count
-      end
+      expect(@ems.vms_and_templates.size).to eq vms_count + images_count + volume_and_snapshot_templates_count
       expect(@ems.vms.size).to                 eq vms_count
-      if ::Settings.ems_refresh.try(:openstack).try(:inventory_object_refresh)
-        expect(@ems.miq_templates.size).to     eq images_count + volume_and_snapshot_templates_count
-      else
-        expect(@ems.miq_templates.size).to     eq images_count
-      end
+      expect(@ems.miq_templates.size).to     eq images_count + volume_and_snapshot_templates_count
       expect(@ems.cloud_networks.size).to      eq network_data.networks.count
 
       if neutron_networking?

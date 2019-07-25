@@ -1,6 +1,5 @@
 class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::Providers::StorageManager::CinderManager
   require_nested :Refresher
-  require_nested :RefreshParser
   require_nested :EventCatcher
   require_nested :EventParser
 
@@ -68,6 +67,14 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
 
   def self.event_monitor_class
     ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher
+  end
+
+  def inventory_object_refresh?
+    true
+  end
+
+  def allow_targeted_refresh?
+    true
   end
 
   def stop_event_monitor_queue_on_change
