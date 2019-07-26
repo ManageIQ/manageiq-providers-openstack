@@ -8,7 +8,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   require_nested :MetricsCollectorWorker
   require_nested :NetworkPort
   require_nested :NetworkRouter
-  require_nested :RefreshParser
   require_nested :RefreshWorker
   require_nested :Refresher
   require_nested :SecurityGroup
@@ -84,6 +83,14 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
 
   def supports_authentication?(authtype)
     supported_auth_types.include?(authtype.to_s)
+  end
+
+  def inventory_object_refresh?
+    true
+  end
+
+  def allow_targeted_refresh?
+    true
   end
 
   def self.event_monitor_class

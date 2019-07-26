@@ -21,7 +21,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   require_nested :Provision
   require_nested :ProvisionWorkflow
   require_nested :Refresher
-  require_nested :RefreshParser
   require_nested :RefreshWorker
   require_nested :Template
   require_nested :Vm
@@ -217,6 +216,14 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def volume_availability_zones
     availability_zones.where("'volume' = ANY(provider_services_supported)")
+  end
+
+  def inventory_object_refresh?
+    true
+  end
+
+  def allow_targeted_refresh?
+    true
   end
 
   #
