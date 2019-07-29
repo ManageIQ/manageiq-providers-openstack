@@ -5,7 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Hammer-8
+## Ivanchuk Beta1
+
+### Added
+- Support Cinder's volume-extend action [(#448)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/448)
+- Support volume multiattachment [(#432)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/432)
+- Allow user to select Network Port for provisioning [(#416)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/416)
+- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#441)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/441)
+- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
+
+### Changed
+- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
+
+### Fixed
+- Get tenant for stack from parameters [(#417)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/417)
+- Targeted refresh: Collect tenant ems references last [(#422)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/422)
+- Remove legacy network collection from CloudManager graph refresh [(#421)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/421)
+- Add case for 404 error to ManagerMixin:translate_exception [(#456)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/456)
+- Fix invalid field user_id on Miqtask [(#452)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/452)
+- Warn but still allow infra without ironic [(#436)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/436)
+
+## Hammer-9 - Released 2019-07-23
 
 ### Fixed
 - Exclude 'all_tenants' option when querying Ceilometer for events [(#467)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/467)
@@ -29,61 +49,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 ### Fixed
 - Parse OpenStack Event Timestamps as UTC [(#457)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/457)
 
-## Unreleased as of Sprint 108 ending 2019-04-01
-
-### Added
-- Support Cinder's volume-extend action [(#448)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/448)
-
-### Fixed
-- Add case for 404 error to ManagerMixin:translate_exception [(#456)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/456)
-- Fix invalid field user_id on Miqtask [(#452)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/452)
-
 ## Hammer-4 - Released 2019-03-29
 
 ### Fixed
 - Read back to catch events that may have reached Panko out of order [(#433)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/433)
 
-## Unreleased as of Sprint 107 ending 2019-03-18
-
-### Added
-- Support volume multiattachment [(#432)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/432)
-
-## Unreleased as of Sprint 106 ending 2019-03-04
-
-### Added
-- Allow user to select Network Port for provisioning [(#416)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/416)
-
 ## Hammer-3 - Released 2019-03-06
 
 ### Fixed
 - Exclude already attached VMs from the volume attachment form [(#409)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/409)
-
-## Unreleased as of Sprint 105 ending 2019-02-18
-
-### Added
-- Add ConversionHost and ServiceTemplateTransformationPlan subclasses [(#441)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/441)
-
-## Unreleased as of Sprint 104 ending 2019-02-04
-
-### Fixed
-- Warn but still allow infra without ironic [(#436)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/436)
-
-## Unreleased as of Sprint 103 ending 2019-01-21
-
-### Added
-- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
-
-### Changed
-- Improve handling of missing services [(#411)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/411)
-
-### Fixed
-- Get tenant for stack from parameters [(#417)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/417)
-
-## Unreleased as of Sprint 102 ending 2019-01-07
-
-### Fixed
-- Targeted refresh: Collect tenant ems references last [(#422)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/422)
-- Remove legacy network collection from CloudManager graph refresh [(#421)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/421)
 
 ## Hammer-1 - Released 2019-01-15
 
