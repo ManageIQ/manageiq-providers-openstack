@@ -232,7 +232,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     return true if image.image_type == 'snapshot'
 
     block_device_mapping = image.attributes[:block_device_mapping]
-    source_type = JSON.parse(block_device_mapping)&.dig('source_type') if block_device_mapping
+    block_device_data    = JSON.parse(block_device_mapping) if block_device_mapping
+    block_device_data    = block_device_data.first if block_device_data.kind_of?(Array)
+    source_type          = block_device_data&.dig('source_type')
 
     source_type == 'snapshot'
   rescue JSON::ParserError
