@@ -90,6 +90,13 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Networ
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup)
 
       network_ems_default_value(builder)
+      # targeted refresh workaround-- always refresh the whole security group collection
+      # regardless of whether this is a TargetCollection or not
+      # because OpenStack doesn't give us UUIDs of new or changed security groups,
+      # we just get an event that one of them changed
+      if references(:security_groups).present?
+        builder.add_properties(:targeted => false)
+      end
     end
   end
 end

@@ -39,7 +39,16 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
                   end
 
     resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    add_target(target_collection, target_type, resource_id) if resource_id
+    if resource_id
+      add_target(target_collection, target_type, resource_id)
+    elsif target_type == :security_groups
+      # Notifications from Panko about new security groups don't include
+      # the ID of the security group, so we can't trigger a targeted refresh.
+      # Add a dummy reference so that the collector will know that a security
+      # group was updated, and that it should refresh the whole security group
+      # inventory as a workaround.
+      add_target(target_collection, :security_groups, nil)
+    end
 
     target_collection.targets
   end
