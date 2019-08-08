@@ -59,11 +59,15 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
       $log.info("Querying OpenStack for events newer than #{latest_event_timestamp}...") if $log
       events = list_events(query_options).sort_by(&:generated)
 
-      # count back a few seconds to catch events that may have arrived in panko
-      # out of order. OSP recommends return time in UTC.
-      with_a_timezone('UTC') do
-        last_seen = events.last.generated unless events.empty?
-        @since = (Time.zone.parse(last_seen) - event_backread_seconds).iso8601 if last_seen
+      # Count back a few seconds to catch events that may have arrived in panko
+      # out of order. OSP recommends return time in UTC. Skip time conversion when disabled.
+      if event_backread_seconds < 1
+        @since = events.last.generated unless events.empty?
+      else
+        with_a_timezone('UTC') do
+          last_seen = events.last.generated unless events.empty?
+          @since = (Time.zone.parse(last_seen) - event_backread_seconds).iso8601 if last_seen
+        end
       end
 
       amqp_events = filter_unwanted_events(events).map do |event|
