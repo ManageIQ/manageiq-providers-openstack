@@ -75,9 +75,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     return [] unless network_service
     return [] if references(:security_groups).blank?
     return @security_groups if @security_groups.any?
-    @security_groups = references(:security_groups).collect do |security_group_id|
-      safe_get { network_service.security_groups.get(security_group_id) }
-    end.compact
+    @security_groups = network_service.handled_list(:security_groups, {}, openstack_network_admin?)
   end
 
   def floating_ips
