@@ -150,6 +150,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     add_collection(cloud, :snapshots) do |builder|
       builder.add_properties(:model_class => ::Snapshot)
       builder.add_properties(:parent_inventory_collections => %i[vms miq_templates])
+      builder.add_properties(:complete => !targeted?)
     end
   end
 
