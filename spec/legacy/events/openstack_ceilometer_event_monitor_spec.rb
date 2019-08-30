@@ -77,5 +77,45 @@ describe OpenstackCeilometerEventMonitor do
         subject.stop
       end
     end
+
+    it 'sets query options for Panko with events history' do
+      ems_double = double(:created_on => Time.now.utc, :ems_events => [])
+      allow(subject.class).to receive(:connect_service_from_settings).and_return nil
+      allow(ems_double).to receive(:connect).with(:service => 'Event')
+      allow(ems_double).to receive(:ems_events).and_return double(:maximum => nil)
+      subject.instance_variable_set(:@ems, ems_double)
+
+      allow(subject).to receive(:skip_history?).and_return false
+
+      subject.provider_connection
+      expect(subject.send(:query_options)).to eq([{
+                                                   'field' => 'start_timestamp',
+                                                   'op'    => 'ge',
+                                                   'value' => ''
+                                                 }, {
+                                                   'field' => 'all_tenants',
+                                                   'value' => 'True'
+                                                 }])
+    end
+
+    it 'sets query options for Panko without events history' do
+      ems_double = double(:created_on => Time.now.utc, :ems_events => [])
+      allow(subject.class).to receive(:connect_service_from_settings).and_return nil
+      allow(ems_double).to receive(:connect).with(:service => 'Event')
+      allow(ems_double).to receive(:ems_events).and_return double(:maximum => nil)
+      subject.instance_variable_set(:@ems, ems_double)
+
+      allow(subject).to receive(:skip_history?).and_return true
+
+      subject.provider_connection
+      expect(subject.send(:query_options)).to eq([{
+                                                   'field' => 'start_timestamp',
+                                                   'op'    => 'ge',
+                                                   'value' => ems_double.created_on.iso8601
+                                                 }, {
+                                                   'field' => 'all_tenants',
+                                                   'value' => 'True'
+                                                 }])
+    end
   end
 end

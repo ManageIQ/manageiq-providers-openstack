@@ -140,7 +140,13 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
     end
   end
 
+  def skip_history?
+    Settings.fetch_path(:ems, :ems_openstack, :event_handling, :event_skip_history) || false
+  end
+
   def latest_event_timestamp
-    @since ||= @ems.ems_events.maximum(:timestamp)
+    return @since if @since.present?
+
+    @since = @ems.ems_events.maximum(:timestamp) || skip_history? ? @ems.created_on.iso8601 : nil
   end
 end

@@ -21,7 +21,8 @@
       :read_timeout: 60
     :blacklisted_event_names: []
     :event_handling:
-      :event_backread_seconds: 15
+      :event_backread_seconds: 5
+      :event_skip_history: false
       :event_groups:
         :addition:
           :critical:
