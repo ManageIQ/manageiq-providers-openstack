@@ -48,7 +48,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
 
     attributes = {:name => name, :zone => zone}
     if provider
-      provider.update_attributes!(attributes)
+      provider.update!(attributes)
     else
       self.provider = ManageIQ::Providers::Openstack::Provider.create!(attributes)
     end

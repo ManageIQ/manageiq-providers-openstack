@@ -447,7 +447,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
       elsif existing_network_port.name.blank?
         # Just updating a names of network_ports refreshed from Neutron, rest of attributes
         # is handled in refresh section.
-        existing_network_port.update_attributes(:name => network_port[:name])
+        existing_network_port.update(:name => network_port[:name])
       end
     end
     unless hashes.blank?
@@ -485,6 +485,6 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     create_event = ext_management_system.ems_events.find_by(:host_id    => nil,
                                                             :event_type => "compute.instance.create.end",
                                                             :host_name  => parsed_ems_ref_obj)
-    create_event&.update_attributes!(:host_id => id)
+    create_event&.update!(:host_id => id)
   end
 end

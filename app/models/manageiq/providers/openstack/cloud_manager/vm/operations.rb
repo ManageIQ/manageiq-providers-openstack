@@ -14,6 +14,6 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations
                       }) do
       with_provider_object(&:destroy)
     end
-    self.update_attributes!(:raw_power_state => "DELETED")
+    self.update!(:raw_power_state => "DELETED")
   end
 end
