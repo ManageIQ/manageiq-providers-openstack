@@ -4,8 +4,8 @@ describe ManageIQ::Providers::Openstack::InfraManager::RefreshWorker do
     let!(:storage_manager) { FactoryBot.create(:ems_storage) }
     let(:ems) do
       FactoryBot.create(:ems_infra).tap do |ems|
-        network_manager.update_attributes(:parent_ems_id => ems.id)
-        storage_manager.update_attributes(:parent_ems_id => ems.id)
+        network_manager.update(:parent_ems_id => ems.id)
+        storage_manager.update(:parent_ems_id => ems.id)
       end
     end
 

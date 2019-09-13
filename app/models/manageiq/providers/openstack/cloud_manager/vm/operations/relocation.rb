@@ -29,7 +29,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Relocation
       end
     end
     # Temporarily update state for quick UI response until refresh comes along
-    self.update_attributes!(:raw_power_state => "MIGRATING")
+    self.update!(:raw_power_state => "MIGRATING")
   end
 
   def raw_evacuate(options = {})
@@ -50,6 +50,6 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Relocation
       end
     end
     # Temporarily update state for quick UI response until refresh comes along
-    self.update_attributes!(:raw_power_state => "MIGRATING")
+    self.update!(:raw_power_state => "MIGRATING")
   end
 end
