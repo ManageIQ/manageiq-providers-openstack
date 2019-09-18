@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
 
-## Ivanchuk-1
+## Sprint 120 - Unreleased as of 2019-09-16
+
+### Fixed
+- Removed gettext catalogs from repo [(#507)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/507)
+- Update Refresh to not delete other Snapshots on a VM during Targeted Refresh [(#502)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/502)
+
+## Ivanchuk-1 - Released 2019-09-18
 
 ### Added
 - Support Cinder's volume-extend action [(#448)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/448)
