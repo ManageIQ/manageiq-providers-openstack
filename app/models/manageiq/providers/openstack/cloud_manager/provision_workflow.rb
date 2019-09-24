@@ -61,6 +61,7 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
         new_volume[:name] = "" unless new_volume.key?(:name)
         volumes.push new_volume
       end
+      new_volume[:delete_on_termination] = true if new_volume[:delete_on_terminate] == "on"
     end
     volumes
   end
