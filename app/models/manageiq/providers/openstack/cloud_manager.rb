@@ -286,7 +286,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   rescue => err
     _log.error "#{log_prefix}, error: #{err}"
     _log.debug { err.backtrace.join("\n") }
-    raise
+    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err)
   end
 
   def vm_remove_snapshot(vm, options = {})
