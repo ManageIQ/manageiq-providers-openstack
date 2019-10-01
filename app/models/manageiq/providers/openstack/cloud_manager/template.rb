@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Providers::CloudManager::Template
+class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Providers::Openstack::CloudManager::BaseTemplate
   include ManageIQ::Providers::Openstack::HelperMethods
   belongs_to :cloud_tenant
 
