@@ -154,12 +154,13 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                                  .where.not(:resource_id => id).includes(:resource)
                                  .select do |endpoint|
                                    unless endpoint.resource.nil?
-                                     endpoint.resource.uid_ems == keystone_v3_domain_id &&
-                                       endpoint.resource.provider_region == provider_region
+                                       endpoint.resource.uid_ems == keystone_v3_domain_id &&
+                                       endpoint.resource.provider_region == provider_region &&
+                                       endpoint.resource.authentication_userid == authentication_userid
                                    end
                                  end
 
-    errors.add(:hostname, "has already been taken") if existing_providers.any?
+    errors.add(:authentication_userid, "has already been used for this hostname") if existing_providers.any?
   end
 
   def supports_port?
