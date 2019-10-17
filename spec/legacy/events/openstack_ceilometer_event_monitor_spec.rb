@@ -6,6 +6,7 @@ describe OpenstackCeilometerEventMonitor do
       ems_double = double
       allow(subject.class).to receive(:connect_service_from_settings).and_return nil
       allow(ems_double).to receive(:connect).with(:service => 'Event')
+      allow(ems_double).to receive(:api_version).and_return 'v3'
       subject.instance_variable_set(:@ems, ems_double)
       allow(subject).to receive(:latest_event_timestamp).and_return nil
 
@@ -20,11 +21,28 @@ describe OpenstackCeilometerEventMonitor do
                                                  }])
     end
 
+    it 'sets query options for Panko with keystone v2' do
+      ems_double = double
+      allow(subject.class).to receive(:connect_service_from_settings).and_return nil
+      allow(ems_double).to receive(:connect).with(:service => 'Event')
+      allow(ems_double).to receive(:api_version).and_return 'v2'
+      subject.instance_variable_set(:@ems, ems_double)
+      allow(subject).to receive(:latest_event_timestamp).and_return nil
+
+      subject.provider_connection
+      expect(subject.send(:query_options)).to eq([{
+                                                   'field' => 'start_timestamp',
+                                                   'op'    => 'ge',
+                                                   'value' => ''
+                                                 }])
+    end
+
     it 'sets query options for Ceilometer' do
       ems_double = double
       allow(subject.class).to receive(:connect_service_from_settings).and_return nil
       allow(ems_double).to receive(:connect).with(:service => 'Event').and_raise(MiqException::ServiceNotAvailable)
       allow(ems_double).to receive(:connect).with(:service => 'Metering')
+      allow(ems_double).to receive(:api_version).and_return 'v2'
       subject.instance_variable_set(:@ems, ems_double)
       allow(subject).to receive(:latest_event_timestamp).and_return nil
 
@@ -83,6 +101,7 @@ describe OpenstackCeilometerEventMonitor do
       allow(subject.class).to receive(:connect_service_from_settings).and_return nil
       allow(ems_double).to receive(:connect).with(:service => 'Event')
       allow(ems_double).to receive(:ems_events).and_return double(:maximum => nil)
+      allow(ems_double).to receive(:api_version).and_return 'v3'
       subject.instance_variable_set(:@ems, ems_double)
 
       allow(subject).to receive(:skip_history?).and_return false
@@ -103,6 +122,7 @@ describe OpenstackCeilometerEventMonitor do
       allow(subject.class).to receive(:connect_service_from_settings).and_return nil
       allow(ems_double).to receive(:connect).with(:service => 'Event')
       allow(ems_double).to receive(:ems_events).and_return double(:maximum => nil)
+      allow(ems_double).to receive(:api_version).and_return 'v3'
       subject.instance_variable_set(:@ems, ems_double)
 
       allow(subject).to receive(:skip_history?).and_return true
