@@ -413,6 +413,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       # will take care of that.
       if s.attributes.fetch("os-extended-volumes:volumes_attached", []).length > 0
         s.volume_attachments.each do |attachment|
+          # Skip Volume mounts without mount point
+          next if attachment['device'].blank?
+
           dev = File.basename(attachment['device'])
           persister.disks.find_or_build_by(
             :hardware    => hardware,
