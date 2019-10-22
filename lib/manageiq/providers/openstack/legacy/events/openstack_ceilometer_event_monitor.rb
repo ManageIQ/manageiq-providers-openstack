@@ -118,7 +118,7 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
       'op'    => 'ge',
       'value' => latest_event_timestamp || ''
     }]
-    if @panko
+    if @panko && tenant_sensitive?
       # all_tenants is not supported by ceilometer
       # and will cause no results to be returned,
       # so only include it if we're querying panko.
@@ -148,5 +148,10 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
     return @since if @since.present?
 
     @since = @ems.ems_events.maximum(:timestamp) || skip_history? ? @ems.created_on.iso8601 : nil
+  end
+
+  def tenant_sensitive?
+    # keystone v2 doesn't accept all_tenants flag even in Panko
+    @ems.respond_to?(:parent_manager) ? @ems.parent_manager.api_version != 'v2' : @ems.api_version != 'v2'
   end
 end
