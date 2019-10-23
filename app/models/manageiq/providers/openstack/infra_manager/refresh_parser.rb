@@ -384,7 +384,7 @@ module ManageIQ
           :ems_ref => uid,
           :uid_ems => uid,
           :name    => name,
-          :type    => 'ManageIQ::Providers::Openstack::InfraManager::EmsCluster'
+          :type    => 'ManageIQ::Providers::Openstack::InfraManager::Cluster'
         }
         return uid, new_result
       end
