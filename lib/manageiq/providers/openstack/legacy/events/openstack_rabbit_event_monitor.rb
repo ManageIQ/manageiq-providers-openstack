@@ -71,6 +71,7 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     @options          = options
     @options[:port] ||= DEFAULT_AMQP_PORT
     @client_ip        = @options[:client_ip]
+    @ems_id           = options[:ems].try(:id)
 
     @collecting_events = false
     @events = []
@@ -134,7 +135,7 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     if @options[:topics]
       @options[:topics].each do |exchange, topic|
         amqp_exchange = @channel.topic(exchange, :durable => durable)
-        queue_name = "miq-#{@client_ip}-#{exchange}"
+        queue_name = "miq-#{@client_ip}-#{exchange}-#{@ems_id}"
         @queues[exchange] = @channel.queue(queue_name, :auto_delete => true, :exclusive => true)
                                     .bind(amqp_exchange, :routing_key => topic)
       end
@@ -149,7 +150,7 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     # no client to drain them.
     channel = connection.create_channel
     @options[:topics].each do |exchange, _topic|
-      queue_name = "miq-#{@client_ip}-#{exchange}"
+      queue_name = "miq-#{@client_ip}-#{exchange}-#{@ems_id}"
       channel.queue_delete(queue_name) if connection.queue_exists?(queue_name)
     end
 
