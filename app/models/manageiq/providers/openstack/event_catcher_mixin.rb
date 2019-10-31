@@ -44,7 +44,7 @@ module ManageIQ::Providers::Openstack::EventCatcherMixin
       end
       sleep_poll_normal
     end
-  rescue Exception => err
+  rescue Fog::Metering::OpenStack::NotFound => err
     _log.warn("#{log_prefix} Failed to monitor events because [#{err.message}]")
   ensure
     reset_event_monitor_handle
