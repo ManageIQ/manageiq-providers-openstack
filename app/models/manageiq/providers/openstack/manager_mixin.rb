@@ -169,6 +169,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       extra_options[:region]            = provider_region if provider_region.present?
       extra_options[:omit_default_port] = ::Settings.ems.ems_openstack.excon.omit_default_port
       extra_options[:read_timeout]      = ::Settings.ems.ems_openstack.excon.read_timeout
+      extra_options[:proxy]             = VMDB::Util.http_proxy_uri(:openstack).to_s
 
       osh = OpenstackHandle::Handle.new(username, password, address, port, api_version, security_protocol, extra_options)
       osh.connection_options = {:instrumentor => $fog_log}
