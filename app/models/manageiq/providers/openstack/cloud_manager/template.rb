@@ -2,12 +2,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   include ManageIQ::Providers::Openstack::HelperMethods
   belongs_to :cloud_tenant
 
-  supports :smartstate_analysis do
-    feature_supported, reason = check_feature_support('smartstate_analysis')
-    unless feature_supported
-      unsupported_reason_add(:smartstate_analysis, reason)
-    end
-  end
+  include_concern 'ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared'
 
   supports :provisioning do
     if ext_management_system

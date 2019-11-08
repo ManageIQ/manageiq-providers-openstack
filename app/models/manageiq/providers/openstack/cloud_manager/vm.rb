@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::CloudManager::Vm
+  include_concern 'ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared'
+
   include_concern 'Operations'
   include_concern 'RemoteConsole'
   include_concern 'Resize'
@@ -6,13 +8,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
   include_concern 'ManageSecurityGroups'
 
   include ManageIQ::Providers::Openstack::HelperMethods
-
-  supports :smartstate_analysis do
-    feature_supported, reason = check_feature_support('smartstate_analysis')
-    unless feature_supported
-      unsupported_reason_add(:smartstate_analysis, reason)
-    end
-  end
 
   supports :snapshots
   supports :conversion_host
