@@ -19,8 +19,10 @@ module ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared::Scannin
   # Maybe this should be calculated based on the size of the image (on the instance method),
   #   but that information isn't directly available.
   #
-  def self.scan_timeout_adjustment_multiplier
-    4
+  module ClassMethods
+    def scan_timeout_adjustment_multiplier
+      4
+    end
   end
 
   def require_snapshot_for_scan?
