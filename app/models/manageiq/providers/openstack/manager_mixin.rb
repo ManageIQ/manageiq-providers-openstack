@@ -50,6 +50,140 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
     private :ems_connect?
 
+    def params_for_create
+      @params_for_create ||= {
+        :title  => "Configure OpenStack",
+        :fields => [
+          {
+            :component  => "text-field",
+            :name       => "name",
+            :label      => "Name",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component  => "text-field",
+            :name       => "provider_region",
+            :label      => "Provider Region",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component  => "text-field",
+            :name       => "api_version",
+            :label      => "API Version",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component  => "text-field",
+            :name       => "endpoints.default.default_userid",
+            :label      => "Username",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component  => "text-field",
+            :name       => "endpoints.default.default_hostname",
+            :label      => "Server Hostname",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component    => "text-field",
+            :name         => "endpoints.default.default_api_port",
+            :label        => "Port",
+            :type         => "number",
+            :initialValue => 13_000,
+            :isRequired   => true,
+            :validate     => [{:type => "required-validator"}]
+          },
+          {
+            :component   => "select-field",
+            :name        => "endpoints.default.security_protocol",
+            :label       => "Security Protocol",
+            :placeholder => "ssl-no-validation", # TODO: This should be a dropdown
+            :options     => [
+              {
+                :label => "SSL without validation",
+                :value => "ssl-no-validation"
+              },
+              {
+                :label => "SSL",
+                :value => "ssl-with-validation"
+              },
+              {
+                :label => "Non SSL",
+                :value => "non-ssl"
+              }
+            ]
+          },
+          {
+            :component  => "text-field",
+            :name       => "endpoints.default.password",
+            :label      => "Password",
+            :type       => "password",
+            :isRequired => true,
+            :validate   => [{:type => "required-validator"}]
+          },
+          {
+            :component => "radio",
+            :name      => "endpoints.events.type",
+            :label     => "Events",
+            :options   => [
+              {
+                :label => "Ceilometer",
+                :value => "ceilometer"
+              },
+              {
+                :label => "AMQP",
+                :value => "amqp"
+              }
+            ]
+          },
+          {
+            :component => "text-field",
+            :name      => "endpoints.rsa.username",
+            :label     => "Username",
+          },
+          {
+            :component => "text-field",
+            :name      => "endpoints.rsa.private_key",
+            :label     => "Private Key",
+            :type      => "password"
+          }
+        ]
+      }
+    end
+
+    # Verify Credentials
+    #
+    # args: {
+    #   "name" => String,
+    #   "provider_region" => String,
+    #   "api_version" => String,
+    #   "endpoints" => {
+    #     "default" => {
+    #       "default_userid" => String,
+    #       "default_hostname" => String,
+    #       "default_api_port" => Integer,
+    #       "security_protocol" => String,
+    #       "password" => String,
+    #     }
+    #   }
+    def verify_credentials(args)
+      root_params = %w[name provider_region api_version]
+      params = args.sice(root_params).symbolize_keys
+
+      default_endpoint = args.dig("endpoints", "default")
+      password = default_endpoint&.dig("password")
+
+      endpoint_params = %w[default_userid default_hostname default_api_port security_protocol]
+      params.merge(default_endpoint&.slice(endpoint_params)&.symbolize_keys || {})
+
+      !!raw_connect(password, params)
+    end
+
     def raw_connect(password, params, service = "Compute")
       if params[:event_stream_selection] == 'amqp'
         amqp_available?(password, params)
