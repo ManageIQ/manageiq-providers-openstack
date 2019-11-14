@@ -1,10 +1,6 @@
 class ManageIQ::Providers::Openstack::NetworkManager::EventCatcher < ::MiqEventCatcher
   require_nested :Runner
 
-  def self.ems_class
-    ManageIQ::Providers::Openstack::NetworkManager
-  end
-
   def self.settings_name
     :event_catcher_openstack_network
   end

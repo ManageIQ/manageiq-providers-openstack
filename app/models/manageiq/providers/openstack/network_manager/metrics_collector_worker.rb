@@ -7,10 +7,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::MetricsCollectorWorker < :
     @friendly_name ||= "C&U Metrics Collector for Openstack Network"
   end
 
-  def self.ems_class
-    ManageIQ::Providers::Openstack::NetworkManager
-  end
-
   def self.settings_name
     :ems_metrics_collector_worker_openstack_network
   end

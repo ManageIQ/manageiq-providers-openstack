@@ -21,8 +21,4 @@ class ManageIQ::Providers::Openstack::CloudManager::RefreshWorker < ::MiqEmsRefr
   # MiQ complains if this isn't defined
   def queue_name_for_ems(ems)
   end
-
-  def self.ems_class
-    ManageIQ::Providers::Openstack::CloudManager
-  end
 end
