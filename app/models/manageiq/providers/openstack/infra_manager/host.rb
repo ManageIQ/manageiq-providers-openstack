@@ -481,10 +481,9 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def update_create_event
-    parsed_ems_ref_obj = YAML.safe_load(ems_ref_obj)
     create_event = ext_management_system.ems_events.find_by(:host_id    => nil,
                                                             :event_type => "compute.instance.create.end",
-                                                            :host_name  => parsed_ems_ref_obj)
+                                                            :host_name  => uid_ems)
     create_event&.update!(:host_id => id)
   end
 end

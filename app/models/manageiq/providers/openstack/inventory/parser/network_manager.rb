@@ -179,7 +179,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
     when /^compute\:.*?$/
       # Owner is in format compute:<availability_zone> or compute:None
       # TODO(slucidi): replace this query for hosts once the infra manager uses the graph inventory system
-      host = collector.manager.hosts.where(Host.arel_table[:ems_ref_obj].matches("%#{network_port.device_id}%")).first
+      host = collector.manager.hosts.where(:uid_ems => network_port.device_id).first
       return host || persister.vms.lazy_find(network_port.device_id)
     when "network:router_interface", "network:router_ha_interface", "network:ha_router_replicated_interface"
       subnet_id = network_port.fixed_ips.try(:first).try(:[], "subnet_id")

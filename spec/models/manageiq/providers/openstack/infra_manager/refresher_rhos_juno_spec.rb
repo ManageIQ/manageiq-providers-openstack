@@ -132,7 +132,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.detect { |x| x.name.include?('(Controller)') }
 
     expect(@host.ems_ref).not_to be nil
-    expect(@host.ems_ref_obj).not_to be nil
+    expect(@host.uid_ems).not_to be nil
     expect(@host.mac_address).not_to be nil
     expect(@host.ipaddress).not_to be nil
     expect(@host.ems_cluster).not_to be nil
@@ -206,7 +206,6 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(template).to have_attributes(
       :template              => true,
       :publicly_available    => is_public,
-      :ems_ref_obj           => nil,
       :vendor                => "openstack",
       :power_state           => "never",
       :location              => "unknown",

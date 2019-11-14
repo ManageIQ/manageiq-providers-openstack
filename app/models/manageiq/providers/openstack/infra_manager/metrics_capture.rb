@@ -122,9 +122,8 @@ class ManageIQ::Providers::Openstack::InfraManager::MetricsCapture < ManageIQ::P
   def perf_capture_data(start_time, end_time)
     # Metadata filter covers all resources, resource filter can be nil
     resource_filter = nil
-    metadata_filter = target.ems_ref_obj ? {"field" => "metadata.resource_id", "value" => target.ems_ref_obj} : nil
+    metadata_filter = target.uid_ems ? {"field" => "metadata.resource_id", "value" => target.uid_ems} : nil
 
-    perf_capture_data_openstack_base(self.class, start_time, end_time, resource_filter,
-                                     metadata_filter)
+    perf_capture_data_openstack_base(self.class, start_time, end_time, resource_filter, metadata_filter)
   end
 end
