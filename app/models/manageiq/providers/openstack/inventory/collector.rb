@@ -107,6 +107,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
     return @all_orchestration_stacks unless @all_orchestration_stacks.nil?
+
     @all_orchestration_stacks = if openstack_heat_global_admin?
                                   orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
                                 else
@@ -114,7 +115,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
                                 end
   rescue Excon::Errors::Forbidden
     # Orchestration service is detected but not open to the user
-    $log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
+    log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
     []
   end
 end

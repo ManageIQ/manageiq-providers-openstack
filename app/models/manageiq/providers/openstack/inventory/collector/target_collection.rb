@@ -108,7 +108,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def get_orchestration_stack(stack_id, _tenant_id = nil)
-    # TODO fog needs to implement /v1/{tenant_id}/stacks/{stack_identity} call, right now the only supported call
+    # TODO: fog needs to implement /v1/{tenant_id}/stacks/{stack_identity} call, right now the only supported call
     # excepts get(name, id). And when we do just get(id) it degrades to fetching all stacks and O(n) search in them.
     # But the method for fetching all stack doesn't include nested stacks, so we were missing those.
     indexed_all_orchestration_stacks[stack_id]
@@ -333,7 +333,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       current_stack = stack
       while counter < max_depth && current_stack && current_stack.parent
         add_simple_target!(:orchestration_stacks, current_stack.parent, :tenant_id => current_stack.service.current_tenant["id"])
-        counter       += 1
+        counter += 1
         current_stack = get_orchestration_stack(current_stack.parent)
       end
 
