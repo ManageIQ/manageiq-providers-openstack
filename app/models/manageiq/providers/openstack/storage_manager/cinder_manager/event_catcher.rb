@@ -1,10 +1,6 @@
 class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher < ::MiqEventCatcher
   require_nested :Runner
 
-  def self.ems_class
-    ManageIQ::Providers::Openstack::StorageManager::CinderManager
-  end
-
   def self.settings_name
     :event_catcher_openstack_cinder
   end

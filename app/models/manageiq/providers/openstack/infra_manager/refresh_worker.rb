@@ -1,10 +1,6 @@
 class ManageIQ::Providers::Openstack::InfraManager::RefreshWorker < ::MiqEmsRefreshWorker
   require_nested :Runner
 
-  def self.ems_class
-    ManageIQ::Providers::Openstack::InfraManager
-  end
-
   # overriding queue_name_for_ems so PerEmsWorkerMixin picks up *all* of the
   # Openstack-manager types from here.
   # This way, the refresher for Openstack's InfraManager will refresh *all*

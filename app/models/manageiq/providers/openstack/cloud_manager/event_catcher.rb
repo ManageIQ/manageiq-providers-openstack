@@ -1,10 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::EventCatcher < ::MiqEventCatcher
   require_nested :Runner
 
-  def self.ems_class
-    ManageIQ::Providers::Openstack::CloudManager
-  end
-
   def self.all_valid_ems_in_zone
     require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
     super.select do |ems|
