@@ -230,60 +230,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   # Operations
   #
 
-  def vm_start(vm, _options = {})
-    vm.start
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_stop(vm, _options = {})
-    vm.stop
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_pause(vm, _options = {})
-    vm.pause
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_suspend(vm, _options = {})
-    vm.suspend
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_shelve(vm, _options = {})
-    vm.shelve
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_shelve_offload(vm, _options = {})
-    vm.shelve_offload
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_destroy(vm, _options = {})
-    vm.vm_destroy
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_reboot_guest(vm, _options = {})
-    vm.reboot_guest
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
-  def vm_reset(vm, _options = {})
-    vm.reset
-  rescue => err
-    _log.error "vm=[#{vm.name}], error: #{err}"
-  end
-
   def vm_create_snapshot(vm, options = {})
     log_prefix = "vm=[#{vm.name}]"
 
