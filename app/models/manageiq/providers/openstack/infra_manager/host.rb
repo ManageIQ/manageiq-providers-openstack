@@ -377,7 +377,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   def destroy_ironic_queue(userid = "system")
     task_opts = {
-      :action => "Deleting Ironic node: #{uid_ems} for user #{userid}",
+      :action => "Deleting Ironic node: #{ems_ref} for user #{userid}",
       :userid => userid
     }
 
@@ -407,7 +407,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
       end
     end
   rescue => e
-    _log.error "ironic node=[#{uid_ems}], error: #{e}"
+    _log.error "ironic node=[#{ems_ref}], error: #{e}"
     if archived?
       raise e
     else
