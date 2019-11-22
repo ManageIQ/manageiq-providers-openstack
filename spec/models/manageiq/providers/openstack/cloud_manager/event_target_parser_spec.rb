@@ -52,11 +52,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
     it "parses image events" do
       ems_event = create_ems_event("image.create.end", "resource_id" => "image_id_test")
       parsed_targets = described_class.new(ems_event).parse
-      expect(parsed_targets.size).to eq(1)
+      expect(parsed_targets.size).to eq(2)
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:images, {:ems_ref => "image_id_test"}]
+            [:images, {:ems_ref=>"image_id_test"}], [:miq_templates, {:ems_ref=>"image_id_test"}]
           ]
         )
       )

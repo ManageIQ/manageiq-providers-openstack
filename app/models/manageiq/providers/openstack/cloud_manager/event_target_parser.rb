@@ -53,8 +53,9 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   end
 
   def collect_image_references!(target_collection, ems_event)
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    add_target(target_collection, :images, resource_id) if resource_id
+    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id') || parse_oslo_message(ems_event.full_data).fetch("payload", {}).fetch("id", nil)
+    add_target(target_collection, :images, resource_id) if resource_id # Works for Create and Update action
+    add_target(target_collection, :miq_templates, resource_id) if resource_id # Existing association name needed for Delete action
   end
 
   def collect_identity_tenant_references!(target_collection, ems_event)
@@ -78,5 +79,11 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
 
   def collect_key_pair_references!(target_collection, _ems_event)
     add_target(target_collection, :key_pairs, nil)
+  end
+
+  def parse_oslo_message(msg_data)
+    JSON.parse(msg_data.fetch_path(:content, 'oslo.message'))
+  rescue JSON::ParserError
+    {}
   end
 end
