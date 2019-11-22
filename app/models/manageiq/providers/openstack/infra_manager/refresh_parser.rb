@@ -203,9 +203,8 @@ module ManageIQ
         new_result = {
           :name                 => host_name,
           :type                 => 'ManageIQ::Providers::Openstack::InfraManager::Host',
-          :uid_ems              => uid,
+          :uid_ems              => host.instance_uuid,
           :ems_ref              => uid,
-          :ems_ref_obj          => host.instance_uuid,
           :operating_system     => {:product_name => 'linux'},
           :vmm_vendor           => 'redhat',
           :vmm_product          => identify_product(indexed_resources, host.instance_uuid),
@@ -391,7 +390,7 @@ module ManageIQ
 
       def set_relationship_on_hosts(hosts, cluster_host_mapping)
         hosts.each do |host|
-          host[:ems_cluster] = @data_index.fetch_path(:clusters, cluster_host_mapping[host[:ems_ref_obj]])
+          host[:ems_cluster] = @data_index.fetch_path(:clusters, cluster_host_mapping[host[:uid_ems]])
         end
       end
 

@@ -669,7 +669,6 @@ module Openstack
         expect(template).to have_attributes(
           :template              => true,
           #:publicly_available    => is_public, # is not exposed now
-          :ems_ref_obj           => nil,
           :vendor                => "openstack",
           :power_state           => "never",
           :location              => "unknown",
@@ -754,7 +753,6 @@ module Openstack
       expect(vm).to have_attributes({
         :template              => false,
         :cloud                 => true,
-        :ems_ref_obj           => nil,
         :vendor                => "openstack",
         :power_state           => "on",
         :location              => "unknown",
@@ -903,7 +901,6 @@ module Openstack
       expect(vm).to have_attributes({
         :template              => false,
         :cloud                 => true,
-        :ems_ref_obj           => nil,
         :vendor                => "openstack",
         :power_state           => "on",
         :location              => "unknown",

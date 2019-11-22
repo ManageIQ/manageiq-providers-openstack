@@ -377,7 +377,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   def destroy_ironic_queue(userid = "system")
     task_opts = {
-      :action => "Deleting Ironic node: #{uid_ems} for user #{userid}",
+      :action => "Deleting Ironic node: #{ems_ref} for user #{userid}",
       :userid => userid
     }
 
@@ -407,7 +407,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
       end
     end
   rescue => e
-    _log.error "ironic node=[#{uid_ems}], error: #{e}"
+    _log.error "ironic node=[#{ems_ref}], error: #{e}"
     if archived?
       raise e
     else
@@ -481,10 +481,9 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def update_create_event
-    parsed_ems_ref_obj = YAML.safe_load(ems_ref_obj)
     create_event = ext_management_system.ems_events.find_by(:host_id    => nil,
                                                             :event_type => "compute.instance.create.end",
-                                                            :host_name  => parsed_ems_ref_obj)
+                                                            :host_name  => uid_ems)
     create_event&.update!(:host_id => id)
   end
 end

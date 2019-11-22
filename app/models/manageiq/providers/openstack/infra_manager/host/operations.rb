@@ -4,7 +4,7 @@ module ManageIQ::Providers::Openstack::InfraManager::Host::Operations
   def ironic_fog_node
     connection_options = {:service => "Baremetal"}
     ext_management_system.with_provider_connection(connection_options) do |service|
-      service.nodes.get(uid_ems)
+      service.nodes.get(ems_ref)
     end
   end
 

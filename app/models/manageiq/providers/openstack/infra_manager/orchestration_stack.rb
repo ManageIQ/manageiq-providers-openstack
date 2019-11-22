@@ -85,7 +85,7 @@ class ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack < ::Orche
     raise_exception_if_stack_not_ready
     if can_use_scale_down_workflow?
       # OSP >= 10 use workflows
-      host_uuids_to_remove = hosts.map { |n| Host.find(n).ems_ref_obj }
+      host_uuids_to_remove = hosts.map { |n| Host.find(n).uid_ems }
       scale_down_using_workflows(host_uuids_to_remove)
     else
       # OSP < 10 use heat stack update
