@@ -49,7 +49,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
       NotificationType.seed
       error_message = "restore failed"
       expect(raw_cloud_volume_backup).to receive(:restore).and_raise(error_message)
-      expect { cloud_volume_backup.raw_restore(cloud_volume) }.to raise_error
+      expect { cloud_volume_backup.raw_restore(cloud_volume) }.to raise_error(error_message)
       note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_restore_error").id)
       expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name, :error_message => error_message)
     end
@@ -74,7 +74,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
       NotificationType.seed
       error_message = "backup failed"
       expect(raw_cloud_volume_backup).to receive(:destroy).and_raise(error_message)
-      expect { cloud_volume_backup.raw_delete }.to raise_error
+      expect { cloud_volume_backup.raw_delete }.to raise_error(error_message)
       note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_delete_error").id)
       expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name, :error_message => error_message)
     end
