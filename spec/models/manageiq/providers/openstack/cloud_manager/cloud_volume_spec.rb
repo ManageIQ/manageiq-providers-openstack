@@ -134,6 +134,45 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
         expect { cloud_volume.delete_volume }.to raise_error(MiqException::MiqVolumeDeleteError)
       end
     end
+
+    context "#backup_create" do
+      let(:fog_backup) do
+        double.tap do |fog_backup|
+          allow(fog_backup).to receive(:save)
+        end
+      end
+
+      let(:fog_backups) do
+        double.tap do |fog_backups|
+          volume_service = double
+          allow(volume_service).to receive(:backups).and_return(fog_backups)
+          allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
+          allow(ems).to receive(:connect).with(hash_including(:service     => 'Volume',
+                                                              :tenant_name => tenant.name)).and_return(volume_service)
+          allow(fog_backups).to receive(:new).and_return(fog_backup)
+        end
+      end
+
+      before do
+        fog_backups
+      end
+
+      it "raises a success notification when backup_create succeeds" do
+        cloud_volume.backup_create(:name => "my_backup")
+
+        note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_create_success").id)
+        expect(note.options).to eq(:subject => cloud_volume.name, :backup_name => "my_backup")
+      end
+
+      it "raises an error notification when backup_create fails" do
+        error_message = "backup_create failed"
+        expect(fog_backups).to receive(:new).and_raise(error_message)
+        expect { cloud_volume.backup_create(:name => "my_backup") }.to raise_error(error_message)
+
+        note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_create_error").id)
+        expect(note.options).to eq(:subject => cloud_volume.name, :backup_name => "my_backup", :error_message => error_message)
+      end
+    end
   end
 
   describe "instance linsting for attaching volumes" do

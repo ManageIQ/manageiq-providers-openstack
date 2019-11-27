@@ -6,8 +6,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudV
   supports :backup_restore
 
   def raw_restore(volumeid = nil, name = nil)
-    with_provider_object do |backup|
-      backup.restore(volumeid, name)
+    with_notification(:cloud_volume_backup_restore,
+                      :options => {
+                        :subject     => self,
+                        :volume_name => cloud_volume.name
+                      }) do
+      with_provider_object do |backup|
+        backup.restore(volumeid, name)
+      end
     end
   rescue => e
     _log.error("backup=[#{name}], error: #{e}")
@@ -15,8 +21,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudV
   end
 
   def raw_delete
-    with_provider_object do |backup|
-      backup.destroy if backup
+    with_notification(:cloud_volume_backup_delete,
+                      :options => {
+                        :subject     => self,
+                        :volume_name => cloud_volume.name
+                      }) do
+      with_provider_object do |backup|
+        backup&.destroy
+      end
     end
   rescue => e
     _log.error("volume backup=[#{name}], error: #{e}")

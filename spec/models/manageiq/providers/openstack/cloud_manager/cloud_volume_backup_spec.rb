@@ -35,12 +35,48 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
       expect(raw_cloud_volume_backup).to receive(:restore)
       cloud_volume_backup.raw_restore(cloud_volume)
     end
+
+    it "raises a success notification when raw_backup_restore succeeds" do
+      NotificationType.seed
+
+      expect(raw_cloud_volume_backup).to receive(:restore)
+      cloud_volume_backup.raw_restore(cloud_volume)
+      note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_restore_success").id)
+      expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name)
+    end
+
+    it "raises an error notification when raw_backup_restore fails" do
+      NotificationType.seed
+      error_message = "restore failed"
+      expect(raw_cloud_volume_backup).to receive(:restore).and_raise(error_message)
+      expect { cloud_volume_backup.raw_restore(cloud_volume) }.to raise_error(error_message)
+      note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_restore_error").id)
+      expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name, :error_message => error_message)
+    end
   end
 
   context 'raw_delete_backup' do
     it 'deletes backup' do
       expect(raw_cloud_volume_backup).to receive(:destroy)
       cloud_volume_backup.raw_delete
+    end
+
+    it "raises a success notification when raw_delete_backup succeeds" do
+      NotificationType.seed
+
+      expect(raw_cloud_volume_backup).to receive(:destroy)
+      cloud_volume_backup.raw_delete
+      note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_delete_success").id)
+      expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name)
+    end
+
+    it "raises an error notification when raw_delete_backup fails" do
+      NotificationType.seed
+      error_message = "backup failed"
+      expect(raw_cloud_volume_backup).to receive(:destroy).and_raise(error_message)
+      expect { cloud_volume_backup.raw_delete }.to raise_error(error_message)
+      note = Notification.find_by(:notification_type_id => NotificationType.find_by(:name => "cloud_volume_backup_delete_error").id)
+      expect(note.options).to eq(:subject => cloud_volume_backup.name, :volume_name => cloud_volume.name, :error_message => error_message)
     end
   end
 end

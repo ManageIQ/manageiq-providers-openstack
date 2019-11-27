@@ -78,9 +78,15 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
 
   def backup_create(options)
     options[:volume_id] = ems_ref
-    with_provider_connection do |service|
-      backup = service.backups.new(options)
-      backup.save
+    with_notification(:cloud_volume_backup_create,
+                      :options => {
+                        :subject     => self,
+                        :backup_name => options[:name]
+                      }) do
+      with_provider_connection do |service|
+        backup = service.backups.new(options)
+        backup.save
+      end
     end
   rescue => e
     _log.error "backup=[#{name}], error: #{e}"
