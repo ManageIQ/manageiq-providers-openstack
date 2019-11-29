@@ -36,6 +36,8 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
     resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
     add_target(target_collection, :cloud_volumes, resource_id, :tenant_id => tenant_id) if resource_id
+    # Bootable Volume can be modelled also as VolumeTemplate for new VM provisioning based on the Bootable Volume
+    add_target(target_collection, :volume_templates, resource_id, :tenant_id => tenant_id) if resource_id
   end
 
   def collect_snapshot_references!(target_collection, ems_event)
