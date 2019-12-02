@@ -11,11 +11,11 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTar
     it "parses volume events" do
       ems_event = create_ems_event("volume.create.end", "resource_id" => "volume_id_test",)
       parsed_targets = described_class.new(ems_event).parse
-      expect(parsed_targets.size).to eq(1)
+      expect(parsed_targets.size).to eq(2)
       expect(target_references(parsed_targets)).to(
         match_array(
           [
-            [:cloud_volumes, {:ems_ref => "volume_id_test"}]
+            [:cloud_volumes, {:ems_ref=>"volume_id_test"}], [:volume_templates, {:ems_ref=>"volume_id_test"}]
           ]
         )
       )
