@@ -84,6 +84,9 @@
           - security_group.create.end
           - security_group.delete.end
           - security_group.update.end
+          - security_group_rule.create.end
+          - security_group_rule.delete.end
+          - security_group_rule.update.end
           - subnet.create.end
           - subnet.delete.end
           - subnet.update.end
@@ -186,7 +189,7 @@
         :amqp_recovery_attempts: 4
         :amqp_vhost: '/'
         :ceilometer:
-          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|security_group_rule|vpn)'
       :event_catcher_openstack_service: "auto"
     :queue_worker_base:
       :ems_metrics_collector_worker:
