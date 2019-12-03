@@ -35,6 +35,12 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
     @security_groups_by_name ||= Hash[security_groups.collect { |sg| [sg.name, sg.id] }]
   end
 
+  def firewall_rules
+    return @firewall_rules if @firewall_rules.any?
+
+    @firewall_rules = network_service.handled_list(:security_group_rules, {}, openstack_network_admin?)
+  end
+
   def orchestration_stacks
     return [] unless orchestration_service
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
