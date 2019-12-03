@@ -8,6 +8,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
     network_ports
     network_routers
     security_groups
+    firewall_rules
   end
 
   def cloud_networks
@@ -140,12 +141,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       )
 
       s.security_group_rules.each do |r|
-        case collector.network_service.name
-        when :neutron
-          firewall_rule_neutron(r, security_group)
-        when :nova
-          firewall_rule_nova(r, security_group)
-        end
+        next unless collector.network_service.name == :nova
+
+        firewall_rule_nova(r, security_group)
+        # Neutron security group rules are handled as s separate firewall_rules collection
       end
     end
   end
@@ -172,6 +171,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
     firewall_rule.port = rule.from_port
     firewall_rule.end_port = rule.to_port
     firewall_rule.source_ip_range = rule.ip_range["cidr"]
+  end
+
+  def firewall_rules
+    collector.firewall_rules.each do |s|
+      firewall_rule_neutron(s, persister.security_groups.find_or_build(s.security_group_id))
+    end
   end
 
   def find_device_object(network_port)
