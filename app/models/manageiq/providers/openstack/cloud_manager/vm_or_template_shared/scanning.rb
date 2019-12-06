@@ -25,6 +25,10 @@ module ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared::Scannin
     end
   end
 
+  def scan_job_class
+    ManageIQ::Providers::Openstack::CloudManager::Scanning::Job
+  end
+
   def require_snapshot_for_scan?
     false
   end
