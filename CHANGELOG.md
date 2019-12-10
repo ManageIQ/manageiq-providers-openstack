@@ -4,10 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Sprint 126 - Unreleased as of 2019-12-11
+
+### Fixed
+- Update Targeted refresh for VolumeTemplate objects [(#541)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/541)
 
 ## Sprint 120 - Unreleased as of 2019-09-16
 
-### Fixed
 - Removed gettext catalogs from repo [(#507)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/507)
 - Update Refresh to not delete other Snapshots on a VM during Targeted Refresh [(#502)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/502)
 
