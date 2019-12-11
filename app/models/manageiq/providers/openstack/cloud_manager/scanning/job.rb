@@ -48,7 +48,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
     _log.info("Enter")
 
     # TODO: remove snapshot here if Vm was running
-    vm = VmOrTemplate.find(target_id)
     if context[:snapshot_mor]
       mor = context[:snapshot_mor]
       context[:snapshot_mor] = nil
@@ -62,7 +61,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
       if vm.ext_management_system
         _log.info("Deleting snapshot: reference: [#{mor}]")
         begin
-          delete_snapshot(mor, vm)
+          delete_snapshot(mor)
         rescue => err
           _log.error(err.to_s)
           return
@@ -81,7 +80,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
       end
     else
       set_status("Snapshot was not taken, delete not required") if options[:snapshot] == :skipped
-      log_end_user_event_message(vm)
+      log_end_user_event_message
     end
 
     signal(:snapshot_complete)
@@ -125,12 +124,11 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
 
   private
 
-  def create_snapshot(vm = nil)
-    vm ||= VmOrTemplate.find(target_id)
+  def create_snapshot
     if vm.ext_management_system
       sn_description = snapshotDescription
       _log.info("Creating snapshot, description: [#{sn_description}]")
-      user_event = start_user_event_message(vm)
+      user_event = start_user_event_message
       options[:snapshot] = :server
       begin
         # TODO: should this be a vm method?
@@ -153,8 +151,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
     end
   end
 
-  def delete_snapshot(mor, vm = nil)
-    vm ||= VmOrTemplate.find(target_id)
+  def delete_snapshot(mor)
     vm.ext_management_system.vm_delete_evm_snapshot(vm, mor)
   end
 
