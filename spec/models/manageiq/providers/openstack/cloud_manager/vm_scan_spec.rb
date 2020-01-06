@@ -2,7 +2,7 @@ describe VmScan do
   let(:miq_server) { FactoryBot.create(:miq_server) }
   let(:ems)  { FactoryBot.create(:ems_openstack) }
   let(:vm)   { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
-  let(:job)  { VmScan.create_job(:target_id => vm.id) }
+  let(:job)  { vm.scan_job_class.create_job(:target_id => vm.id) }
   let(:snapshot_description) { "Snapshot description" }
 
   before do
@@ -30,12 +30,12 @@ describe VmScan do
     end
 
     describe "#check_policy_complete" do
-      it "should queue job.signal(:start_snapshot) after policy check completes successfully" do
+      it "should queue job.signal(:before_scan) after policy check completes successfully" do
         expect(MiqQueue).to receive(:put).with(
           :class_name  => job.class.to_s,
           :instance_id => job.id,
           :method_name => "signal",
-          :args        => [:start_snapshot],
+          :args        => [:before_scan],
           :zone        => miq_server.my_zone,
           :role        => "smartstate"
         )
@@ -48,7 +48,7 @@ describe VmScan do
 
   describe "signal: start_snapshot" do
     before do
-      job.state = "wait_for_policy"
+      job.state = "before_scan"
     end
 
     it "calls ems#vm_create_evm_snapshot" do
