@@ -240,6 +240,16 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     Notification.create(:type => :vm_snapshot_success, :subject => vm, :options => {:snapshot_op => 'create'})
     snapshot_id = snapshot["id"]
 
+    # Add new snapshot to the snapshots table.
+    vm.snapshots.create!(
+      :name        => options[:name],
+      :description => options[:desc],
+      :uid         => snapshot_id,
+      :uid_ems     => snapshot_id,
+      :ems_ref     => snapshot_id,
+      :create_time => snapshot["created"]
+    )
+
     return snapshot_id
   rescue => err
     _log.error "#{log_prefix}, error: #{err}"
