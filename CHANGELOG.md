@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Sprint 128 - Unreleased as of 2020-01-20
+
+### Fixed
+
+* Add support for targeted refresh of SecurityGroupRules [(#542)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/542)
+* Remove unused NetworkManager metrics classes [(#548)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/548)
+
 ## Sprint 126 - Unreleased as of 2019-12-11
 
 ### Fixed
