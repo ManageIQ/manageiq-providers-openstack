@@ -64,7 +64,7 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   end
 
   def collect_orchestration_stack_references!(target_collection, ems_event)
-    stack_id = ems_event.full_data.fetch_path(:content, 'payload', 'stack_id')
+    stack_id = ems_event.full_data.fetch_path(:content, 'payload', 'stack_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
     tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id')
     target_collection.add_target(:association => :orchestration_stacks, :manager_ref => {:ems_ref => stack_id}, :options => {:tenant_id => tenant_id})
   end

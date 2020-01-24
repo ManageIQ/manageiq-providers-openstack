@@ -80,7 +80,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   context "targeted refresh" do
     it "will perform a targeted VM refresh against RHOS #{@environment}" do
       # EmsRefreshSpec-PoweredOn
-      vm_target = InventoryRefresh::Target.new(:manager => @ems, :association => :vms, :manager_ref => {:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b"})
+      vm_target = InventoryRefresh::Target.new(:manager => @ems, :association => :vms, :manager_ref => {:ems_ref => "8daeb8f2-3779-4331-a876-3806676f1fe1"})
       # Run twice to verify that a second run with existing data does not change anything.
       with_cassette("#{@environment}_vm_targeted_refresh", @ems) do
         EmsRefresh.refresh(vm_target)
@@ -94,8 +94,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       # stack1
       stack_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                 :association => :orchestration_stacks,
-                                                :manager_ref => {:ems_ref => "091e1e54-e01c-4ec5-a0ab-b00bee4d425c"},
-                                                :options     => {:tenant_id => "69f8f7205ade4aa59084c32c83e60b5a"})
+                                                :manager_ref => {:ems_ref => "eca4b0d4-c342-4b89-94bb-fe66f001460b"},
+                                                :options     => {:tenant_id => "8eb4b49207904f6eb33283732571bc0e"})
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_stack_targeted_refresh", @ems) do
           EmsRefresh.refresh(stack_target)
@@ -108,7 +108,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       # EmsRefreshSpec-Project
       stack_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                 :association => :cloud_tenants,
-                                                :manager_ref => {:ems_ref => "69f8f7205ade4aa59084c32c83e60b5a"})
+                                                :manager_ref => {:ems_ref => "8eb4b49207904f6eb33283732571bc0e"})
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_tenant_targeted_refresh", @ems) do
           EmsRefresh.refresh(stack_target)
@@ -121,32 +121,32 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     it "will perform a targeted router refresh against RHOS #{@environment}" do
       router_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                  :association => :network_routers,
-                                                 :manager_ref => {:ems_ref => "57e17608-8ac6-44a6-803e-f42ec15e9d1e"})
+                                                 :manager_ref => {:ems_ref => "cdbbd8a3-7ba1-4264-88a7-a1279558f77f"})
 
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_router_targeted_refresh", @ems) do
           EmsRefresh.refresh(router_target)
           expect(NetworkRouter.count).to eq(1)
-          router = NetworkRouter.find_by(:ems_ref => "57e17608-8ac6-44a6-803e-f42ec15e9d1e")
+          router = NetworkRouter.find_by(:ems_ref => "cdbbd8a3-7ba1-4264-88a7-a1279558f77f")
           expect(router.ext_management_system).to eq(@ems.network_manager)
         end
       end
     end
 
-    # attached to ca4f3a16-bae3-4407-83e9-f77b28af0f2b
+    # attached to 0c338e1b-b23c-41e8-8223-fc8086d24e96
     it "will perform a targeted volume refresh against RHOS #{@environment}" do
       volume_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                    :association => :cloud_volumes,
-                                                   :manager_ref => {:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448"})
+                                                   :manager_ref => {:ems_ref => "2042bbec-e245-405e-8e77-cde0205ab38e"})
 
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_volume_targeted_refresh", @ems) do
           EmsRefresh.refresh(volume_target)
           expect(CloudVolume.count).to eq(1)
-          volume = CloudVolume.find_by(:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448")
+          volume = CloudVolume.find_by(:ems_ref => "2042bbec-e245-405e-8e77-cde0205ab38e")
           expect(volume.ext_management_system).to eq(@ems.cinder_manager)
           expect(VmCloud.count).to eq(1)
-          vm = VmCloud.find_by(:ems_ref => "ca4f3a16-bae3-4407-83e9-f77b28af0f2b")
+          vm = VmCloud.find_by(:ems_ref => "0c338e1b-b23c-41e8-8223-fc8086d24e96")
           expect(vm.ext_management_system).to eq(@ems)
           expect(volume.vms.include?(vm)).to be true
         end
@@ -156,13 +156,13 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     it "will perform a targeted port refresh against RHOS #{@environment}" do
       port_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                :association => :network_ports,
-                                               :manager_ref => {:ems_ref => "02b5cbb1-6072-429c-b185-89f44b552d40"})
+                                               :manager_ref => {:ems_ref => "0134788e-bb49-4327-8f26-5584d4426305"})
 
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_port_targeted_refresh", @ems) do
           EmsRefresh.refresh(port_target)
           expect(NetworkPort.count).to eq(1)
-          router = NetworkPort.find_by(:ems_ref => "02b5cbb1-6072-429c-b185-89f44b552d40")
+          router = NetworkPort.find_by(:ems_ref => "0134788e-bb49-4327-8f26-5584d4426305")
           expect(router.ext_management_system).to eq(@ems.network_manager)
         end
       end
@@ -194,19 +194,19 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     it "will reset the cache before collecting tenants during targeted refresh against RHOS #{@environment}" do
       volume_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                    :association => :cloud_volumes,
-                                                   :manager_ref => {:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448"})
+                                                   :manager_ref => {:ems_ref => "2042bbec-e245-405e-8e77-cde0205ab38e"})
       tenant_target = InventoryRefresh::Target.new(:manager     => @ems,
                                                    :association => :cloud_tenants,
-                                                   :manager_ref => {:ems_ref => "e8f744b1fc6a487681d35fb275252608"})
+                                                   :manager_ref => {:ems_ref => "66df12d5801449a2b529d3a1bbf279b0"})
 
       2.times do # Run twice to verify that a second run with existing data does not change anything
         with_cassette("#{@environment}_volume_targeted_refresh", @ems) do
           EmsRefresh.refresh([tenant_target, volume_target])
           expect(CloudVolume.count).to eq(1)
-          volume = CloudVolume.find_by(:ems_ref => "0a55c0d5-c780-4e7d-9d09-47f5520c7448")
+          volume = CloudVolume.find_by(:ems_ref => "2042bbec-e245-405e-8e77-cde0205ab38e")
           expect(CloudTenant.all.count).to eq(2)
-          expect(CloudTenant.find_by(:ems_ref => "e8f744b1fc6a487681d35fb275252608")).to be_truthy
-          expect(CloudTenant.find_by(:ems_ref => "69f8f7205ade4aa59084c32c83e60b5a")).to be_truthy
+          expect(CloudTenant.find_by(:ems_ref => "8eb4b49207904f6eb33283732571bc0e")).to be_truthy
+          expect(CloudTenant.find_by(:ems_ref => "66df12d5801449a2b529d3a1bbf279b0")).to be_truthy
         end
       end
     end
