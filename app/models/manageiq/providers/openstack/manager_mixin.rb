@@ -381,8 +381,15 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       opts = {:ems => self, :automatic_recovery => false, :recover_from_connection_close => false}
 
       ceilometer = connection_configuration_by_role("ceilometer")
+      saf = connection_configuration_by_role("saf")
 
-      if ceilometer.try(:endpoint) && !ceilometer.try(:endpoint).try(:marked_for_destruction?)
+      if endpoint = saf.try(:endpoint)
+        opts[:events_monitor]    = :saf
+        opts[:hostname]          = endpoint.hostname
+        opts[:port]              = endpoint.port
+        opts[:security_protocol] = endpoint.security_protocol
+        #TODO: auth/credentials when become supported in OpenStack
+      elsif ceilometer.try(:endpoint) && !ceilometer.try(:endpoint).try(:marked_for_destruction?)
         opts[:events_monitor] = :ceilometer
       elsif (amqp = connection_configuration_by_role("amqp"))
         opts[:events_monitor] = :amqp
