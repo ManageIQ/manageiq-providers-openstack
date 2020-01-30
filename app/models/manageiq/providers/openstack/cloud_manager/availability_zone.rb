@@ -5,7 +5,10 @@ class ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone < ::Availab
   # deployment, this needs to be changed so that we only sum up the disk capacities for
   # hosts that has the matching availability_zone configured in /etc/cinder/cinder.conf.
   def block_storage_disk_capacity
-    cluster = ext_management_system.provider.infra_ems.ems_clusters.find { |c| c.block_storage? == true }
+    undercloud = ext_management_system&.provider&.infra_ems
+    if undercloud
+      cluster = undercloud.ems_clusters.find { |c| c.block_storage? == true }
+    end
     cluster.nil? ? 0 : cluster.aggregate_disk_capacity
   end
 
