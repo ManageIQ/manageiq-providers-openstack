@@ -69,6 +69,14 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     end.compact
   end
 
+  def firewall_rules
+    return [] unless network_service
+    return [] if references(:firewall_rules).blank?
+    return @firewall_rules if @firewall_rules.any?
+
+    @firewall_rules = network_service.handled_list(:security_group_rules, {}, openstack_network_admin?)
+  end
+
   def floating_ips
     return [] if references(:floating_ips).blank? && references(:floating_ips_by_address).blank?
     return @floating_ips if @floating_ips.any?

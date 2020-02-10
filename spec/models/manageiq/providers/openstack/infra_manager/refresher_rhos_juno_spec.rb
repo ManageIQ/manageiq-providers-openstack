@@ -7,7 +7,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
-      :default => {:userid => "admin", :password => "password_2WpEraURh"})
+      :default => {:userid => "admin", :password => "a5d6375470291c68de726836504d014ebe095b6d"})
   end
 
   it "will perform a full refresh" do
@@ -138,7 +138,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(@host.ems_cluster).not_to be nil
 
     expect(@host).to have_attributes(
-      :ipmi_address       => "172.16.0.1",
+      :ipmi_address       => nil,
       :vmm_vendor         => "redhat",
       :vmm_version        => nil,
       :vmm_product        => "rhel (No hypervisor, Host Type is Controller)",
@@ -241,12 +241,11 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(CloudNetwork.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
       match_array(
         %w(
-          external___overcloud-Networks-qjtholakrc6g-ExternalNetwork-6zyampmzf3tj
-          tenant___overcloud-Networks-qjtholakrc6g-TenantNetwork-ctrbnzridcnt
-          storage_mgmt___overcloud-Networks-qjtholakrc6g-StorageMgmtNetwork-gznjlt35mzvj
-          internal_api___overcloud-Networks-qjtholakrc6g-InternalNetwork-pmjtzxalczbj
-          management___overcloud-Networks-qjtholakrc6g-ManagementNetwork-pez37zpjatdk
-          storage___overcloud-Networks-qjtholakrc6g-StorageNetwork-ka2bg3xvbajf
+          external___overcloud-Networks-zmx7dzn5vqj3-ExternalNetwork-ulhkkcqpqxde
+          tenant___overcloud-Networks-zmx7dzn5vqj3-TenantNetwork-xei6hfh3gtub
+          storage_mgmt___overcloud-Networks-zmx7dzn5vqj3-StorageMgmtNetwork-dinadwrc3yda
+          internal_api___overcloud-Networks-zmx7dzn5vqj3-InternalNetwork-324xh24coise
+          storage___overcloud-Networks-zmx7dzn5vqj3-StorageNetwork-7fbfebqyz7qj
           ctlplane___
         )
       )
