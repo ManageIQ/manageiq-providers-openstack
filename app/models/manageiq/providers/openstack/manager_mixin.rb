@@ -52,106 +52,212 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
     def params_for_create
       @params_for_create ||= {
-        :title  => "Configure OpenStack",
         :fields => [
           {
-            :component  => "text-field",
-            :name       => "name",
-            :label      => "Name",
-            :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
+            :component => "text-field",
+            :name      => "provider_region",
+            :label     => _("Provider Region"),
           },
           {
-            :component  => "text-field",
-            :name       => "provider_region",
-            :label      => "Provider Region",
-            :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
-          },
-          {
-            :component  => "text-field",
-            :name       => "api_version",
-            :label      => "API Version",
-            :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
-          },
-          {
-            :component  => "text-field",
-            :name       => "endpoints.default.default_userid",
-            :label      => "Username",
-            :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
-          },
-          {
-            :component  => "text-field",
-            :name       => "endpoints.default.default_hostname",
-            :label      => "Server Hostname",
-            :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
-          },
-          {
-            :component    => "text-field",
-            :name         => "endpoints.default.default_api_port",
-            :label        => "Port",
-            :type         => "number",
-            :initialValue => 13_000,
+            :component    => "select-field",
+            :name         => "api_version",
+            :label        => _("API Version"),
+            :initialValue => 'v2',
             :isRequired   => true,
-            :validate     => [{:type => "required-validator"}]
-          },
-          {
-            :component   => "select-field",
-            :name        => "endpoints.default.security_protocol",
-            :label       => "Security Protocol",
-            :placeholder => "ssl-no-validation", # TODO: This should be a dropdown
-            :options     => [
+            :validate     => [{:type => "required-validator"}],
+            :options      => [
               {
-                :label => "SSL without validation",
-                :value => "ssl-no-validation"
+                :label => 'Keystone V2',
+                :value => 'v2',
               },
               {
-                :label => "SSL",
-                :value => "ssl-with-validation"
+                :label => 'Keystone V3',
+                :value => 'v3',
               },
-              {
-                :label => "Non SSL",
-                :value => "non-ssl"
-              }
-            ]
+            ],
           },
           {
-            :component  => "text-field",
-            :name       => "endpoints.default.password",
-            :label      => "Password",
-            :type       => "password",
+            :component  => 'text-field',
+            :name       => 'keystone_v3_domain_id',
+            :label      => _('Domain ID'),
             :isRequired => true,
-            :validate   => [{:type => "required-validator"}]
-          },
-          {
-            :component => "radio",
-            :name      => "endpoints.events.type",
-            :label     => "Events",
-            :options   => [
-              {
-                :label => "Ceilometer",
-                :value => "ceilometer"
-              },
-              {
-                :label => "AMQP",
-                :value => "amqp"
+            :condition  => {
+              :when => 'api_version',
+              :is   => 'v3',
+            },
+            :validate   => [{
+              :type      => "required-validator",
+              :condition => {
+                :when => 'api_version',
+                :is   => 'v3',
               }
-            ]
+            }],
           },
           {
-            :component => "text-field",
-            :name      => "endpoints.rsa.username",
-            :label     => "Username",
+            :component => 'switch-field',
+            :name      => 'tenant_mapping_enabled',
+            :label     => _('Tenant Mapping Enabled'),
           },
           {
-            :component => "text-field",
-            :name      => "endpoints.rsa.private_key",
-            :label     => "Private Key",
-            :type      => "password"
-          }
+            :component => 'sub-form',
+            :name      => 'endpoints',
+            :title     => _('Endpoints'),
+            :fields    => [
+              :component => 'tabs',
+              :name      => 'tabs',
+              :fields    => [
+                {
+                  :component => 'tab-item',
+                  :name      => 'default',
+                  :title     => _('Default'),
+                  :fields    => [
+                    {
+                      :component              => 'validate-provider-credentials',
+                      :name                   => 'endpoints.default.valid',
+                      :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
+                      :fields                 => [
+                        {
+                          :component  => "select-field",
+                          :name       => "endpoints.default.default_security_protocol",
+                          :label      => _("Security Protocol"),
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                          :options    => [
+                            {
+                              :label => _("SSL without validation"),
+                              :value => "ssl-no-validation"
+                            },
+                            {
+                              :label => _("SSL"),
+                              :value => "ssl-with-validation"
+                            },
+                            {
+                              :label => _("Non-SSL"),
+                              :value => "non-ssl"
+                            }
+                          ]
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.default.default_hostname",
+                          :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component    => "text-field",
+                          :name         => "endpoints.default.default_api_port",
+                          :label        => _("API Port"),
+                          :type         => "number",
+                          :initialValue => 13_000,
+                          :isRequired   => true,
+                          :validate     => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.default.default_userid",
+                          :label      => "Username",
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.default.password",
+                          :label      => "Password",
+                          :type       => "password",
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                      ]
+                    },
+                  ]
+                },
+                {
+                  :component => 'tab-item',
+                  :name      => 'events',
+                  :title     => _('Events'),
+                  :fields    => [
+                    {
+                      :component    => 'select-field',
+                      :name         => 'event_stream_selection',
+                      :initialValue => 'ceilometer',
+                      :label        => _('Type'),
+                      :options      => [
+                        {
+                          :label => _("Ceilometer"),
+                          :value => "ceilometer"
+                        },
+                        {
+                          :label => _("AMQP"),
+                          :value => "amqp"
+                        }
+                      ]
+                    },
+                    {
+                      :component              => 'validate-provider-credentials',
+                      :name                   => 'endpoints.amqp.valid',
+                      :validationDependencies => %w[type event_stream_selection],
+                      :condition              => {
+                        :when => 'event_stream_selection',
+                        :is   => 'amqp',
+                      },
+                      :fields                 => [
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.amqp.amqp_hostname",
+                          :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component    => "text-field",
+                          :name         => "endpoints.amqp.amqp_api_port",
+                          :label        => _("API Port"),
+                          :type         => "number",
+                          :isRequired   => true,
+                          :initialValue => 5672,
+                          :validate     => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.amqp.amqp_userid",
+                          :label      => "Username",
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.amqp.password",
+                          :label      => "Password",
+                          :type       => "password",
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  :component => 'tab-item',
+                  :name      => 'rsa',
+                  :title     => _('RSA key pair'),
+                  :fields    => [
+                    {
+                      :component => "text-field",
+                      :name      => "endpoints.rsa.username",
+                      :label     => _("Username"),
+                    },
+                    {
+                      :component => "text-field", # file upload maybe?
+                      :name      => "endpoints.rsa.private_key",
+                      :label     => _("Private Key"),
+                      :type      => "password",
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
         ]
       }
     end
@@ -167,10 +273,17 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #       "default_userid" => String,
     #       "default_hostname" => String,
     #       "default_api_port" => Integer,
-    #       "security_protocol" => String,
+    #       "default_security_protocol" => String,
     #       "password" => String,
-    #     }
-    #   }
+    #     },
+    #     "amqp" => {
+    #       "amqp_hostname" => String,
+    #       "amqp_userid" => String,
+    #       "amqp_api_port" => String,
+    #       "password" => String,
+    #     },
+    #   },
+    # }
     def verify_credentials(args)
       root_params = %w[name provider_region api_version]
       params = args.sice(root_params).symbolize_keys
