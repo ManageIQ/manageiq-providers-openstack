@@ -31,7 +31,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       ems.security_protocol      = params[:default_security_protocol].strip
       ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
 
-      user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].strip
+      user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].try(:strip)
 
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       authentication = {:userid => user, :password => ManageIQ::Password.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
@@ -285,14 +285,18 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #   },
     # }
     def verify_credentials(args)
-      root_params = %w[name provider_region api_version]
-      params = args.sice(root_params).symbolize_keys
+      root_params = %w[name provider_region api_version].freeze
+      params = args.slice(*root_params).symbolize_keys
 
-      default_endpoint = args.dig("endpoints", "default")
-      password = default_endpoint&.dig("password")
+      endpoint_name = args.dig("endpoints").keys.first
+      endpoint = args.dig("endpoints", endpoint_name)
 
-      endpoint_params = %w[default_userid default_hostname default_api_port security_protocol]
-      params.merge(default_endpoint&.slice(endpoint_params)&.symbolize_keys || {})
+      params[:event_stream_selection] = args['event_stream_selection'] if endpoint_name == 'amqp'
+
+      password = endpoint&.dig("password")
+
+      endpoint_params = %w[userid hostname api_port security_protocol].map { |item| [endpoint_name, item].join('_') }
+      params.merge!(endpoint&.slice(*endpoint_params)&.symbolize_keys || {})
 
       !!raw_connect(password, params)
     end
