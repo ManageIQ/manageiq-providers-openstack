@@ -46,14 +46,12 @@ class OpenstackSafEventMonitor < OpenstackEventMonitor
 
   def start
     $log.info("Building SAF QDR client START..") if $log
-    @qdr_receiver_thread = Thread.new { @qdr_receiver = Qpid::Proton::Container.new(OpenStackSafEventReceiver.new(self.class.build_qdr_client_url(@options), DEFAULT_TOPIC_NAME, @events, @events_mutex)).run }
-    @qdr_receiver_thread.join
+    @qdr_receiver = Qpid::Proton::Container.new(OpenStackSafEventReceiver.new(self.class.build_qdr_client_url(@options), DEFAULT_TOPIC_NAME, @events, ->(event) { @events << event }))
   end
 
   def stop
     $log.info("Building SAF QDR client STOP..") if $log
-    # @qdr_receiver.stop ??
-    @qdr_receiver_thread.terminate!
+    @qdr_receiver&.stop # ??
     @collecting_events = false
   end
 
