@@ -40,7 +40,6 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       ems.api_version            = params[:api_version].strip
       ems.security_protocol      = params[:default_security_protocol].strip
       ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
-      ems.http_proxy_uri         = params[:proxy].strip if params[:proxy]
 
       user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_api_port].try(:strip)
 
