@@ -61,6 +61,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     @network_ports              = []
     @network_routers            = []
     @security_groups            = []
+    @firewall_rules             = []
     # cinder
     @cloud_volumes              = []
     @cloud_volume_snapshots     = []

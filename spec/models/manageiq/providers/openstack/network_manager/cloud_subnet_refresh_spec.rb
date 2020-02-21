@@ -133,6 +133,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_ports).and_return(mocked_network_ports)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_routers).and_return(mocked_network_routers)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:security_groups).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:firewall_rules).and_return([])
     end
 
     def setup_mocked_targeted_collector
@@ -147,6 +148,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_ports).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:network_routers).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:security_groups).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:firewall_rules).and_return([])
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:image_service).and_return(double(:name => "not-glance"))
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:volume_service).and_return(double(:name => "not-cinder"))
     end
