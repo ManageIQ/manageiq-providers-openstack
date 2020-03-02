@@ -84,4 +84,8 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
       stop_event_monitor_queue
     end
   end
+
+  def self.display_name(number = 1)
+    n_('Cinder Block Storage Manager (OpenStack)', 'Cinder Block Storage Managers (OpenStack)', number)
+  end
 end
