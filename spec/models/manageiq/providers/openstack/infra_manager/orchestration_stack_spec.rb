@@ -102,7 +102,6 @@ describe ManageIQ::Providers::Openstack::InfraManager::OrchestrationStack do
 
     context 'queuing' do
       it 'should do direct stack updates if workflows are not available' do
-        allow(orchestration_stack).to receive(:queue_post_scaledown_task).and_return(true)
         allow(orchestration_stack).to receive(:update_ready?).and_return(true)
         expect(orchestration_stack).to receive(:update_stack).with(any_args).twice
 
