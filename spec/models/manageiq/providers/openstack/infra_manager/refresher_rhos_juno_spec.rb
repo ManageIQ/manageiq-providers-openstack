@@ -10,63 +10,69 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :default => {:userid => "admin", :password => "a5d6375470291c68de726836504d014ebe095b6d"})
   end
 
-  it "will perform a full refresh" do
-    2.times do  # Run twice to verify that a second run with existing data does not change anything
-      @ems.reload
-      # Caching OpenStack info between runs causes the tests to fail with:
-      #   VCR::Errors::UnusedHTTPInteractionError
-      # Reset the cache so HTTP interactions are the same between runs.
-      @ems.reset_openstack_handle
+  [{:inventory_object_refresh => false}, {:inventory_object_refresh => true}].each do |refresh_settings|
+    context "with refresh settings #{refresh_settings}" do
+      before { stub_settings_merge(:ems_refresh => {:openstack_infra => refresh_settings}) }
 
-      # We need VCR to match requests differently here because fog adds a dynamic
-      #   query param to avoid HTTP caching - ignore_awful_caching##########
-      #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
-      VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
-        Fog::OpenStack.instance_variable_set(:@version, nil)
-        EmsRefresh.refresh(@ems)
-        EmsRefresh.refresh(@ems.network_manager)
+      it "will perform a full refresh" do
+        2.times do  # Run twice to verify that a second run with existing data does not change anything
+          @ems.reload
+          # Caching OpenStack info between runs causes the tests to fail with:
+          #   VCR::Errors::UnusedHTTPInteractionError
+          # Reset the cache so HTTP interactions are the same between runs.
+          @ems.reset_openstack_handle
+
+          # We need VCR to match requests differently here because fog adds a dynamic
+          #   query param to avoid HTTP caching - ignore_awful_caching##########
+          #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
+          VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
+            Fog::OpenStack.instance_variable_set(:@version, nil)
+            EmsRefresh.refresh(@ems)
+            EmsRefresh.refresh(@ems.network_manager)
+          end
+          @ems.reload
+
+          assert_table_counts
+          assert_ems
+          assert_specific_host
+          assert_mapped_stacks
+          assert_specific_public_template
+        end
       end
-      @ems.reload
 
-      assert_table_counts
-      assert_ems
-      assert_specific_host
-      assert_mapped_stacks
-      assert_specific_public_template
-    end
-  end
+      it "will verify maintenance mode" do
+        # We need VCR to match requests differently here because fog adds a dynamic
+        #   query param to avoid HTTP caching - ignore_awful_caching##########
+        #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
+        VCR.use_cassette("#{described_class.name.underscore}_rhos_juno_maintenance",
+                         :match_requests_on => [:method, :host, :path]) do
+          @ems.reload
+          @ems.reset_openstack_handle
+          Fog::OpenStack.instance_variable_set(:@version, nil)
+          EmsRefresh.refresh(@ems)
+          EmsRefresh.refresh(@ems.network_manager)
+          @ems.reload
 
-  it "will verify maintenance mode" do
-    # We need VCR to match requests differently here because fog adds a dynamic
-    #   query param to avoid HTTP caching - ignore_awful_caching##########
-    #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
-    VCR.use_cassette("#{described_class.name.underscore}_rhos_juno_maintenance",
-                     :match_requests_on => [:method, :host, :path]) do
-      @ems.reload
-      @ems.reset_openstack_handle
-      Fog::OpenStack.instance_variable_set(:@version, nil)
-      EmsRefresh.refresh(@ems)
-      EmsRefresh.refresh(@ems.network_manager)
-      @ems.reload
+          @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
 
-      @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
+          expect(@host.maintenance).to eq(false)
+          expect(@host.maintenance_reason).to be nil
 
-      expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to be nil
+          @host.set_node_maintenance
+          EmsRefresh.refresh(@ems)
+          @ems.reload
+          @host.reload
+          expect(@host.maintenance).to eq(true)
+          expect(@host.maintenance_reason).to eq("CFscaledown")
 
-      @host.set_node_maintenance
-      EmsRefresh.refresh(@ems)
-      @ems.reload
-      @host.reload
-      expect(@host.maintenance).to eq(true)
-      expect(@host.maintenance_reason).to eq("CFscaledown")
-
-      @host.unset_node_maintenance
-      EmsRefresh.refresh(@ems)
-      @ems.reload
-      @host.reload
-      expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to be nil
+          @host.unset_node_maintenance
+          EmsRefresh.refresh(@ems)
+          @ems.reload
+          @host.reload
+          expect(@host.maintenance).to eq(false)
+          expect(@host.maintenance_reason).to be nil
+        end
+      end
     end
   end
 
