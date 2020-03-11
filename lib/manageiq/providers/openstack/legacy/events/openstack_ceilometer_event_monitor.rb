@@ -147,7 +147,7 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   def latest_event_timestamp
     return @since if @since.present?
 
-    @since = @ems.ems_events.maximum(:timestamp) || skip_history? ? @ems.created_on.iso8601 : nil
+    @since = @ems.ems_events.maximum(:timestamp).try(:iso8601) || (skip_history? ? @ems.created_on.iso8601 : nil)
   end
 
   def tenant_sensitive?
