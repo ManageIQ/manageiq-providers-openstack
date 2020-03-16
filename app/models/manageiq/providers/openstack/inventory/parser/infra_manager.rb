@@ -129,10 +129,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @stack_server_resources = filter_stack_resources_by_resource_type(stack_server_resource_types)
   end
 
-  def servers
-    @servers ||= uniques(@connection.handled_list(:servers))
-  end
-
   def hosts
     @hosts ||= @baremetal_service && uniques(@baremetal_service.handled_list(:nodes))
   end
@@ -172,7 +168,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     # Servers contains assigned IP address of hosts, there can be only
     # one nova server per host, only if the host is provisioned.
     indexed_servers = {}
-    servers.each { |s| indexed_servers[s.id] = s }
+    collector.servers.each { |s| indexed_servers[s.id] = s }
 
     # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
     indexed_resources = {}

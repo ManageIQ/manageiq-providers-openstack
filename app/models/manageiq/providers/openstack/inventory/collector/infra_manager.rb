@@ -19,4 +19,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
 
     @images = uniques(image_service.handled_list(:images))
   end
+
+  def servers
+    return [] unless compute_service
+    return @servers if @servers.any?
+
+    @servers = uniques(compute_service.handled_list(:servers))
+  end
 end
