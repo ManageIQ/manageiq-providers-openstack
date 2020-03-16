@@ -1,6 +1,8 @@
 require 'fog/openstack'
 
 describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
+  include Spec::Support::EmsRefreshHelper
+
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
     @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
@@ -10,27 +12,25 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :default => {:userid => "admin", :password => "a5d6375470291c68de726836504d014ebe095b6d"})
   end
 
+  it "graph refresh the same as classic refresh" do
+    stub_settings_merge(:ems_refresh => {:openstack_infra => {:inventory_object_refresh => false}})
+    full_refresh
+    before = serialize_inventory
+
+    stub_settings_merge(:ems_refresh => {:openstack_infra => {:inventory_object_refresh => true}})
+    full_refresh
+    after = serialize_inventory
+
+    assert_inventory_not_changed(before, after)
+  end
+
   [{:inventory_object_refresh => false}, {:inventory_object_refresh => true}].each do |refresh_settings|
     context "with refresh settings #{refresh_settings}" do
       before { stub_settings_merge(:ems_refresh => {:openstack_infra => refresh_settings}) }
 
       it "will perform a full refresh" do
         2.times do  # Run twice to verify that a second run with existing data does not change anything
-          @ems.reload
-          # Caching OpenStack info between runs causes the tests to fail with:
-          #   VCR::Errors::UnusedHTTPInteractionError
-          # Reset the cache so HTTP interactions are the same between runs.
-          @ems.reset_openstack_handle
-
-          # We need VCR to match requests differently here because fog adds a dynamic
-          #   query param to avoid HTTP caching - ignore_awful_caching##########
-          #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
-          VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
-            Fog::OpenStack.instance_variable_set(:@version, nil)
-            EmsRefresh.refresh(@ems)
-            EmsRefresh.refresh(@ems.network_manager)
-          end
-          @ems.reload
+          full_refresh
 
           assert_table_counts
           assert_ems
@@ -74,6 +74,25 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
         end
       end
     end
+  end
+
+  def full_refresh
+    @ems.reload
+    # Caching OpenStack info between runs causes the tests to fail with:
+    #   VCR::Errors::UnusedHTTPInteractionError
+    # Reset the cache so HTTP interactions are the same between runs.
+    @ems.reset_openstack_handle
+
+    # We need VCR to match requests differently here because fog adds a dynamic
+    #   query param to avoid HTTP caching - ignore_awful_caching##########
+    #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
+    VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
+      Fog::OpenStack.instance_variable_set(:@version, nil)
+      EmsRefresh.refresh(@ems)
+      MiqQueue.where(:class_name => "EmsRefresh", :method_name => "refresh").destroy_all
+      EmsRefresh.refresh(@ems.network_manager)
+    end
+    @ems.reload
   end
 
   def assert_table_counts
