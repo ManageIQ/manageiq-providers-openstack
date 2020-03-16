@@ -12,12 +12,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @data_index        = {}
     @resource_to_stack = {}
 
-    @compute_service            = collector.compute_service
-    @identity_service           = collector.identity_service
-    @orchestration_service      = collector.orchestration_service
-    @image_service              = collector.image_service
-    @storage_service            = collector.storage_service
-    @introspection_service      = collector.introspection_service
+    @orchestration_service = collector.orchestration_service
+    @image_service         = collector.image_service
+    @storage_service       = collector.storage_service
 
     images
     get_object_store
@@ -155,17 +152,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     hosts_attributes
   end
 
-  def get_introspection_details(host)
-    return {} unless @introspection_service
-
-    begin
-      @introspection_service.get_introspection_details(host.uuid).body
-    rescue
-      # introspection data not available
-      {}
-    end
-  end
-
   def get_extra_attributes(introspection_details)
     return {} if introspection_details.blank? || introspection_details["extra"].nil?
 
@@ -179,8 +165,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     ip_address          = identify_primary_ip_address(host, indexed_servers)
     hostname            = ip_address
 
-    introspection_details = get_introspection_details(host)
-    extra_attributes = get_extra_attributes(introspection_details)
+    introspection_details = collector.introspection_details(host)
+    extra_attributes      = get_extra_attributes(introspection_details)
 
     # Get the cloud_host_attributes by hypervisor hostname, only compute hosts can get this
     cloud_host_attributes = cloud_hosts_attributes.select do |x|

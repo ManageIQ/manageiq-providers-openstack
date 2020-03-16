@@ -52,6 +52,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @cloud_managers ||= (manager.provider&.cloud_ems || [])
   end
 
+  def introspection_details(host)
+    return {} unless introspection_service
+
+    begin
+      introspection_service.get_introspection_details(host.uuid).body
+    rescue
+      {}
+    end
+  end
+
   private
 
   def validate_required_services
