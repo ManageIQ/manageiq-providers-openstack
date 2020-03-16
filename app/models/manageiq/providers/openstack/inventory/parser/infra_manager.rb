@@ -19,32 +19,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @storage_service            = collector.storage_service
     @introspection_service      = collector.introspection_service
 
-    validate_required_services
-
     images
     get_object_store
     hosts
     orchestration_stacks
     clusters
-  end
-
-  def validate_required_services
-    unless @identity_service
-      raise MiqException::MiqOpenstackKeystoneServiceMissing, "Required service Keystone is missing in the catalog."
-    end
-
-    unless @compute_service
-      raise MiqException::MiqOpenstackNovaServiceMissing, "Required service Nova is missing in the catalog."
-    end
-
-    unless @image_service
-      raise MiqException::MiqOpenstackGlanceServiceMissing, "Required service Glance is missing in the catalog."
-    end
-
-    # log a warning but don't fail on missing Ironicggg
-    unless collector.baremetal_service
-      _log.warn "Ironic service is missing in the catalog. No host data will be synced."
-    end
   end
 
   def images

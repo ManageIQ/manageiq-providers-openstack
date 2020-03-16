@@ -1,6 +1,12 @@
 class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < ManageIQ::Providers::Openstack::Inventory::Collector
   include ManageIQ::Providers::Openstack::Inventory::Collector::HelperMethods
 
+  def initialize(_manager, _target)
+    super
+
+    validate_required_services
+  end
+
   def baremetal_service
     @baremetal_service ||= manager.openstack_handle.detect_baremetal_service
   end
@@ -47,6 +53,25 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
   end
 
   private
+
+  def validate_required_services
+    unless identity_service
+      raise MiqException::MiqOpenstackKeystoneServiceMissing, "Required service Keystone is missing in the catalog."
+    end
+
+    unless compute_service
+      raise MiqException::MiqOpenstackNovaServiceMissing, "Required service Nova is missing in the catalog."
+    end
+
+    unless image_service
+      raise MiqException::MiqOpenstackGlanceServiceMissing, "Required service Glance is missing in the catalog."
+    end
+
+    # log a warning but don't fail on missing Ironic
+    unless baremetal_service
+      _log.warn "Ironic service is missing in the catalog. No host data will be synced."
+    end
+  end
 
   def detailed_stacks(show_nested = true)
     return [] unless orchestration_service
