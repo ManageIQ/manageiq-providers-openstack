@@ -252,7 +252,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       #:availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id)
     }
 
-    persister.hosts.build(new_result)
+    persister_host = persister.hosts.build(new_result)
+    persister.host_operating_systems.build(:host => persister_host, :product_name => "linux")
+    hardware = persister.host_hardwares.build(process_host_hardware(host, introspection_details).merge(:host => persister_host))
+    process_host_hardware_disks(extra_attributes).each do |disk|
+      persister.host_disks.build(disk.merge(:hardware => hardware))
+    end
 
     return uid, new_result
   end
@@ -279,7 +284,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       # Can't get these 2 from ironic, maybe from Glance metadata, when it will be there, or image fleecing?
       :guest_os_full_name   => nil,
       :guest_os             => nil,
-      :disks                => process_host_hardware_disks(extra_attributes),
       :introspected         => !introspection_details.blank?,
       # fog-openstack baremetal service defaults to Ironic API v1.1.
       # In version 1.1 "available" is shown as null in JSON. It is correctly
@@ -440,13 +444,24 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       :orchestration_template => persister.orchestration_templates.lazy_find(template[:ems_ref]),
     }
 
-    persister.orchestration_stacks.build(
+    persister_stack = persister.orchestration_stacks.build(
       new_result.except(:parent_stack_id, :resources, :outputs, :parameters)
     )
 
-    resources.each  { |res| persister.orchestration_stacks_resources.build(res) }
-    outputs.each    { |output| persister.orchestration_stacks_outputs.build(output) }
-    parameters.each { |param| persister.orchestration_stacks_parameters.build(param) }
+    resources.each do |res|
+      res.merge!(:stack => persister_stack)
+      persister.orchestration_stacks_resources.build(res)
+    end
+
+    outputs.each do |output|
+      output.merge!(:stack => persister_stack)
+      persister.orchestration_stacks_outputs.build(output)
+    end
+
+    parameters.each do |param|
+      param.merge!(:stack => persister_stack)
+      persister.orchestration_stacks_parameters.build(param)
+    end
 
     return uid, new_result
   end

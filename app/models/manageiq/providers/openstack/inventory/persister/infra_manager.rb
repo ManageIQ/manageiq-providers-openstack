@@ -13,6 +13,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::InfraManager < Manag
     add_collection(infra, :orchestration_stacks_resources)
     add_collection(infra, :orchestration_stacks_outputs)
     add_collection(infra, :orchestration_stacks_parameters)
+    add_collection(infra, :orchestration_stack_ancestry)
     add_collection(infra, :orchestration_templates)
 
     add_cloud_collection(:cloud_tenants)
