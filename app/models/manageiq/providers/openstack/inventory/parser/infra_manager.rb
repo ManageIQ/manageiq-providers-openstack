@@ -410,9 +410,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     new_result = {
       :ems_ref => uid,
       :uid_ems => uid,
-      :name    => name,
-      :type    => 'ManageIQ::Providers::Openstack::InfraManager::Cluster'
+      :name    => name
     }
+
+    persister.clusters.build(new_result)
+
     return uid, new_result
   end
 
@@ -424,10 +426,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def get_object_content(obj)
     obj.body
-  end
-
-  def self.miq_template_type
-    "ManageIQ::Providers::Openstack::InfraManager::Template"
   end
 
   #
