@@ -28,7 +28,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def hosts
     host_attributes = cloud_ems_hosts_attributes
-    process_collection(collector.hosts, :hosts) { |host| parse_host(host, host_attributes) }
+    collector.hosts.each { |host| parse_host(host, host_attributes) }
   end
 
   def orchestration_stacks
@@ -37,7 +37,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def clusters
     clusters, cluster_host_mapping = clusters_and_host_mapping
-    process_collection(clusters, :clusters) { |cluster| parse_cluster(cluster) }
+    clusters.each { |cluster| parse_cluster(cluster) }
 
     set_relationship_on_hosts(persister.hosts, cluster_host_mapping)
   end
