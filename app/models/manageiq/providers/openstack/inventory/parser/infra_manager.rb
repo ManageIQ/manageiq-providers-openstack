@@ -390,16 +390,16 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     cluster_host_mapping = {}
     orchestration_stacks = @data_index.fetch_path(:orchestration_stacks)
     orchestration_stacks.each_value do |stack|
-      uid = stack[:parent]&.stringified_reference
-      next unless uid
+      parent = orchestration_stacks[stack[:parent]&.stringified_reference]
+      next unless parent
 
       nova_server = stack[:resources].detect do |r|
         stack_server_resource_types.include?(r[:resource_category])
       end
       next unless nova_server
 
-      cluster_host_mapping[nova_server[:physical_resource]] = uid
-      clusters << {:name => stack[:parent][:name], :uid => uid}
+      cluster_host_mapping[nova_server[:physical_resource]] = parent[:ems_ref]
+      clusters << {:name => parent[:name], :uid => parent[:ems_ref]}
     end if orchestration_stacks
     return clusters.uniq, cluster_host_mapping
   end
