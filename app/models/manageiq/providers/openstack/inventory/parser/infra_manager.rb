@@ -12,9 +12,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @data_index        = {}
     @resource_to_stack = {}
 
-    @orchestration_service = collector.orchestration_service
-    @image_service         = collector.image_service
-    @storage_service       = collector.storage_service
+    @image_service   = collector.image_service
+    @storage_service = collector.storage_service
 
     images
     get_object_store
@@ -66,7 +65,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
     # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
     indexed_resources = {}
-    stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
+    collector.stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
 
     process_collection(collector.hosts, :hosts) do |host|
       parse_host(host, indexed_servers, indexed_resources, cloud_ems_hosts_attributes)
@@ -85,45 +84,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   private
-
-  def stack_resources_by_depth(stack)
-    return @stack_resources if @stack_resources
-
-    # TODO(lsmola) loading this from already obtained nested stack hierarchy will be more effective. This is one
-    # extra API call. But we will need to change order of loading, so we have all resources first.
-    @stack_resources = @orchestration_service.list_resources(:stack => stack, :nested_depth => 2).body['resources']
-  end
-
-  def filter_stack_resources_by_resource_type(resource_type_list)
-    resources = []
-    collector.root_stacks.each do |stack|
-      # Filtering just server resources which is important to us for getting Purpose of the node
-      # (compute, controller, etc.).
-      resources += stack_resources_by_depth(stack).select do |x|
-        resource_type_list.include?(x["resource_type"])
-      end
-    end
-    resources
-  end
-
-  def stack_resource_groups
-    return @stack_resource_groups if @stack_resource_groups
-
-    @stack_resource_groups = filter_stack_resources_by_resource_type(["OS::Heat::ResourceGroup"])
-  end
-
-  def stack_server_resource_types
-    return @stack_server_resource_types if @stack_server_resource_types
-
-    @stack_server_resource_types = ["OS::TripleO::Server", "OS::Nova::Server"]
-    @stack_server_resource_types += stack_resource_groups.map { |rg| "OS::TripleO::" + rg["resource_name"] + "Server" }
-  end
-
-  def stack_server_resources
-    return @stack_server_resources if @stack_server_resources
-
-    @stack_server_resources = filter_stack_resources_by_resource_type(stack_server_resource_types)
-  end
 
   def cloud_ems_hosts_attributes
     hosts_attributes = []
@@ -332,9 +292,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       parent = orchestration_stacks[stack[:parent]&.stringified_reference]
       next unless parent
 
-      nova_server = stack[:resources].detect do |r|
-        stack_server_resource_types.include?(r[:resource_category])
-      end
+      nova_server = stack[:resources].detect { |r| collector.stack_server_resource_types.include?(r[:resource_category]) }
       next unless nova_server
 
       cluster_host_mapping[nova_server[:physical_resource]] = parent[:ems_ref]

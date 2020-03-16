@@ -62,6 +62,27 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     end
   end
 
+  def filter_stack_resources_by_resource_type(resource_type_list)
+    resources = []
+    root_stacks.each do |stack|
+      # Filtering just server resources which is important to us for getting Purpose of the node
+      # (compute, controller, etc.).
+      resources += stack_resources(stack).select { |x| resource_type_list.include?(x["resource_type"]) }
+    end
+    resources
+  end
+
+  def stack_server_resource_types
+    return @stack_server_resource_types if @stack_server_resource_types
+
+    @stack_server_resource_types = ["OS::TripleO::Server", "OS::Nova::Server"]
+    @stack_server_resource_types += stack_resource_groups.map { |rg| "OS::TripleO::" + rg["resource_name"] + "Server" }
+  end
+
+  def stack_server_resources
+    @stack_server_resources ||= filter_stack_resources_by_resource_type(stack_server_resource_types)
+  end
+
   private
 
   def validate_required_services
@@ -93,5 +114,15 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     # Orchestration service is detected but not open to the user
     _log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
     []
+  end
+
+  def stack_resources(stack)
+    # TODO(lsmola) loading this from already obtained nested stack hierarchy will be more effective. This is one
+    # extra API call. But we will need to change order of loading, so we have all resources first.
+    @stack_resources ||= orchestration_service.list_resources(:stack => stack, :nested_depth => 2).body['resources']
+  end
+
+  def stack_resource_groups
+    @stack_resource_groups ||= filter_stack_resources_by_resource_type(["OS::Heat::ResourceGroup"])
   end
 end
