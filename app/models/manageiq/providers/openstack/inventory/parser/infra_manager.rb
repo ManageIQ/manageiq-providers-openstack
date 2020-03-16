@@ -388,7 +388,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     cluster_host_mapping = {}
     orchestration_stacks = @data_index.fetch_path(:orchestration_stacks)
     orchestration_stacks.each_value do |stack|
-      uid = stack.fetch_path(:parent, :ems_ref)
+      uid = stack[:parent]&.stringified_reference
       next unless uid
 
       nova_server = stack[:resources].detect do |r|
@@ -421,6 +421,53 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     hosts.each do |host|
       host[:ems_cluster] = @data_index.fetch_path(:clusters, cluster_host_mapping[host[:uid_ems]])
     end
+  end
+
+  def parse_stack(stack)
+    uid = stack.id.to_s
+
+    resources  = find_stack_resources(stack)
+    outputs    = find_stack_outputs(stack)
+    parameters = find_stack_parameters(stack)
+    template   = find_stack_template(stack)
+
+    new_result = {
+      :ems_ref                => uid,
+      :name                   => stack.stack_name,
+      :description            => stack.description,
+      :status                 => stack.stack_status,
+      :status_reason          => stack.stack_status_reason,
+      :parent                 => persister.orchestration_stacks.lazy_find(stack.parent),
+      :resources              => resources,
+      :orchestration_template => persister.orchestration_templates.lazy_find(template[:ems_ref]),
+    }
+
+    persister.orchestration_stacks.build(
+      new_result.except(:parent_stack_id, :resources, :outputs, :parameters)
+    )
+
+    resources.each  { |res| persister.orchestration_stacks_resources.build(res) }
+    outputs.each    { |output| persister.orchestration_stacks_outputs.build(output) }
+    parameters.each { |param| persister.orchestration_stacks_parameters.build(param) }
+
+    return uid, new_result
+  end
+
+  def parse_stack_template(stack)
+    uid = stack.id
+    template = stack.template
+
+    new_result = {
+      :name        => stack.stack_name,
+      :ems_ref     => uid,
+      :description => template.description,
+      :content     => template.content,
+      :orderable   => false
+    }
+
+    persister.orchestration_templates.build(new_result)
+
+    return uid, new_result
   end
 
   def get_object_content(obj)
