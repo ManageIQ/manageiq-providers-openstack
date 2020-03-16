@@ -59,16 +59,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def hosts
-    # Servers contains assigned IP address of hosts, there can be only
-    # one nova server per host, only if the host is provisioned.
-    indexed_servers = collector.servers.index_by(&:id)
-
-    # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
-    indexed_resources = {}
-    collector.stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
-
     process_collection(collector.hosts, :hosts) do |host|
-      parse_host(host, indexed_servers, indexed_resources, cloud_ems_hosts_attributes)
+      parse_host(host, cloud_ems_hosts_attributes)
     end
   end
 
@@ -118,11 +110,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     introspection_details["extra"]
   end
 
-  def parse_host(host, indexed_servers, indexed_resources, cloud_hosts_attributes)
+  def parse_host(host, cloud_hosts_attributes)
     uid                 = host.uuid
-    host_name           = identify_host_name(indexed_resources, host.instance_uuid, uid)
-    hypervisor_hostname = identify_hypervisor_hostname(host, indexed_servers)
-    ip_address          = identify_primary_ip_address(host, indexed_servers)
+    host_name           = identify_host_name(host.instance_uuid, uid)
+    hypervisor_hostname = identify_hypervisor_hostname(host)
+    ip_address          = identify_primary_ip_address(host)
     hostname            = ip_address
 
     introspection_details = collector.introspection_details(host)
@@ -139,12 +131,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       :uid_ems              => host.instance_uuid,
       :ems_ref              => uid,
       :vmm_vendor           => 'redhat',
-      :vmm_product          => identify_product(indexed_resources, host.instance_uuid),
+      :vmm_product          => identify_product(host.instance_uuid),
       # Can't get this from ironic, maybe from Glance metadata, when it will be there, or image fleecing?
       :vmm_version          => nil,
       :ipaddress            => ip_address,
       :hostname             => hostname,
-      :mac_address          => identify_primary_mac_address(host, indexed_servers),
+      :mac_address          => identify_primary_mac_address(host),
       :ipmi_address         => identify_ipmi_address(host),
       :power_state          => lookup_power_state(host.power_state),
       :connection_state     => lookup_connection_state(host.power_state),
@@ -230,12 +222,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     server&.addresses&.fetch_path('ctlplane', 0, key)
   end
 
-  def get_purpose(indexed_resources, instance_uuid)
-    indexed_resources.fetch_path(instance_uuid, 'resource_name')
+  def get_purpose(instance_uuid)
+    collector.stack_resources_by_id[instance_uuid]&.dig('resource_name')
   end
 
-  def identify_product(indexed_resources, instance_uuid)
-    purpose = get_purpose(indexed_resources, instance_uuid)
+  def identify_product(instance_uuid)
+    purpose = get_purpose(instance_uuid)
     return nil unless purpose
 
     if purpose == 'NovaCompute'
@@ -245,27 +237,29 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def identify_host_name(indexed_resources, instance_uuid, uid)
-    purpose = get_purpose(indexed_resources, instance_uuid)
+  def identify_host_name(instance_uuid, uid)
+    purpose = get_purpose(instance_uuid)
     return uid unless purpose
 
     "#{uid} (#{purpose})"
   end
 
-  def identify_primary_mac_address(host, indexed_servers)
-    server_address(indexed_servers[host.instance_uuid], 'OS-EXT-IPS-MAC:mac_addr')
+  def identify_primary_mac_address(host)
+    server = collector.servers_by_id[host.instance_uuid]
+    server_address(server, 'OS-EXT-IPS-MAC:mac_addr')
   end
 
-  def identify_primary_ip_address(host, indexed_servers)
-    server_address(indexed_servers[host.instance_uuid], 'addr')
+  def identify_primary_ip_address(host)
+    server = collector.servers_by_id[host.instance_uuid]
+    server_address(server, 'addr')
   end
 
   def identify_ipmi_address(host)
     host.driver_info["ipmi_address"]
   end
 
-  def identify_hypervisor_hostname(host, indexed_servers)
-    indexed_servers.fetch_path(host.instance_uuid).try(:name)
+  def identify_hypervisor_hostname(host)
+    collector.servers_by_id[host.instance_uuid]&.name
   end
 
   def lookup_power_state(power_state_input)

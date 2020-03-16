@@ -33,6 +33,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @servers = uniques(compute_service.handled_list(:servers))
   end
 
+  def servers_by_id
+    @servers_by_id ||= servers.index_by(&:id)
+  end
+
   def hosts
     return [] unless baremetal_service
     return @hosts if @hosts.any?
@@ -62,16 +66,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     end
   end
 
-  def filter_stack_resources_by_resource_type(resource_type_list)
-    resources = []
-    root_stacks.each do |stack|
-      # Filtering just server resources which is important to us for getting Purpose of the node
-      # (compute, controller, etc.).
-      resources += stack_resources(stack).select { |x| resource_type_list.include?(x["resource_type"]) }
-    end
-    resources
-  end
-
   def stack_server_resource_types
     return @stack_server_resource_types if @stack_server_resource_types
 
@@ -81,6 +75,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
 
   def stack_server_resources
     @stack_server_resources ||= filter_stack_resources_by_resource_type(stack_server_resource_types)
+  end
+
+  def stack_resources_by_id
+    @stack_resources_by_id ||= stack_server_resources.index_by { |p| p['physical_resource_id'] }
   end
 
   private
@@ -120,6 +118,16 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     # TODO(lsmola) loading this from already obtained nested stack hierarchy will be more effective. This is one
     # extra API call. But we will need to change order of loading, so we have all resources first.
     @stack_resources ||= orchestration_service.list_resources(:stack => stack, :nested_depth => 2).body['resources']
+  end
+
+  def filter_stack_resources_by_resource_type(resource_type_list)
+    resources = []
+    root_stacks.each do |stack|
+      # Filtering just server resources which is important to us for getting Purpose of the node
+      # (compute, controller, etc.).
+      resources += stack_resources(stack).select { |x| resource_type_list.include?(x["resource_type"]) }
+    end
+    resources
   end
 
   def stack_resource_groups
