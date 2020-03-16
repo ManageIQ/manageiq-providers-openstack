@@ -15,21 +15,5 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::InfraManager < Manag
     add_collection(infra, :orchestration_stacks_parameters)
     add_collection(infra, :orchestration_stack_ancestry)
     add_collection(infra, :orchestration_templates)
-
-    add_cloud_collection(:cloud_tenants)
-  end
-
-  private
-
-  def add_cloud_collection(collection)
-    add_collection(cloud, collection, shared_cloud_properties)
-  end
-
-  def cloud_manager
-    manager.provider.cloud_ems.first
-  end
-
-  def shared_cloud_properties
-    {:parent => cloud_manager, :strategy => :local_db_cache_all}
   end
 end
