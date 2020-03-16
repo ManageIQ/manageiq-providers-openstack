@@ -4,6 +4,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
   def images
     return [] unless image_service
     return @images if @images.any?
+
     @images = uniques(image_service.handled_list(:images))
   end
 end

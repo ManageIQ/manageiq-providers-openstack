@@ -29,7 +29,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       before { stub_settings_merge(:ems_refresh => {:openstack_infra => refresh_settings}) }
 
       it "will perform a full refresh" do
-        2.times do  # Run twice to verify that a second run with existing data does not change anything
+        2.times do # Run twice to verify that a second run with existing data does not change anything
           full_refresh
 
           assert_table_counts
