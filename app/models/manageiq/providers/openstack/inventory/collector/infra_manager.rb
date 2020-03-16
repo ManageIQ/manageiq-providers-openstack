@@ -48,6 +48,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @stacks ||= uniques(detailed_stacks)
   end
 
+  def stacks_by_id
+    @stacks_by_id ||= stacks.index_by(&:id)
+  end
+
   def root_stacks
     @root_stacks ||= uniques(detailed_stacks(false))
   end
@@ -108,8 +112,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @stack_server_resources ||= filter_stack_resources_by_resource_type(stack_server_resource_types)
   end
 
-  def stack_resources_by_id
-    @stack_resources_by_id ||= stack_server_resources.index_by { |p| p['physical_resource_id'] }
+  def server_purpose_by_instance_uuid
+    @server_purpose_by_instance_uuid ||= Hash[stack_server_resources.map { |res| [res['physical_resource_id'], res['resource_name']] }]
   end
 
   private

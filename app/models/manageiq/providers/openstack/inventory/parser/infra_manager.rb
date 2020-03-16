@@ -192,12 +192,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     server&.addresses&.fetch_path('ctlplane', 0, key)
   end
 
-  def get_purpose(instance_uuid)
-    collector.stack_resources_by_id[instance_uuid]&.dig('resource_name')
-  end
-
   def identify_product(instance_uuid)
-    purpose = get_purpose(instance_uuid)
+    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
     return nil unless purpose
 
     if purpose == 'NovaCompute'
@@ -208,7 +204,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def identify_host_name(instance_uuid, uid)
-    purpose = get_purpose(instance_uuid)
+    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
     return uid unless purpose
 
     "#{uid} (#{purpose})"
