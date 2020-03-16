@@ -230,10 +230,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
     new_result = {
       :name                 => host_name,
-      :type                 => 'ManageIQ::Providers::Openstack::InfraManager::Host',
       :uid_ems              => host.instance_uuid,
       :ems_ref              => uid,
-      :operating_system     => {:product_name => 'linux'},
       :vmm_vendor           => 'redhat',
       :vmm_product          => identify_product(indexed_resources, host.instance_uuid),
       # Can't get this from ironic, maybe from Glance metadata, when it will be there, or image fleecing?
@@ -246,14 +244,15 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       :connection_state     => lookup_connection_state(host.power_state),
       :maintenance          => host.maintenance,
       :maintenance_reason   => host.maintenance_reason,
-      :hardware             => process_host_hardware(host, introspection_details),
       :hypervisor_hostname  => hypervisor_hostname,
       :service_tag          => extra_attributes.fetch_path('system', 'product', 'serial'),
       # TODO(lsmola) need to add column for connection to SecurityGroup
       # :security_group_id  => security_group_id
       # Attributes taken from the Cloud provider
-      :availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id)
+      #:availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id)
     }
+
+    persister.hosts.build(new_result)
 
     return uid, new_result
   end
