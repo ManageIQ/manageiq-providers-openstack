@@ -8,7 +8,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def parse
     @ems               = collector.manager
-    @connection        = @ems.connect
     @data              = {}
     @data_index        = {}
     @host_hash_by_name = {}
@@ -16,39 +15,22 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
     @known_flavors = Set.new
 
-    @os_handle                  = @ems.openstack_handle
-    @compute_service            = @connection # for consistency
-    @baremetal_service          = @os_handle.detect_baremetal_service
-    @identity_service           = @os_handle.identity_service
-    @orchestration_service      = @os_handle.detect_orchestration_service
-    @image_service              = @os_handle.detect_image_service
-    @storage_service            = @os_handle.detect_storage_service
-    @introspection_service      = @os_handle.detect_introspection_service
+    @connection                 = collector.connection
+    @compute_service            = collector.compute_service
+    @baremetal_service          = collector.baremetal_service
+    @identity_service           = collector.identity_service
+    @orchestration_service      = collector.orchestration_service
+    @image_service              = collector.image_service
+    @storage_service            = collector.storage_service
+    @introspection_service      = collector.introspection_service
 
     validate_required_services
 
-    log_header = "MIQ(#{self.class.name}.#{__method__}) Collecting data" \
-                 " for EMS name: [#{@ems.name}] id: [#{@ems.id}]"
-    $fog_log.info("#{log_header}...")
-    # The order of the below methods does matter, because there are inner dependencies of the data!
-
-    # get_flavors # Not needed in infra
-    # get_availability_zones # Not needed in infra
-    # get_tenants # TODO(lsmola) should be needed, add it
-    # get_quotas # Not needed in infra
-    # get_key_pairs # Not needed in infra
     images
-
     get_object_store
-    # get_object_store needs to run before load hosts
     load_hosts
-
     load_orchestration_stacks
-    # Cluster processing needs to run after host and stacks processing
     clusters
-
-    $fog_log.info("#{log_header}...Complete")
-    @data
   end
 
   def validate_required_services
