@@ -33,4 +33,30 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
 
     @hosts = uniques(baremetal_service.handled_list(:nodes))
   end
+
+  def stacks
+    @stacks ||= uniques(detailed_stacks)
+  end
+
+  def root_stacks
+    @root_stacks ||= uniques(detailed_stacks(false))
+  end
+
+  def cloud_managers
+    @cloud_managers ||= (manager.provider&.cloud_ems || [])
+  end
+
+  private
+
+  def detailed_stacks(show_nested = true)
+    return [] unless orchestration_service
+    # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
+    # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
+    # can't get list of detailed stacks in one API call.
+    orchestration_service.handled_list(:stacks, :show_nested => show_nested).collect(&:details)
+  rescue Excon::Errors::Forbidden
+    # Orchestration service is detected but not open to the user
+    _log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
+    []
+  end
 end

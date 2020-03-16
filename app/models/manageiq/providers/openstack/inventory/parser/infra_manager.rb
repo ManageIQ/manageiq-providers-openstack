@@ -10,14 +10,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @ems               = collector.manager
     @data              = {}
     @data_index        = {}
-    @host_hash_by_name = {}
     @resource_to_stack = {}
 
-    @known_flavors = Set.new
-
-    @connection                 = collector.connection
     @compute_service            = collector.compute_service
-    @baremetal_service          = collector.baremetal_service
     @identity_service           = collector.identity_service
     @orchestration_service      = collector.orchestration_service
     @image_service              = collector.image_service
@@ -29,7 +24,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     images
     get_object_store
     hosts
-    load_orchestration_stacks
+    orchestration_stacks
     clusters
   end
 
@@ -47,7 +42,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
 
     # log a warning but don't fail on missing Ironicggg
-    unless @baremetal_service
+    unless collector.baremetal_service
       _log.warn "Ironic service is missing in the catalog. No host data will be synced."
     end
   end
@@ -88,6 +83,31 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
+  def hosts
+    # Servers contains assigned IP address of hosts, there can be only
+    # one nova server per host, only if the host is provisioned.
+    indexed_servers = collector.servers.index_by(&:id)
+
+    # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
+    indexed_resources = {}
+    stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
+
+    process_collection(collector.hosts, :hosts) do |host|
+      parse_host(host, indexed_servers, indexed_resources, cloud_ems_hosts_attributes)
+    end
+  end
+
+  def orchestration_stacks
+    process_collection(collector.stacks, :orchestration_stacks) { |stack| parse_stack(stack) }
+  end
+
+  def clusters
+    clusters, cluster_host_mapping = clusters_and_host_mapping
+    process_collection(clusters, :clusters) { |cluster| parse_cluster(cluster) }
+
+    set_relationship_on_hosts(persister.hosts, cluster_host_mapping)
+  end
+
   private
 
   def stack_resources_by_depth(stack)
@@ -100,7 +120,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def filter_stack_resources_by_resource_type(resource_type_list)
     resources = []
-    root_stacks.each do |stack|
+    collector.root_stacks.each do |stack|
       # Filtering just server resources which is important to us for getting Purpose of the node
       # (compute, controller, etc.).
       resources += stack_resources_by_depth(stack).select do |x|
@@ -129,15 +149,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @stack_server_resources = filter_stack_resources_by_resource_type(stack_server_resource_types)
   end
 
-  def clouds
-    @ems.provider.try(:cloud_ems)
-  end
-
   def cloud_ems_hosts_attributes
     hosts_attributes = []
-    return hosts_attributes unless clouds
 
-    clouds.each do |cloud_ems|
+    collector.cloud_managers.each do |cloud_ems|
       compute_hosts = nil
       begin
         cloud_ems.with_provider_connection do |connection|
@@ -157,21 +172,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
         hosts_attributes << {:host_name => compute_host.host_name, :availability_zone_id => availability_zone_id}
       end
     end
+
     hosts_attributes
-  end
-
-  def hosts
-    # Servers contains assigned IP address of hosts, there can be only
-    # one nova server per host, only if the host is provisioned.
-    indexed_servers = collector.servers.index_by(&:id)
-
-    # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
-    indexed_resources = {}
-    stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
-
-    process_collection(collector.hosts, :hosts) do |host|
-      parse_host(host, indexed_servers, indexed_resources, cloud_ems_hosts_attributes)
-    end
   end
 
   def get_introspection_details(host)
@@ -355,13 +357,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     when "power off", "rebooting" then "disconnected"
     else                               "disconnected"
     end
-  end
-
-  def clusters
-    clusters, cluster_host_mapping = clusters_and_host_mapping
-    process_collection(clusters, :clusters) { |cluster| parse_cluster(cluster) }
-
-    set_relationship_on_hosts(persister.hosts, cluster_host_mapping)
   end
 
   def clusters_and_host_mapping
