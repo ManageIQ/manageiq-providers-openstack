@@ -28,7 +28,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
     images
     get_object_store
-    load_hosts
+    hosts
     load_orchestration_stacks
     clusters
   end
@@ -129,10 +129,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     @stack_server_resources = filter_stack_resources_by_resource_type(stack_server_resource_types)
   end
 
-  def hosts
-    @hosts ||= @baremetal_service && uniques(@baremetal_service.handled_list(:nodes))
-  end
-
   def clouds
     @ems.provider.try(:cloud_ems)
   end
@@ -164,17 +160,16 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     hosts_attributes
   end
 
-  def load_hosts
+  def hosts
     # Servers contains assigned IP address of hosts, there can be only
     # one nova server per host, only if the host is provisioned.
-    indexed_servers = {}
-    collector.servers.each { |s| indexed_servers[s.id] = s }
+    indexed_servers = collector.servers.index_by(&:id)
 
     # Indexed Heat resources, we are interested only in OS::Nova::Server/OS::TripleO::Server
     indexed_resources = {}
     stack_server_resources.each { |p| indexed_resources[p['physical_resource_id']] = p }
 
-    process_collection(hosts, :hosts) do |host|
+    process_collection(collector.hosts, :hosts) do |host|
       parse_host(host, indexed_servers, indexed_resources, cloud_ems_hosts_attributes)
     end
   end
@@ -213,23 +208,23 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     cloud_host_attributes = cloud_host_attributes.first if cloud_host_attributes
 
     new_result = {
-      :name                => host_name,
-      :uid_ems             => host.instance_uuid,
-      :ems_ref             => uid,
-      :vmm_vendor          => 'redhat',
-      :vmm_product         => identify_product(indexed_resources, host.instance_uuid),
+      :name                 => host_name,
+      :uid_ems              => host.instance_uuid,
+      :ems_ref              => uid,
+      :vmm_vendor           => 'redhat',
+      :vmm_product          => identify_product(indexed_resources, host.instance_uuid),
       # Can't get this from ironic, maybe from Glance metadata, when it will be there, or image fleecing?
-      :vmm_version         => nil,
-      :ipaddress           => ip_address,
-      :hostname            => hostname,
-      :mac_address         => identify_primary_mac_address(host, indexed_servers),
-      :ipmi_address        => identify_ipmi_address(host),
-      :power_state         => lookup_power_state(host.power_state),
-      :connection_state    => lookup_connection_state(host.power_state),
-      :maintenance         => host.maintenance,
-      :maintenance_reason  => host.maintenance_reason,
-      :hypervisor_hostname => hypervisor_hostname,
-      :service_tag         => extra_attributes.fetch_path('system', 'product', 'serial'),
+      :vmm_version          => nil,
+      :ipaddress            => ip_address,
+      :hostname             => hostname,
+      :mac_address          => identify_primary_mac_address(host, indexed_servers),
+      :ipmi_address         => identify_ipmi_address(host),
+      :power_state          => lookup_power_state(host.power_state),
+      :connection_state     => lookup_connection_state(host.power_state),
+      :maintenance          => host.maintenance,
+      :maintenance_reason   => host.maintenance_reason,
+      :hypervisor_hostname  => hypervisor_hostname,
+      :service_tag          => extra_attributes.fetch_path('system', 'product', 'serial'),
       # TODO(lsmola) need to add column for connection to SecurityGroup
       # :security_group_id  => security_group_id
       # Attributes taken from the Cloud provider

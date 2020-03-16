@@ -31,6 +31,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
   attr_reader :cloud_volume_backups
   attr_reader :cloud_volume_types
   attr_reader :servers
+  attr_reader :hosts
 
   def initialize(_manager, _target)
     super
@@ -71,6 +72,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
 
     # infra
     @servers                    = []
+    @hosts                      = []
   end
 
   def connection

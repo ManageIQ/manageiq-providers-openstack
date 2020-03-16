@@ -26,4 +26,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
 
     @servers = uniques(compute_service.handled_list(:servers))
   end
+
+  def hosts
+    return [] unless baremetal_service
+    return @hosts if @hosts.any?
+
+    @hosts = uniques(baremetal_service.handled_list(:nodes))
+  end
 end
