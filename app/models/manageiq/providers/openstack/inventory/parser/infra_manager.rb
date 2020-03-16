@@ -375,12 +375,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def get_clusters
-    # This counts with hosts being already collected
-    hosts = @data.fetch_path(:hosts)
     clusters, cluster_host_mapping = get_clusters_and_host_mapping
     process_collection(clusters, :clusters) { |cluster| parse_cluster(cluster) }
 
-    set_relationship_on_hosts(hosts, cluster_host_mapping)
+    set_relationship_on_hosts(persister.hosts, cluster_host_mapping)
   end
 
   def get_clusters_and_host_mapping
@@ -419,7 +417,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def set_relationship_on_hosts(hosts, cluster_host_mapping)
     hosts.each do |host|
-      host[:ems_cluster] = @data_index.fetch_path(:clusters, cluster_host_mapping[host[:uid_ems]])
+      host.ems_cluster = persister.clusters.lazy_find(cluster_host_mapping[host[:uid_ems]])
     end
   end
 
