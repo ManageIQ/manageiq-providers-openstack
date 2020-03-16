@@ -37,7 +37,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     # get_tenants # TODO(lsmola) should be needed, add it
     # get_quotas # Not needed in infra
     # get_key_pairs # Not needed in infra
-    get_images
+    images
 
     get_object_store
     # get_object_store needs to run before load hosts
@@ -67,6 +67,42 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     # log a warning but don't fail on missing Ironicggg
     unless @baremetal_service
       _log.warn "Ironic service is missing in the catalog. No host data will be synced."
+    end
+  end
+
+  def images
+    collector.images.each do |image|
+      uid      = image.id.to_s
+      guest_os = OperatingSystem.normalize_os_name(image.try(:os_distro) || 'unknown')
+
+      persister_image = persister.miq_templates.build(
+        :uid_ems            => uid,
+        :ems_ref            => uid,
+        :name               => image.name.presence || uid,
+        :vendor             => "openstack",
+        :raw_power_state    => "never",
+        :location           => "unknown",
+        :template           => true,
+        :publicly_available => public?(image)
+      )
+
+      persister.operating_systems.build(
+        :vm_or_template => persister_image,
+        :product_name   => guest_os,
+        :distribution   => image.try(:os_distro),
+        :version        => image.try(:os_version)
+      )
+
+      persister.hardwares.build(
+        :vm_or_template      => persister_image,
+        :guest_os            => guest_os,
+        :bitness             => architecture(image),
+        :disk_size_minimum   => (image.min_disk * 1.gigabyte),
+        :memory_mb_minimum   => image.min_ram,
+        :root_device_type    => image.disk_format,
+        :size_on_disk        => image.size,
+        :virtualization_type => image.properties.try(:[], 'hypervisor_type') || image.attributes['hypervisor_type'],
+      )
     end
   end
 
