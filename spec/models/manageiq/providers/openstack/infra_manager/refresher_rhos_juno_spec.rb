@@ -78,39 +78,31 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
 
   def assert_table_counts
     expect(ExtManagementSystem.count).to         eq 2
-    expect(EmsCluster.count).to                  be > 0
-    expect(Host.count).to                        be > 0
-    expect(OrchestrationStack.count).to          be > 0
-    expect(OrchestrationStackParameter.count).to be > 0
-    expect(OrchestrationStackResource.count).to  be > 0
-    expect(OrchestrationStackOutput.count).to    be > 0
-    expect(OrchestrationTemplate.count).to       be > 0
-    expect(CloudNetwork.count).to                be > 0
-    expect(CloudSubnet.count).to                 be > 0
-    expect(NetworkPort.count).to                 be > 0
-    expect(VmOrTemplate.count).to                be > 0
-    expect(OperatingSystem.count).to             be > 0
-    expect(Hardware.count).to                    be > 0
-    # TODO(tzumainn) Introspection no longer returns disk information, may be
-    # an OpenStack issue?
-    expect(Disk.count).to                        be > -1
+    expect(EmsCluster.count).to                  eq 2
+    expect(Host.count).to                        eq 3
+    expect(OrchestrationStack.count).to          eq 317
+    expect(OrchestrationStackParameter.count).to eq 2929
+    expect(OrchestrationStackResource.count).to  eq 504
+    expect(OrchestrationStackOutput.count).to    eq 439
+    expect(OrchestrationTemplate.count).to       eq 151
+    expect(CloudNetwork.count).to                eq 6
+    expect(CloudSubnet.count).to                 eq 6
+    expect(NetworkPort.count).to                 eq 21
+    expect(VmOrTemplate.count).to                eq 5
+    expect(OperatingSystem.count).to             eq 8
+    expect(Hardware.count).to                    eq 8
+    expect(Disk.count).to                        eq 3
     expect(ResourcePool.count).to                eq 0
     expect(Vm.count).to                          eq 0
     expect(CustomAttribute.count).to             eq 0
     expect(CustomizationSpec.count).to           eq 0
-    # expect(GuestDevice.count).to                 eq > 0
     expect(Lan.count).to                         eq 0
     expect(MiqScsiLun.count).to                  eq 0
     expect(MiqScsiTarget.count).to               eq 0
-    # expect(Network.count).to                     eq 0
     expect(Snapshot.count).to                    eq 0
     expect(Switch.count).to                      eq 0
     expect(SystemService.count).to               eq 0
-    expect(EmsFolder.count).to                   eq 0 # HACK: Folder structure for UI a la VMware
-    # TODO(lsmola) investigate if this should be filled or not, also why
-    # it behaves strangely, it has different values in CI then locally
-    # expect(Relationship.count).to                eq 0
-    # expect(MiqQueue.count).to                    eq 9
+    expect(EmsFolder.count).to                   eq 0
     expect(Storage.count).to                     eq 0
   end
 
@@ -121,17 +113,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :uid_ems           => nil
     )
 
-    expect(@ems.ems_clusters.size).to                be > 0
-    expect(@ems.hosts.size).to                       be > 0
-    expect(@ems.orchestration_stacks.size).to        be > 0
-    expect(@ems.direct_orchestration_stacks.size).to be > 0
-    expect(@ems.vms_and_templates.size).to           be > 0
-    expect(@ems.miq_templates.size).to               be > 0
+    expect(@ems.ems_clusters.size).to                eq 2
+    expect(@ems.hosts.size).to                       eq 3
+    expect(@ems.orchestration_stacks.size).to        eq 317
+    expect(@ems.direct_orchestration_stacks.size).to eq 1
+    expect(@ems.vms_and_templates.size).to           eq 5
+    expect(@ems.miq_templates.size).to               eq 5
     expect(@ems.customization_specs.size).to         eq 0
     expect(@ems.resource_pools.size).to              eq 0
     expect(@ems.storages.size).to                    eq 0
     expect(@ems.vms.size).to                         eq 0
-    expect(@ems.ems_folders.size).to                 eq 0 # HACK: Folder structure for UI a la VMware
+    expect(@ems.ems_folders.size).to                 eq 0
   end
 
   def assert_specific_host
