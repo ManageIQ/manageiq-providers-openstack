@@ -27,8 +27,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def hosts
-    host_attributes = cloud_ems_hosts_attributes
-    collector.hosts.each { |host| parse_host(host, host_attributes) }
+    collector.hosts.each { |host| parse_host(host) }
   end
 
   def orchestration_stacks
@@ -78,40 +77,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     )
   end
 
-  def cloud_ems_hosts_attributes
-    hosts_attributes = []
-
-    collector.cloud_managers.each do |cloud_ems|
-      compute_hosts = nil
-      begin
-        cloud_ems.with_provider_connection do |connection|
-          compute_hosts = connection.hosts.select { |x| x.service_name == "compute" }
-        end
-      rescue => err
-        _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
-        _log.error(err.backtrace.join("\n"))
-        # Just log the error and continue the refresh, we don't want error in cloud side to affect infra refresh
-        next
-      end
-
-      compute_hosts.each do |compute_host|
-        # We need to take correct zone id from correct provider, since the zone name can be the same
-        # across providers
-        availability_zone_id = cloud_ems.availability_zones.find_by(:name => compute_host.zone).try(:id)
-        hosts_attributes << {:host_name => compute_host.host_name, :availability_zone_id => availability_zone_id}
-      end
-    end
-
-    hosts_attributes
-  end
-
   def get_extra_attributes(introspection_details)
     return {} if introspection_details.blank? || introspection_details["extra"].nil?
 
     introspection_details["extra"]
   end
 
-  def parse_host(host, cloud_hosts_attributes)
+  def parse_host(host)
     uid                 = host.uuid
     host_name           = identify_host_name(host.instance_uuid, uid)
     hypervisor_hostname = identify_hypervisor_hostname(host)
@@ -122,10 +94,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     extra_attributes      = get_extra_attributes(introspection_details)
 
     # Get the cloud_host_attributes by hypervisor hostname, only compute hosts can get this
-    cloud_host_attributes = cloud_hosts_attributes.select do |x|
-      hypervisor_hostname && x[:host_name].include?(hypervisor_hostname.downcase)
-    end
-    cloud_host_attributes = cloud_host_attributes.first if cloud_host_attributes
+    cloud_host_attributes = collector.cloud_host_attributes_by_host[hypervisor_hostname.downcase]&.first
 
     new_result = {
       :name                 => host_name,

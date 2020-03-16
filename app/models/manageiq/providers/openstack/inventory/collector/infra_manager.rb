@@ -56,6 +56,37 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @cloud_managers ||= (manager.provider&.cloud_ems || [])
   end
 
+  def cloud_host_attributes
+    @cloud_host_attributes ||= begin
+      cloud_managers.flat_map do |cloud_ems|
+        compute_hosts = nil
+        begin
+          cloud_ems.with_provider_connection do |connection|
+            compute_hosts = connection.hosts.select { |x| x.service_name == "compute" }
+          end
+        rescue => err
+          _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
+          _log.error(err.backtrace.join("\n"))
+          # Just log the error and continue the refresh, we don't want error in cloud side to affect infra refresh
+          next
+        end
+
+        compute_hosts.map do |compute_host|
+          # We need to take correct zone id from correct provider, since the zone name can be the same
+          # across providers
+          availability_zone_id = cloud_ems.availability_zones.find_by(:name => compute_host.zone).try(:id)
+          {:host_name => compute_host.host_name, :availability_zone_id => availability_zone_id}
+        end
+      end
+    end
+  end
+
+  def cloud_host_attributes_by_host
+    @cloud_host_attributes_by_host ||= cloud_host_attributes.group_by do |host_attrs|
+      host_attrs[:host_name]
+    end
+  end
+
   def introspection_details(host)
     return {} unless introspection_service
 
@@ -104,6 +135,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
 
   def detailed_stacks(show_nested = true)
     return [] unless orchestration_service
+
     # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
