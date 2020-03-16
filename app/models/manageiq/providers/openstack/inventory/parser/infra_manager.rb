@@ -23,45 +23,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def images
-    collector.images.each do |image|
-      uid      = image.id.to_s
-      guest_os = OperatingSystem.normalize_os_name(image.try(:os_distro) || 'unknown')
-
-      persister_image = persister.miq_templates.build(
-        :uid_ems            => uid,
-        :ems_ref            => uid,
-        :name               => image.name.presence || uid,
-        :vendor             => "openstack",
-        :raw_power_state    => "never",
-        :location           => "unknown",
-        :template           => true,
-        :publicly_available => public?(image)
-      )
-
-      persister.operating_systems.build(
-        :vm_or_template => persister_image,
-        :product_name   => guest_os,
-        :distribution   => image.try(:os_distro),
-        :version        => image.try(:os_version)
-      )
-
-      persister.hardwares.build(
-        :vm_or_template      => persister_image,
-        :guest_os            => guest_os,
-        :bitness             => architecture(image),
-        :disk_size_minimum   => (image.min_disk * 1.gigabyte),
-        :memory_mb_minimum   => image.min_ram,
-        :root_device_type    => image.disk_format,
-        :size_on_disk        => image.size,
-        :virtualization_type => image.properties.try(:[], 'hypervisor_type') || image.attributes['hypervisor_type']
-      )
-    end
+    collector.images.each { |image| parse_image(image) }
   end
 
   def hosts
-    process_collection(collector.hosts, :hosts) do |host|
-      parse_host(host, cloud_ems_hosts_attributes)
-    end
+    host_attributes = cloud_ems_hosts_attributes
+    process_collection(collector.hosts, :hosts) { |host| parse_host(host, host_attributes) }
   end
 
   def orchestration_stacks
@@ -76,6 +43,40 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   private
+
+  def parse_image(image)
+    uid      = image.id.to_s
+    guest_os = OperatingSystem.normalize_os_name(image.try(:os_distro) || 'unknown')
+
+    persister_image = persister.miq_templates.build(
+      :uid_ems            => uid,
+      :ems_ref            => uid,
+      :name               => image.name.presence || uid,
+      :vendor             => "openstack",
+      :raw_power_state    => "never",
+      :location           => "unknown",
+      :template           => true,
+      :publicly_available => public?(image)
+    )
+
+    persister.operating_systems.build(
+      :vm_or_template => persister_image,
+      :product_name   => guest_os,
+      :distribution   => image.try(:os_distro),
+      :version        => image.try(:os_version)
+    )
+
+    persister.hardwares.build(
+      :vm_or_template      => persister_image,
+      :guest_os            => guest_os,
+      :bitness             => architecture(image),
+      :disk_size_minimum   => (image.min_disk * 1.gigabyte),
+      :memory_mb_minimum   => image.min_ram,
+      :root_device_type    => image.disk_format,
+      :size_on_disk        => image.size,
+      :virtualization_type => image.properties.try(:[], 'hypervisor_type') || image.attributes['hypervisor_type']
+    )
+  end
 
   def cloud_ems_hosts_attributes
     hosts_attributes = []
@@ -151,16 +152,16 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     }
 
     persister_host = persister.hosts.build(new_result)
+
     persister.host_operating_systems.build(:host => persister_host, :product_name => "linux")
-    hardware = persister.host_hardwares.build(process_host_hardware(host, introspection_details).merge(:host => persister_host))
-    process_host_hardware_disks(extra_attributes).each do |disk|
-      persister.host_disks.build(disk.merge(:hardware => hardware))
-    end
+
+    hardware = persister.host_hardwares.build(parse_host_hardware(host, introspection_details).merge(:host => persister_host))
+    parse_host_disks(extra_attributes).each { |disk| persister.host_disks.build(disk.merge(:hardware => hardware)) }
 
     return uid, new_result
   end
 
-  def process_host_hardware(host, introspection_details)
+  def parse_host_hardware(host, introspection_details)
     extra_attributes     = get_extra_attributes(introspection_details)
     cpu_sockets          = extra_attributes.fetch_path('cpu', 'physical', 'number').to_i
     cpu_total_cores      = extra_attributes.fetch_path('cpu', 'logical', 'number').to_i
@@ -192,7 +193,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     }
   end
 
-  def process_host_hardware_disks(extra_attributes)
+  def parse_host_disks(extra_attributes)
     return [] if extra_attributes.nil? || (disks = extra_attributes.fetch_path('disk')).blank?
 
     disks.keys.delete_if { |x| x.include?('{') || x == 'logical' }.map do |disk|
