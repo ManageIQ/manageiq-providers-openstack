@@ -1,6 +1,8 @@
 require 'fog/openstack'
 
 describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
+  include Spec::Support::EmsRefreshHelper
+
   before(:each) do
     _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
     @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
@@ -10,101 +12,116 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :default => {:userid => "admin", :password => "a5d6375470291c68de726836504d014ebe095b6d"})
   end
 
-  it "will perform a full refresh" do
-    2.times do  # Run twice to verify that a second run with existing data does not change anything
-      @ems.reload
-      # Caching OpenStack info between runs causes the tests to fail with:
-      #   VCR::Errors::UnusedHTTPInteractionError
-      # Reset the cache so HTTP interactions are the same between runs.
-      @ems.reset_openstack_handle
+  it "graph refresh the same as classic refresh" do
+    stub_settings_merge(:ems_refresh => {:openstack_infra => {:inventory_object_refresh => false}})
+    full_refresh
+    before = serialize_inventory
 
-      # We need VCR to match requests differently here because fog adds a dynamic
-      #   query param to avoid HTTP caching - ignore_awful_caching##########
-      #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
-      VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
-        Fog::OpenStack.instance_variable_set(:@version, nil)
-        EmsRefresh.refresh(@ems)
-        EmsRefresh.refresh(@ems.network_manager)
+    stub_settings_merge(:ems_refresh => {:openstack_infra => {:inventory_object_refresh => true}})
+    full_refresh
+    after = serialize_inventory
+
+    assert_inventory_not_changed(before, after)
+  end
+
+  [{:inventory_object_refresh => false}, {:inventory_object_refresh => true}].each do |refresh_settings|
+    context "with refresh settings #{refresh_settings}" do
+      before { stub_settings_merge(:ems_refresh => {:openstack_infra => refresh_settings}) }
+
+      it "will perform a full refresh" do
+        2.times do # Run twice to verify that a second run with existing data does not change anything
+          full_refresh
+
+          assert_table_counts
+          assert_ems
+          assert_specific_host
+          assert_mapped_stacks
+          assert_specific_public_template
+        end
       end
-      @ems.reload
 
-      assert_table_counts
-      assert_ems
-      assert_specific_host
-      assert_mapped_stacks
-      assert_specific_public_template
+      it "will verify maintenance mode" do
+        # We need VCR to match requests differently here because fog adds a dynamic
+        #   query param to avoid HTTP caching - ignore_awful_caching##########
+        #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
+        VCR.use_cassette("#{described_class.name.underscore}_rhos_juno_maintenance",
+                         :match_requests_on => [:method, :host, :path]) do
+          @ems.reload
+          @ems.reset_openstack_handle
+          Fog::OpenStack.instance_variable_set(:@version, nil)
+          EmsRefresh.refresh(@ems)
+          EmsRefresh.refresh(@ems.network_manager)
+          @ems.reload
+
+          @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
+
+          expect(@host.maintenance).to eq(false)
+          expect(@host.maintenance_reason).to be nil
+
+          @host.set_node_maintenance
+          EmsRefresh.refresh(@ems)
+          @ems.reload
+          @host.reload
+          expect(@host.maintenance).to eq(true)
+          expect(@host.maintenance_reason).to eq("CFscaledown")
+
+          @host.unset_node_maintenance
+          EmsRefresh.refresh(@ems)
+          @ems.reload
+          @host.reload
+          expect(@host.maintenance).to eq(false)
+          expect(@host.maintenance_reason).to be nil
+        end
+      end
     end
   end
 
-  it "will verify maintenance mode" do
+  def full_refresh
+    @ems.reload
+    # Caching OpenStack info between runs causes the tests to fail with:
+    #   VCR::Errors::UnusedHTTPInteractionError
+    # Reset the cache so HTTP interactions are the same between runs.
+    @ems.reset_openstack_handle
+
     # We need VCR to match requests differently here because fog adds a dynamic
     #   query param to avoid HTTP caching - ignore_awful_caching##########
     #   https://github.com/fog/fog/blob/master/lib/fog/openstack/compute.rb#L308
-    VCR.use_cassette("#{described_class.name.underscore}_rhos_juno_maintenance",
-                     :match_requests_on => [:method, :host, :path]) do
-      @ems.reload
-      @ems.reset_openstack_handle
+    VCR.use_cassette("#{described_class.name.underscore}_rhos_juno", :match_requests_on => [:method, :host, :path]) do
       Fog::OpenStack.instance_variable_set(:@version, nil)
       EmsRefresh.refresh(@ems)
+      MiqQueue.where(:class_name => "EmsRefresh", :method_name => "refresh").destroy_all
       EmsRefresh.refresh(@ems.network_manager)
-      @ems.reload
-
-      @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
-
-      expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to be nil
-
-      @host.set_node_maintenance
-      EmsRefresh.refresh(@ems)
-      @ems.reload
-      @host.reload
-      expect(@host.maintenance).to eq(true)
-      expect(@host.maintenance_reason).to eq("CFscaledown")
-
-      @host.unset_node_maintenance
-      EmsRefresh.refresh(@ems)
-      @ems.reload
-      @host.reload
-      expect(@host.maintenance).to eq(false)
-      expect(@host.maintenance_reason).to be nil
     end
+    @ems.reload
   end
 
   def assert_table_counts
     expect(ExtManagementSystem.count).to         eq 2
-    expect(EmsCluster.count).to                  be > 0
-    expect(Host.count).to                        be > 0
-    expect(OrchestrationStack.count).to          be > 0
-    expect(OrchestrationStackParameter.count).to be > 0
-    expect(OrchestrationStackResource.count).to  be > 0
-    expect(OrchestrationStackOutput.count).to    be > 0
-    expect(OrchestrationTemplate.count).to       be > 0
-    expect(CloudNetwork.count).to                be > 0
-    expect(CloudSubnet.count).to                 be > 0
-    expect(NetworkPort.count).to                 be > 0
-    expect(VmOrTemplate.count).to                be > 0
-    expect(OperatingSystem.count).to             be > 0
-    expect(Hardware.count).to                    be > 0
-    # TODO(tzumainn) Introspection no longer returns disk information, may be
-    # an OpenStack issue?
-    expect(Disk.count).to                        be > -1
+    expect(EmsCluster.count).to                  eq 2
+    expect(Host.count).to                        eq 3
+    expect(OrchestrationStack.count).to          eq 317
+    expect(OrchestrationStackParameter.count).to eq 2929
+    expect(OrchestrationStackResource.count).to  eq 504
+    expect(OrchestrationStackOutput.count).to    eq 439
+    expect(OrchestrationTemplate.count).to       eq 151
+    expect(CloudNetwork.count).to                eq 6
+    expect(CloudSubnet.count).to                 eq 6
+    expect(NetworkPort.count).to                 eq 21
+    expect(VmOrTemplate.count).to                eq 5
+    expect(OperatingSystem.count).to             eq 8
+    expect(Hardware.count).to                    eq 8
+    expect(Disk.count).to                        eq 3
     expect(ResourcePool.count).to                eq 0
     expect(Vm.count).to                          eq 0
     expect(CustomAttribute.count).to             eq 0
     expect(CustomizationSpec.count).to           eq 0
-    # expect(GuestDevice.count).to                 eq > 0
     expect(Lan.count).to                         eq 0
     expect(MiqScsiLun.count).to                  eq 0
     expect(MiqScsiTarget.count).to               eq 0
-    # expect(Network.count).to                     eq 0
     expect(Snapshot.count).to                    eq 0
     expect(Switch.count).to                      eq 0
     expect(SystemService.count).to               eq 0
-    expect(EmsFolder.count).to                   eq 0 # HACK: Folder structure for UI a la VMware
-    # TODO(lsmola) investigate if this should be filled or not, also why
-    # it behaves strangely, it has different values in CI then locally
-    # expect(Relationship.count).to                eq 0
-    # expect(MiqQueue.count).to                    eq 9
+    expect(EmsFolder.count).to                   eq 0
     expect(Storage.count).to                     eq 0
   end
 
@@ -115,17 +132,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :uid_ems           => nil
     )
 
-    expect(@ems.ems_clusters.size).to                be > 0
-    expect(@ems.hosts.size).to                       be > 0
-    expect(@ems.orchestration_stacks.size).to        be > 0
-    expect(@ems.direct_orchestration_stacks.size).to be > 0
-    expect(@ems.vms_and_templates.size).to           be > 0
-    expect(@ems.miq_templates.size).to               be > 0
+    expect(@ems.ems_clusters.size).to                eq 2
+    expect(@ems.hosts.size).to                       eq 3
+    expect(@ems.orchestration_stacks.size).to        eq 317
+    expect(@ems.direct_orchestration_stacks.size).to eq 1
+    expect(@ems.vms_and_templates.size).to           eq 5
+    expect(@ems.miq_templates.size).to               eq 5
     expect(@ems.customization_specs.size).to         eq 0
     expect(@ems.resource_pools.size).to              eq 0
     expect(@ems.storages.size).to                    eq 0
     expect(@ems.vms.size).to                         eq 0
-    expect(@ems.ems_folders.size).to                 eq 0 # HACK: Folder structure for UI a la VMware
+    expect(@ems.ems_folders.size).to                 eq 0
   end
 
   def assert_specific_host
