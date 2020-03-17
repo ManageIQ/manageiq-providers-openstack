@@ -19,13 +19,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @introspection_service ||= manager.openstack_handle.detect_introspection_service
   end
 
-  def images
-    return [] unless image_service
-    return @images if @images.any?
-
-    @images = uniques(image_service.handled_list(:images))
-  end
-
   def servers
     return [] unless compute_service
     return @servers if @servers.any?
@@ -44,18 +37,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @hosts = uniques(baremetal_service.handled_list(:nodes))
   end
 
-  def stacks
-    @stacks ||= uniques(detailed_stacks)
-  end
-
-  def stacks_by_id
-    @stacks_by_id ||= stacks.index_by(&:id)
-  end
-
-  def root_stacks
-    @root_stacks ||= uniques(detailed_stacks(false))
-  end
-
   def cloud_managers
     @cloud_managers ||= (manager.provider&.cloud_ems || [])
   end
@@ -63,8 +44,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
   def clusters
     @cluster_by_host ||= {}
     @clusters ||= begin
-      stacks.each_with_object([]) do |stack, arr|
-        parent = stacks_by_id[stack.parent]
+      orchestration_stacks.each_with_object([]) do |stack, arr|
+        parent = indexed_orchestration_stacks[stack.parent]
         next unless parent
 
         nova_server = stack.resources.detect { |r| stack_server_resource_types.include?(r.resource_type) }
@@ -122,6 +103,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     end
   end
 
+  def orchestration_resources(stack)
+    super.reject { |r| r.physical_resource_id.nil? }
+  end
+
   def stack_server_resource_types
     return @stack_server_resource_types if @stack_server_resource_types
 
@@ -156,19 +141,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     unless baremetal_service
       _log.warn "Ironic service is missing in the catalog. No host data will be synced."
     end
-  end
-
-  def detailed_stacks(show_nested = true)
-    return [] unless orchestration_service
-
-    # TODO(lsmola) We need a support of GET /{tenant_id}/stacks/detail in FOG, it was implemented here
-    # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
-    # can't get list of detailed stacks in one API call.
-    orchestration_service.handled_list(:stacks, :show_nested => show_nested).collect(&:details)
-  rescue Excon::Errors::Forbidden
-    # Orchestration service is detected but not open to the user
-    _log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
-    []
   end
 
   def stack_resources(stack)

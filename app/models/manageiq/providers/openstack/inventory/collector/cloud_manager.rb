@@ -55,16 +55,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     @host_aggregates = safe_list { compute_service.aggregates.all }
   end
 
-  def images
-    return [] unless image_service
-    return @images if @images.any?
-    @images = if openstack_admin?
-                image_service.images_with_pagination_loop
-              else
-                image_service.handled_list(:images)
-              end
-  end
-
   def key_pairs
     return @key_pairs if @key_pairs.any?
     @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
@@ -108,26 +98,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     return [] unless nfv_service
     return @vnfds if @vnfds.any?
     @vnfds = nfv_service.handled_list(:vnfds, {}, openstack_admin?)
-  end
-
-  def orchestration_stacks
-    all_orchestration_stacks
-  end
-
-  def orchestration_outputs(stack)
-    safe_list { stack.outputs }
-  end
-
-  def orchestration_parameters(stack)
-    safe_list { stack.parameters }
-  end
-
-  def orchestration_resources(stack)
-    safe_list { stack.resources }
-  end
-
-  def orchestration_template(stack)
-    safe_call { stack.template }
   end
 
   def volume_templates

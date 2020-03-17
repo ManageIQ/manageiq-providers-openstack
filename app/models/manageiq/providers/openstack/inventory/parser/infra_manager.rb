@@ -30,7 +30,21 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def orchestration_stacks
-    collector.stacks.each { |stack| parse_stack(stack) }
+    collector.orchestration_stacks.each do |stack|
+      o = persister.orchestration_stacks.build(
+        :ems_ref                => stack.id.to_s,
+        :name                   => stack.stack_name,
+        :description            => stack.description,
+        :status                 => stack.stack_status,
+        :status_reason          => stack.stack_status_reason,
+        :parent                 => persister.orchestration_stacks.lazy_find(stack.parent),
+        :orchestration_template => orchestration_template(stack)
+      )
+
+      orchestration_stack_resources(stack, o)
+      orchestration_stack_outputs(stack, o)
+      orchestration_stack_parameters(stack, o)
+    end
   end
 
   def clusters
@@ -73,12 +87,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     )
   end
 
-  def get_extra_attributes(introspection_details)
-    return {} if introspection_details.blank? || introspection_details["extra"].nil?
-
-    introspection_details["extra"]
-  end
-
   def parse_host(host)
     uid                 = host.uuid
     host_name           = identify_host_name(host.instance_uuid, uid)
@@ -87,7 +95,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     hostname            = ip_address
 
     introspection_details = collector.introspection_details(host)
-    extra_attributes      = get_extra_attributes(introspection_details)
+    extra_attributes      = introspection_details&.dig("extra") || {}
 
     # Get the cloud_host_attributes by hypervisor hostname, only compute hosts can get this
     cloud_host_attributes = collector.cloud_host_attributes_by_host[hypervisor_hostname.downcase]&.first
@@ -95,7 +103,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     cluster_ref = collector.cluster_by_host[host.instance_uuid]
     ems_cluster = persister.clusters.lazy_find(cluster_ref) if cluster_ref
 
-    new_result = {
+    persister_host = persister.hosts.build(
       :name                 => host_name,
       :uid_ems              => host.instance_uuid,
       :ems_ref              => uid,
@@ -118,26 +126,23 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       # Attributes taken from the Cloud provider
       :availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id),
       :ems_cluster          => ems_cluster
-    }
-
-    persister_host = persister.hosts.build(new_result)
+    )
 
     persister.host_operating_systems.build(:host => persister_host, :product_name => "linux")
 
-    hardware = persister.host_hardwares.build(parse_host_hardware(host, introspection_details).merge(:host => persister_host))
-    parse_host_disks(extra_attributes).each { |disk| persister.host_disks.build(disk.merge(:hardware => hardware)) }
-
-    return uid, new_result
+    host_hardware = parse_host_hardware(host, introspection_details, persister_host)
+    parse_host_disks(extra_attributes, host_hardware)
   end
 
-  def parse_host_hardware(host, introspection_details)
-    extra_attributes     = get_extra_attributes(introspection_details)
+  def parse_host_hardware(host, introspection_details, persister_host)
+    extra_attributes     = introspection_details&.dig("extra") || {}
     cpu_sockets          = extra_attributes.fetch_path('cpu', 'physical', 'number').to_i
     cpu_total_cores      = extra_attributes.fetch_path('cpu', 'logical', 'number').to_i
     cpu_cores_per_socket = cpu_sockets > 0 ? cpu_total_cores / cpu_sockets : 0
     cpu_speed            = introspection_details.fetch_path('inventory', 'cpu', 'frequency').to_i
 
-    {
+    persister.host_hardwares.build(
+      :host                 => persister_host,
       :memory_mb            => host.properties['memory_mb'],
       :disk_capacity        => host.properties['local_gb'],
       :cpu_total_cores      => cpu_total_cores,
@@ -158,11 +163,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       # shown as "available" starting with version 1.2.
       # This may need to change once this issue is addressed:
       # https://github.com/fog/fog-openstack/issues/197
-      :provision_state      => host.provision_state.nil? ? "available" : host.provision_state,
-    }
+      :provision_state      => host.provision_state.nil? ? "available" : host.provision_state
+    )
   end
 
-  def parse_host_disks(extra_attributes)
+  def parse_host_disks(extra_attributes, host_hardware)
     return [] if extra_attributes.nil? || (disks = extra_attributes.fetch_path('disk')).blank?
 
     disks.keys.delete_if { |x| x.include?('{') || x == 'logical' }.map do |disk|
@@ -171,7 +176,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       # how to represent RAID
       # Convert the disk size from GB to B
       disk_size = disks.fetch_path(disk, 'size').to_i * 1_024**3
-      {
+      persister.host_disks.build(
+        :hardware        => host_hardware,
         :device_name     => disk,
         :device_type     => 'disk',
         :controller_type => 'scsi',
@@ -181,7 +187,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
         :size            => disk_size,
         :disk_type       => nil,
         :mode            => 'persistent'
-      }
+      )
     end
   end
 
@@ -193,35 +199,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     )
   end
 
-  def parse_stack(stack)
-    uid = stack.id.to_s
-
-    new_result = {
-      :ems_ref                => uid,
-      :name                   => stack.stack_name,
-      :description            => stack.description,
-      :status                 => stack.stack_status,
-      :status_reason          => stack.stack_status_reason,
-      :parent                 => persister.orchestration_stacks.lazy_find(stack.parent),
-      :orchestration_template => parse_stack_template(stack)
-    }
-
-    persister_stack = persister.orchestration_stacks.build(
-      new_result.except(:parent_stack_id, :resources, :outputs, :parameters)
-    )
-
-    parse_stack_resources(stack, persister_stack)
-    parse_stack_outputs(stack, persister_stack)
-    parse_stack_parameters(stack, persister_stack)
-
-    return uid, new_result
-  end
-
-  def parse_stack_resources(stack, persister_stack)
-    resources = safe_list { stack.resources }.reject { |r| r.physical_resource_id.nil? }
-    resources.each do |resource|
+  def orchestration_stack_resources(stack, stack_inventory_object)
+    collector.orchestration_resources(stack).each do |resource|
       persister.orchestration_stacks_resources.build(
-        :stack                  => persister_stack,
+        :stack                  => stack_inventory_object,
         :ems_ref                => resource.physical_resource_id,
         :logical_resource       => resource.logical_resource_id,
         :physical_resource      => resource.physical_resource_id,
@@ -233,9 +214,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def parse_stack_outputs(stack, persister_stack)
-    outputs = safe_list { stack.outputs }
-    outputs.each do |output|
+  def orchestration_stack_outputs(stack, persister_stack)
+    collector.orchestration_outputs(stack).each do |output|
       persister.orchestration_stacks_outputs.build(
         :stack       => persister_stack,
         :ems_ref     => compose_ems_ref(stack.id, output['output_key']),
@@ -246,9 +226,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def parse_stack_parameters(stack, persister_stack)
-    params = safe_list { stack.parameters }
-    params.each do |param_key, param_val|
+  def orchestration_stack_parameters(stack, persister_stack)
+    collector.orchestration_parameters(stack).each do |param_key, param_val|
       persister.orchestration_stacks_parameters.build(
         :stack   => persister_stack,
         :ems_ref => compose_ems_ref(stack.id, param_key),
@@ -258,8 +237,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def parse_stack_template(stack)
-    template = stack.template
+  def orchestration_template(stack)
+    template = collector.orchestration_template(stack)
 
     persister.orchestration_templates.build(
       :name        => stack.stack_name,
