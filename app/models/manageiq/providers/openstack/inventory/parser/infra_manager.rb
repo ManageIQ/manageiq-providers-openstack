@@ -214,41 +214,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def orchestration_stack_outputs(stack, persister_stack)
-    collector.orchestration_outputs(stack).each do |output|
-      persister.orchestration_stacks_outputs.build(
-        :stack       => persister_stack,
-        :ems_ref     => compose_ems_ref(stack.id, output['output_key']),
-        :key         => output['output_key'],
-        :value       => output['output_value'],
-        :description => output['description']
-      )
-    end
-  end
-
-  def orchestration_stack_parameters(stack, persister_stack)
-    collector.orchestration_parameters(stack).each do |param_key, param_val|
-      persister.orchestration_stacks_parameters.build(
-        :stack   => persister_stack,
-        :ems_ref => compose_ems_ref(stack.id, param_key),
-        :name    => param_key,
-        :value   => param_val
-      )
-    end
-  end
-
-  def orchestration_template(stack)
-    template = collector.orchestration_template(stack)
-
-    persister.orchestration_templates.build(
-      :name        => stack.stack_name,
-      :ems_ref     => stack.id,
-      :description => template.description,
-      :content     => template.content,
-      :orderable   => false
-    )
-  end
-
   def server_address(server, key)
     # TODO(lsmola) Nova is missing information which address is primary now,
     # so just taking first. We need to figure out how to identify it if
