@@ -111,15 +111,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     []
   end
 
-  def indexed_all_orchestration_stacks
-    @indexed_all_orchestration_stacks ||= all_orchestration_stacks.index_by(&:id)
-  end
-
   def get_orchestration_stack(stack_id, _tenant_id = nil)
     # TODO: fog needs to implement /v1/{tenant_id}/stacks/{stack_identity} call, right now the only supported call
     # excepts get(name, id). And when we do just get(id) it degrades to fetching all stacks and O(n) search in them.
     # But the method for fetching all stack doesn't include nested stacks, so we were missing those.
-    indexed_all_orchestration_stacks[stack_id]
+    indexed_orchestration_stacks[stack_id]
   end
 
   def vms
