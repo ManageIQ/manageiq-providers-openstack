@@ -7,10 +7,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   include ManageIQ::Providers::Openstack::RefreshParserCommon::OrchestrationStacks
 
   def parse
-    @ems               = collector.manager
-    @data              = {}
-    @data_index        = {}
-    @resource_to_stack = {}
+    @ems        = collector.manager
+    @data       = {}
+    @data_index = {}
 
     @image_service   = collector.image_service
     @storage_service = collector.storage_service
@@ -31,7 +30,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def orchestration_stacks
-    process_collection(collector.stacks, :orchestration_stacks) { |stack| parse_stack(stack) }
+    collector.stacks.each { |stack| parse_stack(stack) }
   end
 
   def clusters
@@ -197,11 +196,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   def parse_stack(stack)
     uid = stack.id.to_s
 
-    resources  = find_stack_resources(stack)
-    outputs    = find_stack_outputs(stack)
-    parameters = find_stack_parameters(stack)
-    template   = find_stack_template(stack)
-
     new_result = {
       :ems_ref                => uid,
       :name                   => stack.stack_name,
@@ -209,47 +203,71 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       :status                 => stack.stack_status,
       :status_reason          => stack.stack_status_reason,
       :parent                 => persister.orchestration_stacks.lazy_find(stack.parent),
-      :resources              => resources,
-      :orchestration_template => persister.orchestration_templates.lazy_find(template[:ems_ref]),
+      :orchestration_template => parse_stack_template(stack)
     }
 
     persister_stack = persister.orchestration_stacks.build(
       new_result.except(:parent_stack_id, :resources, :outputs, :parameters)
     )
 
-    resources.each do |res|
-      res[:stack] = persister_stack
-      persister.orchestration_stacks_resources.build(res)
-    end
-
-    outputs.each do |output|
-      output[:stack] = persister_stack
-      persister.orchestration_stacks_outputs.build(output)
-    end
-
-    parameters.each do |param|
-      param[:stack] = persister_stack
-      persister.orchestration_stacks_parameters.build(param)
-    end
+    parse_stack_resources(stack, persister_stack)
+    parse_stack_outputs(stack, persister_stack)
+    parse_stack_parameters(stack, persister_stack)
 
     return uid, new_result
   end
 
+  def parse_stack_resources(stack, persister_stack)
+    resources = safe_list { stack.resources }.reject { |r| r.physical_resource_id.nil? }
+    resources.each do |resource|
+      persister.orchestration_stacks_resources.build(
+        :stack                  => persister_stack,
+        :ems_ref                => resource.physical_resource_id,
+        :logical_resource       => resource.logical_resource_id,
+        :physical_resource      => resource.physical_resource_id,
+        :resource_category      => resource.resource_type,
+        :resource_status        => resource.resource_status,
+        :resource_status_reason => resource.resource_status_reason,
+        :last_updated           => resource.updated_time
+      )
+    end
+  end
+
+  def parse_stack_outputs(stack, persister_stack)
+    outputs = safe_list { stack.outputs }
+    outputs.each do |output|
+      persister.orchestration_stacks_outputs.build(
+        :stack       => persister_stack,
+        :ems_ref     => compose_ems_ref(stack.id, output['output_key']),
+        :key         => output['output_key'],
+        :value       => output['output_value'],
+        :description => output['description']
+      )
+    end
+  end
+
+  def parse_stack_parameters(stack, persister_stack)
+    params = safe_list { stack.parameters }
+    params.each do |param_key, param_val|
+      persister.orchestration_stacks_parameters.build(
+        :stack   => persister_stack,
+        :ems_ref => compose_ems_ref(stack.id, param_key),
+        :name    => param_key,
+        :value   => param_val
+      )
+    end
+  end
+
   def parse_stack_template(stack)
-    uid = stack.id
     template = stack.template
 
-    new_result = {
+    persister.orchestration_templates.build(
       :name        => stack.stack_name,
-      :ems_ref     => uid,
+      :ems_ref     => stack.id,
       :description => template.description,
       :content     => template.content,
       :orderable   => false
-    }
-
-    persister.orchestration_templates.build(new_result)
-
-    return uid, new_result
+    )
   end
 
   def server_address(server, key)
@@ -313,21 +331,5 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
 
   def get_object_content(obj)
     obj.body
-  end
-
-  #
-  # Helper methods
-  #
-
-  def process_collection(collection, key)
-    @data[key] ||= []
-    return if collection.nil?
-
-    collection.each do |item|
-      uid, new_result = yield(item)
-
-      @data[key] << new_result
-      @data_index.store_path(key, uid, new_result)
-    end
   end
 end
