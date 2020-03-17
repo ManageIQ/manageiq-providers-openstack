@@ -9,7 +9,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   require_nested :MetricsCollectorWorker
   require_nested :OrchestrationStack
   require_nested :Refresher
-  require_nested :RefreshParser
   require_nested :RefreshWorker
   require_nested :Template
 
@@ -24,6 +23,10 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
 
   def ensure_network_manager
     build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
+  end
+
+  def inventory_object_refresh?
+    true
   end
 
   def allow_targeted_refresh?
