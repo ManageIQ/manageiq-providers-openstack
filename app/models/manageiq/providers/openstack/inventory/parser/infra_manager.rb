@@ -35,10 +35,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def clusters
-    clusters, cluster_host_mapping = clusters_and_host_mapping
-    clusters.each { |cluster| parse_cluster(cluster) }
-
-    set_relationship_on_hosts(persister.hosts, cluster_host_mapping)
+    collector.clusters.each { |cluster| parse_cluster(cluster) }
   end
 
   private
@@ -96,6 +93,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     # Get the cloud_host_attributes by hypervisor hostname, only compute hosts can get this
     cloud_host_attributes = collector.cloud_host_attributes_by_host[hypervisor_hostname.downcase]&.first
 
+    cluster_ref = collector.cluster_by_host[host.instance_uuid]
+    ems_cluster = persister.clusters.lazy_find(cluster_ref) if cluster_ref
+
     new_result = {
       :name                 => host_name,
       :uid_ems              => host.instance_uuid,
@@ -117,7 +117,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
       # TODO(lsmola) need to add column for connection to SecurityGroup
       # :security_group_id  => security_group_id
       # Attributes taken from the Cloud provider
-      :availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id)
+      :availability_zone_id => cloud_host_attributes.try(:[], :availability_zone_id),
+      :ems_cluster          => ems_cluster
     }
 
     persister_host = persister.hosts.build(new_result)
@@ -185,101 +186,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     end
   end
 
-  def server_address(server, key)
-    # TODO(lsmola) Nova is missing information which address is primary now,
-    # so just taking first. We need to figure out how to identify it if
-    # there are multiple.
-    server&.addresses&.fetch_path('ctlplane', 0, key)
-  end
-
-  def identify_product(instance_uuid)
-    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
-    return nil unless purpose
-
-    if purpose == 'NovaCompute'
-      'rhel (Nova Compute hypervisor)'
-    else
-      "rhel (No hypervisor, Host Type is #{purpose})"
-    end
-  end
-
-  def identify_host_name(instance_uuid, uid)
-    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
-    return uid unless purpose
-
-    "#{uid} (#{purpose})"
-  end
-
-  def identify_primary_mac_address(host)
-    server = collector.servers_by_id[host.instance_uuid]
-    server_address(server, 'OS-EXT-IPS-MAC:mac_addr')
-  end
-
-  def identify_primary_ip_address(host)
-    server = collector.servers_by_id[host.instance_uuid]
-    server_address(server, 'addr')
-  end
-
-  def identify_ipmi_address(host)
-    host.driver_info["ipmi_address"]
-  end
-
-  def identify_hypervisor_hostname(host)
-    collector.servers_by_id[host.instance_uuid]&.name
-  end
-
-  def lookup_power_state(power_state_input)
-    case power_state_input
-    when "power on"               then "on"
-    when "power off", "rebooting" then "off"
-    else                               "unknown"
-    end
-  end
-
-  def lookup_connection_state(power_state_input)
-    case power_state_input
-    when "power on"               then "connected"
-    when "power off", "rebooting" then "disconnected"
-    else                               "disconnected"
-    end
-  end
-
-  def clusters_and_host_mapping
-    clusters = []
-    cluster_host_mapping = {}
-    orchestration_stacks = @data_index.fetch_path(:orchestration_stacks)
-    orchestration_stacks&.each_value do |stack|
-      parent = orchestration_stacks[stack[:parent]&.stringified_reference]
-      next unless parent
-
-      nova_server = stack[:resources].detect { |r| collector.stack_server_resource_types.include?(r[:resource_category]) }
-      next unless nova_server
-
-      cluster_host_mapping[nova_server[:physical_resource]] = parent[:ems_ref]
-      clusters << {:name => parent[:name], :uid => parent[:ems_ref]}
-    end
-    return clusters.uniq, cluster_host_mapping
-  end
-
   def parse_cluster(cluster)
-    name = cluster[:name]
-    uid = cluster[:uid]
-
-    new_result = {
-      :ems_ref => uid,
-      :uid_ems => uid,
-      :name    => name
-    }
-
-    persister.clusters.build(new_result)
-
-    return uid, new_result
-  end
-
-  def set_relationship_on_hosts(hosts, cluster_host_mapping)
-    hosts.each do |host|
-      host.ems_cluster = persister.clusters.lazy_find(cluster_host_mapping[host[:uid_ems]])
-    end
+    persister.clusters.build(
+      :ems_ref => cluster[:uid],
+      :uid_ems => cluster[:uid],
+      :name    => cluster[:name]
+    )
   end
 
   def parse_stack(stack)
@@ -338,6 +250,65 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     persister.orchestration_templates.build(new_result)
 
     return uid, new_result
+  end
+
+  def server_address(server, key)
+    # TODO(lsmola) Nova is missing information which address is primary now,
+    # so just taking first. We need to figure out how to identify it if
+    # there are multiple.
+    server&.addresses&.fetch_path('ctlplane', 0, key)
+  end
+
+  def identify_product(instance_uuid)
+    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
+    return nil unless purpose
+
+    if purpose == 'NovaCompute'
+      'rhel (Nova Compute hypervisor)'
+    else
+      "rhel (No hypervisor, Host Type is #{purpose})"
+    end
+  end
+
+  def identify_host_name(instance_uuid, uid)
+    purpose = collector.server_purpose_by_instance_uuid[instance_uuid]
+    return uid unless purpose
+
+    "#{uid} (#{purpose})"
+  end
+
+  def identify_primary_mac_address(host)
+    server = collector.servers_by_id[host.instance_uuid]
+    server_address(server, 'OS-EXT-IPS-MAC:mac_addr')
+  end
+
+  def identify_primary_ip_address(host)
+    server = collector.servers_by_id[host.instance_uuid]
+    server_address(server, 'addr')
+  end
+
+  def identify_ipmi_address(host)
+    host.driver_info["ipmi_address"]
+  end
+
+  def identify_hypervisor_hostname(host)
+    collector.servers_by_id[host.instance_uuid]&.name
+  end
+
+  def lookup_power_state(power_state_input)
+    case power_state_input
+    when "power on"               then "on"
+    when "power off", "rebooting" then "off"
+    else                               "unknown"
+    end
+  end
+
+  def lookup_connection_state(power_state_input)
+    case power_state_input
+    when "power on"               then "connected"
+    when "power off", "rebooting" then "disconnected"
+    else                               "disconnected"
+    end
   end
 
   def get_object_content(obj)

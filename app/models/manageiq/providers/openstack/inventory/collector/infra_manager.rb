@@ -60,6 +60,27 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @cloud_managers ||= (manager.provider&.cloud_ems || [])
   end
 
+  def clusters
+    @cluster_by_host ||= {}
+    @clusters ||= begin
+      stacks.each_with_object([]) do |stack, arr|
+        parent = stacks_by_id[stack.parent]
+        next unless parent
+
+        nova_server = stack.resources.detect { |r| stack_server_resource_types.include?(r.resource_type) }
+        next unless nova_server
+
+        @cluster_by_host[nova_server.physical_resource_id] = parent.id
+        arr << {:name => parent.stack_name, :uid => parent.id}
+      end
+    end
+  end
+
+  def cluster_by_host
+    clusters if @cluster_by_host.nil?
+    @cluster_by_host
+  end
+
   def cloud_host_attributes
     @cloud_host_attributes ||= begin
       cloud_managers.flat_map do |cloud_ems|
