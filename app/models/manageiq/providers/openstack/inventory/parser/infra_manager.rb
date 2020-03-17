@@ -98,7 +98,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
     extra_attributes      = introspection_details&.dig("extra") || {}
 
     # Get the cloud_host_attributes by hypervisor hostname, only compute hosts can get this
-    cloud_host_attributes = collector.cloud_host_attributes_by_host[hypervisor_hostname.downcase]&.first
+    cloud_host_attributes = collector.cloud_host_attributes.select do |x|
+      hypervisor_hostname && x[:host_name].include?(hypervisor_hostname.downcase)
+    end
+    cloud_host_attributes = cloud_host_attributes.first if cloud_host_attributes
 
     cluster_ref = collector.cluster_by_host[host.instance_uuid]
     ems_cluster = persister.clusters.lazy_find(cluster_ref) if cluster_ref

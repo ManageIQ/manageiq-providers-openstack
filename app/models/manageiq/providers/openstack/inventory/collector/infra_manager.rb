@@ -87,12 +87,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     end
   end
 
-  def cloud_host_attributes_by_host
-    @cloud_host_attributes_by_host ||= cloud_host_attributes.group_by do |host_attrs|
-      host_attrs[:host_name]
-    end
-  end
-
   def introspection_details(host)
     return {} unless introspection_service
 
