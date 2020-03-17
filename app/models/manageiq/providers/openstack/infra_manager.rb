@@ -26,6 +26,10 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
   end
 
+  def allow_targeted_refresh?
+    false
+  end
+
   # A placeholder relation for NetworkTopology to work
   def availability_zones
   end
