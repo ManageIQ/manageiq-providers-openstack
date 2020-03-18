@@ -1,18 +1,8 @@
 class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ::Providers::Openstack::Inventory::Parser
   include Vmdb::Logging
 
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::Objects
-
   def parse
-    @ems        = collector.manager
-    @data       = {}
-    @data_index = {}
-
-    @storage_service = collector.storage_service
-
     images
-    get_object_store
     hosts
     orchestration_stacks
     clusters

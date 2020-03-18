@@ -11,10 +11,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::InfraManager < Manag
     @baremetal_service ||= manager.openstack_handle.detect_baremetal_service
   end
 
-  def storage_service
-    @storage_service ||= manager.openstack_handle.detect_storage_service
-  end
-
   def introspection_service
     @introspection_service ||= manager.openstack_handle.detect_introspection_service
   end
