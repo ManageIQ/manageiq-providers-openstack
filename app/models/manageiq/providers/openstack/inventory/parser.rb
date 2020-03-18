@@ -38,4 +38,10 @@ class ManageIQ::Providers::Openstack::Inventory::Parser < ManageIQ::Providers::I
       o
     end
   end
+
+  private
+
+  def compose_ems_ref(*keys)
+    keys.join('_')
+  end
 end

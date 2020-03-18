@@ -2,16 +2,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   include Vmdb::Logging
 
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::Images
   include ManageIQ::Providers::Openstack::RefreshParserCommon::Objects
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::OrchestrationStacks
 
   def parse
     @ems        = collector.manager
     @data       = {}
     @data_index = {}
 
-    @image_service   = collector.image_service
     @storage_service = collector.storage_service
 
     images
@@ -192,6 +189,21 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
         :mode            => 'persistent'
       )
     end
+  end
+
+  def architecture(image)
+    architecture = image.properties.try(:[], 'architecture') || image.attributes['architecture']
+    return nil if architecture.blank?
+    # Just simple name to bits, x86_64 will be the most used, we should probably support displaying of
+    # architecture name
+    architecture.include?("64") ? 64 : 32
+  end
+
+  def public?(image)
+    # Glance v1
+    return image.is_public if image.respond_to? :is_public
+    # Glance v2
+    image.visibility != 'private' if image.respond_to? :visibility
   end
 
   def parse_cluster(cluster)
