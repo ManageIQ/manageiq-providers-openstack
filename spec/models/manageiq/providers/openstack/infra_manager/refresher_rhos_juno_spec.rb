@@ -9,7 +9,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
-      :default => {:userid => "admin", :password => "a5d6375470291c68de726836504d014ebe095b6d"})
+      :default => {:userid => "admin", :password => "1fb03e3ec17f5840a5448ef2115a7ec7d645c982"})
   end
 
   it "will perform a full refresh" do
@@ -80,19 +80,19 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   def assert_table_counts
     expect(ExtManagementSystem.count).to         eq 2
     expect(EmsCluster.count).to                  eq 2
-    expect(Host.count).to                        eq 3
-    expect(OrchestrationStack.count).to          eq 317
-    expect(OrchestrationStackParameter.count).to eq 2929
-    expect(OrchestrationStackResource.count).to  eq 504
-    expect(OrchestrationStackOutput.count).to    eq 439
+    expect(Host.count).to                        eq 2
+    expect(OrchestrationStack.count).to          eq 301
+    expect(OrchestrationStackParameter.count).to eq 2773
+    expect(OrchestrationStackResource.count).to  eq 459
+    expect(OrchestrationStackOutput.count).to    eq 398
     expect(OrchestrationTemplate.count).to       eq 151
     expect(CloudNetwork.count).to                eq 6
     expect(CloudSubnet.count).to                 eq 6
-    expect(NetworkPort.count).to                 eq 21
+    expect(NetworkPort.count).to                 eq 17
     expect(VmOrTemplate.count).to                eq 5
-    expect(OperatingSystem.count).to             eq 8
-    expect(Hardware.count).to                    eq 8
-    expect(Disk.count).to                        eq 3
+    expect(OperatingSystem.count).to             eq 7
+    expect(Hardware.count).to                    eq 7
+    expect(Disk.count).to                        eq 2
     expect(ResourcePool.count).to                eq 0
     expect(Vm.count).to                          eq 0
     expect(CustomAttribute.count).to             eq 0
@@ -115,8 +115,8 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     )
 
     expect(@ems.ems_clusters.size).to                eq 2
-    expect(@ems.hosts.size).to                       eq 3
-    expect(@ems.orchestration_stacks.size).to        eq 317
+    expect(@ems.hosts.size).to                       eq 2
+    expect(@ems.orchestration_stacks.size).to        eq 301
     expect(@ems.direct_orchestration_stacks.size).to eq 1
     expect(@ems.vms_and_templates.size).to           eq 5
     expect(@ems.miq_templates.size).to               eq 5
@@ -239,11 +239,11 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(CloudNetwork.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
       match_array(
         %w(
-          external___overcloud-Networks-zmx7dzn5vqj3-ExternalNetwork-ulhkkcqpqxde
-          tenant___overcloud-Networks-zmx7dzn5vqj3-TenantNetwork-xei6hfh3gtub
-          storage_mgmt___overcloud-Networks-zmx7dzn5vqj3-StorageMgmtNetwork-dinadwrc3yda
-          internal_api___overcloud-Networks-zmx7dzn5vqj3-InternalNetwork-324xh24coise
-          storage___overcloud-Networks-zmx7dzn5vqj3-StorageNetwork-7fbfebqyz7qj
+          external___overcloud-Networks-m2cvlqpcz5b2-ExternalNetwork-5uey56mcytii
+          tenant___overcloud-Networks-m2cvlqpcz5b2-TenantNetwork-dar2ol7zf72w
+          storage_mgmt___overcloud-Networks-m2cvlqpcz5b2-StorageMgmtNetwork-vbtdttrp6xbl
+          internal_api___overcloud-Networks-m2cvlqpcz5b2-InternalNetwork-j3tyhpmhfonl
+          storage___overcloud-Networks-m2cvlqpcz5b2-StorageNetwork-qyh4atckxw3a
           ctlplane___
         )
       )
