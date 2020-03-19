@@ -4,20 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
-## Sprint 128 - Unreleased as of 2020-01-20
+## Jansa-1 Alpha-1
 
 ### Fixed
-
 * Add support for targeted refresh of SecurityGroupRules [(#542)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/542)
 * Remove unused NetworkManager metrics classes [(#548)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/548)
-
-## Sprint 126 - Unreleased as of 2019-12-11
-
-### Fixed
 - Update Targeted refresh for VolumeTemplate objects [(#541)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/541)
-
-## Sprint 120 - Unreleased as of 2019-09-16
-
 - Removed gettext catalogs from repo [(#507)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/507)
 - Update Refresh to not delete other Snapshots on a VM during Targeted Refresh [(#502)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/502)
 
