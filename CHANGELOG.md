@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 
+## Ivanchuk-4
+
+### Fixed
+- Add SecurityGroupRules to Targeted refres [(#554)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/554)
+
+## Ivanchuk-3
+
+### Fixed
+- Don't send all_tenants flag for Panko with Keystone v2 [(#516)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/516)
+- Update Targeted refresh for VolumeTemplate objects [(#541)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/541)
+- Fix Volume Template nil name refresh [(#522)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/522)
+- Fix Image targeted refresh [(#521)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/521)
+-  Fix targeted refresh for nested stacks and their resource relations [(#551)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/551)
+
+## Ivanchuk-2
+
+### Fixed
+- Fix unique client IDs for AMQP event monitor [(#519)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/519)
+- Test ruby 2.5.5 [(#526](https://github.com/ManageIQ/manageiq-providers-openstack/pull/526)
+- Fix Snapshot create error message [(#511)](https://github.com/ManageIQ/manageiq-providers-openstack/pull/511)
 
 ## Ivanchuk-1
 
