@@ -69,10 +69,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher
   end
 
-  def inventory_object_refresh?
-    true
-  end
-
   def allow_targeted_refresh?
     true
   end

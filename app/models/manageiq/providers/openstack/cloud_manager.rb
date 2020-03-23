@@ -218,10 +218,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     availability_zones.where("'volume' = ANY(provider_services_supported)")
   end
 
-  def inventory_object_refresh?
-    true
-  end
-
   def allow_targeted_refresh?
     true
   end
