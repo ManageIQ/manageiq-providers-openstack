@@ -82,10 +82,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
     supported_auth_types.include?(authtype.to_s)
   end
 
-  def inventory_object_refresh?
-    true
-  end
-
   def allow_targeted_refresh?
     true
   end

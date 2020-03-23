@@ -25,10 +25,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
   end
 
-  def inventory_object_refresh?
-    true
-  end
-
   def allow_targeted_refresh?
     false
   end
