@@ -1,6 +1,5 @@
 class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ::Providers::Openstack::Inventory::Parser
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
-  include ManageIQ::Providers::Openstack::RefreshParserCommon::Images
 
   def parse
     availability_zones
