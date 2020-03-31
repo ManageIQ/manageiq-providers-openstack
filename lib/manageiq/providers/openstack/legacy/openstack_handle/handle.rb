@@ -350,6 +350,7 @@ module OpenstackHandle
         next if name == "services"
         return @default_tenant_name ||= name if tenant_accessible?(name)
       end
+      nil
     end
 
     def service_for_each_accessible_tenant(service_name)
