@@ -12,7 +12,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
         new_volume_attrs[:destination_type] = 'volume'
         volumes_attrs_list << new_volume_attrs
       end
-    end
+    end if requested_volumes.any?
     volumes_attrs_list
   end
 
