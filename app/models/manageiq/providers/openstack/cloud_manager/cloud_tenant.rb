@@ -59,7 +59,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
     # then return the security group with the most VMs in it.
     security_groups.left_joins(:network_port_security_groups)
                    .group(:id)
-                   .order('COUNT(network_ports_security_groups.security_group_id) DESC NULLS LAST')
+                   .order(Arel.sql('COUNT(network_ports_security_groups.security_group_id) DESC NULLS LAST'))
                    .first
   end
 
