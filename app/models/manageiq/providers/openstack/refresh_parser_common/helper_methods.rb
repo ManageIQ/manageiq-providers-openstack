@@ -52,22 +52,22 @@ module ManageIQ::Providers
           yield
         rescue Excon::Errors::Forbidden => err
           # It can happen user doesn't have rights to read some tenant, in that case log warning but continue refresh
-          _log.warn "Forbidden response code returned in provider: #{@os_handle.address}. Message=#{err.message}"
+          _log.warn "Forbidden response code returned in provider: #{@manager&.hostname}. Message=#{err.message}"
           _log.warn err.backtrace.join("\n")
           nil
         rescue Excon::Errors::Unauthorized => err
           # It can happen user doesn't have rights to read some tenant, in that case log warning but continue refresh
-          _log.warn "Unauthorized response code returned in provider: #{@os_handle.address}. Message=#{err.message}"
+          _log.warn "Unauthorized response code returned in provider: #{@manager&.hostname}. Message=#{err.message}"
           _log.warn err.backtrace.join("\n")
           nil
         rescue Excon::Errors::NotFound, Fog::Errors::NotFound => err
           # It can happen that some data do not exist anymore,, in that case log warning but continue refresh
-          _log.warn "Not Found response code returned in provider: #{@os_handle.address}. Message=#{err.message}"
+          _log.warn "Not Found response code returned in provider: #{@manager&.hostname}. Message=#{err.message}"
           _log.warn err.backtrace.join("\n")
           nil
         rescue Excon::Errors::BadRequest => err
           # This can happen if stack resources are missing, among other reasons. In such a case log a warning but continue the refresh.
-          _log.warn "Bad Request response code returned in provider: #{@os_handle.address}. Message=#{err.message}"
+          _log.warn "Bad Request response code returned in provider: #{@manager&.hostname}. Message=#{err.message}"
           _log.warn err.backtrace.join("\n")
           nil
         end
