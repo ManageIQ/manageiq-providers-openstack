@@ -96,8 +96,8 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     supported_auth_types.include?(authtype.to_s)
   end
 
-  def supported_catalog_types
-    %w(openstack)
+  def self.catalog_types
+    {"openstack" => N_("OpenStack")}
   end
 
   def self.event_monitor_class

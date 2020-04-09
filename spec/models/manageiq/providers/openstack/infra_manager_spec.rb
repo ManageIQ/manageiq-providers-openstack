@@ -148,8 +148,8 @@ describe ManageIQ::Providers::Openstack::InfraManager do
   context "catalog types" do
     let(:ems) { FactoryBot.create(:ems_openstack_infra_with_authentication) }
 
-    it "#supported_catalog_types" do
-      expect(ems.supported_catalog_types).to eq(%w(openstack))
+    it "#catalog_types" do
+      expect(ems.catalog_types).to include("openstack")
     end
   end
 

@@ -178,8 +178,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     %w(default amqp ssh_keypair)
   end
 
-  def supported_catalog_types
-    %w(openstack)
+  def self.catalog_types
+    {"openstack" => N_("OpenStack")}
   end
 
   def supports_provider_id?
