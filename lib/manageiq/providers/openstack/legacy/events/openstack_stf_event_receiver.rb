@@ -1,13 +1,14 @@
 require 'qpid_proton'
 
-class OpenStackSafEventReceiver < Qpid::Proton::MessagingHandler
+class OpenStackStfEventReceiver < Qpid::Proton::MessagingHandler
 
-  def initialize(url, topic, received_events_block)
-    puts "SAF RECEIVER INIT"
+  def initialize(url, topic, received_events_block, events_mutex)
+    puts "STF RECEIVER INIT"
     super()
     @topic                 = topic
     @url                   = url
     @received_events_block = received_events_block
+    @events_mutex          = events_mutex
   end
 
   def on_container_start(container)
@@ -16,8 +17,10 @@ class OpenStackSafEventReceiver < Qpid::Proton::MessagingHandler
   end
 
   def on_message(delivery, message)
-    puts "SAF RECEIVER MESSAGE"
+    puts "STF RECEIVER MESSAGE"
     p message
-    @received_events_block.call(message)
+    @events_mutex.synchronize do 
+      @received_events_block.call(message.body)
+    end
   end
 end

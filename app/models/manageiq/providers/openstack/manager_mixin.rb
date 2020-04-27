@@ -381,10 +381,10 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       opts = {:ems => self, :automatic_recovery => false, :recover_from_connection_close => false}
 
       ceilometer = connection_configuration_by_role("ceilometer")
-      saf = connection_configuration_by_role("saf")
+      stf = connection_configuration_by_role("stf")
 
-      if endpoint = saf.try(:endpoint)
-        opts[:events_monitor]    = :saf
+      if endpoint = stf.try(:endpoint)
+        opts[:events_monitor]    = :stf
         opts[:hostname]          = endpoint.hostname
         opts[:port]              = endpoint.port
         opts[:security_protocol] = endpoint.security_protocol

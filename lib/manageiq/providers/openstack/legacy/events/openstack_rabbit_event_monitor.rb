@@ -8,10 +8,10 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_HEARTBEAT = 30
   DEFAULT_AMQP_VHOST = '/'
 
-  # SAF/QDR event monitor is available if a connection can be established.
+  # The rabbit event monitor is available if a connection can be established.
+  # This ensures that the amqp server is indeed rabbit (and not another amqp	
+  # implementation).
   def self.available?(options = {})
-    puts "Testing connection to SAF.."
-    p options
     hostnames = [options.delete(:hostname), options.delete(:amqp_fallback_hostname1), options.delete(:amqp_fallback_hostname2)]
     hostnames.each do |hostname|
       options[:hostname] = hostname
