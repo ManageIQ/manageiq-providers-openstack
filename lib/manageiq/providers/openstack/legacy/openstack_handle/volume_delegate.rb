@@ -11,6 +11,7 @@ module OpenstackHandle
       super(dobj)
       @os_handle = os_handle
       @name      = name
+      @proxy     = openstack_proxy
     end
 
     def snapshots_for_accessible_tenants

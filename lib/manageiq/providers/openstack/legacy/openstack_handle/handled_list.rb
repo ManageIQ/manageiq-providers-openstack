@@ -93,5 +93,9 @@ module OpenstackHandle
       # OpenstackHandle::MultiTenancy::None
       OpenstackHandle::MultiTenancy::Loop
     end
+
+    def openstack_proxy
+      VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+    end
   end
 end

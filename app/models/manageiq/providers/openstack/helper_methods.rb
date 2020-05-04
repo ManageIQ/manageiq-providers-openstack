@@ -1,6 +1,10 @@
 module ManageIQ::Providers::Openstack::HelperMethods
   extend ActiveSupport::Concern
 
+  def openstack_proxy
+    VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+  end
+
   def parse_error_message_from_fog_response(exception)
     self.class.parse_error_message_from_fog_response(exception)
   end
