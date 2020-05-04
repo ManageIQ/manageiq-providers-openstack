@@ -115,8 +115,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
 
     def raw_connect(password, params, service = "Compute")
-      proxy = VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
-      params[:proxy] = proxy.to_s if proxy
+      params[:proxy] = openstack_proxy.to_s if openstack_proxy
 
       case params[:event_stream_selection]
       when "amqp"
@@ -174,8 +173,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       extra_options[:read_timeout]      = ::Settings.ems.ems_openstack.excon.read_timeout
 
       # The proxy must be a string, so we use the helper methods here
-      proxy = VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
-      extra_options[:proxy] = proxy.to_s if proxy
+      extra_options[:proxy] = openstack_proxy.to_s if openstack_proxy
 
       osh = OpenstackHandle::Handle.new(username, password, address, port, api_version, security_protocol, extra_options)
       osh.connection_options = {:instrumentor => $fog_log}
