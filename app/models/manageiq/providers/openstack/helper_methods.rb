@@ -18,6 +18,10 @@ module ManageIQ::Providers::Openstack::HelperMethods
   end
 
   module ClassMethods
+    def openstack_proxy
+      VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+    end
+
     def parse_error_message_from_fog_response(exception)
       exception_string = exception.to_s
       matched_message = exception_string.match(/message\\\": \\\"(.*)\\\", /)
