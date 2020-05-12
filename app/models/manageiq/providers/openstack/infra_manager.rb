@@ -217,4 +217,10 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
       end
     end
   end
+
+  private
+
+  def authentication_class(attributes)
+    attributes.symbolize_keys[:auth_key] ? ManageIQ::Providers::Openstack::InfraManager::AuthKeyPair : super
+  end
 end
