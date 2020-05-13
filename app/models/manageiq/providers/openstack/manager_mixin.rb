@@ -59,10 +59,21 @@ module ManageIQ::Providers::Openstack::ManagerMixin
             :label     => _("Provider Region"),
           },
           {
+            :component => "select-field",
+            :name      => "provider_id",
+            :label     => _("Openstack Infra Provider"),
+            :options   => ManageIQ::Providers::Openstack::Provider.pluck(:name, :id).map do |name, id|
+              {
+                :label => name,
+                :value => id.to_s,
+              }
+            end
+          },
+          {
             :component    => "select-field",
             :name         => "api_version",
             :label        => _("API Version"),
-            :initialValue => 'v2',
+            :initialValue => 'v3',
             :isRequired   => true,
             :validate     => [{:type => "required-validator"}],
             :options      => [
@@ -78,7 +89,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
           },
           {
             :component  => 'text-field',
-            :name       => 'keystone_v3_domain_id',
+            :name       => 'uid_ems',
             :label      => _('Domain ID'),
             :isRequired => true,
             :condition  => {
@@ -100,7 +111,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
           },
           {
             :component => 'sub-form',
-            :name      => 'endpoints',
+            :name      => 'endpoints-subform',
             :title     => _('Endpoints'),
             :fields    => [
               :component => 'tabs',
@@ -108,17 +119,18 @@ module ManageIQ::Providers::Openstack::ManagerMixin
               :fields    => [
                 {
                   :component => 'tab-item',
-                  :name      => 'default',
+                  :name      => 'default-tab',
                   :title     => _('Default'),
                   :fields    => [
                     {
                       :component              => 'validate-provider-credentials',
-                      :name                   => 'endpoints.default.valid',
+                      :name                   => 'authentications.default.valid',
+                      :skipSubmit             => true,
                       :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                       :fields                 => [
                         {
                           :component  => "select-field",
-                          :name       => "endpoints.default.default_security_protocol",
+                          :name       => "endpoints.default.security_protocol",
                           :label      => _("Security Protocol"),
                           :isRequired => true,
                           :validate   => [{:type => "required-validator"}],
@@ -139,14 +151,14 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                         },
                         {
                           :component  => "text-field",
-                          :name       => "endpoints.default.default_hostname",
+                          :name       => "endpoints.default.hostname",
                           :label      => _("Hostname (or IPv4 or IPv6 address)"),
                           :isRequired => true,
                           :validate   => [{:type => "required-validator"}],
                         },
                         {
                           :component    => "text-field",
-                          :name         => "endpoints.default.default_api_port",
+                          :name         => "endpoints.default.port",
                           :label        => _("API Port"),
                           :type         => "number",
                           :initialValue => 13_000,
@@ -155,14 +167,14 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                         },
                         {
                           :component  => "text-field",
-                          :name       => "endpoints.default.default_userid",
+                          :name       => "authentications.default.userid",
                           :label      => "Username",
                           :isRequired => true,
                           :validate   => [{:type => "required-validator"}],
                         },
                         {
-                          :component  => "text-field",
-                          :name       => "endpoints.default.password",
+                          :component  => "password-field",
+                          :name       => "authentications.default.password",
                           :label      => "Password",
                           :type       => "password",
                           :isRequired => true,
@@ -174,28 +186,41 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                 },
                 {
                   :component => 'tab-item',
-                  :name      => 'events',
+                  :name      => 'events-tab',
                   :title     => _('Events'),
                   :fields    => [
                     {
-                      :component    => 'select-field',
+                      :component    => 'protocol-selector',
                       :name         => 'event_stream_selection',
+                      :skipSubmit   => true,
                       :initialValue => 'ceilometer',
                       :label        => _('Type'),
                       :options      => [
                         {
-                          :label => _("Ceilometer"),
-                          :value => "ceilometer"
+                          :label => _('Ceilometer'),
+                          :value => _('ceilometer'),
                         },
                         {
-                          :label => _("AMQP"),
-                          :value => "amqp"
+                          :label => _('AMQP'),
+                          :value => _('amqp'),
+                          :pivot => 'endpoints.amqp.hostname',
                         }
-                      ]
+                      ],
+                    },
+                    {
+                      :component    => 'text-field',
+                      :type         => 'hidden',
+                      :name         => 'endpoints.ceilometer',
+                      :initialValue => {},
+                      :condition    => {
+                        :when => 'event_stream_selection',
+                        :is   => 'ceilometer',
+                      },
                     },
                     {
                       :component              => 'validate-provider-credentials',
                       :name                   => 'endpoints.amqp.valid',
+                      :skipSubmit             => true,
                       :validationDependencies => %w[type event_stream_selection],
                       :condition              => {
                         :when => 'event_stream_selection',
@@ -204,14 +229,14 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                       :fields                 => [
                         {
                           :component  => "text-field",
-                          :name       => "endpoints.amqp.amqp_hostname",
+                          :name       => "endpoints.amqp.hostname",
                           :label      => _("Hostname (or IPv4 or IPv6 address)"),
                           :isRequired => true,
                           :validate   => [{:type => "required-validator"}],
                         },
                         {
                           :component    => "text-field",
-                          :name         => "endpoints.amqp.amqp_api_port",
+                          :name         => "endpoints.amqp.port",
                           :label        => _("API Port"),
                           :type         => "number",
                           :isRequired   => true,
@@ -220,14 +245,14 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                         },
                         {
                           :component  => "text-field",
-                          :name       => "endpoints.amqp.amqp_userid",
+                          :name       => "authentications.amqp.userid",
                           :label      => "Username",
                           :isRequired => true,
                           :validate   => [{:type => "required-validator"}],
                         },
                         {
-                          :component  => "text-field",
-                          :name       => "endpoints.amqp.password",
+                          :component  => "password-field",
+                          :name       => "authentications.amqp.password",
                           :label      => "Password",
                           :type       => "password",
                           :isRequired => true,
@@ -239,20 +264,35 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                 },
                 {
                   :component => 'tab-item',
-                  :name      => 'rsa',
+                  :name      => 'ssh_keypair-tab',
                   :title     => _('RSA key pair'),
                   :fields    => [
-                    {
-                      :component => "text-field",
-                      :name      => "endpoints.rsa.username",
-                      :label     => _("Username"),
-                    },
-                    {
-                      :component => "text-field", # file upload maybe?
-                      :name      => "endpoints.rsa.private_key",
-                      :label     => _("Private Key"),
-                      :type      => "password",
-                    },
+                    :component => 'provider-credentials',
+                    :name      => 'endpoints.ssh_keypair.valid',
+                    :fields    => [
+                      {
+                        :component    => 'text-field',
+                        :type         => 'hidden',
+                        :name         => 'endpoints.ssh_keypair',
+                        :initialValue => {},
+                        :condition    => {
+                          :when       => 'authentications.ssh_keypair.userid',
+                          :isNotEmpty => true,
+                        },
+                      },
+                      {
+                        :component => "text-field",
+                        :name      => "authentications.ssh_keypair.userid",
+                        :label     => _("Username"),
+                      },
+                      {
+                        :component      => "password-field",
+                        :name           => "authentications.ssh_keypair.auth_key",
+                        :componentClass => 'textarea',
+                        :rows           => 10,
+                        :label          => _("Private Key"),
+                      },
+                    ],
                   ],
                 },
               ],
@@ -270,35 +310,46 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #   "api_version" => String,
     #   "endpoints" => {
     #     "default" => {
-    #       "default_userid" => String,
-    #       "default_hostname" => String,
-    #       "default_api_port" => Integer,
-    #       "default_security_protocol" => String,
-    #       "password" => String,
+    #       "hostname" => String,
+    #       "api_port" => Integer,
+    #       "security_protocol" => String,
     #     },
     #     "amqp" => {
-    #       "amqp_hostname" => String,
-    #       "amqp_userid" => String,
-    #       "amqp_api_port" => String,
-    #       "password" => String,
+    #       "hostname" => String,
+    #       "api_port" => String,
     #     },
     #   },
+    #   "authentications" => {
+    #     "default" =>
+    #       "userid" => String,
+    #       "password" => String,
+    #     }
+    #     "amqp" => {
+    #       "userid" => String,
+    #       "password" => String,
+    #     }
+    #   }
     # }
     def verify_credentials(args)
-      root_params = %w[name provider_region api_version].freeze
-      params = args.slice(*root_params).symbolize_keys
-
       endpoint_name = args.dig("endpoints").keys.first
       endpoint = args.dig("endpoints", endpoint_name)
+      authentication = args.dig("authentications", endpoint_name)
 
-      params[:event_stream_selection] = args['event_stream_selection'] if endpoint_name == 'amqp'
+      userid, password = authentication&.values_at('userid', 'password')
+      password = MiqPassword.try_decrypt(password)
+      password ||= find(args["id"]).authentication_password(endpoint_name)
 
-      password = endpoint&.dig("password")
+      params = %w[hostname api_port security_protocol].reduce(
+        [endpoint_name, 'userid'].join('_')   => userid,
+        [endpoint_name, 'password'].join('_') => password
+      ) do |obj, item|
+        obj.merge([endpoint_name, item].join('_') => endpoint.try(:[], item))
+      end
 
-      endpoint_params = %w[userid hostname api_port security_protocol].map { |item| [endpoint_name, item].join('_') }
-      params.merge!(endpoint&.slice(*endpoint_params)&.symbolize_keys || {})
+      params.merge!(args.slice('name', 'provider_region', 'api_version'))
+      params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name == 'amqp'
 
-      !!raw_connect(password, params)
+      !!raw_connect(password, params.symbolize_keys)
     end
 
     def raw_connect(password, params, service = "Compute")
