@@ -23,6 +23,16 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
     private :amqp_available?
 
+    def stf_available?(password, params)
+      require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
+      OpenstackStfEventMonitor.available?(
+        :hostname          => params[:stf_hostname],
+        :port              => params[:stf_api_port],
+        :security_protocol => params[:stf_security_protocol]
+      )
+    end
+    private :stf_available?
+
     def ems_connect?(password, params, service)
       ems = new
       ems.name                   = params[:name].strip
@@ -304,6 +314,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     def raw_connect(password, params, service = "Compute")
       if params[:event_stream_selection] == 'amqp'
         amqp_available?(password, params)
+      elsif params[:event_stream_selection] == 'stf'
+        stf_available?(password, params)
       else
         ems_connect?(password, params, service)
       end
@@ -426,7 +438,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def sync_event_monitor_available?
-    event_monitor_options[:events_monitor] == :ceilometer ? authentication_status_ok? : event_monitor_available?
+    event_monitor_options[:events_monitor] == :amqp ? event_monitor_available? : authentication_status_ok?
   end
 
   def stop_event_monitor_queue_on_change

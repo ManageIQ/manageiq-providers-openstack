@@ -12,6 +12,7 @@ class OpenStackStfEventReceiver < Qpid::Proton::MessagingHandler
   end
 
   def on_container_start(container)
+    puts "STF starting.."
     c = container.connect(@url)
     c.open_receiver(@topic)
   end
