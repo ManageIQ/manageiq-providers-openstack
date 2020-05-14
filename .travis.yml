@@ -13,7 +13,8 @@ env:
   - RUBY_GC_HEAP_GROWTH_FACTOR=1.25
 addons:
   postgresql: '10'
-before_install: sudo apt-get install -y libqpid-proton2 libqpid-proton2-dev
+before_install:
+- source ${TRAVIS_BUILD_DIR}/tools/ci/before_install.sh
 install: bin/setup
 after_script: bundle exec codeclimate-test-reporter
 notifications:

@@ -7,19 +7,19 @@ require 'qpid_proton'
 
 class OpenstackStfEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_PORT  = 5666
-  DEFAULT_TOPIC_NAME = 'anycast/ceilometer/event.sample'
+  DEFAULT_TOPIC_NAME = 'anycast/ceilometer/event.sample'.freeze
 
   def self.available?(options = {})
     $log.info("Testing connection to STF with #{options}") if $log
-    qdr_client = Qpid::Proton::Container.new(OpenStackStfEventTestReceiver.new(self.build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
+    qdr_client = Qpid::Proton::Container.new(OpenStackStfEventTestReceiver.new(build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
     qdr_client.run
-    return true
+    true
   rescue => ex
     $log.info("OpenstackSTFEventMonitor availability check failed with #{ex}.") if $log
     false
   ensure
-    qdr_client.close if qdr_client.respond_to? :close
-    qdr_client.stop if qdr_client.respond_to? :stop
+    qdr_client.close if qdr_client.respond_to?(:close)
+    qdr_client.stop if qdr_client.respond_to?(:stop)
   end
 
   def self.plugin_priority
@@ -40,17 +40,17 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
     @ems = options[:ems]
     @config = options.fetch(:stf, {})
 
-    #@collecting_events = false
     @events = []
     @events_mutex = Mutex.new
 
-    @recv_block = ->(event) { puts "ev in recv_block"; @events << event }
-    
+    @recv_block = ->(event) { @events << event }
+
     @qdr_receiver = Qpid::Proton::Container.new(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block, @events_mutex))
   end
 
   def start
     return if @qdr_receiver.running > 0
+
     $log.info("STF QDR client START..") if $log
     @handler = Thread.start { @qdr_receiver.run }
   end
@@ -62,26 +62,24 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
   end
 
   def each_batch
-    $log.info("Building STF QDR client EACHBATCH..") if $log
     @collecting_events = true
     while @collecting_events
       @events_mutex.synchronize do
-        $log.info("MIQ(#{self.class.name}) STF Yielding #{@events.size} events to"\
-                   " event_catcher: #{@events.map { |e| e }}") if $log
-
-        @events.map! do |raw_event|
-          p "unserialize"
-          p raw_event
+        converted_events = @events.map do |raw_event|
           unserialized_event = unserialize_event(raw_event)
-          p "convert"
           converted_event = OpenstackStfEventConverter.new(unserialized_event)
           $log.debug("Processing a new OpenStack STF Event: #{unserialized_event.inspect}") if $log
           openstack_event(nil, converted_event.metadata, converted_event.payload)
-          #openstack_event(nil, converted_event, converted_event.fetch(:payload))
         end
-          
-        yield filter_event_types(@events)
-        $log.info("MIQ(#{self.class.name}) Clearing events") if $log && @events.any?
+
+        filtered_events = filter_event_types(converted_events)
+
+        $log.info("MIQ(#{self.class.name}) STF Yielding #{filtered_events.size} events to"\
+        " event_catcher: #{filtered_events.map { |e| e }}") if $log
+
+        yield filtered_events
+
+        $log.info("MIQ(#{self.class.name}) Clearing events") if $log && @events.any? && filtered_events.any?
         @events.clear
       end
       sleep 5
@@ -105,9 +103,9 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
   end
 
   def filter_event_types(events)
-    $log.info("Received new OpenStack STF events: (before filtering)") if $log && events.any?
-    $log.info(events.inspect) if $log && events.any?
+    $log.debug("Received new OpenStack STF events: (before filtering)") if $log && events.any?
+    $log.debug(events.inspect) if $log && events.any?
     @event_type_regex ||= Regexp.new(@config[:event_types_regex].to_s)
-    events.select { |event| @event_type_regex.match(event.event_type) }
+    events.select { |event| @event_type_regex.match(event.payload.fetch("event_type")) }
   end
 end

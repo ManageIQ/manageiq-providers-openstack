@@ -1,14 +1,7 @@
 class OpenstackStfEventConverter
   def initialize(event)
     @event = event.symbolize_keys
-    p "convertiiiiing"
-    p "e"
-    p event
-    p "@"
-    p @event.inspect
     @event_payload = @event.fetch(:payload).symbolize_keys
-    p "@event_payload"
-    p @event_payload.inspect
     @payload = hashize_traits(@event_payload.fetch(:traits))
   end
 

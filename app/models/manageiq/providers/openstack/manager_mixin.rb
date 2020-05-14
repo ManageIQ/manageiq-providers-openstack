@@ -23,7 +23,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
     private :amqp_available?
 
-    def stf_available?(password, params)
+    def stf_available?(_password, params)
       require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
       OpenstackStfEventMonitor.available?(
         :hostname          => params[:stf_hostname],
@@ -400,7 +400,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         opts[:hostname]          = endpoint.hostname
         opts[:port]              = endpoint.port
         opts[:security_protocol] = endpoint.security_protocol
-        #TODO: auth/credentials when become supported in OpenStack
+        # Add auth/credentials when it become supported in OpenStack
       elsif ceilometer.try(:endpoint) && !ceilometer.try(:endpoint).try(:marked_for_destruction?)
         opts[:events_monitor] = :ceilometer
       elsif (amqp = connection_configuration_by_role("amqp"))
