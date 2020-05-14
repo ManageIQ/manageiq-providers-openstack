@@ -438,7 +438,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def sync_event_monitor_available?
-    event_monitor_options[:events_monitor] == :amqp ? event_monitor_available? : authentication_status_ok?
+    event_monitor_options[:events_monitor] == :ceilometer ? authentication_status_ok? : event_monitor_available?
   end
 
   def stop_event_monitor_queue_on_change
