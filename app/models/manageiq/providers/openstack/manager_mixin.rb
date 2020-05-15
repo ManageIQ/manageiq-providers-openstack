@@ -27,7 +27,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
       OpenstackStfEventMonitor.available?(
         :hostname          => params[:stf_hostname],
-        :port              => params[:stf_api_port],
+        :port              => params[:stf_api_port] || params[:stf_port].to_s,
         :security_protocol => params[:stf_security_protocol]
       )
     end
