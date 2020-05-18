@@ -10,7 +10,8 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
   DEFAULT_TOPIC_NAME = 'anycast/ceilometer/event.sample'.freeze
 
   def self.available?(options = {})
-    $log.info("Testing connection to STF with #{options}") if $log
+    $log.info("Testing connection to STF..") if $log
+    $log.debug("With STF options: #{options.inspect}") if $log
     qdr_client = Qpid::Proton::Container.new(OpenStackStfEventTestReceiver.new(build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
     qdr_client.run
     true
