@@ -188,8 +188,8 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   end
 
   def list_all_service_containers_cmd
-    'if [ -e /usr/bin/podman ]; then sudo podman ps --format "{{.Names}} {{.Status}}"; fi; '\
-    'if [ -e /usr/bin/docker ]; then docker ps --format "table {{.Names}}\t{{.Status}}" | tail -n +2; fi'
+    'if [ -e /usr/bin/podman ]; then sudo podman ps --format "{{.Names}} {{.Status}}"; \
+    elif [ -e /usr/bin/docker ]; then docker ps --format "table {{.Names}}\t{{.Status}}" | tail -n +2; fi'
   end
 
   def refresh_custom_attributes_from_conf_files(files)
