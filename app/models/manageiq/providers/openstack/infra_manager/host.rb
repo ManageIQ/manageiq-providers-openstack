@@ -149,6 +149,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   def refresh_openstack_services(ssu)
     openstack_status = ssu.shell_exec("systemctl -la --plain | awk '/openstack/ {gsub(/ +/, \" \"); gsub(\".service\", \":\"); gsub(\"not-found\",\"(disabled)\"); split($0,s,\" \"); print s[1],s[3],s[2]}' | sed \"s/ loaded//g\"")
+    ssu.instance_variable_set(:@passwordless_sudo, false)
     openstack_containerized_status = ssu.shell_exec(list_all_service_containers_cmd)
 
     services = MiqLinux::Utils.parse_openstack_status(openstack_status)
