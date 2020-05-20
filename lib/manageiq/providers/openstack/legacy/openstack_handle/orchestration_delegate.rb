@@ -26,7 +26,7 @@ module OpenstackHandle
           nil
         end
 
-        ra.concat(rv.to_a)
+        ra.concat(rv.to_a) if rv
       end
 
       ra
