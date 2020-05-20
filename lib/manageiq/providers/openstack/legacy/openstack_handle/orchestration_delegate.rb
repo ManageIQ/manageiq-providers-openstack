@@ -28,7 +28,6 @@ module OpenstackHandle
 
         ra.concat(rv.to_a) if rv
       end
-
       ra
     end
   end
