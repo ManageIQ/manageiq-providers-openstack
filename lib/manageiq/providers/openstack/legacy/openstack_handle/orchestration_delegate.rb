@@ -23,11 +23,10 @@ module OpenstackHandle
         rescue not_found_error => e
           $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
                         "Skipping inventory item #{SERVICE_NAME} stacks\n#{e}")
-          next
+          nil
         end
 
         ra.concat(rv.to_a)
-        end
       end
 
       ra
