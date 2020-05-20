@@ -49,8 +49,6 @@ module OpenstackHandle
       # Show any list related exception in a nice format.
       openstack_service_name = Handle::SERVICE_NAME_MAP[self.class::SERVICE_NAME]
 
-      $log.warn("ERROR_CLASS: #{err.class}")
-
       _log.error "Unable to obtain collection: '#{collection_type}' in service: '#{openstack_service_name}' "\
                  "using project scope: '#{@os_handle.project_name}' in provider: '#{@os_handle.address}'. "\
                  "Message=#{err.message}"
