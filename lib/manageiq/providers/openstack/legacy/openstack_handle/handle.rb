@@ -384,6 +384,9 @@ module OpenstackHandle
           $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
                         "Skipping inventory item #{service} #{accessor}\n#{e}")
           nil
+        rescue Exception => err
+          $log.warn("ACCESSOR_FOR_ACCESSIBLE_TENANTS FAILED: #{err.class}:#{err.message}")
+          nil
         end
 
         if !response.nil? && array_accessor && response.last.kind_of?(Fog::Model)

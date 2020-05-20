@@ -15,19 +15,29 @@ module OpenstackHandle
 
     def stacks_for_accessible_tenants(opts = {})
       ra = []
-      @os_handle.service_for_each_accessible_tenant(SERVICE_NAME) do |svc|
-        not_found_error = Fog.const_get(SERVICE_NAME)::OpenStack::NotFound
+      $log.warn("STACKS_FOR_ACCESSIBLE_TENANTS: #{opts}")
 
-        rv = begin
-          svc.stacks.all(opts)
-        rescue not_found_error => e
-          $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
-                        "Skipping inventory item #{SERVICE_NAME} stacks\n#{e}")
-          nil
+      begin
+        @os_handle.service_for_each_accessible_tenant(SERVICE_NAME) do |svc|
+          not_found_error = Fog.const_get(SERVICE_NAME)::OpenStack::NotFound
+
+          rv = begin
+            svc.stacks.all(opts)
+          rescue not_found_error => e
+            $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
+                          "Skipping inventory item #{SERVICE_NAME} stacks\n#{e}")
+            next
+          rescue Exception => err
+            $log.warn("STACKS: MIQ(#{self.class.name}.#{__method__}): EXCEPTION: #{err}")
+            next
+          end
+
+          ra.concat(rv.to_a)
         end
-
-        ra.concat(rv.to_a) if rv
+      rescue Exception => err
+        $log.warn("STACKS: MIQ(#{self.class.name}.#{__method__}): EXCEPTION: #{err}")
       end
+
       ra
     end
   end

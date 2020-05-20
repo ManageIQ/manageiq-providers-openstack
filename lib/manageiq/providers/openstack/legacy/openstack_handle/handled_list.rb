@@ -21,8 +21,11 @@ module OpenstackHandle
                             else
                               default_multi_tenancy_class
                             end
-      multi_tenancy_class.new(self, @os_handle, self.class::SERVICE_NAME, collection_type, options,
-                              :all).list
+
+      $log.warn("MULTI_TENANCY_CLASS: #{multi_tenancy_class}")
+      $log.warn("COLLECTION_TYPE: #{collection_type}")
+      $log.warn("OPTIONS: #{options}")
+      multi_tenancy_class.new(self, @os_handle, self.class::SERVICE_NAME, collection_type, options, :all).list
     rescue Excon::Errors::Forbidden => err
       # It can happen user doesn't have rights to read some tenant, in that case log warning but continue refresh
       _log.warn "Forbidden to read the project: #{@os_handle.project_name}, for collection type: #{collection_type}, "\
@@ -41,9 +44,21 @@ module OpenstackHandle
                 "in provider: #{@os_handle.address}. Message=#{err.message}"
       _log.warn err.backtrace.join("\n")
       []
+    rescue Excon::Error::Timeout, Fog::Errors::TimeoutError => err
+      _log.warn "Timeout trying to find data for project: #{@os_handle.project_name}, for collection type: #{collection_type}, "\
+                "in provider: #{@os_handle.address}. Message=#{err.message}"
+      _log.warn err.backtrace.join("\n")
+      []
+    rescue Errno::ECONNREFUSED => err
+      # Probably neutron server wasn't setup
+      _log.warn "Connection refused trying to find data for project: #{@os_handle.project_name}, for collection type: #{collection_type}, "\
+                "in provider: #{@os_handle.address}. Message=#{err.message}"
+      _log.warn err.backtrace.join("\n")
     rescue => err
       # Show any list related exception in a nice format.
       openstack_service_name = Handle::SERVICE_NAME_MAP[self.class::SERVICE_NAME]
+
+      $log.warn("ERROR_CLASS: #{err.class}")
 
       _log.error "Unable to obtain collection: '#{collection_type}' in service: '#{openstack_service_name}' "\
                  "using project scope: '#{@os_handle.project_name}' in provider: '#{@os_handle.address}'. "\
