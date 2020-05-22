@@ -10,6 +10,7 @@ env:
   - RUBY_GC_HEAP_GROWTH_MAX_SLOTS=300000
   - RUBY_GC_HEAP_INIT_SLOTS=600000
   - RUBY_GC_HEAP_GROWTH_FACTOR=1.25
+  - BUNDLE_WITH=qpid_proton
 addons:
   postgresql: '10'
 before_install:
