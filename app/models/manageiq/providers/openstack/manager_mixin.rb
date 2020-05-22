@@ -23,6 +23,16 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
     private :amqp_available?
 
+    def stf_available?(_password, params)
+      require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
+      OpenstackStfEventMonitor.available?(
+        :hostname          => params[:stf_hostname],
+        :port              => params[:stf_api_port] || params[:stf_port].to_s,
+        :security_protocol => params[:stf_security_protocol]
+      )
+    end
+    private :stf_available?
+
     def ems_connect?(password, params, service)
       ems = new
       ems.name                   = params[:name].strip
@@ -304,6 +314,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     def raw_connect(password, params, service = "Compute")
       if params[:event_stream_selection] == 'amqp'
         amqp_available?(password, params)
+      elsif params[:event_stream_selection] == 'stf'
+        stf_available?(password, params)
       else
         ems_connect?(password, params, service)
       end
@@ -381,8 +393,15 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       opts = {:ems => self, :automatic_recovery => false, :recover_from_connection_close => false}
 
       ceilometer = connection_configuration_by_role("ceilometer")
+      stf = connection_configuration_by_role("stf")
 
-      if ceilometer.try(:endpoint) && !ceilometer.try(:endpoint).try(:marked_for_destruction?)
+      if endpoint = stf.try(:endpoint)
+        opts[:events_monitor]    = :stf
+        opts[:hostname]          = endpoint.hostname
+        opts[:port]              = endpoint.port
+        opts[:security_protocol] = endpoint.security_protocol
+        # Add auth/credentials when it become supported in OpenStack
+      elsif ceilometer.try(:endpoint) && !ceilometer.try(:endpoint).try(:marked_for_destruction?)
         opts[:events_monitor] = :ceilometer
       elsif (amqp = connection_configuration_by_role("amqp"))
         opts[:events_monitor] = :amqp

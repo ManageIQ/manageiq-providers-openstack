@@ -9,6 +9,7 @@ module ManageIQ::Providers::Openstack::EventCatcherMixin
       options[:capacity]                      = worker_settings[:capacity]
       options[:heartbeat]                     = worker_settings[:amqp_heartbeat]
       options[:ceilometer]                    = worker_settings[:ceilometer]
+      options[:stf]                           = worker_settings[:stf]
       options[:automatic_recovery]            = true
       options[:recover_from_connection_close] = true
       options[:recovery_attempts]             = worker_settings[:amqp_recovery_attempts]
@@ -44,7 +45,7 @@ module ManageIQ::Providers::Openstack::EventCatcherMixin
       end
       sleep_poll_normal
     end
-  rescue Fog::Metering::OpenStack::NotFound => err
+  rescue => err
     _log.warn("#{log_prefix} Failed to monitor events because [#{err.message}]")
   ensure
     reset_event_monitor_handle
