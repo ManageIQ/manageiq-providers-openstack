@@ -19,4 +19,9 @@ class OpenStackStfEventReceiver < Qpid::Proton::MessagingHandler
       @received_events_block.call(message.body)
     end
   end
+
+  def on_error(err)
+    $log.error("STF Event Receiver error: #{err.inspect}") if $log
+    raise err
+  end
 end

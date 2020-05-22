@@ -13,4 +13,9 @@ class OpenStackStfEventTestReceiver < Qpid::Proton::MessagingHandler
     # If the open_receiver passed, container can be closed to make the test successful
     c.close
   end
+
+  def on_error(err)
+    $log.error("STF Event Test Receiver error: #{err.inspect}") if $log
+    raise err
+  end
 end

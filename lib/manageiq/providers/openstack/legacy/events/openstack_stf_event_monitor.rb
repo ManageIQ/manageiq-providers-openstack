@@ -53,18 +53,19 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
     return if @qdr_receiver.running > 0
 
     $log.info("STF QDR client START..") if $log
-    @handler = Thread.start { @qdr_receiver.run }
+    @collecting_events = true
+    @handler           = Thread.start { @qdr_receiver.run }
   end
 
   def stop
     $log.info("STF QDR client STOP..") if $log
+    @collecting_events = false
     @qdr_receiver&.stop
-    @handler&.terminate!
+    @handler&.terminate
   end
 
   def each_batch
-    @collecting_events = true
-    while @collecting_events
+    while @collecting_events && @qdr_receiver.running > 0
       @events_mutex.synchronize do
         converted_events = @events.map do |raw_event|
           unserialized_event = unserialize_event(raw_event)
@@ -104,8 +105,6 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
   end
 
   def filter_event_types(events)
-    $log.debug("Received new OpenStack STF events: (before filtering)") if $log && events.any?
-    $log.debug(events.inspect) if $log && events.any?
     @event_type_regex ||= Regexp.new(@config[:event_types_regex].to_s)
     events.select { |event| @event_type_regex.match(event.payload.fetch("event_type")) }
   end
