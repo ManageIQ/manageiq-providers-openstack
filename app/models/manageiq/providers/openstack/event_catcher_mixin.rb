@@ -9,6 +9,7 @@ module ManageIQ::Providers::Openstack::EventCatcherMixin
       options[:capacity]                      = worker_settings[:capacity]
       options[:heartbeat]                     = worker_settings[:amqp_heartbeat]
       options[:ceilometer]                    = worker_settings[:ceilometer]
+      options[:stf]                           = worker_settings[:stf]
       options[:automatic_recovery]            = true
       options[:recover_from_connection_close] = true
       options[:recovery_attempts]             = worker_settings[:amqp_recovery_attempts]

@@ -79,6 +79,8 @@ class OpenstackEventMonitor
       OpenstackCeilometerEventMonitor
     when :amqp
       OpenstackRabbitEventMonitor
+    when :stf
+      OpenstackStfEventMonitor
     else
       OpenstackNullEventMonitor
     end
