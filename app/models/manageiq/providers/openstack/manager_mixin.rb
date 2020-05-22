@@ -18,7 +18,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         :hostname => params[:amqp_hostname],
         :username => params[:amqp_userid],
         :password => ManageIQ::Password.try_decrypt(password),
-        :port     => params[:amqp_api_port]
+        :port     => params[:amqp_api_port] || params[:amqp_port].to_s
       )
     end
     private :amqp_available?
@@ -321,12 +321,12 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #   "endpoints" => {
     #     "default" => {
     #       "hostname" => String,
-    #       "api_port" => Integer,
+    #       "port" => Integer,
     #       "security_protocol" => String,
     #     },
     #     "amqp" => {
     #       "hostname" => String,
-    #       "api_port" => String,
+    #       "port" => String,
     #     },
     #   },
     #   "authentications" => {
@@ -349,7 +349,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       password = MiqPassword.try_decrypt(password)
       password ||= find(args["id"]).authentication_password(endpoint_name)
 
-      params = %w[hostname api_port security_protocol].reduce(
+      params = %w[hostname port security_protocol].reduce(
         [endpoint_name, 'userid'].join('_')   => userid,
         [endpoint_name, 'password'].join('_') => password
       ) do |obj, item|
