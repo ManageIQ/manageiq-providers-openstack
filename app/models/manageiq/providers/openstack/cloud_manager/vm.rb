@@ -10,7 +10,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
   include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :snapshots
-  supports :conversion_host
 
   POWER_STATES = {
     "ACTIVE"            => "on",
