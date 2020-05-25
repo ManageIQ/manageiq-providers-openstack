@@ -1,12 +1,11 @@
 require 'qpid_proton'
 
 class OpenStackStfEventReceiver < Qpid::Proton::MessagingHandler
-  def initialize(url, topic, received_events_block, events_mutex)
+  def initialize(url, topic, received_events_block)
     super()
     @topic                 = topic
     @url                   = url
     @received_events_block = received_events_block
-    @events_mutex          = events_mutex
   end
 
   def on_container_start(container)
@@ -15,9 +14,7 @@ class OpenStackStfEventReceiver < Qpid::Proton::MessagingHandler
   end
 
   def on_message(_delivery, message)
-    @events_mutex.synchronize do
-      @received_events_block.call(message.body)
-    end
+    @received_events_block.call(message.body)
   end
 
   def on_error(err)

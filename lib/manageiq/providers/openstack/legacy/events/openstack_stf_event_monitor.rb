@@ -6,8 +6,9 @@ require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_test_rec
 require 'qpid_proton'
 
 class OpenstackStfEventMonitor < OpenstackEventMonitor
-  DEFAULT_AMQP_PORT  = 5666
-  DEFAULT_TOPIC_NAME = 'anycast/ceilometer/event.sample'.freeze
+  DEFAULT_AMQP_PORT       = 5666
+  DEFAULT_TOPIC_NAME      = 'anycast/ceilometer/event.sample'.freeze
+  EVENTS_BATCH_MAX_SIZE   = 200
 
   def self.available?(options = {})
     $log.info("Testing connection to STF..") if $log
@@ -41,12 +42,10 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
     @ems = options[:ems]
     @config = options.fetch(:stf, {})
 
-    @events = []
-    @events_mutex = Mutex.new
-
+    @events = Queue.new
     @recv_block = ->(event) { @events << event }
 
-    @qdr_receiver = Qpid::Proton::Container.new(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block, @events_mutex))
+    @qdr_receiver = Qpid::Proton::Container.new(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block))
   end
 
   def start
@@ -66,24 +65,20 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
 
   def each_batch
     while @collecting_events && @qdr_receiver.running > 0
-      @events_mutex.synchronize do
-        converted_events = @events.map do |raw_event|
-          unserialized_event = unserialize_event(raw_event)
-          converted_event = OpenstackStfEventConverter.new(unserialized_event)
-          $log.debug("Processing a new OpenStack STF Event: #{unserialized_event.inspect}") if $log
-          openstack_event(nil, converted_event.metadata, converted_event.payload)
-        end
-
-        filtered_events = filter_event_types(converted_events)
-
-        $log.info("MIQ(#{self.class.name}) STF Yielding #{filtered_events.size} events to"\
-        " event_catcher: #{filtered_events.map { |e| e }}") if $log
-
-        yield filtered_events
-
-        $log.info("MIQ(#{self.class.name}) Clearing events") if $log && @events.any? && filtered_events.any?
-        @events.clear
+      captured_events = []
+      while !@events.empty? && captured_events.length < EVENTS_BATCH_MAX_SIZE
+        captured_events << @events.pop
       end
+      converted_events = captured_events.map do |raw_event|
+        unserialized_event = unserialize_event(raw_event)
+        converted_event = OpenstackStfEventConverter.new(unserialized_event)
+        $log.debug("Processing a new OpenStack STF Event: #{unserialized_event.inspect}") if $log
+        openstack_event(nil, converted_event.metadata, converted_event.payload)
+      end
+      filtered_events = filter_event_types(converted_events)
+      $log.info("MIQ(#{self.class.name}) STF Yielding #{filtered_events.size} events to"\
+      " event_catcher: #{filtered_events.map { |e| e }}") if $log
+      yield filtered_events
       sleep 5
     end
   end
