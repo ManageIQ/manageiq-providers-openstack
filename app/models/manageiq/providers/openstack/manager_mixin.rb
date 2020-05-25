@@ -363,9 +363,10 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
 
     def raw_connect(password, params, service = "Compute")
-      if params[:event_stream_selection] == 'amqp'
+      case params[:event_stream_selection]
+      when "amqp"
         amqp_available?(password, params)
-      elsif params[:event_stream_selection] == 'stf'
+      when "stf"
         stf_available?(password, params)
       else
         ems_connect?(password, params, service)
