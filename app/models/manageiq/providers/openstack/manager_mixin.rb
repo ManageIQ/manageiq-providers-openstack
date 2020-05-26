@@ -211,10 +211,15 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                           :value => _('ceilometer'),
                         },
                         {
+                          :label => _('STF'),
+                          :value => _('stf'),
+                          :pivot => 'endpoints.stf.hostname',
+                        },
+                        {
                           :label => _('AMQP'),
                           :value => _('amqp'),
                           :pivot => 'endpoints.amqp.hostname',
-                        }
+                        },
                       ],
                     },
                     {
@@ -270,6 +275,55 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                         },
                       ],
                     },
+                    {
+                      :component              => 'validate-provider-credentials',
+                      :name                   => 'endpoints.stf.valid',
+                      :skipSubmit             => true,
+                      :validationDependencies => %w[type event_stream_selection],
+                      :condition              => {
+                        :when => 'event_stream_selection',
+                        :is   => 'stf',
+                      },
+                      :fields                 => [
+                        {
+                          :component  => "select-field",
+                          :name       => "endpoints.stf.security_protocol",
+                          :label      => _("Security Protocol"),
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                          :options    => [
+                            {
+                              :label => _("SSL without validation"),
+                              :value => "ssl-no-validation"
+                            },
+                            {
+                              :label => _("SSL"),
+                              :value => "ssl-with-validation"
+                            },
+                            {
+                              :label => _("Non-SSL"),
+                              :value => "non-ssl"
+                            }
+                          ]
+                        },
+                        {
+                          :component  => "text-field",
+                          :name       => "endpoints.stf.hostname",
+                          :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                          :isRequired => true,
+                          :validate   => [{:type => "required-validator"}],
+                        },
+                        {
+                          :component    => "text-field",
+                          :name         => "endpoints.stf.port",
+                          :label        => _("API Port"),
+                          :type         => "number",
+                          :isRequired   => true,
+                          :initialValue => 5666,
+                          :validate     => [{:type => "required-validator"}],
+                        },
+                      ]
+                    }
                   ],
                 },
                 {
@@ -328,6 +382,10 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #       "hostname" => String,
     #       "port" => String,
     #     },
+    #     "stf" => {
+    #       "hostname" => String,
+    #       "port" => String,
+    #     },
     #   },
     #   "authentications" => {
     #     "default" =>
@@ -347,7 +405,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
       userid, password = authentication&.values_at('userid', 'password')
       password = MiqPassword.try_decrypt(password)
-      password ||= find(args["id"]).authentication_password(endpoint_name)
+      password ||= find(args["id"]).authentication_password(endpoint_name) if args["id"]
 
       params = %w[hostname port security_protocol].reduce(
         [endpoint_name, 'userid'].join('_')   => userid,
@@ -357,7 +415,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       end
 
       params.merge!(args.slice('name', 'provider_region', 'api_version'))
-      params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name == 'amqp'
+      params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name != 'default'
 
       !!raw_connect(password, params.symbolize_keys)
     end
