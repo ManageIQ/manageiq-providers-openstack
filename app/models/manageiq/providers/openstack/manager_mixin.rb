@@ -69,10 +69,11 @@ module ManageIQ::Providers::Openstack::ManagerMixin
             :label     => _("Provider Region"),
           },
           {
-            :component => "select-field",
-            :name      => "provider_id",
-            :label     => _("Openstack Infra Provider"),
-            :options   => ManageIQ::Providers::Openstack::Provider.pluck(:name, :id).map do |name, id|
+            :component   => "select-field",
+            :name        => "provider_id",
+            :label       => _("Openstack Infra Provider"),
+            :isClearable => true,
+            :options     => ManageIQ::Providers::Openstack::Provider.pluck(:name, :id).map do |name, id|
               {
                 :label => name,
                 :value => id.to_s,
