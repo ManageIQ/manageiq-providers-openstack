@@ -1,4 +1,11 @@
 describe ManageIQ::Providers::Openstack::CloudManager do
+  let(:logger_file) { StringIO.new }
+
+  def lastlog
+    logger_file.rewind
+    logger_file.read
+  end
+
   context "Class Methods" do
     it("from mixin") { expect(described_class.methods).to include(:raw_connect) }
   end
@@ -50,6 +57,38 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     it "returns the correct queue name" do
       worker_queue = ManageIQ::Providers::Openstack::CloudManager::MetricsCollectorWorker.default_queue_name
       expect(described_class.metrics_collector_queue_name).to eq(worker_queue)
+    end
+  end
+
+  describe "#accessor_for_accessible_tenants", :stuff => true do
+    let(:service) { 'Compute' }
+    let(:handle) { OpenstackHandle::Handle.new('test', 'test', 'test') }
+
+    before do
+      require 'fog/openstack'
+      require 'manageiq/providers/openstack/legacy/openstack_handle/handle'
+      $fog_log = Logger.new(logger_file)
+    end
+
+    it "logs the expected warning and returns nil if the service is not found" do
+      accessor = Proc.new { |service| raise Excon::Errors::NotFound.new(service) }
+      allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
+      expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
+      expect(lastlog).to include("HTTP 404 Error")
+    end
+
+    it "logs the expected warning and returns nil if the service times out" do
+      accessor = Proc.new { |service| raise Excon::Error::Timeout.new(service) }
+      allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
+      expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
+      expect(lastlog).to include("timeout during OpenStack request")
+    end
+
+    it "logs the expected warning and returns nil if the service connect fails" do
+      accessor = Proc.new { |service| raise Excon::Error::Socket.new }
+      allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
+      expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
+      expect(lastlog).to include("failed to connect during OpenStack request")
     end
   end
 
