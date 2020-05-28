@@ -68,6 +68,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
       require 'fog/openstack'
       require 'manageiq/providers/openstack/legacy/openstack_handle/handle'
       $fog_log = Logger.new(logger_file)
+      $fog_log.extend(Vmdb::Loggers::Instrument)
     end
 
     it "logs the expected warning and returns nil if the service is not found" do
