@@ -71,21 +71,21 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
 
     it "logs the expected warning and returns nil if the service is not found" do
-      accessor = Proc.new { |service| raise Excon::Errors::NotFound.new(service) }
+      accessor = proc { |service| raise Excon::Errors::NotFound.new(service) }
       allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
       expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
       expect(lastlog).to include("HTTP 404 Error")
     end
 
     it "logs the expected warning and returns nil if the service times out" do
-      accessor = Proc.new { |service| raise Excon::Error::Timeout.new(service) }
+      accessor = proc { |service| raise Excon::Error::Timeout.new(service) }
       allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
       expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
       expect(lastlog).to include("timeout during OpenStack request")
     end
 
     it "logs the expected warning and returns nil if the service connect fails" do
-      accessor = Proc.new { |service| raise Excon::Error::Socket.new }
+      accessor = proc { raise Excon::Error::Socket }
       allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
       expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
       expect(lastlog).to include("failed to connect during OpenStack request")
