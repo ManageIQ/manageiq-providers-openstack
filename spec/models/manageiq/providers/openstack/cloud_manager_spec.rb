@@ -60,7 +60,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
   end
 
-  describe "#accessor_for_accessible_tenants", :stuff => true do
+  describe "#accessor_for_accessible_tenants" do
     let(:service) { 'Compute' }
     let(:handle) { OpenstackHandle::Handle.new('test', 'test', 'test') }
 
@@ -71,14 +71,14 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     end
 
     it "logs the expected warning and returns nil if the service is not found" do
-      accessor = proc { |service| raise Excon::Errors::NotFound.new(service) }
+      accessor = proc { |service| raise Excon::Errors::NotFound, service }
       allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
       expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
       expect(lastlog).to include("HTTP 404 Error")
     end
 
     it "logs the expected warning and returns nil if the service times out" do
-      accessor = proc { |service| raise Excon::Error::Timeout.new(service) }
+      accessor = proc { |service| raise Excon::Error::Timeout, service }
       allow(handle).to receive(:service_for_each_accessible_tenant).with(service).and_return([service, 'some_tenant'])
       expect(handle.accessor_for_accessible_tenants(service, accessor, 'xyz')).to eq([])
       expect(lastlog).to include("timeout during OpenStack request")
