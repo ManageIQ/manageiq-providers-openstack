@@ -209,16 +209,16 @@ module ManageIQ::Providers::Openstack::ManagerMixin
                       :options      => [
                         {
                           :label => _('Ceilometer'),
-                          :value => _('ceilometer'),
+                          :value => 'ceilometer',
                         },
                         {
                           :label => _('STF'),
-                          :value => _('stf'),
+                          :value => 'stf',
                           :pivot => 'endpoints.stf.hostname',
                         },
                         {
                           :label => _('AMQP'),
-                          :value => _('amqp'),
+                          :value => 'amqp',
                           :pivot => 'endpoints.amqp.hostname',
                         },
                       ],
