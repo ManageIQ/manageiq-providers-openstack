@@ -1,18 +1,21 @@
 require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_converter'
-require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_receiver'
-require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_test_receiver'
-require 'qpid_proton'
 
 class OpenstackStfEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_PORT  = 5666
   DEFAULT_TOPIC_NAME = 'anycast/ceilometer/event.sample'.freeze
 
+  def self.qpid_proton_container(*args)
+    require 'qpid_proton'
+    Qpid::Proton::Container.new(args)
+  end
+
   def self.available?(options = {})
+    require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_test_receiver'
     $log.info("Testing connection to STF..") if $log
     $log.debug("With STF options: #{options.inspect}") if $log
-    qdr_client = Qpid::Proton::Container.new(OpenStackStfEventTestReceiver.new(build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
+    qdr_client = qpid_proton_container(OpenStackStfEventTestReceiver.new(build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
     qdr_client.run
     true
   rescue => ex
@@ -46,7 +49,8 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
 
     @recv_block = ->(event) { @events << event }
 
-    @qdr_receiver = Qpid::Proton::Container.new(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block, @events_mutex))
+    require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_receiver'
+    @qdr_receiver = self.class.qpid_proton_container(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block, @events_mutex))
   end
 
   def start
