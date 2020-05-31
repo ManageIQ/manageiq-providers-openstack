@@ -1,8 +1,6 @@
 require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_converter'
-require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_receiver'
-require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_test_receiver'
 
 class OpenstackStfEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_PORT  = 5666
@@ -14,6 +12,7 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
   end
 
   def self.available?(options = {})
+    require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_test_receiver'
     $log.info("Testing connection to STF..") if $log
     $log.debug("With STF options: #{options.inspect}") if $log
     qdr_client = qpid_proton_container(OpenStackStfEventTestReceiver.new(build_qdr_client_url(options), DEFAULT_TOPIC_NAME))
@@ -50,6 +49,7 @@ class OpenstackStfEventMonitor < OpenstackEventMonitor
 
     @recv_block = ->(event) { @events << event }
 
+    require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_receiver'
     @qdr_receiver = self.class.qpid_proton_container(OpenStackStfEventReceiver.new(self.class.build_qdr_client_url(@options), @config[:topic_name] || DEFAULT_TOPIC_NAME, @recv_block, @events_mutex))
   end
 
