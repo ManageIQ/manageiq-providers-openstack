@@ -380,9 +380,18 @@ module OpenstackHandle
           else
             array_accessor ? svc.send(accessor).to_a : svc.send(accessor)
           end
-        rescue not_found_error, Excon::Errors::NotFound => e
+        rescue not_found_error, Excon::Errors::NotFound => err
           $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) HTTP 404 Error during OpenStack request. " \
-                        "Skipping inventory item #{service} #{accessor}\n#{e}")
+                        "Skipping inventory item #{service} #{accessor}\n#{err}")
+          nil
+        rescue Excon::Error::Timeout, Fog::Errors::TimeoutError => err
+          $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) timeout during OpenStack request. " \
+                        "Skipping inventory item #{service} #{accessor}\n#{err}")
+          nil
+        rescue Excon::Error::Socket, Fog::Errors::Error => err
+          # Neutron probably not setup or failed
+          $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) failed to connect during OpenStack request. " \
+                        "Skipping inventory item #{service} #{accessor}\n#{err}")
           nil
         end
 
