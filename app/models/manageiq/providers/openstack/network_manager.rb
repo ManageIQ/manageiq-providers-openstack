@@ -9,6 +9,7 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   require_nested :Refresher
   require_nested :SecurityGroup
 
+  include BelongsToParentManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
 
