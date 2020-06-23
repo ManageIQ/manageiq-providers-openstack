@@ -26,8 +26,13 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
            :hostname,
            :default_endpoint,
            :endpoints,
+           :cloud_tenants,
+           :volume_availability_zones,
            :to        => :parent_manager,
            :allow_nil => true
+
+  virtual_delegate :cloud_tenants, :to => :parent_manager, :allow_nil => true
+  virtual_delegate :volume_availability_zones, :to => :parent_manager, :allow_nil => true
 
   def self.default_blacklisted_event_names
     %w(
