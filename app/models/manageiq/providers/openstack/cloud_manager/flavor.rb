@@ -1,6 +1,9 @@
 class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
   include ManageIQ::Providers::Openstack::HelperMethods
 
+  supports :create
+  supports :delete
+
   def self.raw_create_flavor(ext_management_system, create_options)
     ext_management_system.with_provider_connection({:service => 'Compute'}) do |service|
       cloud_tenant_refs = create_options.delete("cloud_tenant_refs")
