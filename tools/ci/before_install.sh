@@ -9,7 +9,7 @@ sudo apt-get install -y libsasl2-2 libsasl2-dev
 
 # Get the latest Qpid Proton source
 cd $HOME/build
-git clone --branch 0.30.0 https://github.com/apache/qpid-proton.git
+git clone --branch 0.26.0 https://github.com/apache/qpid-proton.git
 cd qpid-proton
 
 # Configure the source of Qpid Proton.
