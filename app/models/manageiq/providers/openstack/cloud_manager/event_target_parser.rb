@@ -82,6 +82,6 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   end
 
   def event_payload
-    @event_payload ||= ManageIQ::Providers::Openstack::CloudManager::EventParser.extract_payload(ems_event)
+    @event_payload ||= ManageIQ::Providers::Openstack::EventParserCommon.message_content(ems_event).fetch('payload', {})
   end
 end

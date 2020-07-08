@@ -33,18 +33,18 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
   end
 
   def collect_volume_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    tenant_id = event_payload['project_id']
+    resource_id = event_payload['resource_id']
     add_target(target_collection, :cloud_volumes, resource_id, :tenant_id => tenant_id) if resource_id
     # Bootable Volume can be modelled also as VolumeTemplate for new VM provisioning based on the Bootable Volume
     add_target(target_collection, :volume_templates, resource_id, :tenant_id => tenant_id) if resource_id
   end
 
   def collect_snapshot_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'project_id')
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    tenant_id = event_payload['project_id']
+    resource_id = event_payload['resource_id']
     add_target(target_collection, :cloud_volume_snapshots, resource_id, :tenant_id => tenant_id) if resource_id
-    volume_id = ems_event.full_data.fetch_path(:content, 'payload', 'volume_id')
+    volume_id = event_payload['volume_id']
     add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
   end
 
@@ -61,5 +61,9 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
 
   def add_target(target_collection, association, ref, options = {})
     target_collection.add_target(:association => association, :manager_ref => {:ems_ref => ref}, :options => options)
+  end
+
+  def event_payload
+    @event_payload ||= ManageIQ::Providers::Openstack::EventParserCommon.message_content(ems_event).fetch('payload', {})
   end
 end
