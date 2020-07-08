@@ -36,4 +36,20 @@ module ManageIQ::Providers::Openstack::CloudManager::EventParser
     end
     event[:content]
   end
+
+  def self.extract_content(ems_event)
+    if (oslo_message = ems_event.full_data.fetch_path(:content, 'oslo.message'))
+      begin
+        JSON.parse(oslo_message)
+      rescue JSON::ParserError
+        {}
+      end
+    else
+      ems_event.full_data.fetch(:content, {})
+    end
+  end
+
+  def self.extract_payload(ems_event)
+    extract_content(ems_event).fetch('payload', {})
+  end
 end
