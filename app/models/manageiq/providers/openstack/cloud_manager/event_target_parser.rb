@@ -48,31 +48,31 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
   end
 
   def collect_compute_instance_references!(target_collection, ems_event)
-    instance_id = ems_event.full_data.fetch_path(:content, 'payload', 'instance_id')
+    instance_id = event_payload['instance_id']
     add_target(target_collection, :vms, instance_id) if instance_id
   end
 
   def collect_image_references!(target_collection, ems_event)
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id') || parse_oslo_message(ems_event.full_data).fetch("payload", {}).fetch("id", nil)
+    resource_id = event_payload['resource_id'] || event_payload['id']
     add_target(target_collection, :images, resource_id) if resource_id # Works for Create and Update action
     add_target(target_collection, :miq_templates, resource_id) if resource_id # Existing association name needed for Delete action
   end
 
   def collect_identity_tenant_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id') || ems_event.full_data.fetch_path(:content, 'payload', 'project_id') || ems_event.full_data.fetch_path(:content, 'payload', 'initiator', 'project_id')
+    tenant_id = event_payload['tenant_id'] || event_payload['project_id'] || event_payload.fetch_path('initiator', 'project_id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end
 
   def collect_orchestration_stack_references!(target_collection, ems_event)
-    stack_id = ems_event.full_data.fetch_path(:content, 'payload', 'stack_id') || ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id')
+    stack_id = event_payload['stack_id'] || event_payload['resource_id']
+    tenant_id = event_payload['tenant_id']
     target_collection.add_target(:association => :orchestration_stacks, :manager_ref => {:ems_ref => stack_id}, :options => {:tenant_id => tenant_id})
   end
 
   def collect_host_aggregate_references!(target_collection, ems_event)
     # aggregate events from ceilometer don't have an id field for the aggregate,
     # but they do have a "service" field in the form of "aggregate.<id>"
-    aggregate_id = ems_event.full_data.fetch_path(:content, 'payload', 'service')
+    aggregate_id = event_payload['service']
     aggregate_id&.sub!('aggregate.', '')
     add_target(target_collection, :host_aggregates, aggregate_id) if aggregate_id
   end
@@ -81,9 +81,7 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
     add_target(target_collection, :key_pairs, nil)
   end
 
-  def parse_oslo_message(msg_data)
-    JSON.parse(msg_data.fetch_path(:content, 'oslo.message'))
-  rescue JSON::ParserError
-    {}
+  def event_payload
+    @event_payload ||= ManageIQ::Providers::Openstack::CloudManager::EventParser.extract_payload(ems_event)
   end
 end
