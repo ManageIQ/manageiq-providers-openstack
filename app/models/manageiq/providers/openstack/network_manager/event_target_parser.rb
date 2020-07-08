@@ -40,7 +40,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
                     :firewall_rules
                   end
 
-    resource_id = ems_event.full_data.fetch_path(:content, 'payload', 'resource_id')
+    resource_id = event_payload['resource_id']
     if resource_id
       add_target(target_collection, target_type, resource_id)
     elsif target_type == :security_groups
@@ -58,7 +58,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
   end
 
   def collect_identity_tenant_references!(target_collection, ems_event)
-    tenant_id = ems_event.full_data.fetch_path(:content, 'payload', 'tenant_id') || ems_event.full_data.fetch_path(:content, 'payload', 'project_id') || ems_event.full_data.fetch_path(:content, 'payload', 'initiator', 'project_id')
+    tenant_id = event_payload['tenant_id'] || event_payload['project_id'] || event_payload.fetch_path('initiator', 'project_id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end
 
@@ -68,5 +68,9 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
 
   def add_target(target_collection, association, ref)
     target_collection.add_target(:association => association, :manager_ref => {:ems_ref => ref})
+  end
+
+  def event_payload
+    @event_payload ||= ManageIQ::Providers::Openstack::EventParserCommon.message_content(ems_event).fetch('payload', {})
   end
 end
