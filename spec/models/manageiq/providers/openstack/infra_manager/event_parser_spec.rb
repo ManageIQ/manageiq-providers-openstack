@@ -9,6 +9,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :chain_id     => "r-otxomvqw",
         :timestamp    => "2015-05-12 07:24:39.462895",
         :host_ems_ref => "cdab9a8d-d653-4dee-81f9-173f9a22bd2e",
+        :host_uid_ems => "a9811ecc-f6e9-4dfe-b78b-a7437c9d3c1b",
         :message      => "Success"
       )
 
@@ -27,6 +28,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::EventParser do
         :chain_id     => "r-36dfs67z",
         :timestamp    => "2015-05-12 07:22:19.122336",
         :host_ems_ref => "b94ebb7a-34f2-4146-94c3-5bbc46b4d5ff",
+        :host_uid_ems => "3a0c66d5-d762-4b60-b604-850bc9a13cff",
         :message      => "Failed to provision instance 3a0c66d5-d762-4b60-b604-850bc9a13cff: Failed to deploy. Error:" \
                          " Failed to execute command via SSH: LC_ALL=C /usr/bin/virsh --connect qemu:///system start"\
                          " baremetal_2."
