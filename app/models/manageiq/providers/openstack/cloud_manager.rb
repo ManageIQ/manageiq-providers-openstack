@@ -248,6 +248,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
 
   def vm_remove_snapshot(vm, options = {})
+    require 'OpenStackExtract/MiqOpenStackVm/MiqOpenStackInstance'
+
     snapshot_uid = options[:snMor]
 
     log_prefix = "snapshot=[#{snapshot_uid}]"
