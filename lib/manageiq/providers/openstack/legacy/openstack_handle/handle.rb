@@ -135,7 +135,12 @@ module OpenstackHandle
       @excon_options[:omit_default_port] = @extra_options[:omit_default_port] unless
                                            @extra_options[:omit_default_port].blank?
       @excon_options[:read_timeout]      = @extra_options[:read_timeout] unless @extra_options[:read_timeout].blank?
-      @excon_options[:proxy]             = @extra_options[:proxy] if @extra_options[:proxy].present?
+
+      if @extra_options[:proxy].present?
+        @excon_options[:proxy] = @extra_options[:proxy]
+        @excon_options[:headers] = {'Accept-Encoding' => 'identity,deflate'}
+      end
+
       @excon_options
     end
 
