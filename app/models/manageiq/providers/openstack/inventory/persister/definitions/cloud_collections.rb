@@ -15,7 +15,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
     add_flavors
 
-    add_key_pairs
+    add_auth_key_pairs
 
     unless targeted?
       add_cloud_resource_quotas
@@ -123,11 +123,8 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     end
   end
 
-  def add_key_pairs(extra_properties = {})
-    add_collection(cloud, :key_pairs, extra_properties) do |builder|
-      builder.add_properties(
-        :model_class => ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair,
-      )
+  def add_auth_key_pairs(extra_properties = {})
+    add_collection(cloud, :auth_key_pairs, extra_properties) do |builder|
       # targeted refresh workaround-- always refresh the whole keypair collection
       # regardless of whether this is a TargetCollection or not
       # because OpenStack doesn't give us UUIDs of changed keypairs,

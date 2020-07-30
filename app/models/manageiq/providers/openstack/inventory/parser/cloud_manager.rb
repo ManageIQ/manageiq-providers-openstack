@@ -6,7 +6,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     cloud_services
     flavors
     miq_templates
-    key_pairs
+    auth_key_pairs
     orchestration_stacks
     quotas
     vms
@@ -148,9 +148,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     end
   end
 
-  def key_pairs
+  def auth_key_pairs
     collector.key_pairs.each do |kp|
-      key_pair = persister.key_pairs.find_or_build(kp.name)
+      key_pair = persister.auth_key_pairs.find_or_build(kp.name)
       key_pair.name = kp.name
       key_pair.fingerprint = kp.fingerprint
     end
@@ -316,7 +316,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       server.host = parent_host
       server.ems_cluster = parent_cluster
       server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
-      server.key_pairs = [persister.key_pairs.lazy_find(s.key_name)].compact
+      server.key_pairs = [persister.auth_key_pairs.lazy_find(s.key_name)].compact
       server.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id.to_s)
       server.genealogy_parent = miq_template_lazy unless s.image["id"].nil?
 
