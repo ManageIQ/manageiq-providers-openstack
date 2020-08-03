@@ -111,9 +111,9 @@ module ManageIQ::Providers::Openstack::BaseMetricsCapture
           # the network interface's resource
           if port.ems_ref
             original_resource_id = "#{target.ems_ref}-tap#{port.ems_ref[0..10]}"
-            resources = @perf_ems.list_resources.body
+            resources = @perf_ems.list_resources("instance_network_interface").body
             resources.each do |r|
-              if r["type"].to_s == "instance_network_interface" && r["original_resource_id"].include?(original_resource_id)
+              if r["original_resource_id"].include?(original_resource_id)
                 resource_filter = {"field" => "resource_id", "value" => r["id"]}
                 counters = counters + list_resource_meters(resource_filter, log_header)
               end
