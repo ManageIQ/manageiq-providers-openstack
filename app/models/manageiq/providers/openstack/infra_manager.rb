@@ -25,12 +25,12 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     @params_for_create ||= {
       :fields => [
         {
-          :component    => "select-field",
+          :component    => "select",
           :name         => "api_version",
           :label        => _("API Version"),
           :initialValue => 'v3',
           :isRequired   => true,
-          :validate     => [{:type => "required-validator"}],
+          :validate     => [{:type => "required"}],
           :options      => [
             {
               :label => 'Keystone V2',
@@ -52,7 +52,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
             :is   => 'v3',
           },
           :validate   => [{
-            :type      => "required-validator",
+            :type      => "required",
             :condition => {
               :when => 'api_version',
               :is   => 'v3',
@@ -79,11 +79,11 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
-                        :component  => "select-field",
+                        :component  => "select",
                         :name       => "endpoints.default.security_protocol",
                         :label      => _("Security Protocol"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                         :options    => [
                           {
                             :label => _("SSL without validation"),
@@ -104,7 +104,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :name       => "endpoints.default.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component    => "text-field",
@@ -113,14 +113,14 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :type         => "number",
                         :initialValue => 13_000,
                         :isRequired   => true,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                       },
                       {
                         :component  => "text-field",
                         :name       => "authentications.default.userid",
                         :label      => "Username",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component  => "password-field",
@@ -128,7 +128,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :label      => "Password",
                         :type       => "password",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                     ]
                   },
@@ -182,7 +182,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :name       => "endpoints.amqp.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component    => "text-field",
@@ -191,14 +191,14 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :type         => "number",
                         :isRequired   => true,
                         :initialValue => 5672,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                       },
                       {
                         :component  => "text-field",
                         :name       => "authentications.amqp.userid",
                         :label      => "Username",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component  => "password-field",
@@ -206,7 +206,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                         :label      => "Password",
                         :type       => "password",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                     ],
                   },

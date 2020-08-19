@@ -64,7 +64,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           :label     => _("Provider Region"),
         },
         {
-          :component   => "select-field",
+          :component   => "select",
           :name        => "provider_id",
           :label       => _("Openstack Infra Provider"),
           :isClearable => true,
@@ -76,12 +76,12 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           end
         },
         {
-          :component    => "select-field",
+          :component    => "select",
           :name         => "api_version",
           :label        => _("API Version"),
           :initialValue => 'v3',
           :isRequired   => true,
-          :validate     => [{:type => "required-validator"}],
+          :validate     => [{:type => "required"}],
           :options      => [
             {
               :label => 'Keystone V2',
@@ -103,7 +103,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
             :is   => 'v3',
           },
           :validate   => [{
-            :type      => "required-validator",
+            :type      => "required",
             :condition => {
               :when => 'api_version',
               :is   => 'v3',
@@ -111,7 +111,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           }],
         },
         {
-          :component => 'switch-field',
+          :component => 'switch',
           :name      => 'tenant_mapping_enabled',
           :label     => _('Tenant Mapping Enabled'),
         },
@@ -135,11 +135,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
-                        :component  => "select-field",
+                        :component  => "select",
                         :name       => "endpoints.default.security_protocol",
                         :label      => _("Security Protocol"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                         :options    => [
                           {
                             :label => _("SSL without validation"),
@@ -160,7 +160,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :name       => "endpoints.default.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component    => "text-field",
@@ -169,14 +169,14 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :type         => "number",
                         :initialValue => 13_000,
                         :isRequired   => true,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                       },
                       {
                         :component  => "text-field",
                         :name       => "authentications.default.userid",
                         :label      => "Username",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component  => "password-field",
@@ -184,7 +184,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :label      => "Password",
                         :type       => "password",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                     ]
                   },
@@ -243,7 +243,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :name       => "endpoints.amqp.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component    => "text-field",
@@ -252,14 +252,14 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :type         => "number",
                         :isRequired   => true,
                         :initialValue => 5672,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                       },
                       {
                         :component  => "text-field",
                         :name       => "authentications.amqp.userid",
                         :label      => "Username",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component  => "password-field",
@@ -267,7 +267,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :label      => "Password",
                         :type       => "password",
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                     ],
                   },
@@ -282,11 +282,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     },
                     :fields                 => [
                       {
-                        :component  => "select-field",
+                        :component  => "select",
                         :name       => "endpoints.stf.security_protocol",
                         :label      => _("Security Protocol"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                         :options    => [
                           {
                             :label => _("SSL without validation"),
@@ -307,7 +307,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :name       => "endpoints.stf.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
-                        :validate   => [{:type => "required-validator"}],
+                        :validate   => [{:type => "required"}],
                       },
                       {
                         :component    => "text-field",
@@ -316,7 +316,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                         :type         => "number",
                         :isRequired   => true,
                         :initialValue => 5666,
-                        :validate     => [{:type => "required-validator"}],
+                        :validate     => [{:type => "required"}],
                       },
                     ]
                   }
