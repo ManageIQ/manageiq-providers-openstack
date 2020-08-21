@@ -9,11 +9,11 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::InfraManager < Manag
     add_collection(infra, :host_disks)
     add_collection(infra, :host_hardwares)
     add_collection(infra, :host_operating_systems)
-    add_collection(infra, :orchestration_stacks)
-    add_collection(infra, :orchestration_stacks_resources)
-    add_collection(infra, :orchestration_stacks_outputs)
-    add_collection(infra, :orchestration_stacks_parameters)
-    add_collection(infra, :orchestration_stack_ancestry)
-    add_collection(infra, :orchestration_templates)
+    add_collection(cloud, :orchestration_stacks)
+    add_collection(cloud, :orchestration_stacks_resources)
+    add_collection(cloud, :orchestration_stacks_outputs)
+    add_collection(cloud, :orchestration_stacks_parameters)
+    add_collection(cloud, :orchestration_stack_ancestry)
+    add_collection(cloud, :orchestration_templates)
   end
 end
