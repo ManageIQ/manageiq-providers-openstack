@@ -1,6 +1,7 @@
 module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudCollections
   extend ActiveSupport::Concern
 
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::OrchestrationStackCollections
   include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Utils
 
   # used also in ovirt, so automatic model_classes are not possible in many cases
@@ -25,25 +26,18 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
       add_host_aggregates
     end
 
-    add_orchestration_stacks_with_ems_param
+    add_orchestration_stack_collections
 
     %i(hardwares
        operating_systems
        disks
-       networks
-       orchestration_stacks_resources
-       orchestration_stacks_outputs
-       orchestration_stacks_parameters).each do |name|
+       networks).each do |name|
 
       add_collection(cloud, name)
     end
 
-    add_orchestration_templates
-
     # Custom processing of Ancestry
     add_collection(cloud, :vm_and_miq_template_ancestry)
-
-    add_orchestration_stack_ancestry
 
     add_snapshots
 
@@ -117,12 +111,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     end
   end
 
-  def add_orchestration_templates
-    add_collection(cloud, :orchestration_templates) do |builder|
-      builder.add_properties(:model_class => ::OrchestrationTemplate)
-    end
-  end
-
   def add_auth_key_pairs(extra_properties = {})
     add_collection(cloud, :auth_key_pairs, extra_properties) do |builder|
       # targeted refresh workaround-- always refresh the whole keypair collection
@@ -133,12 +121,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
         builder.add_properties(:targeted => false)
       end
       builder.add_default_values(:resource => manager)
-    end
-  end
-
-  def add_orchestration_stack_ancestry
-    add_collection(cloud, :orchestration_stack_ancestry) do |builder|
-      builder.remove_dependency_attributes(:orchestration_stacks_resources) unless targeted?
     end
   end
 
@@ -180,15 +162,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
           )
         end
       )
-    end
-  end
-
-  protected
-
-  # Shortcut for better code readability
-  def add_orchestration_stacks_with_ems_param
-    add_orchestration_stacks do |builder|
-      builder.add_default_values(:ems_id => manager.id)
     end
   end
 end

@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::Inventory::Persister::InfraManager < ManageIQ::Providers::Openstack::Inventory::Persister
+  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::OrchestrationStackCollections
+
   def initialize_inventory_collections
     add_collection(infra, :miq_templates) { |b| b.add_properties(:model_class => manager.class::Template) }
     add_collection(infra, :hardwares)
@@ -9,11 +11,6 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::InfraManager < Manag
     add_collection(infra, :host_disks)
     add_collection(infra, :host_hardwares)
     add_collection(infra, :host_operating_systems)
-    add_collection(infra, :orchestration_stacks)
-    add_collection(infra, :orchestration_stacks_resources)
-    add_collection(infra, :orchestration_stacks_outputs)
-    add_collection(infra, :orchestration_stacks_parameters)
-    add_collection(infra, :orchestration_stack_ancestry)
-    add_collection(infra, :orchestration_templates)
+    add_orchestration_stack_collections
   end
 end
