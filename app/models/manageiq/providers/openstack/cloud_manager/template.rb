@@ -4,14 +4,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
 
   include_concern 'ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared'
 
-  supports :provisioning do
-    if ext_management_system
-      unsupported_reason_add(:provisioning, ext_management_system.unsupported_reason(:provisioning)) unless ext_management_system.supports_provisioning?
-    else
-      unsupported_reason_add(:provisioning, _('not connected to ems'))
-    end
-  end
-
   has_and_belongs_to_many :cloud_tenants,
                           :foreign_key             => "vm_id",
                           :join_table              => "cloud_tenants_vms",
