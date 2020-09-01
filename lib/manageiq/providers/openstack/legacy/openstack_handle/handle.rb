@@ -25,8 +25,8 @@ module OpenstackHandle
     }
 
     def self.try_connection(security_protocol, ssl_options = {})
-      if security_protocol.blank? || security_protocol == 'ssl'
-        # For backwards compatibility take blank security_protocol as SSL
+      # For backwards compatibility take blank security_protocol as SSL
+      if security_protocol.blank? || security_protocol == 'ssl' || security_protocol == 'ssl-no-validation'
         yield "https", {:ssl_verify_peer => false}
       elsif security_protocol == 'ssl-with-validation'
         excon_ssl_options = {:ssl_verify_peer => true}.merge(ssl_options)
