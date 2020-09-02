@@ -11,6 +11,7 @@ module OpenstackHandle
       super(dobj)
       @os_handle = os_handle
       @name      = name
+      @proxy     = openstack_proxy.to_s if openstack_proxy
     end
   end
 end
