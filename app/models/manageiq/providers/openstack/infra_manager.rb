@@ -26,6 +26,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
       :fields => [
         {
           :component    => "select",
+          :id           => "api_version",
           :name         => "api_version",
           :label        => _("API Version"),
           :initialValue => 'v3',
@@ -44,6 +45,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
         },
         {
           :component  => 'text-field',
+          :id         => 'uid_ems',
           :name       => 'uid_ems',
           :label      => _('Domain ID'),
           :isRequired => true,
@@ -61,6 +63,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
         },
         {
           :component => 'sub-form',
+          :id        => 'endpoints-subform',
           :name      => 'endpoints-subform',
           :title     => _('Endpoints'),
           :fields    => [
@@ -69,17 +72,20 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
             :fields    => [
               {
                 :component => 'tab-item',
+                :id        => 'default-tab',
                 :name      => 'default-tab',
                 :title     => _('Default'),
                 :fields    => [
                   {
                     :component              => 'validate-provider-credentials',
+                    :id                     => 'authentications.default.valid',
                     :name                   => 'authentications.default.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
                         :component  => "select",
+                        :id         => "endpoints.default.security_protocol",
                         :name       => "endpoints.default.security_protocol",
                         :label      => _("Security Protocol"),
                         :isRequired => true,
@@ -101,6 +107,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component  => "text-field",
+                        :id         => "endpoints.default.hostname",
                         :name       => "endpoints.default.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
@@ -108,6 +115,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component    => "text-field",
+                        :id           => "endpoints.default.port",
                         :name         => "endpoints.default.port",
                         :label        => _("API Port"),
                         :type         => "number",
@@ -117,6 +125,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component  => "text-field",
+                        :id         => "authentications.default.userid",
                         :name       => "authentications.default.userid",
                         :label      => "Username",
                         :isRequired => true,
@@ -124,6 +133,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component  => "password-field",
+                        :id         => "authentications.default.password",
                         :name       => "authentications.default.password",
                         :label      => "Password",
                         :type       => "password",
@@ -136,11 +146,13 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
               },
               {
                 :component => 'tab-item',
+                :id        => 'events-tab',
                 :name      => 'events-tab',
                 :title     => _('Events'),
                 :fields    => [
                   {
                     :component    => 'protocol-selector',
+                    :id           => 'event_stream_selection',
                     :name         => 'event_stream_selection',
                     :skipSubmit   => true,
                     :initialValue => 'ceilometer',
@@ -160,6 +172,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                   {
                     :component    => 'text-field',
                     :type         => 'hidden',
+                    :id           => 'endpoints.ceilometer',
                     :name         => 'endpoints.ceilometer',
                     :initialValue => {},
                     :condition    => {
@@ -169,6 +182,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                   },
                   {
                     :component              => 'validate-provider-credentials',
+                    :id                     => 'endpoints.amqp.valid',
                     :name                   => 'endpoints.amqp.valid',
                     :skipSubmit             => true,
                     :validationDependencies => %w[type event_stream_selection],
@@ -179,6 +193,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                     :fields                 => [
                       {
                         :component  => "text-field",
+                        :id         => "endpoints.amqp.hostname",
                         :name       => "endpoints.amqp.hostname",
                         :label      => _("Hostname (or IPv4 or IPv6 address)"),
                         :isRequired => true,
@@ -186,6 +201,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component    => "text-field",
+                        :id           => "endpoints.amqp.port",
                         :name         => "endpoints.amqp.port",
                         :label        => _("API Port"),
                         :type         => "number",
@@ -195,6 +211,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component  => "text-field",
+                        :id         => "authentications.amqp.userid",
                         :name       => "authentications.amqp.userid",
                         :label      => "Username",
                         :isRequired => true,
@@ -202,6 +219,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                       },
                       {
                         :component  => "password-field",
+                        :id         => "authentications.amqp.password",
                         :name       => "authentications.amqp.password",
                         :label      => "Password",
                         :type       => "password",
@@ -214,15 +232,18 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
               },
               {
                 :component => 'tab-item',
+                :id        => 'ssh_keypair-tab',
                 :name      => 'ssh_keypair-tab',
                 :title     => _('RSA key pair'),
                 :fields    => [
                   :component => 'provider-credentials',
+                  :id        => 'endpoints.ssh_keypair.valid',
                   :name      => 'endpoints.ssh_keypair.valid',
                   :fields    => [
                     {
                       :component    => 'text-field',
                       :type         => 'hidden',
+                      :id           => 'endpoints.ssh_keypair',
                       :name         => 'endpoints.ssh_keypair',
                       :initialValue => {},
                       :condition    => {
@@ -232,11 +253,13 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                     },
                     {
                       :component => "text-field",
+                      :id        => "authentications.ssh_keypair.userid",
                       :name      => "authentications.ssh_keypair.userid",
                       :label     => _("Username"),
                     },
                     {
                       :component      => "password-field",
+                      :id             => "authentications.ssh_keypair.auth_key",
                       :name           => "authentications.ssh_keypair.auth_key",
                       :componentClass => 'textarea',
                       :rows           => 10,
