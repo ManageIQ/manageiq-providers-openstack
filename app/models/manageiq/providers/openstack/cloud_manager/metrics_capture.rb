@@ -1,5 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::Providers::CloudManager::MetricsCapture
-  include ManageIQ::Providers::Openstack::BaseMetricsCapture
+class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::Providers::Openstack::BaseMetricsCapture
   CPU_METERS     = ["cpu_util"]
   MEMORY_METERS  = ["memory.usage"]
   DISK_METERS    = ["disk.read.bytes", "disk.write.bytes"]

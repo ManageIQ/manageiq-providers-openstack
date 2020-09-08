@@ -1,5 +1,4 @@
-class ManageIQ::Providers::Openstack::NetworkManager::MetricsCapture < ManageIQ::Providers::BaseManager::MetricsCapture
-  include ManageIQ::Providers::Openstack::BaseMetricsCapture
+class ManageIQ::Providers::Openstack::NetworkManager::MetricsCapture < ManageIQ::Providers::Openstack::BaseMetricsCapture
   NETWORK_METERS = [].freeze
 
   # The list of meters that provide "cumulative" meters instead of "gauge"

@@ -18,12 +18,6 @@ describe ManageIQ::Providers::Openstack::CloudManager::MetricsCapture do
     @vm = FactoryBot.create(:vm_perf_openstack, :ext_management_system => @ems_openstack)
   end
 
-  context "#perf_capture_object" do
-    it "returns the correct class" do
-      expect(@vm.perf_capture_object.class).to eq(described_class)
-    end
-  end
-
   context "with standard interval data" do
     before :each do
       allow(@metering).to receive(:get_statistics) do |name, _options|
