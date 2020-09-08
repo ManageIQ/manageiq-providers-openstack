@@ -18,6 +18,27 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     expect(described_class.description).to eq('OpenStack')
   end
 
+  describe ".params_for_create" do
+    it "dynamically adjusts to new providers" do
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to be_empty
+
+      provider1 = FactoryBot.create(:provider_openstack, :name => "Provider B")
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        {:label => provider1.name, :value => provider1.id.to_s}
+      ]
+
+      provider2 = FactoryBot.create(:provider_openstack, :name => "provider a")
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        # Note that this also tests that the providers are returned properly sorted
+        {:label => provider2.name, :value => provider2.id.to_s},
+        {:label => provider1.name, :value => provider1.id.to_s}
+      ]
+    end
+  end
+
   it "moves the child managers to the same zone and provider region as the cloud_manager" do
     zone1 = FactoryBot.create(:zone)
     zone2 = FactoryBot.create(:zone)
