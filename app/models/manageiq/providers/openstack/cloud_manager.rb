@@ -55,8 +55,21 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   before_update :ensure_managers_zone_and_provider_region
   after_save :refresh_parent_infra_manager
 
+  private_class_method def self.provider_id_options
+    t = ManageIQ::Providers::Openstack::Provider
+    Rbac
+      .filtered(t.order(t.arel_table[:name].lower))
+      .pluck(:name, :id)
+      .map do |name, id|
+        {
+          :label => name,
+          :value => id.to_s,
+        }
+      end
+  end
+
   def self.params_for_create
-    @params_for_create ||= {
+    {
       :fields => [
         {
           :component => "text-field",
@@ -70,12 +83,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           :name        => "provider_id",
           :label       => _("Openstack Infra Provider"),
           :isClearable => true,
-          :options     => ManageIQ::Providers::Openstack::Provider.pluck(:name, :id).map do |name, id|
-            {
-              :label => name,
-              :value => id.to_s,
-            }
-          end
+          :options     => provider_id_options
         },
         {
           :component    => "select",

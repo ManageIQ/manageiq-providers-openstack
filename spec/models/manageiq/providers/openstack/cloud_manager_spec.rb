@@ -18,6 +18,54 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     expect(described_class.description).to eq('OpenStack')
   end
 
+  describe ".params_for_create" do
+    it "dynamically adjusts to new providers" do
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to be_empty
+
+      provider1 = FactoryBot.create(:provider_openstack, :name => "Provider B")
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        {:label => provider1.name, :value => provider1.id.to_s}
+      ]
+
+      provider2 = FactoryBot.create(:provider_openstack, :name => "provider a")
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        # Note that this also tests that the providers are returned properly sorted
+        {:label => provider2.name, :value => provider2.id.to_s},
+        {:label => provider1.name, :value => provider1.id.to_s}
+      ]
+    end
+
+    it "filters out providers based on RBAC" do
+      Tenant.seed
+      EvmSpecHelper.local_miq_server
+
+      tenant1 = FactoryBot.create(:tenant)
+      group1  = FactoryBot.create(:miq_group, :tenant => tenant1)
+      user1   = FactoryBot.create(:user, :miq_groups => [group1])
+      tenant2 = FactoryBot.create(:tenant)
+      group2  = FactoryBot.create(:miq_group, :tenant => tenant2)
+      user2   = FactoryBot.create(:user, :miq_groups => [group2])
+
+      provider1 = FactoryBot.create(:provider_openstack, :tenant => tenant1)
+      provider2 = FactoryBot.create(:provider_openstack, :tenant => tenant2)
+
+      User.current_user = user1
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        {:label => provider1.name, :value => provider1.id.to_s}
+      ]
+
+      User.current_user = user2
+      options = DDF.find_field(described_class.params_for_create, "provider_id")[:options]
+      expect(options).to eq [
+        {:label => provider2.name, :value => provider2.id.to_s}
+      ]
+    end
+  end
+
   it "moves the child managers to the same zone and provider region as the cloud_manager" do
     zone1 = FactoryBot.create(:zone)
     zone2 = FactoryBot.create(:zone)
