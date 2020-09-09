@@ -56,8 +56,9 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   after_save :refresh_parent_infra_manager
 
   private_class_method def self.provider_id_options
-    (t = ManageIQ::Providers::Openstack::Provider)
-      .order(t.arel_table[:name].lower)
+    t = ManageIQ::Providers::Openstack::Provider
+    Rbac
+      .filtered(t.order(t.arel_table[:name].lower))
       .pluck(:name, :id)
       .map do |name, id|
         {
