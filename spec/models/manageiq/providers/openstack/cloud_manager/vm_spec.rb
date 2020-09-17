@@ -49,6 +49,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
   end
 
   describe "vm actions" do
+    before { NotificationType.seed }
+
     context "#live_migrate" do
       it "live migrates with default options" do
         expect(handle).to receive(:live_migrate_server).with(vm.ems_ref, nil, false, false)
@@ -217,6 +219,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       double("vm_openstack_provider_object", :destroy => nil).as_null_object
     end
     let(:vm)  { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
+
+    before { NotificationType.seed }
 
     it "sets the raw_power_state and not state" do
       expect(vm).to receive(:with_provider_object).and_yield(provider_object)

@@ -46,6 +46,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot do
   end
 
   describe 'snapshot actions' do
+    before { NotificationType.seed }
     context ".create_snapshot" do
       let(:the_new_snapshot) { double }
       let(:snapshot_options) { {:cloud_tenant => tenant, :name => "new_name"} }

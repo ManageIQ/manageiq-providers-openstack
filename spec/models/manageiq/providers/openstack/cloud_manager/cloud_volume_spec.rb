@@ -39,6 +39,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
       let(:volume_options) { {:cloud_tenant => tenant, :name => "new_name", :size => 2} }
 
       before do
+        NotificationType.seed
         allow(raw_volumes).to receive(:new).and_return(the_new_volume)
       end
 
@@ -76,6 +77,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
     end
 
     context "#update_volume" do
+      before { NotificationType.seed }
+
       it 'updates the volume' do
         expect(the_raw_volume).to receive(:save)
         expect(the_raw_volume).to receive(:size)
@@ -100,6 +103,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
     end
 
     context "#delete_volume" do
+      before { NotificationType.seed }
+
       it "validates the volume delete operation when status is in-use" do
         expect(cloud_volume).to receive(:status).and_return("in-use")
         validation = cloud_volume.validate_delete_volume
@@ -154,6 +159,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
       end
 
       before do
+        NotificationType.seed
         fog_backups
       end
 
