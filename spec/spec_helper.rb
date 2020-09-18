@@ -12,13 +12,3 @@ VCR.configure do |config|
   config.ignore_hosts 'codeclimate.com' if ENV['CI']
   config.cassette_library_dir = File.join(ManageIQ::Providers::Openstack::Engine.root, 'spec/vcr_cassettes')
 end
-
-RSpec.configure do |config|
-  config.before(:suite) do
-    NotificationType.seed
-  end
-
-  config.after(:suite) do
-    NotificationType.delete_all
-  end
-end

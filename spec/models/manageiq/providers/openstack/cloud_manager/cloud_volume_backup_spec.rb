@@ -32,6 +32,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
 
   context 'raw_backup_restore' do
     it 'restores backup' do
+      NotificationType.seed
+
       expect(raw_cloud_volume_backup).to receive(:restore)
       cloud_volume_backup.raw_restore(cloud_volume)
     end
@@ -57,6 +59,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
 
   context 'raw_delete_backup' do
     it 'deletes backup' do
+      NotificationType.seed
+
       expect(raw_cloud_volume_backup).to receive(:destroy)
       cloud_volume_backup.raw_delete
     end
