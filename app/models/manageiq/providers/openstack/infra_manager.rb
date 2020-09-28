@@ -81,6 +81,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                     :id                     => 'authentications.default.valid',
                     :name                   => 'authentications.default.valid',
                     :skipSubmit             => true,
+                    :isRequired             => true,
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
@@ -185,6 +186,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
                     :id                     => 'endpoints.amqp.valid',
                     :name                   => 'endpoints.amqp.valid',
                     :skipSubmit             => true,
+                    :isRequired             => true,
                     :validationDependencies => %w[type event_stream_selection],
                     :condition              => {
                       :when => 'event_stream_selection',

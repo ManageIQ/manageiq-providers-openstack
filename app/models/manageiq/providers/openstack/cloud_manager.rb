@@ -148,6 +148,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :id                     => 'authentications.default.valid',
                     :name                   => 'authentications.default.valid',
                     :skipSubmit             => true,
+                    :isRequired             => true,
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
@@ -257,6 +258,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :id                     => 'endpoints.amqp.valid',
                     :name                   => 'endpoints.amqp.valid',
                     :skipSubmit             => true,
+                    :isRequired             => true,
                     :validationDependencies => %w[type event_stream_selection],
                     :condition              => {
                       :when => 'event_stream_selection',
@@ -305,6 +307,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :id                     => 'endpoints.stf.valid',
                     :name                   => 'endpoints.stf.valid',
                     :skipSubmit             => true,
+                    :isRequired             => true,
                     :validationDependencies => %w[type event_stream_selection],
                     :condition              => {
                       :when => 'event_stream_selection',
