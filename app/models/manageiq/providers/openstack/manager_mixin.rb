@@ -98,7 +98,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       authentication = args.dig("authentications", endpoint_name)
 
       userid, password = authentication&.values_at('userid', 'password')
-      password = MiqPassword.try_decrypt(password)
+      password = ManageIQ::Password.try_decrypt(password)
       password ||= find(args["id"]).authentication_password(endpoint_name) if args["id"]
 
       params = %w[hostname port security_protocol].reduce(
