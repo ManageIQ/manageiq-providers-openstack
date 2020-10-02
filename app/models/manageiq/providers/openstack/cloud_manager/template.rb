@@ -115,4 +115,8 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   def delete_image
     raw_delete_image
   end
+
+  def self.display_name(number = 1)
+    n_('Image (OpenStack)', 'Images (OpenStack)', number)
+  end
 end

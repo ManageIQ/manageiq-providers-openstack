@@ -9,4 +9,8 @@ class ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate < ManageIQ::P
   def volume_template?
     true
   end
+
+  def self.display_name(number = 1)
+    n_('Volume Template (Openstack)', 'Volume Templates (Openstack)', number)
+  end
 end
