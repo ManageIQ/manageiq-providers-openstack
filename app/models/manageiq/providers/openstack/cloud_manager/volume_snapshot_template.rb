@@ -9,4 +9,8 @@ class ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate < Man
   def volume_snapshot_template?
     true
   end
+
+  def self.display_name(number = 1)
+    n_('Volume Snapshot Template (Openstack)', 'Volume Snapshot Templates (Openstack)', number)
+  end
 end
