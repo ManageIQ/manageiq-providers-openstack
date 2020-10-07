@@ -171,16 +171,14 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
   def nova_connection_options
     connection_options = {:service => "Compute"}
     connection_options[:tenant_name] = cloud_tenant.name if cloud_tenant
-    proxy = openstack_proxy
-    connection_options[:proxy] = proxy.to_s if proxy
+    connection_options[:proxy] = openstack_proxy
     connection_options
   end
 
   def self.cinder_connection_options(cloud_tenant = nil)
     connection_options = {:service => "Volume"}
     connection_options[:tenant_name] = cloud_tenant.name if cloud_tenant
-    proxy = openstack_proxy
-    connection_options[:proxy] = proxy.to_s if proxy
+    connection_options[:proxy] = openstack_proxy
     connection_options
   end
 

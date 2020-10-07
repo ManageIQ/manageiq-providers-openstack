@@ -1,8 +1,9 @@
 module ManageIQ::Providers::Openstack::HelperMethods
   extend ActiveSupport::Concern
 
+  # Return the openstack proxy, if any, as a string. Otherwise return nil.
   def openstack_proxy
-    VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+    ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
   end
 
   def parse_error_message_from_fog_response(exception)
@@ -19,7 +20,7 @@ module ManageIQ::Providers::Openstack::HelperMethods
 
   module ClassMethods
     def openstack_proxy
-      VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+      ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
     end
 
     def parse_error_message_from_fog_response(exception)

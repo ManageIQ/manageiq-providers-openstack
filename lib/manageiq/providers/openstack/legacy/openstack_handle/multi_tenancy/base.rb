@@ -9,8 +9,7 @@ module OpenstackHandle
         @options            = options
         @method             = method
 
-        proxy = VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
-        @options[:proxy] ||= proxy.to_s if proxy
+        @options[:proxy] ||= ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
       end
     end
   end

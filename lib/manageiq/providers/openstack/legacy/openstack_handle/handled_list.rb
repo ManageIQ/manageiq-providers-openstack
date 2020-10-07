@@ -95,7 +95,7 @@ module OpenstackHandle
     end
 
     def openstack_proxy
-      VMDB::Util.http_proxy_uri(:openstack) || VMDB::Util.http_proxy_uri(:default)
+      ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
     end
   end
 end
