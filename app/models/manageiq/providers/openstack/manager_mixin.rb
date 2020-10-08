@@ -115,7 +115,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
 
     def raw_connect(password, params, service = "Compute")
-      params[:proxy] = openstack_proxy
+      params[:proxy] = openstack_proxy if openstack_proxy
 
       case params[:event_stream_selection]
       when "amqp"
@@ -171,7 +171,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       extra_options[:region]            = provider_region if provider_region.present?
       extra_options[:omit_default_port] = ::Settings.ems.ems_openstack.excon.omit_default_port
       extra_options[:read_timeout]      = ::Settings.ems.ems_openstack.excon.read_timeout
-      extra_options[:proxy]             = openstack_proxy
+      extra_options[:proxy]             = openstack_proxy if openstack_proxy
 
       osh = OpenstackHandle::Handle.new(username, password, address, port, api_version, security_protocol, extra_options)
       osh.connection_options = {:instrumentor => $fog_log}

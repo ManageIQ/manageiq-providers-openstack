@@ -11,7 +11,7 @@ module OpenstackHandle
       super(dobj)
       @os_handle = os_handle
       @name      = name
-      @proxy     = openstack_proxy
+      @proxy     = openstack_proxy if openstack_proxy
     end
 
     # Ceilometer-like methods provided by Gnocchi backend to serve code expecting Ceilometer API

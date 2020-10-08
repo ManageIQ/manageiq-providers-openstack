@@ -9,7 +9,8 @@ module OpenstackHandle
         @options            = options
         @method             = method
 
-        @options[:proxy] ||= ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+        proxy = ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+        @options[:proxy] ||= proxy if proxy
       end
     end
   end
