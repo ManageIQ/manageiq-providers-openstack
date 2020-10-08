@@ -1,6 +1,11 @@
 module ManageIQ::Providers::Openstack::HelperMethods
   extend ActiveSupport::Concern
 
+  # Return the openstack proxy, if any, as a string. Otherwise return nil.
+  def openstack_proxy
+    ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+  end
+
   def parse_error_message_from_fog_response(exception)
     self.class.parse_error_message_from_fog_response(exception)
   end
@@ -14,6 +19,10 @@ module ManageIQ::Providers::Openstack::HelperMethods
   end
 
   module ClassMethods
+    def openstack_proxy
+      ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+    end
+
     def parse_error_message_from_fog_response(exception)
       exception_string = exception.to_s
       matched_message = exception_string.match(/message\\\": \\\"(.*)\\\", /)

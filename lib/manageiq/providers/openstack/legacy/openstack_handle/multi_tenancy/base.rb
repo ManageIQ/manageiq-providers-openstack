@@ -8,6 +8,9 @@ module OpenstackHandle
         @collection_type    = collection_type
         @options            = options
         @method             = method
+
+        proxy = ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+        @options[:proxy] ||= proxy if proxy
       end
     end
   end

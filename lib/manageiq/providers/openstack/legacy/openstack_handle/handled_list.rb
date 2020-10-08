@@ -93,5 +93,9 @@ module OpenstackHandle
       # OpenstackHandle::MultiTenancy::None
       OpenstackHandle::MultiTenancy::Loop
     end
+
+    def openstack_proxy
+      ManageIQ::Providers::Openstack::CloudManager.http_proxy_uri&.to_s
+    end
   end
 end
