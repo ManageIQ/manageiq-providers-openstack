@@ -9,6 +9,73 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   supports :backup_restore
   supports :snapshot_create
 
+  def self.params_for_create(ems)
+    {
+      :fields => [
+        {
+          :component  => 'text-field',
+          :name       => 'size',
+          :id         => 'size',
+          :label      => _('Size (in bytes)'),
+          :type       => 'number',
+          :step       => 1.gigabytes,
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
+        },
+        {
+          :component  => 'select',
+          :name       => 'cloud_tenant_id',
+          :id         => 'cloud_tenant_id',
+          :label      => _('Cloud Tenant'),
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
+          :condition  => {
+            :when => 'edit',
+            :is   => false,
+          },
+          :options    => ems.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id,
+            }
+          end,
+        },
+        {
+          :component => 'select',
+          :name      => 'availability_zone_id',
+          :id        => 'availability_zone_id',
+          :label     => _('Availability Zone'),
+          :condition => {
+            :when => 'edit',
+            :is   => false,
+          },
+          :options   => ems.availability_zones.map do |az|
+            {
+              :label => az.name,
+              :value => az.id,
+            }
+          end,
+        },
+        {
+          :component => 'select',
+          :name      => 'volume_type',
+          :id        => 'volume_type',
+          :label     => _('Cloud Volume Type'),
+          :condition => {
+            :when => 'edit',
+            :is   => false,
+          },
+          :options   => ems.cloud_volume_types.map do |cvt|
+            {
+              :label => cvt.name,
+              :value => cvt.type,
+            }
+          end,
+        },
+      ]
+    }
+  end
+
   def self.validate_create_volume(ext_management_system)
     validate_volume(ext_management_system)
   end
