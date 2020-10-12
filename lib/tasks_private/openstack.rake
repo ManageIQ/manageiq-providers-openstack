@@ -1,4 +1,4 @@
-require 'vcr_recorder'
+require_relative 'vcr_recorder'
 
 namespace :vcr do
   namespace :credentials do
