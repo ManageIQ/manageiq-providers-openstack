@@ -9,7 +9,7 @@ Dir[File.join(__dir__, "support/**/*.rb")].each { |f| require f }
 require "manageiq-providers-openstack"
 
 RSpec.configure do |config|
-  config.filter_run_excluding(:qpid_proton) unless Gem.loaded_specs.key?(:qpid_proton)
+  config.filter_run_excluding(:qpid_proton) unless ENV['CI'] || Gem.loaded_specs.key?(:qpid_proton)
 end
 
 VCR.configure do |config|
