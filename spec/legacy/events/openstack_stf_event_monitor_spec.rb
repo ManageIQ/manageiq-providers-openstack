@@ -1,18 +1,12 @@
 require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
 
 describe OpenstackStfEventMonitor, :qpid_proton => true do
+  before(:all) do
+    require 'qpid_proton'
+  end
+
   let(:qdr_options) { {:hostname => "machine.local", :port => '5666', :security_protocol => 'non-ssl'} }
   let(:qdr_ssl_options) { {:hostname => "machine.local", :port => '5672', :security_protocol => 'ssl'} }
-
-  before do
-    unless ENV["CI"]
-      begin
-        require 'qpid_proton'
-      rescue LoadError => err
-        skip "test expects installation of qpid_proton" if err.message.include?("qpid_proton")
-      end
-    end
-  end
 
   context "connecting to STF service" do
     describe "URL prepare" do
