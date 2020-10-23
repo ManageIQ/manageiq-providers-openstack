@@ -36,6 +36,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
   supports :provisioning
+  supports :cloud_tenants
   supports :cloud_tenant_mapping do
     if defined?(self.class.parent::CloudManager::CloudTenant) && !tenant_mapping_enabled?
       unsupported_reason_add(:cloud_tenant_mapping, _("Tenant mapping is disabled on the Provider"))
@@ -457,10 +458,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
       network_manager.tenant_mapping_enabled = tenant_mapping_enabled
       network_manager.save!
     end
-  end
-
-  def supports_cloud_tenants?
-    true
   end
 
   def cinder_service
