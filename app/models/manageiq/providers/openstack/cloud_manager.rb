@@ -49,9 +49,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :swift_service
   supports :create_host_aggregate
 
-  before_create :ensure_managers,
-                :ensure_cinder_managers,
-                :ensure_swift_managers
+  before_create :ensure_managers
 
   before_update :ensure_managers_zone_and_provider_region
   after_save :refresh_parent_infra_manager
@@ -417,19 +415,29 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     end
   end
 
+  def ensure_managers
+    ensure_network_manager
+    ensure_cinder_manager
+    ensure_swift_manager
+    ensure_managers_zone_and_provider_region
+  end
+
   def ensure_managers_zone_and_provider_region
     if network_manager
       network_manager.zone_id         = zone_id
+      network_manager.tenant_id       = tenant_id
       network_manager.provider_region = provider_region
     end
 
     if cinder_manager
       cinder_manager.zone_id         = zone_id
+      cinder_manager.tenant_id       = tenant_id
       cinder_manager.provider_region = provider_region
     end
 
     if swift_manager
       swift_manager.zone_id         = zone_id
+      swift_manager.tenant_id       = tenant_id
       swift_manager.provider_region = provider_region
     end
   end
