@@ -1,9 +1,9 @@
 # ManageIQ::Providers::Openstack
 
-[![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-openstack.svg?branch=master)](https://travis-ci.com/ManageIQ/manageiq-providers-openstack)
+[![Build Status](https://travis-ci.com/ManageIQ/manageiq-providers-openstack.svg?branch=kasparov)](https://travis-ci.com/ManageIQ/manageiq-providers-openstack)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/test_coverage)
-[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/master.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/master)
+[![Security](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/kasparov.svg)](https://hakiri.io/github/ManageIQ/manageiq-providers-openstack/kasparov)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-openstack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
