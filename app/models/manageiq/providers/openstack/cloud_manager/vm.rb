@@ -163,6 +163,28 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
     true
   end
 
+  def params_for_create_snapshot
+    {
+      :fields => [
+        {
+          :component  => 'text-field',
+          :name       => 'name',
+          :id         => 'name',
+          :label      => _('Name'),
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
+        },
+        {
+          :component => 'textarea',
+          :name      => 'description',
+          :id        => 'description',
+          :label     => _('Description'),
+          :validate  => [{:type => 'required'}],
+        },
+      ],
+    }
+  end
+
   def self.display_name(number = 1)
     n_('Instance (OpenStack)', 'Instances (OpenStack)', number)
   end
