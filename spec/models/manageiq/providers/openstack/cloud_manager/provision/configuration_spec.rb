@@ -18,17 +18,17 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::Configuration 
                                    :cloud_network_selection_method => "network",
                                    :cloud_network                  => [@net1.id, @net1.name]
                                  })
-      @port_task = FactoryGirl.create(:miq_provision_openstack,
-                                      :source      => @template,
-                                      :destination => @vm,
-                                      :state       => 'pending',
-                                      :status      => 'Ok',
-                                      :options     => {
-                                        :src_vm_id                      => @template.id,
-                                        :cloud_network_selection_method => "port",
-                                        :network_port                   => [@port.id, @port.name]
-                                      })
       allow(@task).to receive_messages(:miq_request => double("MiqRequest").as_null_object)
+      @port_task = FactoryBot.create(:miq_provision_openstack,
+                                     :source      => @template,
+                                     :destination => @vm,
+                                     :state       => 'pending',
+                                     :status      => 'Ok',
+                                     :options     => {
+                                       :src_vm_id                      => @template.id,
+                                       :cloud_network_selection_method => "port",
+                                       :network_port                   => [@port.id, @port.name]
+                                     })
     end
 
     it "sets nic from dialog" do
