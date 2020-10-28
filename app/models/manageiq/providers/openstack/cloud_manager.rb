@@ -47,6 +47,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
   supports :cinder_service
   supports :swift_service
+  supports :create_flavor
   supports :create_host_aggregate
 
   before_create :ensure_managers
