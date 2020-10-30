@@ -2,7 +2,7 @@ class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::P
   include ManageIQ::Providers::Openstack::BaseMetricsCapture
   CPU_METERS     = ["cpu_util"]
   MEMORY_METERS  = ["memory.usage"]
-  DISK_METERS    = ["disk.read.bytes", "disk.write.bytes"]
+  DISK_METERS    = ["disk.device.read.bytes", "disk.device.write.bytes"]
   NETWORK_METERS = ["network.incoming.bytes", "network.outgoing.bytes"]
 
   # The list of meters that provide "cumulative" meters instead of "gauge"
