@@ -9,6 +9,9 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
 
   include ManageIQ::Providers::Openstack::HelperMethods
 
+  supports :pause do
+    unsupported_reason_add(:pause, _('The VM is not powered on')) unless vm_powered_on?
+  end
   supports :snapshots
   supports :conversion_host
 
