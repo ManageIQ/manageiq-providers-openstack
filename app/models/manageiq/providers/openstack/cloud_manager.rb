@@ -35,6 +35,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
+  supports :auth_key_pair_create
   supports :provisioning
   supports :cloud_tenants
   supports :cloud_tenant_mapping do
