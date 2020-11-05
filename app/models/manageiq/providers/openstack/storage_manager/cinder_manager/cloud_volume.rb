@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::CloudVolume < ::CloudVolume
+class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume < ::CloudVolume
   include ManageIQ::Providers::Openstack::HelperMethods
   include_concern 'Operations'
 
