@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup < ::CloudVolumeBackup
+class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup < ::CloudVolumeBackup
   include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
 

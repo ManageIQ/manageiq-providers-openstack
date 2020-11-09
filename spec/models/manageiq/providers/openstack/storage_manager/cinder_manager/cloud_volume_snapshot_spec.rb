@@ -1,6 +1,6 @@
-describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot do
-  let(:ems) { FactoryBot.create(:ems_openstack) }
-  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot do
+  let(:ems) { FactoryBot.create(:ems_openstack_cinder) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems.parent_manager) }
   let(:cloud_volume) do
     FactoryBot.create(:cloud_volume_openstack,
                        :ext_management_system => ems,
@@ -32,9 +32,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot do
     double.tap do |snapshots|
       handle = double
       allow(handle).to receive(:snapshots).and_return(snapshots)
-      allow(ems).to receive(:connect).with(hash_including(:service     => 'Volume',
-                                                          :tenant_name => tenant.name)).and_return(handle)
+      allow(ems.parent_manager).to receive(:connect)
+                               .with(hash_including(:service => 'Volume', :tenant_name => tenant.name))
+                               .and_return(handle)
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
+      allow(ExtManagementSystem).to receive(:find).with(ems.parent_manager.id).and_return(ems.parent_manager)
       allow(CloudVolume).to receive(:find).with(cloud_volume.id).and_return(cloud_volume)
       # allow(cloud_volume).to receive(:try).with(:ext_management_system).and_return(ems)
       allow(snapshots).to receive(:get).with(cloud_volume_snapshot.ems_ref).and_return(the_raw_snapshot)
@@ -58,7 +60,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot do
         allow(the_new_snapshot).to receive("status").and_return('creating')
         allow(raw_snapshots).to receive(:create).and_return(the_new_snapshot)
 
-        snapshot = ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot
+        snapshot = ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot
                    .create_snapshot(cloud_volume, snapshot_options)
         expect(snapshot.class).to        eq described_class
         expect(snapshot.name).to         eq 'new_name'

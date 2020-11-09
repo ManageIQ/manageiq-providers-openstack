@@ -1,6 +1,6 @@
-describe ManageIQ::Providers::Openstack::CloudManager::CloudVolumeBackup do
-  let(:ems) { FactoryBot.create(:ems_openstack) }
-  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems, :name => 'test') }
+describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup do
+  let(:ems) { FactoryBot.create(:ems_openstack_cinder) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems.parent_manager, :name => 'test') }
   let(:raw_cloud_volume_backup) { double }
 
   let(:cloud_volume) do

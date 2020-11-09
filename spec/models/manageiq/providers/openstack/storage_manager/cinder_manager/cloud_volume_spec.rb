@@ -1,6 +1,6 @@
-describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
-  let(:ems) { FactoryBot.create(:ems_openstack) }
-  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
+describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume do
+  let(:ems) { FactoryBot.create(:ems_openstack_cinder) }
+  let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems.parent_manager) }
   let(:cloud_volume) do
     FactoryBot.create(:cloud_volume_openstack,
                        :ext_management_system => ems,
@@ -23,8 +23,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
       handle = double
       allow(handle).to receive(:volumes).and_return(volumes)
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-      allow(ems).to receive(:connect).with(hash_including(:service     => 'Volume',
-                                                          :tenant_name => tenant.name)).and_return(handle)
+      allow(ExtManagementSystem).to receive(:find).with(ems.parent_manager.id).and_return(ems.parent_manager)
+      allow(ems.parent_manager).to receive(:connect)
+                               .with(hash_including(:service => 'Volume', :tenant_name => tenant.name))
+                               .and_return(handle)
       allow(volumes).to receive(:get).with(cloud_volume.ems_ref).and_return(the_raw_volume)
     end
   end
@@ -152,8 +154,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
           volume_service = double
           allow(volume_service).to receive(:backups).and_return(fog_backups)
           allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-          allow(ems).to receive(:connect).with(hash_including(:service     => 'Volume',
-                                                              :tenant_name => tenant.name)).and_return(volume_service)
+          allow(ExtManagementSystem).to receive(:find).with(ems.parent_manager.id).and_return(ems.parent_manager)
+          allow(ems.parent_manager).to receive(:connect)
+                                   .with(hash_including(:service => 'Volume', :tenant_name => tenant.name))
+                                   .and_return(volume_service)
           allow(fog_backups).to receive(:new).and_return(fog_backup)
         end
       end

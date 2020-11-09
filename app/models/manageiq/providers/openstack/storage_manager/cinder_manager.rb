@@ -1,4 +1,8 @@
 class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::Providers::StorageManager::CinderManager
+  require_nested :CloudVolume
+  require_nested :CloudVolumeBackup
+  require_nested :CloudVolumeSnapshot
+  require_nested :CloudVolumeType
   require_nested :Refresher
   require_nested :EventCatcher
   require_nested :EventParser

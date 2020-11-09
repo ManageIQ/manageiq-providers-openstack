@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot < ::CloudVolumeSnapshot
+class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot < ::CloudVolumeSnapshot
   include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
 
