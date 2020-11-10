@@ -136,11 +136,11 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   end
 
   def create_volume_snapshot(options)
-    ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot.create_snapshot(self, options)
+    ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot.create_snapshot(self, options)
   end
 
   def create_volume_snapshot_queue(userid, options)
-    ManageIQ::Providers::Openstack::CloudManager::CloudVolumeSnapshot
+    ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot
       .create_snapshot_queue(userid, self, options)
   end
 
