@@ -41,7 +41,11 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     return [] if references(:cloud_networks).blank?
     return @cloud_networks if @cloud_networks.any?
     @cloud_networks = references(:cloud_networks).collect do |network_id|
-      safe_get { network_service.networks.get(network_id) }
+      safe_get do
+        network_service.get_network(network_id).body["network"]
+      rescue Fog::OpenStack::Network::NotFound
+        nil
+      end
     end.compact
   end
 
