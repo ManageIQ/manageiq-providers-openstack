@@ -46,6 +46,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :swift_service
   supports :create_flavor
   supports :create_host_aggregate
+  supports :label_mapping
 
   before_create :ensure_managers
 
@@ -720,5 +721,17 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def self.display_name(number = 1)
     n_('Cloud Provider (OpenStack)', 'Cloud Providers (OpenStack)', number)
+  end
+
+  LABEL_MAPPING_ENTITIES = {
+    "VmOpenstack" => "ManageIQ::Providers::Openstack::CloudManager::Vm"
+  }.freeze
+
+  def self.entities_for_label_mapping
+    LABEL_MAPPING_ENTITIES
+  end
+
+  def self.label_mapping_prefix
+    ems_type
   end
 end
