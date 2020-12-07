@@ -7,7 +7,7 @@ module ManageIQ::Providers::Openstack::CinderManagerMixin
     # Should use has_many :storage_managers,
     has_one  :cinder_manager,
              :foreign_key => :parent_ems_id,
-             :class_name  => "ManageIQ::Providers::StorageManager::CinderManager",
+             :class_name  => "ManageIQ::Providers::Openstack::StorageManager::CinderManager",
              :autosave    => true
 
     delegate :cloud_volumes,
