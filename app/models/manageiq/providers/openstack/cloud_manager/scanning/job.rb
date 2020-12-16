@@ -128,7 +128,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
     if vm.ext_management_system
       sn_description = snapshotDescription
       _log.info("Creating snapshot, description: [#{sn_description}]")
-      user_event = start_user_event_message
+      log_start_user_event_message
       options[:snapshot] = :server
       begin
         # TODO: should this be a vm method?
