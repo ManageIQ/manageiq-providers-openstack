@@ -201,8 +201,9 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
       ceilometer = connection_configuration_by_role("ceilometer")
       stf = connection_configuration_by_role("stf")
+      endpoint = stf.try(:endpoint)
 
-      if endpoint = stf.try(:endpoint)
+      if endpoint
         opts[:events_monitor]    = :stf
         opts[:hostname]          = endpoint.hostname
         opts[:port]              = endpoint.port

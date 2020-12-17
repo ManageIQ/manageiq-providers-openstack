@@ -227,6 +227,15 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     super(cinder_connection_options)
   end
 
+  def self.cinder_connection_options(cloud_tenant = nil)
+    connection_options = {:service => "Volume"}
+    connection_options[:tenant_name] = cloud_tenant.name if cloud_tenant
+    connection_options[:proxy] = openstack_proxy if openstack_proxy
+    connection_options
+  end
+
+  private_class_method :cinder_connection_options
+
   private
 
   def connection_options
@@ -242,14 +251,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     connection_options
   end
 
-  def self.cinder_connection_options(cloud_tenant = nil)
-    connection_options = {:service => "Volume"}
-    connection_options[:tenant_name] = cloud_tenant.name if cloud_tenant
-    connection_options[:proxy] = openstack_proxy if openstack_proxy
-    connection_options
-  end
-
   def cinder_connection_options
-    self.class.cinder_connection_options(cloud_tenant)
+    self.class.send(:cinder_connection_options, cloud_tenant)
   end
 end
