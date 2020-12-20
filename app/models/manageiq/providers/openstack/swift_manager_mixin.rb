@@ -8,7 +8,7 @@ module ManageIQ::Providers::Openstack::SwiftManagerMixin
     has_one :swift_manager,
             :dependent,
             :foreign_key => :parent_ems_id,
-            :inverse_of => false,
+            :inverse_of  => false,
             :class_name  => "ManageIQ::Providers::StorageManager::SwiftManager",
             :autosave    => true
 
