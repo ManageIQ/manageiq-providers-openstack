@@ -5,9 +5,9 @@ module ManageIQ::Providers::Openstack::SwiftManagerMixin
   included do
     # TODO: how about many storage managers???
     # Should use has_many :storage_managers,
-    has_one  :swift_manager,
+    has_one  :inverse_of,
+             :swift_manager,
              :dependent,
-             :inverse_of,
              :foreign_key => :parent_ems_id,
              :class_name  => "ManageIQ::Providers::StorageManager::SwiftManager",
              :autosave    => true

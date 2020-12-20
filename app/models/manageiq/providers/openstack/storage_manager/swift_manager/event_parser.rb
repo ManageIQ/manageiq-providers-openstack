@@ -4,8 +4,8 @@ module ManageIQ::Providers::Openstack::StorageManager::SwiftManager::EventParser
     event_type = content["event_type"]
     payload = content["payload"] || {}
 
-    #log_header = "ems_id: [#{ems_id}] " unless ems_id.nil?
-    #_log.debug("#{log_header}event: [#{event_type}]") if $log && $log.debug?
+    # log_header = "ems_id: [#{ems_id}] " unless ems_id.nil?
+    # _log.debug("#{log_header}event: [#{event_type}]") if $log && $log.debug?
 
     # attributes that are common to all notifications
     event_hash = {
