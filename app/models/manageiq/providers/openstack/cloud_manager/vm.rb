@@ -178,11 +178,12 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
           :validate   => [{:type => 'required'}],
         },
         {
-          :component => 'textarea',
-          :name      => 'description',
-          :id        => 'description',
-          :label     => _('Description'),
-          :validate  => [{:type => 'required'}],
+          :component  => 'textarea',
+          :name       => 'description',
+          :id         => 'description',
+          :label      => _('Description'),
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
         },
       ],
     }
