@@ -1,13 +1,13 @@
 # FIXME: these have to be moved over here
-require Rails.root.join('spec/tools/environment_builders/openstack/services/compute/data').to_s
-require Rails.root.join('spec/tools/environment_builders/openstack/services/identity/data/keystone_v2')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/identity/data/keystone_v3')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/image/data')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/network/data/neutron')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/network/data/nova')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/orchestration/data')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/storage/data')
-require Rails.root.join('spec/tools/environment_builders/openstack/services/volume/data')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/compute/data').to_s
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/identity/data/keystone_v2')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/identity/data/keystone_v3')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/image/data')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/network/data/neutron')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/network/data/nova')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/orchestration/data')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/storage/data')
+require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/environment_builders/openstack/services/volume/data')
 
 require_relative 'refresh_spec_environments'
 require_relative 'refresh_spec_helpers'
