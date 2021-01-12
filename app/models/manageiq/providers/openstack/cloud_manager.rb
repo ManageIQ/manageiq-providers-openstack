@@ -27,7 +27,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
            :autosave    => true
   has_many :snapshots, :through => :vms_and_templates
   include ManageIQ::Providers::Openstack::CinderManagerMixin
-  include SwiftManagerMixin
+  include ManageIQ::Providers::Openstack::SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
@@ -455,7 +455,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def ensure_swift_manager
     return false if swift_manager
-    build_swift_manager(:type => 'ManageIQ::Providers::StorageManager::SwiftManager')
+    build_swift_manager(:type => 'ManageIQ::Providers::Openstack::StorageManager::SwiftManager')
     true
   end
 
