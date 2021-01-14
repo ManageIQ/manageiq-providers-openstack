@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::Providers::StorageManager::SwiftManager
+class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::Providers::StorageManager
   require_nested :Refresher
 
   include ManageIQ::Providers::StorageManager::ObjectMixin
@@ -64,10 +64,6 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::P
 
   def allow_targeted_refresh?
     false
-  end
-
-  def self.event_monitor_class
-    ManageIQ::Providers::StorageManager::SwiftManager::EventCatcher
   end
 
   def self.display_name(number = 1)

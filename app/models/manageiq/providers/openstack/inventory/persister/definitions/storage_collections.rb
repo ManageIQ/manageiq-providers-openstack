@@ -8,6 +8,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Storag
        ).each do |name|
 
       add_collection(cloud, name) do |builder|
+        builder.add_properties(:model_class => "ManageIQ::Providers::Openstack::StorageManager::CinderManager::#{name.to_s.classify}".constantize)
         if targeted?
           builder.add_properties(:parent => manager.cinder_manager)
           builder.add_default_values(:ems_id => manager.cinder_manager.try(:id))
@@ -21,6 +22,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::Storag
 
   def add_cloud_volume_backups(extra_properties = {})
     add_collection(cloud, :cloud_volume_backups, extra_properties) do |builder|
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeBackup)
       if targeted?
         builder.add_properties(:parent => manager.cinder_manager)
         builder.add_default_values(:ems_id => manager.cinder_manager.try(:id))
