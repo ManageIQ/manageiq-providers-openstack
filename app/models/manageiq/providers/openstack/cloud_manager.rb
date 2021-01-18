@@ -47,8 +47,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :create_flavor
   supports :create_host_aggregate
   supports :label_mapping
-  supports :cloud_volume
-  supports :cloud_volume_create
 
   before_create :ensure_managers
 
