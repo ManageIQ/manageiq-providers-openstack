@@ -15,7 +15,7 @@ module ManageIQ
         end
 
         def self.init_loggers
-          $fog_log ||= Vmdb::Loggers.create_logger("fog.log")
+          $fog_log ||= Vmdb::Loggers.create_logger("fog.log", Vmdb::Loggers::FogLogger)
         end
 
         def self.apply_logger_config(config)
