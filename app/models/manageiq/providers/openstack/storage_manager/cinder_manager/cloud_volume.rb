@@ -49,7 +49,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
             :when => 'edit',
             :is   => false,
           },
-          :options   => ems.availability_zones.map do |az|
+          :options   => ems.volume_availability_zones.map do |az|
             {
               :label => az.name,
               :value => az.id,
