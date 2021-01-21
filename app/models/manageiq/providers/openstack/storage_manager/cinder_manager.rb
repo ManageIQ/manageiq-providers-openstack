@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::Providers::StorageManager::CinderManager
+class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::Providers::StorageManager
   require_nested :CloudVolume
   require_nested :CloudVolumeBackup
   require_nested :CloudVolumeSnapshot
@@ -7,6 +7,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   require_nested :EventCatcher
   require_nested :EventParser
 
+  include ManageIQ::Providers::StorageManager::BlockMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
 
   supports :cinder_volume_types
@@ -50,6 +51,22 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
 
   def self.hostname_required?
     false
+  end
+
+  def self.ems_type
+    @ems_type ||= "cinder".freeze
+  end
+
+  def self.description
+    @description ||= "Cinder ".freeze
+  end
+
+  def description
+    @description ||= "Cinder ".freeze
+  end
+
+  def name
+    "#{parent_manager.try(:name)} Cinder Manager"
   end
 
   def supports_port?
