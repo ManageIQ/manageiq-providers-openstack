@@ -35,8 +35,7 @@ module OpenstackHandle
       resource_id = options['q'].find { |q| q['field'] == 'resource_id' }['value']
       start = options['q'].find { |q| q['field'] == 'timestamp' && q['op'] == 'gt' }['value']
       stop = options['q'].find { |q| q['field'] == 'timestamp' && q['op'] == 'lt' }['value']
-      granularity = ::Settings.workers.worker_base.queue_worker_base.ems_metrics_collector_worker
-                              .ems_metrics_gnocchi_granularity || 300
+      granularity = ::Settings.workers.ems_metrics_collector_worker.ems_metrics_gnocchi_granularity || 300
       measures = get_resource_metric_measures(resource_id, counter_name, :start => start, :stop => stop, :granularity => granularity).body
       stats = measures.map do |measure|
         {

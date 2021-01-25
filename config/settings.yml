@@ -129,83 +129,89 @@
 :log:
   :level_fog: info
 :workers:
-  :worker_base:
-    :event_catcher:
-      :event_catcher_openstack:
-        :poll: 15.seconds
-        :topics:
-          :nova: notifications.*
-          :cinder: notifications.*
-          :glance: notifications.*
-          :heat: notifications.*
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :amqp_vhost: '/'
-        :ceilometer:
-          :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn|volume|snapshot|backup)'
-        :stf:
-          :topic_name: anycast/ceilometer/event.sample
-          :event_types_regex: '\A(aggregate|compute\.instance|identity\.project|image|keypair|orchestration\.stack|servergroup|snapshot)'
-      :event_catcher_openstack_cinder:
-        :poll: 15.seconds
-        :topics:
-          :nova: notifications.*
-          :cinder: notifications.*
-          :glance: notifications.*
-          :heat: notifications.*
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :amqp_vhost: '/'
-        :ceilometer:
-          :event_types_regex: '\A(volume|snapshot|backup)'
-        :stf:
-          :topic_name: anycast/ceilometer/event.sample
-          :event_types_regex: '\A(volume|snapshot|backup)'
-      :event_catcher_openstack_infra:
-        :poll: 15.seconds
-        :topics:
-          :nova: notifications.*
-          :cinder: notifications.*
-          :glance: notifications.*
-          :heat: notifications.*
-          :ironic: notifications.*
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :amqp_vhost: '/'
-        :ceilometer:
-          :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
-      :event_catcher_openstack_network:
-        :poll: 15.seconds
-        :topics:
-          :neutron: "notifications.*"
-        :duration: 10.seconds
-        :capacity: 50
-        :amqp_port: 5672
-        :amqp_heartbeat: 30
-        :amqp_recovery_attempts: 4
-        :amqp_vhost: '/'
-        :ceilometer:
-          :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|security_group_rule|vpn)'
-        :stf:
-          :topic_name: anycast/ceilometer/event.sample
-          :event_types_regex: '\A(network|port|router|subnet|security_group|security_group_rule)'
-      :event_catcher_openstack_service: "auto"
-    :queue_worker_base:
-      :ems_metrics_collector_worker:
-        :ems_metrics_collector_worker_openstack: {}
-        :ems_metrics_collector_worker_openstack_infra: {}
-        :ems_metrics_openstack_default_service: "auto"
-        :ems_metrics_gnocchi_granularity: 300
-      :ems_refresh_worker:
-        :ems_refresh_worker_openstack: {}
-        :ems_refresh_worker_openstack_infra: {}
-        :ems_refresh_worker_openstack_network: {}
+  :ems_metrics_collector_worker:
+    :ems_metrics_gnocchi_granularity: 300
+    :ems_metrics_openstack_default_service: "auto"
+  :ems_metrics_collector_worker_openstack:
+    :inherits_from: ems_metrics_collector_worker
+  :ems_metrics_collector_worker_openstack_infra:
+    :inherits_from: ems_metrics_collector_worker
+  :ems_refresh_worker_openstack:
+    :inherits_from: ems_refresh_worker
+  :ems_refresh_worker_openstack_infra:
+    :inherits_from: ems_refresh_worker
+  :ems_refresh_worker_openstack_network:
+    :inherits_from: ems_refresh_worker
+  :event_catcher:
+    :event_catcher_openstack_service: "auto"
+  :event_catcher_openstack:
+    :amqp_heartbeat: 30
+    :amqp_port: 5672
+    :amqp_recovery_attempts: 4
+    :amqp_vhost: '/'
+    :capacity: 50
+    :ceilometer:
+      :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn|volume|snapshot|backup)'
+    :duration: 10.seconds
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+    :stf:
+      :event_types_regex: '\A(aggregate|compute\.instance|identity\.project|image|keypair|orchestration\.stack|servergroup|snapshot)'
+      :topic_name: anycast/ceilometer/event.sample
+    :topics:
+      :cinder: notifications.*
+      :glance: notifications.*
+      :heat: notifications.*
+      :nova: notifications.*
+  :event_catcher_openstack_cinder:
+    :amqp_heartbeat: 30
+    :amqp_port: 5672
+    :amqp_recovery_attempts: 4
+    :amqp_vhost: '/'
+    :capacity: 50
+    :ceilometer:
+      :event_types_regex: '\A(volume|snapshot|backup)'
+    :duration: 10.seconds
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+    :stf:
+      :event_types_regex: '\A(volume|snapshot|backup)'
+      :topic_name: anycast/ceilometer/event.sample
+    :topics:
+      :cinder: notifications.*
+      :glance: notifications.*
+      :heat: notifications.*
+      :nova: notifications.*
+  :event_catcher_openstack_infra:
+    :amqp_heartbeat: 30
+    :amqp_port: 5672
+    :amqp_recovery_attempts: 4
+    :amqp_vhost: '/'
+    :capacity: 50
+    :ceilometer:
+      :event_types_regex: '\A(?!firewall|floatingip|gateway|net|port|router|subnet|security_group|vpn)'
+    :duration: 10.seconds
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+    :topics:
+      :cinder: notifications.*
+      :glance: notifications.*
+      :heat: notifications.*
+      :ironic: notifications.*
+      :nova: notifications.*
+  :event_catcher_openstack_network:
+    :amqp_heartbeat: 30
+    :amqp_port: 5672
+    :amqp_recovery_attempts: 4
+    :amqp_vhost: '/'
+    :capacity: 50
+    :ceilometer:
+      :event_types_regex: '\A(firewall|floatingip|gateway|net|port|router|subnet|security_group|security_group_rule|vpn)'
+    :duration: 10.seconds
+    :inherits_from: event_catcher
+    :poll: 15.seconds
+    :stf:
+      :event_types_regex: '\A(network|port|router|subnet|security_group|security_group_rule)'
+      :topic_name: anycast/ceilometer/event.sample
+    :topics:
+      :neutron: "notifications.*"
