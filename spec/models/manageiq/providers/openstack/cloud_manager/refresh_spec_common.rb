@@ -86,8 +86,8 @@ module Openstack
       expect(SystemService.count).to                     eq 0
       expect(GuestDevice.count).to                       eq 0
       expect(CustomAttribute.count).to                   eq 0
-      # Just check that Relationship are not empty
-      expect(Relationship.count).to        be > 0
+      # Check that Relationships are empty
+      expect(Relationship.count).to                      eq 0
       # Just check that queue is not empty
       expect(MiqQueue.count).to            be > 0
     end
@@ -270,8 +270,8 @@ module Openstack
       expect(GuestDevice.count).to                       eq 0
       expect(CustomAttribute.count).to                   eq 0
 
-      # Just check that Relationship are not empty
-      expect(Relationship.count).to        be > 0
+      # Check that Relationships are empty
+      expect(Relationship.count).to                      eq 0
       # Just check that queue is not empty
       expect(MiqQueue.count).to            be > 0
       expect(CloudService.count).to        be > 0
