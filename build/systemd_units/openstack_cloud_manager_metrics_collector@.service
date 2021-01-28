@@ -1,0 +1,11 @@
+[Unit]
+PartOf=openstack_cloud_manager_metrics_collector.target
+[Install]
+WantedBy=openstack_cloud_manager_metrics_collector.target
+[Service]
+WorkingDirectory=/var/www/miq/vmdb
+Environment=BUNDLER_GROUPS=manageiq_default,ui_dependencies
+ExecStart=/bin/bash -lc 'exec ruby lib/workers/bin/run_single_worker.rb ManageIQ::Providers::Openstack::CloudManager::MetricsCollectorWorker --heartbeat --guid=%i'
+Restart=no
+Type=notify
+Slice=miq-openstack_cloud_manager_metrics_collector.slice
