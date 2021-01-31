@@ -1,7 +1,6 @@
 require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
 require 'manageiq/providers/openstack/legacy/events/openstack_event'
 require 'bunny'
-require 'thread'
 
 class OpenstackRabbitEventMonitor < OpenstackEventMonitor
   DEFAULT_AMQP_PORT = 5672
