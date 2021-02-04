@@ -68,7 +68,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :options   => ems.cloud_volume_types.map do |cvt|
             {
               :label => cvt.name,
-              :value => cvt.type,
+              :value => cvt.name,
             }
           end,
         },
