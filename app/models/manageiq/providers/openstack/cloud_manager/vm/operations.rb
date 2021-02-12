@@ -9,7 +9,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations
 
   included do
     supports :terminate do
-      unsupported_reason_add(:terminate, unsupported_reason(:control)) unless supports_control?
+      unsupported_reason_add(:terminate, unsupported_reason(:control)) unless supports?(:control)
     end
   end
 

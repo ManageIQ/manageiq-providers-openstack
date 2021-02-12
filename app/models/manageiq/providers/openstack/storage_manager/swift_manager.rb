@@ -24,7 +24,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::P
   supports :swift_service do
     if parent_manager
       unsupported_reason_add(:swift_service, parent_manager.unsupported_reason(:swift_service)) unless
-        parent_manager.supports_swift_service?
+        parent_manager.supports?(:swift_service)
     else
       unsupported_reason_add(:swift_service, _('no parent_manager to ems'))
     end
