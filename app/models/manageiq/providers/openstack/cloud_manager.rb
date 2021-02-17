@@ -150,13 +150,14 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
                     :fields                 => [
                       {
-                        :component  => "select",
-                        :id         => "endpoints.default.security_protocol",
-                        :name       => "endpoints.default.security_protocol",
-                        :label      => _("Security Protocol"),
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                        :options    => [
+                        :component    => "select",
+                        :id           => "endpoints.default.security_protocol",
+                        :name         => "endpoints.default.security_protocol",
+                        :label        => _("Security Protocol"),
+                        :isRequired   => true,
+                        :initialValue => 'ssl-with-validation',
+                        :validate     => [{:type => "required"}],
+                        :options      => [
                           {
                             :label => _("SSL without validation"),
                             :value => "ssl-no-validation"
@@ -313,13 +314,14 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     },
                     :fields                 => [
                       {
-                        :component  => "select",
-                        :id         => "endpoints.stf.security_protocol",
-                        :name       => "endpoints.stf.security_protocol",
-                        :label      => _("Security Protocol"),
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                        :options    => [
+                        :component    => "select",
+                        :id           => "endpoints.stf.security_protocol",
+                        :name         => "endpoints.stf.security_protocol",
+                        :label        => _("Security Protocol"),
+                        :isRequired   => true,
+                        :initialValue => 'ssl-with-validation',
+                        :validate     => [{:type => "required"}],
+                        :options      => [
                           {
                             :label => _("SSL without validation"),
                             :value => "ssl-no-validation"

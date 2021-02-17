@@ -23,17 +23,18 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :validate   => [{:type => 'required'}],
         },
         {
-          :component  => 'select',
-          :name       => 'cloud_tenant_id',
-          :id         => 'cloud_tenant_id',
-          :label      => _('Cloud Tenant'),
-          :isRequired => true,
-          :validate   => [{:type => 'required'}],
-          :condition  => {
+          :component    => 'select',
+          :name         => 'cloud_tenant_id',
+          :id           => 'cloud_tenant_id',
+          :label        => _('Cloud Tenant'),
+          :isRequired   => true,
+          :includeEmpty => true,
+          :validate     => [{:type => 'required'}],
+          :condition    => {
             :when => 'edit',
             :is   => false,
           },
-          :options    => ems.cloud_tenants.map do |ct|
+          :options      => ems.cloud_tenants.map do |ct|
             {
               :label => ct.name,
               :value => ct.id,
@@ -41,15 +42,16 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           end,
         },
         {
-          :component => 'select',
-          :name      => 'availability_zone_id',
-          :id        => 'availability_zone_id',
-          :label     => _('Availability Zone'),
-          :condition => {
+          :component    => 'select',
+          :name         => 'availability_zone_id',
+          :id           => 'availability_zone_id',
+          :label        => _('Availability Zone'),
+          :includeEmpty => true,
+          :condition    => {
             :when => 'edit',
             :is   => false,
           },
-          :options   => ems.volume_availability_zones.map do |az|
+          :options      => ems.volume_availability_zones.map do |az|
             {
               :label => az.name,
               :value => az.id,
@@ -57,15 +59,16 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           end,
         },
         {
-          :component => 'select',
-          :name      => 'volume_type',
-          :id        => 'volume_type',
-          :label     => _('Cloud Volume Type'),
-          :condition => {
+          :component    => 'select',
+          :name         => 'volume_type',
+          :id           => 'volume_type',
+          :label        => _('Cloud Volume Type'),
+          :includeEmpty => true,
+          :condition    => {
             :when => 'edit',
             :is   => false,
           },
-          :options   => ems.cloud_volume_types.map do |cvt|
+          :options      => ems.cloud_volume_types.map do |cvt|
             {
               :label => cvt.name,
               :value => cvt.name,
