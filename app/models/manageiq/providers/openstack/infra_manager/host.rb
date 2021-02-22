@@ -349,13 +349,9 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     ironic_set_power_state_queue(userid, "power off")
   end
 
-  def validate_destroy
-    if archived?
-      {:available => true, :message => nil}
-    elsif hardware.provision_state == "active"
-      {:available => false, :message => "Cannot remove #{name} because it is in #{hardware.provision_state} state."}
-    else
-      {:available => true, :message => nil}
+  supports :destroy do
+    if !archived? && hardware.provision_state == "active"
+      unsupported_reason_add(:destroy, "Cannot remove #{name} because it is in #{hardware.provision_state} state.")
     end
   end
 
