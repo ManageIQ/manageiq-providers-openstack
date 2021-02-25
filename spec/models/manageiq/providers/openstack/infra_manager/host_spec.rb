@@ -96,7 +96,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
       end
 
       it "supports refresh_network_interfaces" do
-        expect(host.supports_refresh_network_interfaces?).to be_truthy
+        expect(host.supports?(:refresh_network_interfaces)).to be_truthy
       end
     end
 

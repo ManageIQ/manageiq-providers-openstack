@@ -3,13 +3,13 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Relocation
 
   included do
     supports :live_migrate do
-      unsupported_reason_add(:live_migrate, unsupported_reason(:control)) unless supports_control?
+      unsupported_reason_add(:live_migrate, unsupported_reason(:control)) unless supports?(:control)
     end
 
     supports_not :migrate, :reason => _("Migrate operation is not supported.")
 
     supports :evacuate do
-      unsupported_reason_add(:evacuate, unsupported_reason(:control)) unless supports_control?
+      unsupported_reason_add(:evacuate, unsupported_reason(:control)) unless supports?(:control)
     end
   end
 

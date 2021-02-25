@@ -42,11 +42,17 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                                                       "on the CloudManager"))
     end
   end
-  supports :cinder_service
-  supports :swift_service
   supports :create_flavor
   supports :create_host_aggregate
   supports :label_mapping
+
+  supports :cinder_service do
+    unsupported_reason_add(:cinder_service, "Cinder service unavailable") unless openstack_handle.detect_volume_service.name == :cinder
+  end
+
+  supports :swift_service do
+    unsupported_reason_add(:swift_service, "Swift service unavailable") unless openstack_handle.detect_volume_service.name == :swift
+  end
 
   before_create :ensure_managers
 
@@ -538,14 +544,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def supports_provider_id?
     true
-  end
-
-  def supports_cinder_service?
-    openstack_handle.detect_volume_service.name == :cinder
-  end
-
-  def supports_swift_service?
-    openstack_handle.detect_storage_service.name == :swift
   end
 
   def supports_authentication?(authtype)

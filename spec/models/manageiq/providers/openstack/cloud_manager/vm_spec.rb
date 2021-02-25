@@ -64,8 +64,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
         expect(vm.power_state).to eq 'migrating'
       end
 
-      it "checks live migration is_available?" do
-        expect(vm.supports_live_migrate?).to eq true
+      it "checks live migration is supported" do
+        expect(vm.supports?(:live_migrate)).to eq true
       end
     end
 
@@ -89,7 +89,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       end
 
       it "returns true for querying vm if the evacuate operation is supported" do
-        expect(vm.supports_evacuate?).to eq true
+        expect(vm.supports?(:evacuate)).to eq true
       end
     end
 
@@ -101,14 +101,14 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
         vm.associate_floating_ip('10.10.10.10')
       end
 
-      it "checks associate_floating_ip is_available? when floating ips are available" do
+      it "checks associate_floating_ip is supported when floating ips are available" do
         expect(vm.cloud_tenant).to receive(:floating_ips).and_return([1]) # fake a floating ip being available
-        expect(vm.supports_associate_floating_ip?).to eq true
+        expect(vm.supports?(:associate_floating_ip)).to eq true
       end
 
-      it "checks associate_floating_ip is_available? when floating ips are not available" do
+      it "checks associate_floating_ip is supported when floating ips are not available" do
         expect(vm.cloud_tenant).to receive(:floating_ips).and_return([])
-        expect(vm.supports_associate_floating_ip?).to eq false
+        expect(vm.supports?(:associate_floating_ip)).to eq false
       end
     end
 
@@ -120,48 +120,48 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
         vm.disassociate_floating_ip('10.10.10.10')
       end
 
-      it "checks disassociate_floating_ip is_available? when floating ips are associated with the instance" do
+      it "checks disassociate_floating_ip is supported when floating ips are associated with the instance" do
         expect(vm).to receive(:floating_ips).and_return([1]) # fake a floating ip being associated
-        expect(vm.supports_disassociate_floating_ip?).to eq true
+        expect(vm.supports?(:disassociate_floating_ip)).to eq true
       end
 
-      it "checks disassociate_floating_ip is_available? when no floating ips are associated with the instance" do
+      it "checks disassociate_floating_ip is supported when no floating ips are associated with the instance" do
         expect(vm).to receive(:floating_ips).and_return([])
-        expect(vm.supports_disassociate_floating_ip?).to eq false
+        expect(vm.supports?(:disassociate_floating_ip)).to eq false
       end
     end
 
     context "snapshot actions" do
       it "supports snapshot_create" do
-        expect(vm.supports_snapshot_create?).to eq true
+        expect(vm.supports?(:snapshot_create)).to eq true
       end
 
       it "does not support snapshot_create on terminated VM" do
-        expect(terminated_vm.supports_snapshot_create?).to be_falsy
+        expect(terminated_vm.supports?(:snapshot_create)).to be_falsy
       end
 
-      it "checks remove_snapshot is_available? when snapshots are associated with the instance" do
+      it "checks remove_snapshot is supported when snapshots are associated with the instance" do
         expect(vm).to receive(:snapshots).and_return([1]) # fake a floating ip being associated
-        expect(vm.supports_remove_snapshot?).to eq true
+        expect(vm.supports?(:remove_snapshot)).to eq true
       end
 
-      it "checks remove_snapshot is_available? when no snapshots are associated with the instance" do
+      it "checks remove_snapshot is supported when no snapshots are associated with the instance" do
         expect(vm).to receive(:snapshots).and_return([])
-        expect(vm.supports_remove_snapshot?).to eq false
+        expect(vm.supports?(:remove_snapshot)).to eq false
       end
 
       it "does not support remove_snapshot_by_description" do
-        expect(vm.supports_remove_snapshot_by_description?).to eq false
+        expect(vm.supports?(:remove_snapshot_by_description)).to eq false
       end
 
       it "does not support revert_to_snapshot" do
-        expect(vm.supports_revert_to_snapshot?).to eq false
+        expect(vm.supports?(:revert_to_snapshot)).to eq false
       end
     end
 
     context "v2v actions" do
       it "supports conversion_host" do
-        expect(vm.supports_conversion_host?).to eq true
+        expect(vm.supports?(:conversion_host)).to eq true
       end
     end
   end
@@ -239,7 +239,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     it "initiate resize process" do
       service = double
       allow(ems).to receive(:connect).and_return(service)
-      expect(vm.supports_resize?).to be_truthy
+      expect(vm.supports?(:resize)).to be_truthy
       expect(vm.validate_resize_confirm).to be false
       expect(service).to receive(:resize_server).with(vm.ems_ref, flavor.ems_ref)
       expect(MiqQueue).to receive(:put)
@@ -250,7 +250,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       vm.raw_power_state = 'VERIFY_RESIZE'
       service = double
       allow(ems).to receive(:connect).and_return(service)
-      expect(vm.supports_resize?).to be_falsey
+      expect(vm.supports?(:resize)).to be_falsey
       expect(vm.validate_resize_confirm).to be true
       expect(service).to receive(:confirm_resize_server).with(vm.ems_ref)
       vm.resize_confirm
@@ -260,7 +260,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       vm.raw_power_state = 'VERIFY_RESIZE'
       service = double
       allow(ems).to receive(:connect).and_return(service)
-      expect(vm.supports_resize?).to be_falsey
+      expect(vm.supports?(:resize)).to be_falsey
       expect(vm.validate_resize_revert).to be true
       expect(service).to receive(:revert_resize_server).with(vm.ems_ref)
       vm.resize_revert
@@ -281,10 +281,10 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     end
   end
 
-  describe "#supports_terminate?" do
+  describe "#supports?(:terminate)" do
     context "when connected to a provider" do
       it "returns true" do
-        expect(vm.supports_terminate?).to be_truthy
+        expect(vm.supports?(:terminate)).to be_truthy
       end
     end
 
@@ -292,7 +292,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       let(:archived_vm) { FactoryBot.create(:vm_openstack) }
 
       it "returns false" do
-        expect(archived_vm.supports_terminate?).to be_falsey
+        expect(archived_vm.supports?(:terminate)).to be_falsey
         expect(archived_vm.unsupported_reason(:terminate)).to eq("The VM is not connected to an active Provider")
       end
     end

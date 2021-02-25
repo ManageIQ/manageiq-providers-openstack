@@ -3,17 +3,17 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Snapshot
 
   included do
     supports :snapshot_create do
-      unless supports_control?
+      unless supports?(:control)
         unsupported_reason_add(:snapshot_create, unsupported_reason(:control))
       end
     end
 
     supports :remove_snapshot do
-      if supports_snapshots?
+      if supports?(:snapshots)
         if snapshots.size <= 0
           unsupported_reason_add(:remove_snapshot, _("No snapshots available for this VM"))
         end
-        unless supports_control?
+        unless supports?(:control)
           unsupported_reason_add(:remove_snapshot, unsupported_reason(:control))
         end
       else
@@ -22,7 +22,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Snapshot
     end
 
     supports :remove_all_snapshots do
-      unless supports_remove_snapshot?
+      unless supports?(:remove_snapshot)
         unsupported_reason_add(:remove_all_snapshots, unsupported_reason(:remove_snapshot))
       end
     end
@@ -44,9 +44,11 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Snapshot
   end
 
   def raw_remove_snapshot(snapshot_id)
-    raise MiqException::MiqVmError, unsupported_reason(:remove_snapshot) unless supports_remove_snapshot?
+    raise MiqException::MiqVmError, unsupported_reason(:remove_snapshot) unless supports?(:remove_snapshot)
+
     snapshot = snapshots.find_by(:id => snapshot_id)
     raise _("Requested VM snapshot not found, unable to remove snapshot") unless snapshot
+
     begin
       _log.info("removing snapshot ID: [#{snapshot.id}] uid_ems: [#{snapshot.uid_ems}] ems_ref: [#{snapshot.ems_ref}] name: [#{snapshot.name}] description [#{snapshot.description}]")
 
@@ -62,7 +64,8 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Snapshot
   end
 
   def raw_remove_all_snapshots
-    raise MiqException::MiqVmError, unsupported_reason(:remove_all_snapshots) unless supports_remove_all_snapshots?
+    raise MiqException::MiqVmError, unsupported_reason(:remove_all_snapshots) unless supports?(:remove_all_snapshots)
+
     run_command_via_parent(:vm_remove_all_snapshots)
   end
 end
