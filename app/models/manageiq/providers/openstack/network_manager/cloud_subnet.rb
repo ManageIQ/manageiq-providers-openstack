@@ -24,6 +24,102 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     end
   end
 
+  def self.params_for_create(ems)
+    {
+      :fields => [
+        {
+          :component    => 'select',
+          :name         => 'cloud_tenant_id',
+          :id           => 'cloud_tenant_id',
+          :label        => _('Cloud Tenant Placement'),
+          :validate     => [{:type => 'required'}],
+          :includeEmpty => true,
+          :isRequired   => true,
+          :options      => ems.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id,
+            }
+          end,
+        },
+        {
+          :component    => 'select',
+          :name         => 'cloud_network_id',
+          :id           => 'cloud_network_id',
+          :label        => _('Network'),
+          :isRequired   => true,
+          :includeEmpty => true,
+          :validate     => [{:type => 'required'}],
+          :options      => ems.networks.map do |cvt|
+            {
+              :label => cvt.name,
+              :value => cvt.id,
+            }
+          end
+        },
+        {
+          :component => 'text-field',
+          :id        => 'gateway',
+          :name      => 'gateway',
+          :label     => _('Gateway'),
+        },
+        {
+          :component => 'switch',
+          :id        => 'dhcp_enabled',
+          :name      => 'dhcp_enabled',
+          :label     => _('DHCP'),
+          :onText    => 'Enabled',
+          :offText   => 'Disabled',
+        },
+        {
+          :component    => 'select',
+          :name         => 'extra_attributes.ip_version',
+          :id           => 'extra_attributes.ip_version',
+          :label        => _('IP Version'),
+          :includeEmpty => true,
+          :options      => [
+            {
+              :label => 'ipv4',
+              :value => 4,
+            },
+            {
+              :label => 'ipv6',
+              :value => 6,
+            }
+          ]
+        },
+        {
+          :component         => 'field-array',
+          :id                => 'extra_attributes.allocation_pools',
+          :name              => 'extra_attributes.allocation_pools',
+          :label             => _('Allocation Pools'),
+          :fields            => [{:component => 'text-field'}],
+          :noItemsMessage    => _('None'),
+          :buttonLabels      => {
+            :add    => _('Add'),
+            :remove => _('Remove'),
+          },
+          :AddButtonProps    => {:size => 'small'},
+          :RemoveButtonProps => {:size => 'small'},
+        },
+        {
+          :component         => 'field-array',
+          :id                => 'extra_attributes.host_routes',
+          :name              => 'extra_attributes.host_routes',
+          :label             => _('Host Routes'),
+          :fields            => [{:component => 'text-field'}],
+          :noItemsMessage    => _('None'),
+          :buttonLabels      => {
+            :add    => _('Add'),
+            :remove => _('Remove'),
+          },
+          :AddButtonProps    => {:size => 'small'},
+          :RemoveButtonProps => {:size => 'small'},
+        },
+      ]
+    }
+  end
+
   def self.raw_create_cloud_subnet(ext_management_system, options)
     cloud_tenant = options.delete(:cloud_tenant)
     subnet = nil
