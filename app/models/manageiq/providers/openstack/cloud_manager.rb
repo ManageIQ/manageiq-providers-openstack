@@ -148,7 +148,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :name                   => 'authentications.default.valid',
                     :skipSubmit             => true,
                     :isRequired             => true,
-                    :validationDependencies => %w[name type api_version provider_region keystone_v3_domain_id],
+                    :validationDependencies => %w[name type api_version provider_region uid_ems],
                     :fields                 => [
                       {
                         :component  => "select",

@@ -39,7 +39,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       ems.provider_region        = params[:provider_region]
       ems.api_version            = params[:api_version].strip
       ems.security_protocol      = params[:default_security_protocol].strip
-      ems.keystone_v3_domain_id  = params[:keystone_v3_domain_id]
+      ems.keystone_v3_domain_id  = params[:uid_ems]
 
       user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_port].try(:strip)
 
@@ -108,7 +108,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         obj.merge([endpoint_name, item].join('_') => endpoint.try(:[], item))
       end
 
-      params.merge!(args.slice('name', 'provider_region', 'api_version'))
+      params.merge!(args.slice('name', 'provider_region', 'api_version', 'uid_ems'))
       params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name != 'default'
 
       !!raw_connect(password, params.symbolize_keys)
