@@ -154,7 +154,7 @@ describe ManageIQ::Providers::Openstack::CloudManager do
         :default_security_protocol => 'non-ssl',
         :default_userid            => 'admin',
         :default_hostname          => 'address',
-        :default_api_port          => '5000'
+        :default_port              => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
@@ -175,12 +175,33 @@ describe ManageIQ::Providers::Openstack::CloudManager do
         :default_security_protocol => 'non-ssl',
         :default_userid            => 'admin',
         :default_hostname          => 'address',
-        :default_api_port          => '5000'
+        :default_port              => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
         "dummy",
         "http://address:5000",
+        "Compute",
+        instance_of(Hash)
+      )
+
+      described_class.raw_connect("dummy", params, "Compute")
+    end
+
+    it "works with a non-default port" do
+      params = {
+        :name                      => 'dummy',
+        :provider_region           => '',
+        :api_version               => 'v2.0',
+        :default_security_protocol => 'ssl-with-validation',
+        :default_userid            => 'admin',
+        :default_hostname          => 'address',
+        :default_port              => '13001'
+      }
+      expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
+        "admin",
+        "dummy",
+        "https://address:13001",
         "Compute",
         instance_of(Hash)
       )
