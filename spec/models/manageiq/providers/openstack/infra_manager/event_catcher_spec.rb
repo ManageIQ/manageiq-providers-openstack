@@ -1,7 +1,7 @@
 describe ManageIQ::Providers::Openstack::InfraManager::EventCatcher do
   before do
-    @ems = FactoryBot.create(:ems_openstack_infra)
-    allow(@ems).to receive(:authentication_status_ok?).and_return(true)
+    _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
+    @ems = FactoryBot.create(:ems_openstack_infra, :with_authentication, :zone => zone)
     allow(ManageIQ::Providers::Openstack::InfraManager::EventCatcher).to receive(:all_ems_in_zone).and_return([@ems])
   end
 
