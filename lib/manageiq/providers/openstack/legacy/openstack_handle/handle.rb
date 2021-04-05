@@ -80,7 +80,7 @@ module OpenstackHandle
       else
         Fog.const_get(service).new(opts)
       end
-    rescue Fog::OpenStack::Auth::Catalog::ServiceTypeError
+    rescue Fog::OpenStack::Auth::Catalog::ServiceTypeError, Fog::Service::NotFound
       $fog_log.warn("MIQ(#{self.class.name}##{__method__}) "\
                     "Service #{service} not available for openstack provider #{auth_url}")
       raise MiqException::ServiceNotAvailable
@@ -353,7 +353,7 @@ module OpenstackHandle
     end
 
     def default_tenant_name
-      return @default_tenant_name ||= "admin" if tenant_accessible?("admin")
+      return @default_tenant_name ||= ("admin" if tenant_accessible?("admin"))
       tenant_names.each do |name|
         next if name == "services"
         return @default_tenant_name ||= name if tenant_accessible?(name)
