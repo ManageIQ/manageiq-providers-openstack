@@ -330,7 +330,8 @@ module OpenstackHandle
 
     def detect_service(service, tenant_name = nil)
       connect(:service => service, :tenant_name => tenant_name)
-    rescue MiqException::ServiceNotAvailable
+    rescue => err
+      $fog_log.warn("MIQ(#{self.class.name}.#{__method__}) detect service error: #{err}")
       return nil
     end
 
