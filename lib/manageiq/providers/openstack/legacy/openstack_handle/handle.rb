@@ -353,11 +353,17 @@ module OpenstackHandle
     end
 
     def default_tenant_name
-      return @default_tenant_name ||= ("admin" if tenant_accessible?("admin"))
+      @default_tenant_name ||= detect_default_tenant_name
+    end
+
+    def detect_default_tenant_name
+      return "admin" if tenant_accessible?("admin")
+
       tenant_names.each do |name|
         next if name == "services"
-        return @default_tenant_name ||= name if tenant_accessible?(name)
+        return name if tenant_accessible?(name)
       end
+
       nil
     end
 
