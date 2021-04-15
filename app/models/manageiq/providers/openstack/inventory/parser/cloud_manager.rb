@@ -26,7 +26,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       volume_template.name = vt.name.blank? ? vt.id : vt.name
       volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt.tenant_id) if vt.tenant_id
       volume_template.location = "N/A"
-      volume_template.vendor = "openstack"
     end
   end
 
@@ -38,7 +37,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       volume_template.name = (vt['display_name'] || vt['name']).blank? ? vt["id"] : (vt['display_name'] || vt['name'])
       volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt["os-extended-snapshot-attributes:project_id"])
       volume_template.location = "N/A"
-      volume_template.vendor = "openstack"
     end
   end
 
@@ -187,9 +185,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       image.type = "ManageIQ::Providers::Openstack::CloudManager::Template"
       image.uid_ems = i.id
       image.name = i.name.blank? ? i.id.to_s : i.name
-      image.vendor = "openstack"
       image.raw_power_state = "never"
-      image.template = true
       image.publicly_available = public_image?(i)
       image.cloud_tenants = image_tenants(i)
       image.location = "unknown"
@@ -309,7 +305,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       server = persister.vms.find_or_build(s.id.to_s)
       server.uid_ems = s.id
       server.name = s.name
-      server.vendor = "openstack"
       server.raw_power_state = s.state || "UNKNOWN"
       server.connection_state = "connected"
       server.location = "unknown"

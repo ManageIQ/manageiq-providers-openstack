@@ -51,13 +51,14 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
   def add_vms
     add_collection_with_ems_param(cloud, :vms) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::Vm)
+      builder.add_default_values(:vendor => manager.class.vm_vendor)
     end
   end
 
   def add_miq_templates
     add_collection(cloud, :miq_templates) do |builder|
       builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::BaseTemplate)
-      builder.add_default_values(:ems_id => manager.id)
+      builder.add_default_values(:ems_id => manager.id, :vendor => manager.class.vm_vendor)
 
       # Extra added to automatic attributes
       builder.add_inventory_attributes(%i(cloud_tenant cloud_tenants))
