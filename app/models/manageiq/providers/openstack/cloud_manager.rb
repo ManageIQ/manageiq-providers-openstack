@@ -493,6 +493,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     @description ||= "OpenStack".freeze
   end
 
+  def self.vm_vendor
+    @vm_vendor ||= "openstack".freeze
+  end
+
   def self.default_blacklisted_event_names
     %w(
       identity.authenticate
