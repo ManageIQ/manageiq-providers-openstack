@@ -56,7 +56,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
     # ensure the null az exists
     null_az = persister.availability_zones.find_or_build("null_az")
-    null_az.type = "ManageIQ::Providers::Openstack::CloudManager::AvailabilityZoneNull"
+    null_az.type = persister.manager.class::AvailabilityZoneNull.name
     null_az.ems_ref = "null_az"
     null_az.provider_services_supported = ["compute"]
   end

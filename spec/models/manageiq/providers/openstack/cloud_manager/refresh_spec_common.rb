@@ -405,7 +405,7 @@ module Openstack
       end
 
       CloudTenant.all.each do |tenant|
-        expect(tenant).to be_kind_of(CloudTenant)
+        expect(tenant).to be_kind_of(ManageIQ::Providers::Openstack::CloudManager::CloudTenant)
         expect(tenant.ext_management_system).to eq(@ems)
       end
     end
@@ -422,7 +422,7 @@ module Openstack
       end
 
       CloudTenant.all.each do |tenant|
-        expect(tenant).to be_kind_of(CloudTenant)
+        expect(tenant).to be_kind_of(ManageIQ::Providers::Openstack::CloudManager::CloudTenant)
         expect(tenant.ext_management_system).to eq(@ems)
       end
     end
