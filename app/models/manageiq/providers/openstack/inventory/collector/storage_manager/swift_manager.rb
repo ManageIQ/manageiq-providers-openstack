@@ -6,7 +6,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::StorageManager::Swif
   end
 
   def directories
-    @directories ||= swift_service.handled_list(:directories)
+    @directories ||= swift_service&.handled_list(:directories) || []
   end
 
   def files(directory)
