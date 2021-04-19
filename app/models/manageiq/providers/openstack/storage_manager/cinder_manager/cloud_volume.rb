@@ -4,10 +4,13 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
 
   include SupportsFeatureMixin
 
-  supports :create
   supports :backup_create
   supports :backup_restore
+  supports :create
   supports :snapshot_create
+  supports :update do
+    unsupported_reason_add(:update, _("The Volume is not connected to an active Provider")) unless ext_management_system
+  end
 
   def self.params_for_create(ems)
     {
