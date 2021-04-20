@@ -88,14 +88,13 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
       end
 
       it "validates the volume update operation" do
-        validation = cloud_volume.validate_update_volume
-        expect(validation[:available]).to be true
+        expect(cloud_volume.supports?(:update)).to be_truthy
       end
 
       it "validates the volume update operation when ems is missing" do
         expect(cloud_volume).to receive(:ext_management_system).and_return(nil)
-        validation = cloud_volume.validate_update_volume
-        expect(validation[:available]).to be false
+        expect(cloud_volume.supports?(:update)).to be_falsy
+        expect(cloud_volume.unsupported_reason(:update)).to eq("The Volume is not connected to an active Provider")
       end
 
       it 'catches errors from provider' do
