@@ -20,4 +20,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManageIQ::Providers
 
     initialize_inventory_collections
   end
+
+  def cinder_manager
+    manager.kind_of?(ManageIQ::Providers::Openstack::StorageManager::CinderManager) ? manager : manager.cinder_manager
+  end
 end
