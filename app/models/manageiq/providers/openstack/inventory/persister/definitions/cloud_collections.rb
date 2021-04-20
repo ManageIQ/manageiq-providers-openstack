@@ -50,14 +50,13 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
   # model_class defined due to ovirt dependency
   def add_vms
     add_collection_with_ems_param(cloud, :vms) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::Vm)
       builder.add_default_values(:vendor => manager.class.vm_vendor)
     end
   end
 
   def add_miq_templates
     add_collection(cloud, :miq_templates) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::BaseTemplate)
+      builder.add_properties(:model_class => manager.class::BaseTemplate)
       builder.add_default_values(:ems_id => manager.id, :vendor => manager.class.vm_vendor)
 
       # Extra added to automatic attributes
@@ -67,9 +66,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
   # model_class defined due to ovirt dependency
   def add_availability_zones
-    add_collection_with_ems_param(cloud, :availability_zones) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::AvailabilityZone)
-    end
+    add_collection_with_ems_param(cloud, :availability_zones)
   end
 
   # model_class defined due to ovirt dependency
@@ -81,16 +78,12 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
   # model_class defined due to ovirt dependency
   def add_flavors
-    add_collection_with_ems_param(cloud, :flavors) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::Flavor)
-    end
+    add_collection_with_ems_param(cloud, :flavors)
   end
 
   # model_class defined due to ovirt dependency
   def add_cloud_resource_quotas
-    add_collection_with_ems_param(cloud, :cloud_resource_quotas) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::CloudResourceQuota)
-    end
+    add_collection_with_ems_param(cloud, :cloud_resource_quotas)
   end
 
   def add_cloud_services
@@ -99,9 +92,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
   # model_class defined due to ovirt dependency
   def add_host_aggregates
-    add_collection_with_ems_param(cloud, :host_aggregates) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::HostAggregate)
-    end
+    add_collection_with_ems_param(cloud, :host_aggregates)
   end
 
   def add_orchestration_stacks(extra_properties = {})
