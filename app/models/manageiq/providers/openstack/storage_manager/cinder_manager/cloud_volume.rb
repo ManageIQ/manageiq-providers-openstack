@@ -107,10 +107,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     raise MiqException::MiqVolumeCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def validate_update_volume
-    validate_volume
-  end
-
   def raw_update_volume(options)
     with_notification(:cloud_volume_update,
                       :options => {
