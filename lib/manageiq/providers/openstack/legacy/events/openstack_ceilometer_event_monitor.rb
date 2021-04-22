@@ -93,7 +93,7 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   end
 
   def self.event_service_settings
-    Settings[:workers][:worker_base][:event_catcher][:event_catcher_openstack_service]
+    Settings.workers.event_catcher.event_catcher_openstack_service
   rescue StandardError => err
     $log.warn "#{_log.prefix} Settings key :event_catcher_openstack_service is missing, #{err}."
     nil

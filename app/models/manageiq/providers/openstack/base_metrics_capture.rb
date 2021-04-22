@@ -420,7 +420,7 @@ module ManageIQ::Providers::Openstack::BaseMetricsCapture
   end
 
   def metric_service_from_settings
-    Settings[:workers][:worker_base][:queue_worker_base][:ems_metrics_collector_worker][:ems_metrics_openstack_default_service]
+    Settings.workers.ems_metrics_collector_worker.ems_metrics_openstack_default_service
   rescue StandardError => err
     $log.warn "#{_log.prefix} Settings key ems_metrics_openstack_default_service is missing, #{err}."
     nil
