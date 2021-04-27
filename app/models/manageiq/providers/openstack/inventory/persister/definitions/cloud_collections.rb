@@ -95,14 +95,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     add_collection_with_ems_param(cloud, :host_aggregates)
   end
 
-  def add_orchestration_stacks(extra_properties = {})
-    add_collection(cloud, :orchestration_stacks, extra_properties) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::CloudManager::OrchestrationStack)
-
-      yield builder if block_given?
-    end
-  end
-
   def add_auth_key_pairs(extra_properties = {})
     add_collection(cloud, :auth_key_pairs, extra_properties) do |builder|
       # targeted refresh workaround-- always refresh the whole keypair collection

@@ -702,7 +702,7 @@ module Openstack
     def assert_specific_stacks
       return unless orchestration_supported?
 
-      stacks = OrchestrationStack.all
+      stacks = ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack.all
 
       assert_objects_with_hashes(stacks,
                                  orchestration_data.stacks,
@@ -712,7 +712,7 @@ module Openstack
     end
 
     def assert_targeted_stack
-      stack_target = OrchestrationStack.find_by(:name => "stack1")
+      stack_target = ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack.find_by(:name => "stack1")
       assert_objects_with_hashes([stack_target],
                                  [orchestration_data.stacks[0]],
                                  orchestration_data.stack_translate_table,

@@ -1,4 +1,4 @@
-class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::CloudManager::OrchestrationStack
+class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack
   include ManageIQ::Providers::Openstack::HelperMethods
   require_nested :Status
 
