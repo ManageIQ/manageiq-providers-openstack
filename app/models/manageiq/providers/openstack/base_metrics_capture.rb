@@ -302,7 +302,7 @@ module ManageIQ::Providers::Openstack::BaseMetricsCapture
         i[:openstack_counters].each { |c| last_metrics[c] = metrics_by_counter_name.fetch_path(c, last_period) }
         all_last_metrics_available = process_multi_counter_metrics(i, last_metrics, last_multi_counter_metrics)
 
-        if !all_last_metrics_available
+        unless all_last_metrics_available
           # Resetting multi_counter_aligned_end, which will be initialized to period in next period
           multi_counter_aligned_end = nil
           # All last_multi_counter data are not available, lets move to another period and try to capture them
