@@ -14,10 +14,9 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   def cloud_networks
     collector.cloud_networks.each do |n|
       status = n["status"].to_s.downcase == "active" ? "active" : "inactive"
-      network_type_suffix = n["router:external"] ? "::Public" : "::Private"
 
       network = persister.cloud_networks.find_or_build(n["id"])
-      network.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork" + network_type_suffix
+      network.type = "#{persister.network_manager.class}::CloudNetwork::#{n["router:external"] ? "Public" : "Private"}"
       network.name = n["name"]
       network.shared = n["shared"]
       network.status = status
@@ -40,7 +39,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   def cloud_subnets
     collector.cloud_subnets.each do |s|
       subnet = persister.cloud_subnets.find_or_build(s.id)
-      subnet.type = "ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet"
       subnet.name = s.name
       subnet.cidr = s.cidr
       subnet.network_protocol = "ipv#{s.ip_version}"
@@ -64,7 +62,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   def floating_ips
     collector.floating_ips.each do |f|
       floating_ip = persister.floating_ips.find_or_build(f.id)
-      floating_ip.type = "ManageIQ::Providers::Openstack::NetworkManager::FloatingIp"
       floating_ip.address = f.floating_ip_address
       floating_ip.fixed_ip_address = f.fixed_ip_address
       floating_ip.status = f.attributes["status"]
@@ -80,7 +77,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       mac_address = np.mac_address
 
       network_port = persister.network_ports.find_or_build(np.id)
-      network_port.type = "ManageIQ::Providers::Openstack::NetworkManager::NetworkPort"
       network_port.name = np.name.blank? ? mac_address : np.name
       network_port.status = np.status
       network_port.admin_state_up = np.admin_state_up
@@ -116,7 +112,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
     collector.network_routers.each do |nr|
       network_id = nr.try(:external_gateway_info).try(:fetch_path, "network_id")
       network_router = persister.network_routers.find_or_build(nr.id)
-      network_router.type = "ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter"
       network_router.name = nr.name
       network_router.admin_state_up = nr.admin_state_up
       network_router.status = nr.status
@@ -132,7 +127,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
   def security_groups
     collector.security_groups.each do |s|
       security_group = persister.security_groups.find_or_build(s.id)
-      security_group.type = "ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup"
       security_group.name = s.name
       security_group.description = s.description.try(:truncate, 255)
       security_group.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id)
