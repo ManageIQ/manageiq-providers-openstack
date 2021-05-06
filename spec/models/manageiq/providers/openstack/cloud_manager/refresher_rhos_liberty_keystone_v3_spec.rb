@@ -4,7 +4,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   include Openstack::RefreshSpecCommon
 
   before(:each) do
-    setup_ems('11.22.33.44', 'password_2WpEraURh', 5000, "admin", "v3", "default")
+    hostname, port, userid, password = Rails.application.secrets.openstack.values_at(:hostname, :port, :userid, :password)
+    setup_ems(hostname, password, port, userid, "v3", "default")
     @environment = :liberty_keystone_v3
   end
 
