@@ -45,6 +45,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :create_flavor
   supports :create_host_aggregate
   supports :label_mapping
+  supports :metrics
 
   supports :cinder_service do
     unsupported_reason_add(:cinder_service, "Cinder service unavailable") unless openstack_handle.detect_volume_service.name == :cinder
