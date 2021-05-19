@@ -50,7 +50,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :isRequired   => true,
           :includeEmpty => true,
           :validate     => [{:type => 'required'}],
-          :options      => ems.networks.map do |cvt|
+          :options      => ems.cloud_networks.map do |cvt|
             {
               :label => cvt.name,
               :value => cvt.id,
@@ -76,7 +76,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :name         => 'extra_attributes.ip_version',
           :id           => 'extra_attributes.ip_version',
           :label        => _('IP Version'),
-          :includeEmpty => true,
           :options      => [
             {
               :label => 'ipv4',
@@ -93,7 +92,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :id                => 'extra_attributes.allocation_pools',
           :name              => 'extra_attributes.allocation_pools',
           :label             => _('Allocation Pools'),
-          :fields            => [{:component => 'text-field'}],
+          :fields            => [
+            {:component => 'text-field', :id => 'start', :name => 'start', :label => _('Start')},
+            {:component => 'text-field', :id => 'end', :name => 'end', :label => _('End')}
+          ],
           :noItemsMessage    => _('None'),
           :buttonLabels      => {
             :add    => _('Add'),
@@ -107,7 +109,10 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :id                => 'extra_attributes.host_routes',
           :name              => 'extra_attributes.host_routes',
           :label             => _('Host Routes'),
-          :fields            => [{:component => 'text-field'}],
+          :fields            => [
+            {:component => 'text-field', :id => 'nexthop', :name => 'nexthop', :label => _('Nexthop')},
+            {:component => 'text-field', :id => 'destination', :name => 'destination', :label => _('Destination')}
+          ],
           :noItemsMessage    => _('None'),
           :buttonLabels      => {
             :add    => _('Add'),
@@ -121,7 +126,11 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
   end
 
   def self.raw_create_cloud_subnet(ext_management_system, options)
-    cloud_tenant = options.delete(:cloud_tenant)
+    cloud_network_id = options.delete(:cloud_network_id)
+    cloud_network = CloudNetwork.find_by(:id => cloud_network_id) if cloud_network_id
+    options[:network_id] = cloud_network&.ems_ref
+    cloud_tenant_id = options.delete(:cloud_tenant_id)
+    cloud_tenant = CloudTenant.find_by(:id => cloud_tenant_id) if cloud_tenant_id
     subnet = nil
 
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
