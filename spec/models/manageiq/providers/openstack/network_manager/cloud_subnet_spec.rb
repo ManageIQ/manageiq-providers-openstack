@@ -2,11 +2,13 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
   let(:ems) { FactoryBot.create(:ems_openstack) }
   let(:tenant) { FactoryBot.create(:cloud_tenant_openstack, :ext_management_system => ems) }
   let(:ems_network) { ems.network_manager }
+  let(:network) { FactoryBot.create(:cloud_network_openstack, :ext_management_system => ems_network) }
   let(:cloud_subnet) do
     FactoryBot.create(:cloud_subnet_openstack,
                        :ext_management_system => ems_network,
                        :name                  => 'test',
                        :ems_ref               => 'one_id',
+                       :cloud_network         => network,
                        :cloud_tenant          => tenant)
   end
 
@@ -39,7 +41,7 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
       it 'catches errors from provider' do
         expect(service).to receive_message_chain(:subnets, :new).and_raise(bad_request)
         expect do
-          ems_network.create_cloud_subnet(:cloud_tenant => tenant)
+          ems_network.create_cloud_subnet(:cloud_tenant_id => tenant.id, :cloud_network_id => network.id)
         end.to raise_error(MiqException::MiqCloudSubnetCreateError)
       end
     end
