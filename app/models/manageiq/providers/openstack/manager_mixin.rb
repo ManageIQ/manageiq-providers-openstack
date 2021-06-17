@@ -133,7 +133,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       when Excon::Errors::NotFound
         MiqException::MiqHostError.new("Endpoint not found.")
       when Excon::Errors::Unauthorized
-        MiqException::MiqInvalidCredentialsError.new("Login failed due to a bad username or password.")
+        MiqException::MiqInvalidCredentialsError.new("Login failed.")
       when Excon::Errors::Timeout
         MiqException::MiqUnreachableError.new("Login attempt timed out")
       when Excon::Errors::SocketError
