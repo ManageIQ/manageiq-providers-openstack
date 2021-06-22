@@ -22,17 +22,17 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     target_collection = InventoryRefresh::TargetCollection.new(:manager => ems_event.ext_management_system.parent_manager, :event => ems_event)
 
     if ems_event.event_type.start_with?("volume.")
-      collect_volume_references!(target_collection, ems_event)
+      collect_volume_references!(target_collection)
     elsif ems_event.event_type.start_with?("snapshot.")
-      collect_snapshot_references!(target_collection, ems_event)
+      collect_snapshot_references!(target_collection)
     elsif ems_event.event_type.start_with?("backup.")
-      collect_backup_references!(target_collection, ems_event)
+      collect_backup_references!(target_collection)
     end
 
     target_collection.targets
   end
 
-  def collect_volume_references!(target_collection, ems_event)
+  def collect_volume_references!(target_collection)
     tenant_id = event_payload['project_id']
     resource_id = event_payload['resource_id']
     add_target(target_collection, :cloud_volumes, resource_id, :tenant_id => tenant_id) if resource_id
@@ -40,7 +40,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     add_target(target_collection, :volume_templates, resource_id, :tenant_id => tenant_id) if resource_id
   end
 
-  def collect_snapshot_references!(target_collection, ems_event)
+  def collect_snapshot_references!(target_collection)
     tenant_id = event_payload['project_id']
     resource_id = event_payload['resource_id']
     add_target(target_collection, :cloud_volume_snapshots, resource_id, :tenant_id => tenant_id) if resource_id
@@ -48,7 +48,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTarget
     add_target(target_collection, :cloud_volumes, volume_id, :tenant_id => tenant_id) if volume_id
   end
 
-  def collect_backup_references!(target_collection, _ems_event)
+  def collect_backup_references!(target_collection)
     # backup notifications from panko don't include IDs, so we can't target
     # a single backup. Add a dummy backup target which will allow us to collect
     # all backups as a workaround.

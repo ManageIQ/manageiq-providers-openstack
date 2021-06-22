@@ -22,7 +22,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
     target_collection = InventoryRefresh::TargetCollection.new(:manager => ems_event.ext_management_system.parent_manager, :event => ems_event)
 
     # there's almost always a tenant id regardless of event type
-    collect_identity_tenant_references!(target_collection, ems_event)
+    collect_identity_tenant_references!(target_collection)
 
     target_type = if ems_event.event_type.start_with?("floatingip.")
                     :floating_ips
@@ -57,7 +57,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
     target_collection.targets
   end
 
-  def collect_identity_tenant_references!(target_collection, ems_event)
+  def collect_identity_tenant_references!(target_collection)
     tenant_id = event_payload['tenant_id'] || event_payload['project_id'] || event_payload.fetch_path('initiator', 'project_id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end

@@ -111,14 +111,14 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
     targets.each_with_object({}) { |az, h| h[az.id] = az.name if az.provider_services_supported.include?("compute") }
   end
 
+  def self.provider_model
+    ManageIQ::Providers::Openstack::CloudManager
+  end
+
   private
 
   def dialog_name_from_automate(message = 'get_dialog_name')
     super(message, {'platform' => 'openstack'})
-  end
-
-  def self.provider_model
-    ManageIQ::Providers::Openstack::CloudManager
   end
 
   def filter_cloud_networks(networks)

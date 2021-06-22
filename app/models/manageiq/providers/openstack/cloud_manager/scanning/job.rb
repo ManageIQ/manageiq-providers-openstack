@@ -30,10 +30,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
       options[:use_existing_snapshot] = false
       return unless create_snapshot
       signal(:snapshot_complete)
-    rescue => err
-      _log.log_backtrace(err)
-      signal(:abort, err.message, "error")
-      return
     rescue Timeout::Error
       msg = case options[:snapshot]
             when :smartProxy, :skipped then "Request to log snapshot user event with EMS timed out."
@@ -41,6 +37,9 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
             end
       _log.error(msg)
       signal(:abort, msg, "error")
+    rescue => err
+      _log.log_backtrace(err)
+      signal(:abort, err.message, "error")
     end
   end
 
@@ -62,12 +61,13 @@ class ManageIQ::Providers::Openstack::CloudManager::Scanning::Job < VmScan
         _log.info("Deleting snapshot: reference: [#{mor}]")
         begin
           delete_snapshot(mor)
-        rescue => err
-          _log.error(err.to_s)
-          return
         rescue Timeout::Error
           msg = "Request to delete snapshot timed out"
           _log.error(msg)
+          return
+        rescue => err
+          _log.error(err.to_s)
+          return
         end
 
         unless options[:snapshot] == :smartProxy
