@@ -157,23 +157,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
     raise MiqException::MiqCloudSubnetDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
-  def delete_cloud_subnet_queue(userid)
-    task_opts = {
-      :action => "deleting Cloud Subnet for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'raw_delete_cloud_subnet',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => []
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def raw_update_cloud_subnet(options)
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       service.update_subnet(ems_ref, options)
