@@ -250,10 +250,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                   },
                   {
                     :component    => 'text-field',
-                    :type         => 'hidden',
+                    :hideField    => true,
+                    :label        => 'ceilometer',
                     :id           => 'endpoints.ceilometer',
                     :name         => 'endpoints.ceilometer',
-                    :initialValue => {},
+                    :initialValue => '',
                     :condition    => {
                       :when => 'event_stream_selection',
                       :is   => 'ceilometer',
@@ -377,10 +378,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                   :fields    => [
                     {
                       :component    => 'text-field',
-                      :type         => 'hidden',
+                      :hideField    => true,
+                      :label        => 'ssh_keypair',
                       :id           => 'endpoints.ssh_keypair',
                       :name         => 'endpoints.ssh_keypair',
-                      :initialValue => {},
+                      :initialValue => '',
                       :condition    => {
                         :when       => 'authentications.ssh_keypair.userid',
                         :isNotEmpty => true,
