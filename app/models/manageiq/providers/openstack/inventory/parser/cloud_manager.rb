@@ -109,7 +109,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     flavor = persister.flavors.find_or_build(f.id)
     flavor.name = f.name
     flavor.enabled = !f.disabled
-    flavor.cpus = f.vcpus
+    flavor.cpu_total_cores = f.vcpus
     flavor.memory = f.ram.megabytes
     flavor.publicly_available = f.is_public
     flavor.root_disk_size = f.disk.to_i.gigabytes
