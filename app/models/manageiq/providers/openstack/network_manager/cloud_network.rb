@@ -1,3 +1,7 @@
+require 'uri'
+require 'net/http'
+require 'byebug'
+
 class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetwork
   include ManageIQ::Providers::Openstack::HelperMethods
   include SupportsFeatureMixin
@@ -18,6 +22,226 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
         :table => ui_lookup(:table => "ext_management_systems")
       })
     end
+  end
+
+  def self.params_for_create(ems, ems_id, cloud_network_id)
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :title     => _('Placement'),
+          :id        => 'placement',
+          :name      => 'placement',
+          :fields    => [
+            {
+              :component       => 'select',
+              :id              => 'cloud_tenant',
+              :name            => 'cloud_tenant',
+              :key             => "id-#{ems_id}",
+              :label           => _('Cloud Tenant'),
+              :placeholder     => "<#{_('Choose')}>",
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isDisabled      => cloud_network_id.present?,
+              :options         => ems.cloud_tenants.map do |ct|
+                {
+                  :label => ct.name,
+                  :value => ct.id.to_s,
+                }
+              end,
+              :includeEmpty    => true,
+              :clearOnUnmount  => true,
+            },
+          ]
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('Network Provider Information'),
+          :id        => 'provider-information',
+          :name      => 'provider-information',
+          :condition => {
+            :when       => 'cloud_tenant',
+            :isNotEmpty => true,
+          },
+          :fields    => [
+            {
+              :component   => 'select',
+              :id          => 'provider_network_type',
+              :name        => 'provider_network_type',
+              :label       => _('Provider Network Type'),
+              :placeholder => _('Nothing selected'),
+              :options     => [
+                {:label => _('None')},
+                {:label => _('Local'),  :value => 'local'},
+                {:label => _('Flat'),   :value => 'flat'},
+                {:label => _('GRE'),    :value => 'gre'},
+                {:label => _('GENEVE'), :value => 'geneve'},
+                {:label => _('VLAN'),   :value => 'vlan'},
+                {:label => _('VXLAN'),  :value => 'vxlan'}
+              ],
+              :isDisabled  => cloud_network_id.present?,
+            },
+            {
+              :component => 'sub-form',
+              :id        => 'subform-1',
+              :name      => 'subform-1',
+              :condition => {
+                :when => 'provider_network_type',
+                :is   => 'flat',
+              },
+              :fields    => [
+                {
+                  :component       => 'text-field',
+                  :label           => _('Physical Network'),
+                  :maxLength       => 128,
+                  :id              => 'provider_physical_network',
+                  :name            => 'provider_physical_network',
+                  :isDisabled      => cloud_network_id.present?,
+                  :validateOnMount => true,
+                  :clearOnUnmount  => true,
+                  :validate        => [{
+                    :type    => 'required',
+                    :message => _('Required'),
+                  }],
+                },
+              ],
+            },
+            {
+              :component => 'sub-form',
+              :id        => 'subform-2',
+              :name      => 'subform-2',
+              :condition => {
+                :when => 'provider_network_type',
+                :is   => 'gre',
+              },
+              :fields    => [
+                {
+                  :component       => 'text-field',
+                  :label           => _('Segmentation ID'),
+                  :maxLength       => 128,
+                  :id              => 'provider_segmentation_id',
+                  :name            => 'provider_segmentation_id',
+                  :isDisabled      => cloud_network_id.present?,
+                  :validateOnMount => true,
+                  :clearOnUnmount  => true,
+                  :validate        => [{
+                    :type    => 'required',
+                    :message => _('Required'),
+                  }],
+                }
+              ]
+            },
+            {
+              :component => 'sub-form',
+              :id        => 'subform-3',
+              :name      => 'subform-3',
+              :condition => {
+                :when => 'provider_network_type',
+                :is   => 'vlan',
+              },
+              :fields    => [
+                {
+                  :component       => 'text-field',
+                  :label           => _('Physical Network'),
+                  :maxLength       => 128,
+                  :id              => 'provider_physical_network',
+                  :name            => 'provider_physical_network',
+                  :isDisabled      => cloud_network_id.present?,
+                  :validateOnMount => true,
+                  :clearOnUnmount  => true,
+                  :validate        => [{
+                    :type    => 'required',
+                    :message => _('Required'),
+                  }],
+                },
+                {
+                  :component       => 'text-field',
+                  :label           => _('Segmentation ID'),
+                  :maxLength       => 128,
+                  :id              => 'provider_segmentation_id',
+                  :name            => 'provider_segmentation_id',
+                  :isDisabled      => !!cloud_network_id,
+                  :validateOnMount => true,
+                  :clearOnUnmount  => true,
+                  :validate        => [{
+                    :type    => 'required',
+                    :message => _('Required'),
+                  }],
+                }
+              ]
+            },
+            {
+              :component => 'sub-form',
+              :id        => 'subform-4',
+              :name      => 'subform-4',
+              :condition => {
+                :when => 'provider_network_type',
+                :is   => 'vxlan',
+              },
+              :fields    => [
+                {
+                  :component      => 'text-field',
+                  :label          => _('Segmentation ID'),
+                  :maxLength      => 128,
+                  :id             => 'provider_segmentation_id',
+                  :name           => 'provider_segmentation_id',
+                  :isDisabled     => cloud_network_id.present?,
+                  :clearOnUnmount => true,
+                }
+              ]
+            }
+          ],
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('Network Information'),
+          :id        => 'network-information',
+          :name      => 'network-information',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'name',
+              :name            => 'name',
+              :validateOnMount => true,
+              :label           => _('Network Name'),
+              :validate        => [
+                {
+                  :type    => 'required',
+                  :message => _('Required'),
+                }
+              ]
+            }
+          ]
+        },
+        {
+          :component => 'switch',
+          :id        => 'cloud_network_external_facing',
+          :name      => 'external_facing',
+          :label     => _('External Router'),
+          :onText    => _('Yes'),
+          :offText   => _('No'),
+        },
+        {
+          :component => 'switch',
+          :id        => 'cloud_network_enabled',
+          :name      => 'enabled',
+          :label     => _('Adminstrative State'),
+          :onText    => _('Up'),
+          :offText   => _('Down'),
+        },
+        {
+          :component => 'switch',
+          :id        => 'cloud_network_shared',
+          :name      => 'shared',
+          :label     => _('Shared'),
+          :onText    => _('Yes'),
+          :offText   => _('No'),
+        },
+      ]
+    }
   end
 
   require_nested :Private
