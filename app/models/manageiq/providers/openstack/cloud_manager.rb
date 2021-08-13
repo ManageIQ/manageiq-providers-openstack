@@ -46,6 +46,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :create_host_aggregate
   supports :label_mapping
   supports :metrics
+  supports :storage_manager
 
   supports :cinder_service do
     unsupported_reason_add(:cinder_service, "Cinder service unavailable") unless openstack_handle.detect_volume_service.name == :cinder
@@ -543,6 +544,10 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def supported_auth_types
     %w(default amqp ssh_keypair)
+  end
+
+  def block_storage_manager
+    cinder_manager
   end
 
   def self.catalog_types
