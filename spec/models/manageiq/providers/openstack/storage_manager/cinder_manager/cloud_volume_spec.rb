@@ -108,26 +108,22 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
 
       it "validates the volume delete operation when status is in-use" do
         expect(cloud_volume).to receive(:status).and_return("in-use")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be false
+        expect(cloud_volume.supports?(:delete_volume)).to be false
       end
 
       it "validates the volume delete operation when status is available" do
         expect(cloud_volume).to receive(:status).and_return("available")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be true
+        expect(cloud_volume.supports?(:delete_volume)).to be true
       end
 
       it "validates the volume delete operation when status is error" do
         expect(cloud_volume).to receive(:status).and_return("error")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be true
+        expect(cloud_volume.supports?(:delete_volume)).to be true
       end
 
       it "validates the volume delete operation when ems is missing" do
         expect(cloud_volume).to receive(:ext_management_system).and_return(nil)
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be false
+        expect(cloud_volume.supports?(:delete_volume)).to be false
       end
 
       it 'updates the volume' do

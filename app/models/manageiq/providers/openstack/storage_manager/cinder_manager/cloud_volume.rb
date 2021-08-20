@@ -5,6 +5,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   supports :backup_create
   supports :backup_restore
   supports :create
+  supports :delete_volume do
+    unsupported_reason_add(:delete_volume, _("the volume is not connected to an active Provider")) unless ext_management_system
+    unsupported_reason_add(:delete_volume, _("cannot delete volume that is in use.")) if status == "in-use"
+  end
   supports :snapshot_create
   supports :update do
     unsupported_reason_add(:update, _("The Volume is not connected to an active Provider")) unless ext_management_system
@@ -120,15 +124,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   rescue => e
     _log.error "volume=[#{name}], error: #{e}"
     raise MiqException::MiqVolumeUpdateError, parse_error_message_from_fog_response(e), e.backtrace
-  end
-
-  def validate_delete_volume
-    msg = validate_volume
-    return {:available => msg[:available], :message => msg[:message]} unless msg[:available]
-    if status == "in-use"
-      return validation_failed("Delete Volume", "Can't delete volume that is in use.")
-    end
-    {:available => true, :message => nil}
   end
 
   def raw_delete_volume
