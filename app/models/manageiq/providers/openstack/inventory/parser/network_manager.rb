@@ -79,7 +79,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       network_port = persister.network_ports.find_or_build(np.id)
       network_port.name = np.name.blank? ? mac_address : np.name
       network_port.status = np.status
-      network_port.admin_state_up = np.admin_state_up
+      network_port.admin_state_up = np.admin_state_up if np.admin_state_up.present?
       network_port.mac_address = mac_address
       network_port.device_owner = np.device_owner
       network_port.device_ref = np.device_id
@@ -113,7 +113,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::NetworkManager < Manage
       network_id = nr.try(:external_gateway_info).try(:fetch_path, "network_id")
       network_router = persister.network_routers.find_or_build(nr.id)
       network_router.name = nr.name
-      network_router.admin_state_up = nr.admin_state_up
+      network_router.admin_state_up = nr.admin_state_up if nr.admin_state_up.present?
       network_router.status = nr.status
       network_router.external_gateway_info = nr.external_gateway_info
       network_router.distributed = nr.attributes["distributed"]
