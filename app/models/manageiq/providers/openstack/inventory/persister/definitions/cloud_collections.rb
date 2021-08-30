@@ -56,7 +56,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
   def add_miq_templates
     add_collection(cloud, :miq_templates) do |builder|
-      builder.add_properties(:model_class => manager.class::BaseTemplate)
+      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::BaseTemplate)
       builder.add_default_values(:ems_id => manager.id, :vendor => manager.class.vm_vendor)
 
       # Extra added to automatic attributes
