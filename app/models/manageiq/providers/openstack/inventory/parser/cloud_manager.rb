@@ -22,7 +22,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     collector.volume_templates.each do |vt|
       next if vt.attributes["bootable"].to_s != "true"
       volume_template = persister.miq_templates.find_or_build(vt.id)
-      volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeTemplate"
+      volume_template.type = "#{persister.cloud_manager.class}::VolumeTemplate"
       volume_template.name = vt.name.blank? ? vt.id : vt.name
       volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt.tenant_id) if vt.tenant_id
       volume_template.location = "N/A"
@@ -33,7 +33,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     collector.volume_snapshot_templates.each do |vt|
       # next if vt["attributes"].["bootable"].to_s != "true"
       volume_template = persister.miq_templates.find_or_build(vt["id"])
-      volume_template.type = "ManageIQ::Providers::Openstack::CloudManager::VolumeSnapshotTemplate"
+      volume_template.type = "#{persister.cloud_manager.class}::VolumeSnapshotTemplate"
       volume_template.name = (vt['display_name'] || vt['name']).blank? ? vt["id"] : (vt['display_name'] || vt['name'])
       volume_template.cloud_tenant = persister.cloud_tenants.lazy_find(vt["os-extended-snapshot-attributes:project_id"])
       volume_template.location = "N/A"
@@ -182,7 +182,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     collector.images.each do |i|
       parent_server_uid = parse_image_parent_id(i)
       image = persister.miq_templates.find_or_build(i.id)
-      image.type = "ManageIQ::Providers::Openstack::CloudManager::Template"
+      image.type = "#{persister.cloud_manager.class}::Template"
       image.uid_ems = i.id
       image.name = i.name.blank? ? i.id.to_s : i.name
       image.raw_power_state = "never"
@@ -418,7 +418,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
   def vnfs
     collector.vnfs.each do |v|
       vnf = persister.orchestration_stacks.find_or_build(v.id)
-      vnf.type = "ManageIQ::Providers::Openstack::CloudManager::Vnf"
+      vnf.type = "#{persister.cloud_manager.class}::Vnf"
       vnf.name = v.name
       vnf.description = v.description
       vnf.status = v.status
@@ -434,7 +434,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
   def vnfds
     collector.vnfds.each do |v|
       vnfd = persister.orchestration_templates.find_or_build(v.id)
-      vnfd.type = "ManageIQ::Providers::Openstack::CloudManager::VnfdTemplate"
+      vnfd.type = "#{persister.cloud_manager.class}::VnfdTemplate"
       vnfd.name = v.name.blank? ? v.id : v.name
       vnfd.description = v.description
       vnfd.content = v.vnf_attributes["vnfd"]
