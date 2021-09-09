@@ -2,8 +2,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   include ManageIQ::Providers::Openstack::HelperMethods
   include_concern 'Operations'
 
-  include SupportsFeatureMixin
-
   supports :backup_create
   supports :backup_restore
   supports :create
