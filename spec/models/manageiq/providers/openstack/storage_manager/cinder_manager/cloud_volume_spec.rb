@@ -61,14 +61,8 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
         expect { CloudVolume.create_volume(nil) }.to raise_error(ArgumentError)
       end
 
-      it "validates the volume create operation" do
-        validation = CloudVolume.validate_create_volume(ems)
-        expect(validation[:available]).to be true
-      end
-
-      it "validates the volume create operation when ems is missing" do
-        validation = CloudVolume.validate_create_volume(nil)
-        expect(validation[:available]).to be false
+      it "supports the cloud volume create operation" do
+        expect(ems.supports?(:cloud_volume_create)).to be true
       end
 
       it 'catches errors from provider' do

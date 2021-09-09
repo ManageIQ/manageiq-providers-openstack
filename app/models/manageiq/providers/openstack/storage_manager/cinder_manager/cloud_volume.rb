@@ -84,10 +84,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     }
   end
 
-  def self.validate_create_volume(ext_management_system)
-    validate_volume(ext_management_system)
-  end
-
   def self.raw_create_volume(ext_management_system, options)
     cloud_tenant = options.delete(:cloud_tenant)
     volume = nil
