@@ -5,9 +5,9 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   supports :backup_create
   supports :backup_restore
   supports :create
-  supports :delete_volume do
-    unsupported_reason_add(:delete_volume, _("the volume is not connected to an active Provider")) unless ext_management_system
-    unsupported_reason_add(:delete_volume, _("cannot delete volume that is in use.")) if status == "in-use"
+  supports :delete do
+    unsupported_reason_add(:delete, _("the volume is not connected to an active Provider")) unless ext_management_system
+    unsupported_reason_add(:delete, _("cannot delete volume that is in use.")) if status == "in-use"
   end
   supports :snapshot_create
   supports :update do
