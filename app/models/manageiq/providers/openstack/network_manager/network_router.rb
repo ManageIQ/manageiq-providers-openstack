@@ -30,6 +30,281 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
 
   supports :remove_interface
 
+  def self.params_for_create(ems, cloud_network_id)
+    if cloud_network_id.nil?
+      {
+        :fields => [
+          {
+            :component       => 'select',
+            :id              => 'cloud_tenant_id',
+            :name            => 'cloud_tenant_id',
+            :key             => "id-#{ems.id}",
+            :label           => _('Cloud Tenant Placement'),
+            :placeholder     => "<#{_('Choose')}>",
+            :validateOnMount => true,
+            :validate        => [{
+              :type    => 'required',
+              :message => _('Required'),
+            }],
+            :isRequired      => true,
+            :options         => ems.cloud_tenants.map do |ct|
+              {
+                :label => ct.name,
+                :value => ct.id.to_s,
+              }
+            end,
+            :includeEmpty    => true,
+            :clearOnUnmount  => true,
+          },
+          {
+            :component => 'sub-form',
+            :title     => _('Router Information'),
+            :id        => 'routerInformation',
+            :name      => 'routerInformation',
+            :fields    => [
+              {
+                :component       => 'text-field',
+                :id              => 'router_name',
+                :name            => 'name',
+                :label           => _('Router Name'),
+                :validateOnMount => true,
+                :validate        => [{
+                  :type    => 'required',
+                  :message => _('Required'),
+                }],
+                :isRequired      => true,
+                :clearOnUnmount  => true,
+              },
+              {
+                :component    => 'switch',
+                :id           => 'admin_state_up',
+                :name         => 'admin_state_up',
+                :label        => _('Administrative State'),
+                :onText       => _('Up'),
+                :offText      => _('Down'),
+                :initialValue => true,
+              },
+            ]
+          },
+          {
+            :component => 'sub-form',
+            :title     => _('External Gateway'),
+            :id        => 'externalGateway',
+            :name      => 'externalGateway',
+            :fields    => [
+              {
+                :component => 'switch',
+                :id        => 'enable',
+                :name      => 'enable',
+                :label     => _('Enable'),
+                :onText    => _('Yes'),
+                :offText   => _('No'),
+              },
+              {
+                :component    => 'switch',
+                :id           => 'source_nat',
+                :name         => 'source_nat',
+                :label        => _('Source NAT'),
+                :onText       => _('Yes'),
+                :offText      => _('No'),
+                :condition    => {
+                  :when => 'enable',
+                  :is   => true,
+                },
+                :initialValue => true,
+              },
+              {
+                :component      => 'select',
+                :id             => 'network',
+                :name           => 'network',
+                :key            => "network-#{ems.id}",
+                :label          => _('Network'),
+                :placeholder    => "<#{_('Choose')}>",
+                :includeEmpty   => true,
+                :clearOnUnmount => true,
+                :condition      => {
+                  :when => 'enable',
+                  :is   => true,
+                },
+                :options        => ems.cloud_networks.select { |cn| cn.ems_id == ems.id && cn.external_facing == true }.map do |cn|
+                  {
+                    :label => cn.name,
+                    :value => cn.id,
+                  }
+                end,
+              },
+            ]
+          },
+        ]
+      }
+    else
+      {
+        :fields => [
+          {
+            :component      => 'select',
+            :id             => 'subnet',
+            :name           => 'subnet',
+            :key            => "subnet-#{ems.id}",
+            :label          => _('Fixed IPs Subnet'),
+            :placeholder    => "<#{_('Choose')}>",
+            :includeEmpty   => true,
+            :clearOnUnmount => true,
+            :condition      => {
+              :and => [
+                {
+                  :when => 'enable',
+                  :is   => true,
+                },
+                {
+                  :when       => 'network',
+                  :isNotEmpty => true
+                }
+              ]
+            },
+            :options        => ems.cloud_subnets.select { |cs| cs.cloud_network_id == cloud_network_id.to_i }.map do |cs|
+              {
+                :label => cs.name,
+                :value => cs.id
+              }
+            end,
+          },
+        ]
+      }
+    end
+  end
+
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component       => 'select',
+          :id              => 'cloud_tenant_id',
+          :name            => 'cloud_tenant_id',
+          :key             => "id-#{ext_management_system.id}",
+          :label           => _('Cloud Tenant Placement'),
+          :placeholder     => "<#{_('Choose')}>",
+          :isRequired      => true,
+          :validateOnMount => true,
+          :isDisabled      => !!id,
+          :options         => ext_management_system.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('Router Information'),
+          :id        => 'routerInformation',
+          :name      => 'routerInformation',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'router_name',
+              :name            => 'name',
+              :label           => _('Router Name'),
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isRequired      => true,
+              :clearOnUnmount  => true,
+            },
+            {
+              :component    => 'switch',
+              :id           => 'admin_state_up',
+              :name         => 'admin_state_up',
+              :label        => _('Administrative State'),
+              :onText       => _('Up'),
+              :offText      => _('Down'),
+              :initialValue => true,
+            },
+          ]
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('External Gateway'),
+          :id        => 'externalGateway',
+          :name      => 'externalGateway',
+          :fields    => [
+            {
+              :component => 'switch',
+              :id        => 'enable',
+              :name      => 'enable',
+              :label     => _('Enable'),
+              :onText    => _('Yes'),
+              :offText   => _('No'),
+            },
+            {
+              :component    => 'switch',
+              :id           => 'source_nat',
+              :name         => 'source_nat',
+              :label        => _('Source NAT'),
+              :onText       => _('Yes'),
+              :offText      => _('No'),
+              :condition    => {
+                :when => 'enable',
+                :is   => true,
+              },
+              :initialValue => true,
+            },
+            {
+              :component      => 'select',
+              :id             => 'network',
+              :name           => 'network',
+              :key            => "id-#{ext_management_system.id}",
+              :label          => _('Network'),
+              :placeholder    => "<#{_('Choose')}>",
+              :includeEmpty   => true,
+              :clearOnUnmount => true,
+              :condition      => {
+                :when => 'enable',
+                :is   => true,
+              },
+              :options        => ext_management_system.cloud_networks.select { |cn| cn.ems_id == ext_management_system.id && cn.external_facing == true }.map do |cn|
+                {
+                  :label => cn.name,
+                  :value => cn.id,
+                }
+              end,
+            },
+          ]
+        },
+        {
+          :component      => 'select',
+          :id             => 'subnet',
+          :name           => 'subnet',
+          :label          => _('Fixed IPs Subnet'),
+          :placeholder    => "<#{_('Choose')}>",
+          :includeEmpty   => true,
+          :clearOnUnmount => true,
+          :condition      => {
+            :and => [
+              {
+                :when => 'enable',
+                :is   => true,
+              },
+              {
+                :when       => 'network',
+                :isNotEmpty => true
+              }
+            ]
+          },
+          :options        => ext_management_system.cloud_subnets.select { |cs| cs.cloud_network_id == cloud_network_id.to_i }.map do |cs|
+            {
+              :label => cs.name,
+              :value => cs.ems_ref,
+            }
+          end,
+        },
+      ]
+    }
+  end
+
   def self.raw_create_network_router(ext_management_system, options)
     cloud_tenant = options.delete(:cloud_tenant)
     name = options.delete(:name)
