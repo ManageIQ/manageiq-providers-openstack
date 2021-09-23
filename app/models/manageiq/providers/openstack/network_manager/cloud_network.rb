@@ -236,7 +236,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     }
   end
 
-  def params_for_edit
+  def params_for_update
     {
       :fields => [
         {
