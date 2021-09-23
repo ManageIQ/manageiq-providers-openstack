@@ -58,8 +58,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
         {
           :component => 'sub-form',
           :title     => _('Router Information'),
-          :id        => 'routerInformation',
-          :name      => 'routerInformation',
+          :id        => 'router_information',
+          :name      => 'router_information',
           :fields    => [
             {
               :component       => 'text-field',
@@ -88,8 +88,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
         {
           :component => 'sub-form',
           :title     => _('External Gateway'),
-          :id        => 'externalGateway',
-          :name      => 'externalGateway',
+          :id        => 'external_gateway',
+          :name      => 'external_gateway',
           :fields    => [
             {
               :component => 'switch',
@@ -163,8 +163,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
         {
           :component => 'sub-form',
           :title     => _('Router Information'),
-          :id        => 'routerInformation',
-          :name      => 'routerInformation',
+          :id        => 'router_information',
+          :name      => 'router_information',
           :fields    => [
             {
               :component       => 'text-field',
@@ -193,8 +193,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
         {
           :component => 'sub-form',
           :title     => _('External Gateway'),
-          :id        => 'externalGateway',
-          :name      => 'externalGateway',
+          :id        => 'external_gateway',
+          :name      => 'external_gateway',
           :fields    => [
             {
               :component => 'switch',
