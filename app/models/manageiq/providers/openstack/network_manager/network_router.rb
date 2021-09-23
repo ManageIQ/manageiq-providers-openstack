@@ -1,4 +1,3 @@
-require 'byebug'
 class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkRouter
   include ManageIQ::Providers::Openstack::HelperMethods
   include ProviderObjectMixin
@@ -31,7 +30,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
 
   supports :remove_interface
 
-  def self.params_for_create(ems)
+  def self.params_for_create(ems, cloud_network_id)
     if cloud_network_id.nil?
       {
         :fields => [
