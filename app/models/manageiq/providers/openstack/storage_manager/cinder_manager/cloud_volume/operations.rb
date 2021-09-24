@@ -1,10 +1,15 @@
 module ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume::Operations
-  def validate_attach_volume
-    validate_volume_available
-  end
+  extend ActiveSupport::Concern
 
-  def validate_detach_volume
-    validate_volume_in_use
+  included do
+    supports :attach_volume do
+      unsupported_reason_add(:attach_volume, _("the volume is not connected to an active Provider")) unless ext_management_system
+      unsupported_reason_add(:attach_volume, _("the volume status is '%{status}' but should be 'available'") % {:status => status}) unless status == "available"
+    end
+    supports :detach_volume do
+      unsupported_reason_add(:detach_volume, _("the volume is not connected to an active Provider")) unless ext_management_system
+      unsupported_reason_add(:detach_volume, _("the volume status is '%{status}' but should be 'in-use'") % {:status => status}) unless status == "in-use"
+    end
   end
 
   def raw_attach_volume(server_ems_ref, device = nil)

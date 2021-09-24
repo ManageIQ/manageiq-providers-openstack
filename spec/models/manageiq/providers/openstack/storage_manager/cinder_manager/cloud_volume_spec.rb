@@ -61,14 +61,8 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
         expect { CloudVolume.create_volume(nil) }.to raise_error(ArgumentError)
       end
 
-      it "validates the volume create operation" do
-        validation = CloudVolume.validate_create_volume(ems)
-        expect(validation[:available]).to be true
-      end
-
-      it "validates the volume create operation when ems is missing" do
-        validation = CloudVolume.validate_create_volume(nil)
-        expect(validation[:available]).to be false
+      it "supports the cloud volume create operation" do
+        expect(ems.supports?(:cloud_volume_create)).to be true
       end
 
       it 'catches errors from provider' do
@@ -108,26 +102,22 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
 
       it "validates the volume delete operation when status is in-use" do
         expect(cloud_volume).to receive(:status).and_return("in-use")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be false
+        expect(cloud_volume.supports?(:delete)).to be false
       end
 
       it "validates the volume delete operation when status is available" do
         expect(cloud_volume).to receive(:status).and_return("available")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be true
+        expect(cloud_volume.supports?(:delete)).to be true
       end
 
       it "validates the volume delete operation when status is error" do
         expect(cloud_volume).to receive(:status).and_return("error")
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be true
+        expect(cloud_volume.supports?(:delete)).to be true
       end
 
       it "validates the volume delete operation when ems is missing" do
         expect(cloud_volume).to receive(:ext_management_system).and_return(nil)
-        validation = cloud_volume.validate_delete_volume
-        expect(validation[:available]).to be false
+        expect(cloud_volume.supports?(:delete)).to be false
       end
 
       it 'updates the volume' do
