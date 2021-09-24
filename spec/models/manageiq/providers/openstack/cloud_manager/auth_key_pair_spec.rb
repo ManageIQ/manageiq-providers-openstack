@@ -40,16 +40,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair do
   end
 
   describe 'validations' do
-    it 'fails create with invalid parameters' do
-      expect(subject.class.validate_create_key_pair(nil)).to eq(
-        :available => false,
-        :message   => 'The Keypair is not connected to an active Provider')
-    end
-
-    it 'pass create with valid parameters' do
-      expect(subject.class.validate_create_key_pair(ems)).to eq(
-        :available => true,
-        :message   => nil)
+    it 'ems supports auth_key_pair_create' do
+      expect(ems.supports?(:auth_key_pair_create)).to eq(true)
     end
   end
 end

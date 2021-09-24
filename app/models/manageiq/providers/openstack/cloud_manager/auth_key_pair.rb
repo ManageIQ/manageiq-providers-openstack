@@ -13,16 +13,6 @@ class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Prov
     raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
-  def self.validate_create_key_pair(ext_management_system, _options = {})
-    if ext_management_system
-      {:available => true, :message => nil}
-    else
-      {:available => false,
-       :message   => _("The Keypair is not connected to an active %{table}") %
-         {:table => ui_lookup(:table => "ext_management_system")}}
-    end
-  end
-
   def raw_delete_key_pair
     connection_options = {:service => 'Compute'}
     resource.with_provider_connection(connection_options) do |service|
