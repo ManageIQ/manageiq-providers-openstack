@@ -125,7 +125,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
                 :when => 'enable',
                 :is   => true,
               },
-              :options        => ems.cloud_networks.select { |cn| cn.ems_id == ems.id && cn.external_facing == true }.map do |cn|
+              :options        => ems.public_networks.map do |cn|
                 {
                   :label => cn.name,
                   :value => cn.id,
@@ -230,7 +230,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
                 :when => 'enable',
                 :is   => true,
               },
-              :options        => ext_management_system.cloud_networks.select { |cn| cn.ems_id == ext_management_system.id && cn.external_facing == true }.map do |cn|
+              :options        => ext_management_system.public_networks.map do |cn|
                 {
                   :label => cn.name,
                   :value => cn.id,
