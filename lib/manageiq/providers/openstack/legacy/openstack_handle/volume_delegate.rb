@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class VolumeDelegate < DelegateClass(Fog::Volume::OpenStack)
+  class VolumeDelegate < DelegateClass(Fog::OpenStack::Volume)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

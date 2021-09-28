@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class BaremetalDelegate < DelegateClass(Fog::Baremetal::OpenStack)
+  class BaremetalDelegate < DelegateClass(Fog::OpenStack::Baremetal)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

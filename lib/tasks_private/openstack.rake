@@ -60,7 +60,7 @@ namespace :vcr do
       retry_count.times do
         yield
         sleep(retry_sleep)
-      rescue Fog::Compute::OpenStack::NotFound
+      rescue Fog::OpenStack::Compute::NotFound
         break
       end
     end

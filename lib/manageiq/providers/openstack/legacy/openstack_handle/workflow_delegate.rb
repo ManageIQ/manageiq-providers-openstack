@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class WorkflowDelegate < DelegateClass(Fog::Workflow::OpenStack)
+  class WorkflowDelegate < DelegateClass(Fog::OpenStack::Workflow)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 
