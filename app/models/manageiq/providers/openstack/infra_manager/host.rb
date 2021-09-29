@@ -20,6 +20,8 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   include_concern 'Operations'
 
   supports :refresh_network_interfaces
+  supports :set_node_maintenance
+  supports :unset_node_maintenance
 
   # TODO(lsmola) for some reason UI can't handle joined table cause there is hardcoded somewhere that it selects
   # DISTINCT id, with joined tables, id needs to be prefixed with table name. When this is figured out, replace
@@ -201,14 +203,6 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     hashes = OpenstackConfigurationParser.parse(file.contents)
     hashes = add_unique_names(file, hashes)
     EmsRefresh.save_custom_attributes_inventory(file, hashes, :scan) if hashes
-  end
-
-  def validate_set_node_maintenance
-    {:available => true,   :message => nil}
-  end
-
-  def validate_unset_node_maintenance
-    {:available => true,   :message => nil}
   end
 
   def disconnect_ems(e = nil)
