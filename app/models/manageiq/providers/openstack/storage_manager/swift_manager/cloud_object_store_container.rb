@@ -24,10 +24,12 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
             :when => 'edit',
             :is   => false,
           },
-          :options      => [{
-                              :label => cloud_tenants.name,
-                              :value => cloud_tenants.id,
-                            }]
+          :options      => [
+            {
+              :label => cloud_tenants.name,
+              :value => cloud_tenants.id
+            }
+          ]
         }
       ]
     }
@@ -51,14 +53,14 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
     end
 
     {
-      :ems_ref => "#{project_id}/#{options["name"]}",
-      :key => options["name"],
-      :object_count => 0,
-      :bytes => 0,
-      :ems_id => ext_management_system.id,
-      :cloud_tenant_id => options["cloud_tenant_id"]
+      :ems_ref          => "#{project_id}/#{options["name"]}",
+      :key              => options["name"],
+      :object_count     => 0,
+      :bytes            => 0,
+      :ems_id           => ext_management_system.id,
+      :cloud_tenant_id  => options["cloud_tenant_id"]
     }
-  rescue Exception => e
+  rescue => e
     _log.error("container=[#{options["name"]}], error: #{e}")
     parsed_error = parse_error_message_from_neutron_response(e)
     raise MiqException::MiqCloudObjectStoreContainerCreateError, parsed_error, e.backtrace
@@ -80,12 +82,8 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
   end
 
   def raw_cloud_object_store_container_delete(options)
-    file_name = "manageiq_provider_openstack_log"
-    File.open(Rails.root.join('public', 'upload', file_name), 'a') do |file|
-      file.write("delete cloud object store container options = #{options.to_s}\n")
-    end
+    options
   rescue => e
-    _log.error("network=[#{name}], error: #{e}")
     raise MiqException::MiqNetworkDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 end
