@@ -51,14 +51,13 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
         directory.save
       end
     end
-
     {
-      :ems_ref          => "#{project_id}/#{options["name"]}",
-      :key              => options["name"],
-      :object_count     => 0,
-      :bytes            => 0,
-      :ems_id           => ext_management_system.id,
-      :cloud_tenant_id  => options["cloud_tenant_id"]
+      :ems_ref => "#{project_id}/#{options["name"]}",
+      :key => options["name"],
+      :object_count => 0,
+      :bytes => 0,
+      :ems_id => ext_management_system.id,
+      :cloud_tenant_id => options["cloud_tenant_id"]
     }
   rescue => e
     _log.error("container=[#{options["name"]}], error: #{e}")
