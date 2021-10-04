@@ -1,4 +1,6 @@
 class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::Providers::StorageManager
+  require_nested :CloudObjectStoreContainer
+  require_nested :CloudObjectStoreObject
   require_nested :Refresher
 
   include ManageIQ::Providers::StorageManager::ObjectMixin
