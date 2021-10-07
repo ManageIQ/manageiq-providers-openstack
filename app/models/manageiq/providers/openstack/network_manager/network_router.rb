@@ -101,8 +101,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
             },
             {
               :component    => 'switch',
-              :id           => 'source_nat',
-              :name         => 'source_nat',
+              :id           => 'external_gateway_info.enable_snat',
+              :name         => 'external_gateway_info.enable_snat',
               :label        => _('Source NAT'),
               :onText       => _('Yes'),
               :offText      => _('No'),
@@ -114,8 +114,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
             },
             {
               :component      => 'select',
-              :id             => 'network_id',
-              :name           => 'network_id',
+              :id             => 'cloud_network_id',
+              :name           => 'cloud_network_id',
               :key            => "network-#{ems.id}",
               :label          => _('Network'),
               :placeholder    => "<#{_('Choose')}>",
@@ -125,7 +125,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
                 :when => 'enable',
                 :is   => true,
               },
-              :options        => ems.cloud_networks.select { |cn| cn.ems_id == ems.id && cn.external_facing == true }.map do |cn|
+              :options        => ems.public_networks.map do |cn|
                 {
                   :label => cn.name,
                   :value => cn.id,
@@ -206,8 +206,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
             },
             {
               :component    => 'switch',
-              :id           => 'source_nat',
-              :name         => 'source_nat',
+              :id           => 'external_gateway_info.enable_snat',
+              :name         => 'external_gateway_info.enable_snat',
               :label        => _('Source NAT'),
               :onText       => _('Yes'),
               :offText      => _('No'),
@@ -219,8 +219,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
             },
             {
               :component      => 'select',
-              :id             => 'network_id',
-              :name           => 'network_id',
+              :id             => 'cloud_network_id',
+              :name           => 'cloud_network_id',
               :key            => "network-#{ext_management_system.id}",
               :label          => _('Network'),
               :placeholder    => "<#{_('Choose')}>",
@@ -230,7 +230,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
                 :when => 'enable',
                 :is   => true,
               },
-              :options        => ext_management_system.cloud_networks.select { |cn| cn.ems_id == ext_management_system.id && cn.external_facing == true }.map do |cn|
+              :options        => ext_management_system.public_networks.map do |cn|
                 {
                   :label => cn.name,
                   :value => cn.id,
@@ -244,14 +244,20 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
   end
 
   def self.raw_create_network_router(ext_management_system, options)
-    cloud_tenant = options.delete(:cloud_tenant)
-    name = options.delete(:name)
+    cloud_tenant = options.delete(:cloud_tenant) # old non-react code
+    if (cloud_tenant_id = options.delete(:cloud_tenant_id))
+      cloud_tenant = ext_management_system.cloud_tenants.find_by(:id => cloud_tenant_id)
+    end
+
+    options_to_refs(cloud_tenant, options) unless options[:external_gateway_info] && options[:external_gateway_info][:network_id]
+
+    router_name = options.delete(:name)
     router = nil
 
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
-      router = service.create_router(name, options).body
+      router = service.create_router(router_name, options).body
     end
-    {:ems_ref => router['id'], :name => options[:name]}
+    {:ems_ref => router['id'], :name => router_name}
   rescue => e
     _log.error "router=[#{options[:name]}], error: #{e}"
     parsed_error = parse_error_message_from_neutron_response(e)
@@ -278,6 +284,26 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     raise MiqException::MiqNetworkRouterDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
+  def self.options_to_refs(cloud_tenant, options)
+    if (cloud_network_id = options[:cloud_network_id]).present?
+      gateway_options = {}
+      network = cloud_tenant.cloud_networks.find(cloud_network_id)
+      gateway_options[:network_id] = network.ems_ref
+      if (cloud_subnet_ids = options.delete(:cloud_subnet_id)).present?
+        gateway_options[:external_fixed_ips] =
+          Array(cloud_subnet_ids).map do |cloud_subnet_id|
+            subnet = CloudSubnet.find(cloud_subnet_id)
+            {:subnet_id => subnet.ems_ref}
+          end
+      end
+      gateway_options[:enable_snat] = options.fetch_path(:external_gateway_info, :enable_snat) || false
+      options[:external_gateway_info] = gateway_options
+    else
+      options.delete(:external_gateway_info) # only has the enable_snat flag, but no cloud network
+    end
+    options[:admin_state_up] ||= false
+  end
+
   def delete_network_router_queue(userid)
     task_opts = {
       :action => "deleting Network Router for user #{userid}",
@@ -296,6 +322,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
   end
 
   def raw_update_network_router(options)
+    self.class.options_to_refs(cloud_tenant, options)
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       service.update_router(ems_ref, options)
     end
