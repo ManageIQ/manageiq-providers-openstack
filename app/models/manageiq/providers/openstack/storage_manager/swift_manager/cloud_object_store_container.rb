@@ -51,11 +51,6 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
      :ems_id => ext_management_system.id, :cloud_tenant_id => options["cloud_tenant_id"]}
 
   rescue Exception => e
-    file_name = "provider_openstack_project"
-    File.open(Rails.root.join('public', 'upload', file_name), 'ab') do |file|
-      file.write(e.message)
-      file.write(e.backtrace.inspect)
-    end
 
     _log.error "network=[#{options[:name]}], error: #{e}"
     parsed_error = parse_error_message_from_neutron_response(e)
