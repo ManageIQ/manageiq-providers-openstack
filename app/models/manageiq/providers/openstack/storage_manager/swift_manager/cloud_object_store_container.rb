@@ -23,10 +23,9 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
                 :when => 'edit',
                 :is   => false,
             },
-            :options      => [{
-                  :label => cloud_tenants.name,
-                  :value => cloud_tenants.id,
-            }]
+            :options      => cloud_tenants.map do |ct|
+              {:label => ct.name, :value => ct.id}
+            }
         }
       ]
     }
