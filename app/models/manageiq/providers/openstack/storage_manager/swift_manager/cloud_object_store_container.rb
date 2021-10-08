@@ -70,7 +70,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
   end
 
   def raw_delete
-    ext_management_system.with_provider_connection(swift_connection_options(cloud_tenant)) do |service|
+    ext_management_system.with_provider_connection(swift_connection_options) do |service|
       service.delete_container(ems_ref) # NOTE this is untested by me
     end
   rescue => e
