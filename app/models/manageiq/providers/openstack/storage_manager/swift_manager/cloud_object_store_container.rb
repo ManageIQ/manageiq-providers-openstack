@@ -36,10 +36,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
     project_id = ''
 
     options[:key] = options["name"]
-    with_notification(:cloud_container_create,
-                      :options => {
-                          :key => options["name"],
-                      }) do
+    with_notification(:cloud_container_create, :options => {:key => options["name"]}) do
       ext_management_system.with_provider_connection(swift_connection_options(cloud_tenant)) do |service|
         project_id = service.get_current_tenant()["id"]
         directory = service.directories.new(options)
