@@ -3,7 +3,6 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
   include SupportsFeatureMixin
 
   supports :create
-  supports :update
   supports :delete
 
   def self.params_for_create(ems)
