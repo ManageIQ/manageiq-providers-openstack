@@ -69,10 +69,9 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
     validate_cloud_object_store_container(ext_management_system)
   end
 
-  def raw_cloud_object_store_container_delete(options)
-    file_name = "manageiq_provider_openstack_log"
-    File.open(Rails.root.join('public', 'upload', file_name), 'a') do |file|
-      file.write("delete cloud object store container options = #{options.to_s}\n")
+  def raw_delete
+    ext_management_system.with_provider_connection(swift_connection_options(cloud_tenant)) do |service|
+      service.delete_container(ems_ref) # NOTE this is untested by me
     end
   rescue => e
     _log.error "network=[#{name}], error: #{e}"
