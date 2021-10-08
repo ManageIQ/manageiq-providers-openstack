@@ -7,8 +7,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
   supports :delete
 
   def self.params_for_create(ems)
-    parent_ems_id = ems.parent_ems_id
-    cloud_tenants = CloudTenant.find_by(:ems_id => parent_ems_id)
+    cloud_tenants = ems.parent_manager.cloud_tenants
 
     {
       :fields => [
