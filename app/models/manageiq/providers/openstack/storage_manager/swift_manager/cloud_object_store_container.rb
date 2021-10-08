@@ -12,20 +12,20 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
     {
       :fields => [
         {
-            :component    => 'select',
-            :name         => 'cloud_tenant_id',
-            :id           => 'cloud_tenant_id',
-            :label        => _('Cloud Tenant'),
-            :isRequired   => true,
-            :includeEmpty => true,
-            :validate     => [{:type => 'required'}],
-            :condition    => {
-                :when => 'edit',
-                :is   => false,
-            },
-            :options      => cloud_tenants.map do |ct|
-              {:label => ct.name, :value => ct.id}
-            }
+          :component    => 'select',
+          :name         => 'cloud_tenant_id',
+          :id           => 'cloud_tenant_id',
+          :label        => _('Cloud Tenant'),
+          :isRequired   => true,
+          :includeEmpty => true,
+          :validate     => [{:type => 'required'}],
+          :condition    => {
+            :when => 'edit',
+            :is   => false,
+          },
+          :options      => cloud_tenants.map do |ct|
+            {:label => ct.name, :value => ct.id}
+          end
         }
       ]
     }
