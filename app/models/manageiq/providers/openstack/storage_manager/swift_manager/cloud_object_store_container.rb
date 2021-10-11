@@ -68,10 +68,10 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
 
   def raw_delete
     ext_management_system.with_provider_connection(swift_connection_options) do |service|
-      service.delete_container(ems_ref) # NOTE: this is untested by me
+      service.delete_container(key)
     end
   rescue => e
-    _log.error("container=[#{name}], error: #{e}")
+    _log.error("container=[#{key}], error: #{e}")
     raise MiqException::MiqNetworkDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 end
