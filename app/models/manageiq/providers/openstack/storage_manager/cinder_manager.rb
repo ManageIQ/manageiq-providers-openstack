@@ -16,6 +16,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   supports :volume_availability_zones
   supports :cloud_volume
   supports :cloud_volume_create
+  supports :port
 
   # Auth and endpoints delegations, editing of this type of manager must be disabled
   delegate :authentication_check,
@@ -67,10 +68,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
 
   def name
     "#{parent_manager.try(:name)} Cinder Manager"
-  end
-
-  def supports_port?
-    true
   end
 
   def supports_api_version?

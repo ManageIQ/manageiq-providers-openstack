@@ -46,6 +46,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :create_host_aggregate
   supports :label_mapping
   supports :metrics
+  supports :port
   supports :storage_manager
 
   supports :cinder_service do
@@ -528,10 +529,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                                  end
 
     errors.add(:hostname, "has already been taken") if existing_providers.any?
-  end
-
-  def supports_port?
-    true
   end
 
   def supports_api_version?

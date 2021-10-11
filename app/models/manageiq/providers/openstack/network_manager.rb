@@ -15,6 +15,7 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   supports :create
   supports :create_network_router
   supports :cloud_subnet_create
+  supports :port
 
   has_many :public_networks,  :foreign_key => :ems_id, :dependent => :destroy,
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public"
@@ -58,10 +59,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
       scheduler.run_instance.scheduled
       scheduler.run_instance.end
     )
-  end
-
-  def supports_port?
-    true
   end
 
   def supports_api_version?

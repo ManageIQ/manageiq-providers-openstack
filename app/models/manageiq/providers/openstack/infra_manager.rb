@@ -22,6 +22,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   before_update :ensure_managers_zone_and_provider_region
 
   supports :metrics
+  supports :port
 
   def self.params_for_create
     @params_for_create ||= {
@@ -332,10 +333,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     %w(
       identity.authenticate
     )
-  end
-
-  def supports_port?
-    true
   end
 
   def supports_api_version?
