@@ -334,18 +334,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     )
   end
 
-  def supports_port?
-    true
-  end
-
-  def supports_api_version?
-    true
-  end
-
-  def supports_security_protocol?
-    true
-  end
-
   def supported_auth_types
     %w(default amqp ssh_keypair)
   end

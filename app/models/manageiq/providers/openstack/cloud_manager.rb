@@ -530,18 +530,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     errors.add(:hostname, "has already been taken") if existing_providers.any?
   end
 
-  def supports_port?
-    true
-  end
-
-  def supports_api_version?
-    true
-  end
-
-  def supports_security_protocol?
-    true
-  end
-
   def supported_auth_types
     %w(default amqp ssh_keypair)
   end
@@ -552,10 +540,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def self.catalog_types
     {"openstack" => N_("OpenStack")}
-  end
-
-  def supports_provider_id?
-    true
   end
 
   def supports_authentication?(authtype)

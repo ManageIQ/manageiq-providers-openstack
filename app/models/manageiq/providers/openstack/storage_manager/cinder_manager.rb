@@ -69,24 +69,8 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     "#{parent_manager.try(:name)} Cinder Manager"
   end
 
-  def supports_port?
-    true
-  end
-
-  def supports_api_version?
-    true
-  end
-
-  def supports_security_protocol?
-    true
-  end
-
   def supported_auth_types
     %w(default amqp)
-  end
-
-  def supports_provider_id?
-    true
   end
 
   def supports_authentication?(authtype)

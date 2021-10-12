@@ -52,18 +52,6 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::P
     "#{parent_manager.try(:name)} Swift Manager"
   end
 
-  def supports_api_version?
-    true
-  end
-
-  def supports_security_protocol?
-    true
-  end
-
-  def supports_provider_id?
-    true
-  end
-
   def allow_targeted_refresh?
     false
   end
