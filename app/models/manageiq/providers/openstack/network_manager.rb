@@ -60,24 +60,8 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
     )
   end
 
-  def supports_port?
-    true
-  end
-
-  def supports_api_version?
-    true
-  end
-
-  def supports_security_protocol?
-    true
-  end
-
   def supported_auth_types
     %w(default amqp)
-  end
-
-  def supports_provider_id?
-    true
   end
 
   def supports_authentication?(authtype)
