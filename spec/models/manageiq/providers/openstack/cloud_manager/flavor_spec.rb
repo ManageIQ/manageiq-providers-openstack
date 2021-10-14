@@ -71,18 +71,4 @@ describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
       end.to raise_error(MiqException::MiqOpenstackApiRequestError)
     end
   end
-
-  context 'when validations' do
-    it 'fails with invalid parameters' do
-      expect(subject.class.validate_create_flavor(nil)).to eq(
-        :available => false,
-        :message   => 'The Flavor is not connected to an active Provider')
-    end
-
-    it 'doesn`t fail with valid parameters' do
-      expect(subject.class.validate_create_flavor(ems)).to eq(
-        :available => true,
-        :message   => nil)
-    end
-  end
 end

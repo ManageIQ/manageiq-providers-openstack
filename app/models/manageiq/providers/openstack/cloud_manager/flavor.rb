@@ -19,16 +19,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
     raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
   end
 
-  def self.validate_create_flavor(ext_management_system, _options = {})
-    if ext_management_system
-      {:available => true, :message => nil}
-    else
-      {:available => false,
-       :message   => _("The Flavor is not connected to an active %{table}") %
-         {:table => ui_lookup(:table => "ext_management_system")}}
-    end
-  end
-
   def raw_delete_flavor
     ext_management_system.with_provider_connection({:service => 'Compute'}) do |service|
       service.delete_flavor(ems_ref)
@@ -36,10 +26,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Flavor < ::Flavor
   rescue => err
     _log.error "flavor=[#{name}], error: #{err}"
     raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
-  end
-
-  def validate_delete_flavor
-    {:available => true, :message => nil}
   end
 
   def description
