@@ -249,7 +249,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
       cloud_tenant = ext_management_system.cloud_tenants.find_by(:id => cloud_tenant_id)
     end
 
-    options_to_refs(cloud_tenant, options) unless options[:external_gateway_info] && options[:external_gateway_info][:network_id]
+    options_to_refs!(cloud_tenant, options) unless options[:external_gateway_info] && options[:external_gateway_info][:network_id]
 
     router_name = options.delete(:name)
     router = nil
@@ -284,7 +284,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
     raise MiqException::MiqNetworkRouterDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
-  def self.options_to_refs(cloud_tenant, options)
+  def self.options_to_refs!(cloud_tenant, options)
     if (cloud_network_id = options[:cloud_network_id]).present?
       gateway_options = {}
       network = cloud_tenant.cloud_networks.find(cloud_network_id)
@@ -296,7 +296,8 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
             {:subnet_id => subnet.ems_ref}
           end
       end
-      gateway_options[:enable_snat] = options.fetch_path(:external_gateway_info, :enable_snat) || false
+      gateway_options[:enable_snat] = options.fetch_path(:external_gateway_info, :enable_snat)
+      gateway_options[:enable_snat] = false if gateway_options[:enable_snat].nil?
       options[:external_gateway_info] = gateway_options
     else
       options.delete(:external_gateway_info) # only has the enable_snat flag, but no cloud network
@@ -322,7 +323,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
   end
 
   def raw_update_network_router(options)
-    self.class.options_to_refs(cloud_tenant, options)
+    self.class.options_to_refs!(cloud_tenant, options)
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       service.update_router(ems_ref, options)
     end
