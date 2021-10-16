@@ -617,7 +617,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     raise
   end
 
-  def vm_remove_all_snapshots(vm, options = {})
+  def vm_remove_all_snapshots(vm, _options = {})
     vm.snapshots.each { |snapshot| vm_remove_snapshot(vm, :snMor => snapshot.uid) }
   end
 
