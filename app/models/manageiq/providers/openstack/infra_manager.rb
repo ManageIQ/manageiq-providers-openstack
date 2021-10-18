@@ -21,6 +21,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   before_create :ensure_managers
   before_update :ensure_managers_zone_and_provider_region
 
+  supports :catalog
   supports :metrics
 
   def self.params_for_create
