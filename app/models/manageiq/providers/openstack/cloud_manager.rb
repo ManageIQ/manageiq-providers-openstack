@@ -232,9 +232,13 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     :id           => 'event_stream_selection',
                     :name         => 'event_stream_selection',
                     :skipSubmit   => true,
-                    :initialValue => 'ceilometer',
+                    :initialValue => 'none',
                     :label        => _('Type'),
                     :options      => [
+                      {
+                        :label => _('Disabled'),
+                        :value => 'none',
+                      },
                       {
                         :label => _('Ceilometer'),
                         :value => 'ceilometer',
@@ -252,16 +256,25 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                     ],
                   },
                   {
-                    :component    => 'text-field',
-                    :hideField    => true,
-                    :label        => 'ceilometer',
-                    :id           => 'endpoints.ceilometer',
-                    :name         => 'endpoints.ceilometer',
-                    :initialValue => '',
-                    :condition    => {
+                    :component              => 'validate-provider-credentials',
+                    :id                     => 'endpoints.ceilometer.valid',
+                    :name                   => 'endpoints.ceilometer.valid',
+                    :skipSubmit             => true,
+                    :isRequired             => true,
+                    :validationDependencies => %w[type event_stream_selection authentications.default.valid],
+                    :condition              => {
                       :when => 'event_stream_selection',
                       :is   => 'ceilometer',
                     },
+                    :fields                 => [
+                      {
+                        :component  => "text-field",
+                        :id         => "endpoints.ceilometer.hostname",
+                        :name       => "endpoints.ceilometer.hostname",
+                        :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                        :isRequired => false
+                      },
+                    ]
                   },
                   {
                     :component              => 'validate-provider-credentials',

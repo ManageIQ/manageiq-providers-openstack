@@ -33,6 +33,11 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
     private :stf_available?
 
+    def ceilometer_available?(password, params)
+      ems_connect?(password, params, "Event")
+    end
+    private :ceilometer_available?
+
     def ems_connect?(password, params, service)
       ems = new
       ems.name                   = params[:name].strip
@@ -122,6 +127,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         amqp_available?(password, params)
       when "stf"
         stf_available?(password, params)
+      when "ceilometer"
+        ceilometer_available?(password, params)
       else
         ems_connect?(password, params, service)
       end
