@@ -101,6 +101,20 @@ describe ManageIQ::Providers::Openstack::CloudManager do
     expect(ems.swift_manager.provider_region).to eq "region2"
   end
 
+  describe "#pause!" do
+    before    { Zone.seed } # Seed the maintenance zone
+    let(:ems) { FactoryBot.create(:ems_openstack) }
+
+    it "pauses all child managers" do
+      ems.pause!
+
+      expect(ems).not_to be_enabled
+      expect(ems.network_manager).not_to be_enabled
+      expect(ems.cinder_manager).not_to be_enabled
+      expect(ems.swift_manager).not_to be_enabled
+    end
+  end
+
   describe ".metrics_collector_queue_name" do
     it "returns the correct queue name" do
       worker_queue = ManageIQ::Providers::Openstack::CloudManager::MetricsCollectorWorker.default_queue_name

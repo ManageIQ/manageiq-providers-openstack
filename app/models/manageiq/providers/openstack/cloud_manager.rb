@@ -24,7 +24,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   has_many :storage_managers,
            :foreign_key => :parent_ems_id,
            :class_name  => "ManageIQ::Providers::StorageManager",
-           :autosave    => true
+           :autosave    => true,
+           :dependent   => :destroy
   has_many :snapshots, :through => :vms_and_templates
   include ManageIQ::Providers::Openstack::CinderManagerMixin
   include ManageIQ::Providers::Openstack::SwiftManagerMixin
@@ -425,18 +426,21 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def ensure_managers_zone_and_provider_region
     if network_manager
+      network_manager.enabled         = enabled
       network_manager.zone_id         = zone_id
       network_manager.tenant_id       = tenant_id
       network_manager.provider_region = provider_region
     end
 
     if cinder_manager
+      cinder_manager.enabled         = enabled
       cinder_manager.zone_id         = zone_id
       cinder_manager.tenant_id       = tenant_id
       cinder_manager.provider_region = provider_region
     end
 
     if swift_manager
+      swift_manager.enabled         = enabled
       swift_manager.zone_id         = zone_id
       swift_manager.tenant_id       = tenant_id
       swift_manager.provider_region = provider_region
