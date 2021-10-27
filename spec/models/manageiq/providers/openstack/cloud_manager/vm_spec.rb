@@ -158,12 +158,6 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
         expect(vm.supports?(:revert_to_snapshot)).to eq false
       end
     end
-
-    context "v2v actions" do
-      it "supports conversion_host" do
-        expect(vm.supports?(:conversion_host)).to eq true
-      end
-    end
   end
 
   context "#is_available?" do
