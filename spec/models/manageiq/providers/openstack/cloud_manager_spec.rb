@@ -162,13 +162,13 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
     it "accepts and decrypts encrypted passwords" do
       params = {
-        :name                      => 'dummy',
-        :provider_region           => '',
-        :api_version               => 'v2.0',
-        :default_security_protocol => 'non-ssl',
-        :default_userid            => 'admin',
-        :default_hostname          => 'address',
-        :default_port              => '5000'
+        :name              => 'dummy',
+        :provider_region   => '',
+        :api_version       => 'v2.0',
+        :security_protocol => 'non-ssl',
+        :userid            => 'admin',
+        :hostname          => 'address',
+        :port              => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
@@ -183,13 +183,13 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
     it "works with unencrypted passwords" do
       params = {
-        :name                      => 'dummy',
-        :provider_region           => '',
-        :api_version               => 'v2.0',
-        :default_security_protocol => 'non-ssl',
-        :default_userid            => 'admin',
-        :default_hostname          => 'address',
-        :default_port              => '5000'
+        :name              => 'dummy',
+        :provider_region   => '',
+        :api_version       => 'v2.0',
+        :security_protocol => 'non-ssl',
+        :userid            => 'admin',
+        :hostname          => 'address',
+        :port              => '5000'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
@@ -204,13 +204,13 @@ describe ManageIQ::Providers::Openstack::CloudManager do
 
     it "works with a non-default port" do
       params = {
-        :name                      => 'dummy',
-        :provider_region           => '',
-        :api_version               => 'v2.0',
-        :default_security_protocol => 'ssl-with-validation',
-        :default_userid            => 'admin',
-        :default_hostname          => 'address',
-        :default_port              => '13001'
+        :name              => 'dummy',
+        :provider_region   => '',
+        :api_version       => 'v2.0',
+        :security_protocol => 'ssl-with-validation',
+        :userid            => 'admin',
+        :hostname          => 'address',
+        :port              => '13001'
       }
       expect(OpenstackHandle::Handle).to receive(:raw_connect).with(
         "admin",
