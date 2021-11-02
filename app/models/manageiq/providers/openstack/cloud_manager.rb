@@ -142,273 +142,257 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           :name      => 'endpoints-subform',
           :title     => _('Endpoints'),
           :fields    => [
-            :component => 'tabs',
-            :name      => 'tabs',
-            :fields    => [
-              {
-                :component => 'tab-item',
-                :id        => 'default-tab',
-                :name      => 'default-tab',
-                :title     => _('Default'),
-                :fields    => [
-                  {
-                    :component              => 'validate-provider-credentials',
-                    :id                     => 'authentications.default.valid',
-                    :name                   => 'authentications.default.valid',
-                    :skipSubmit             => true,
-                    :isRequired             => true,
-                    :validationDependencies => %w[name type api_version provider_region uid_ems],
-                    :fields                 => [
-                      {
-                        :component    => "select",
-                        :id           => "endpoints.default.security_protocol",
-                        :name         => "endpoints.default.security_protocol",
-                        :label        => _("Security Protocol"),
-                        :isRequired   => true,
-                        :initialValue => 'ssl-with-validation',
-                        :validate     => [{:type => "required"}],
-                        :options      => [
-                          {
-                            :label => _("SSL without validation"),
-                            :value => "ssl-no-validation"
+            {
+              :component => 'sub-form',
+              :id        => 'default-tab',
+              :name      => 'default-tab',
+              :title     => _('Default'),
+              :fields    => [
+                {
+                  :component              => 'validate-provider-credentials',
+                  :id                     => 'authentications.default.valid',
+                  :name                   => 'authentications.default.valid',
+                  :skipSubmit             => true,
+                  :isRequired             => true,
+                  :validationDependencies => %w[name type api_version provider_region uid_ems],
+                  :fields                 => [
+                    {
+                      :component    => "select",
+                      :id           => "endpoints.default.security_protocol",
+                      :name         => "endpoints.default.security_protocol",
+                      :label        => _("Security Protocol"),
+                      :isRequired   => true,
+                      :initialValue => 'ssl-with-validation',
+                      :validate     => [{:type => "required"}],
+                      :options      => [
+                        {
+                          :label => _("SSL without validation"),
+                          :value => "ssl-no-validation"
+                        },
+                        {
+                          :label => _("SSL"),
+                          :value => "ssl-with-validation"
+                        },
+                        {
+                          :label => _("Non-SSL"),
+                          :value => "non-ssl"
+                        }
+                      ]
+                    },
+                    {
+                      :component  => "text-field",
+                      :id         => "endpoints.default.hostname",
+                      :name       => "endpoints.default.hostname",
+                      :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                      :isRequired => true,
+                      :validate   => [{:type => "required"}],
+                    },
+                    {
+                      :component    => "text-field",
+                      :id           => "endpoints.default.port",
+                      :name         => "endpoints.default.port",
+                      :label        => _("API Port"),
+                      :type         => "number",
+                      :initialValue => 13_000,
+                      :isRequired   => true,
+                      :validate     => [{:type => "required"}],
+                    },
+                    {
+                      :component  => "text-field",
+                      :id         => "authentications.default.userid",
+                      :name       => "authentications.default.userid",
+                      :label      => "Username",
+                      :isRequired => true,
+                      :validate   => [{:type => "required"}],
+                    },
+                    {
+                      :component  => "password-field",
+                      :id         => "authentications.default.password",
+                      :name       => "authentications.default.password",
+                      :label      => "Password",
+                      :type       => "password",
+                      :isRequired => true,
+                      :validate   => [{:type => "required"}],
+                    },
+                    {
+                      :component => 'sub-form',
+                      :id        => 'events-tab',
+                      :name      => 'events-tab',
+                      :title     => _('Events'),
+                      :fields    => [
+                        {
+                          :component    => 'protocol-selector',
+                          :id           => 'event_stream_selection',
+                          :name         => 'event_stream_selection',
+                          :skipSubmit   => true,
+                          :initialValue => 'none',
+                          :label        => _('Type'),
+                          :options      => [
+                            {
+                              :label => _('Disabled'),
+                              :value => 'none',
+                            },
+                            {
+                              :label => _('Ceilometer'),
+                              :value => 'ceilometer',
+                            },
+                            {
+                              :label => _('STF'),
+                              :value => 'stf',
+                              :pivot => 'endpoints.stf.hostname',
+                            },
+                            {
+                              :label => _('AMQP'),
+                              :value => 'amqp',
+                              :pivot => 'endpoints.amqp.hostname',
+                            },
+                          ],
+                        },
+                        {
+                          :component              => 'sub-form',
+                          :id                     => 'endpoints.amqp.valid',
+                          :name                   => 'endpoints.amqp.valid',
+                          :validationDependencies => %w[type event_stream_selection],
+                          :condition              => {
+                            :when => 'event_stream_selection',
+                            :is   => 'amqp',
                           },
-                          {
-                            :label => _("SSL"),
-                            :value => "ssl-with-validation"
+                          :fields                 => [
+                            {
+                              :component  => "text-field",
+                              :id         => "endpoints.amqp.hostname",
+                              :name       => "endpoints.amqp.hostname",
+                              :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                              :isRequired => true,
+                              :validate   => [{:type => "required"}],
+                            },
+                            {
+                              :component    => "text-field",
+                              :id           => "endpoints.amqp.port",
+                              :name         => "endpoints.amqp.port",
+                              :label        => _("API Port"),
+                              :type         => "number",
+                              :isRequired   => true,
+                              :initialValue => 5672,
+                              :validate     => [{:type => "required"}],
+                            },
+                            {
+                              :component  => "text-field",
+                              :id         => "authentications.amqp.userid",
+                              :name       => "authentications.amqp.userid",
+                              :label      => "Username",
+                              :isRequired => true,
+                              :validate   => [{:type => "required"}],
+                            },
+                            {
+                              :component  => "password-field",
+                              :id         => "authentications.amqp.password",
+                              :name       => "authentications.amqp.password",
+                              :label      => "Password",
+                              :type       => "password",
+                              :isRequired => true,
+                              :validate   => [{:type => "required"}],
+                            },
+                          ],
+                        },
+                        {
+                          :component              => 'sub-form',
+                          :id                     => 'endpoints.stf.valid',
+                          :name                   => 'endpoints.stf.valid',
+                          :validationDependencies => %w[type event_stream_selection],
+                          :condition              => {
+                            :when => 'event_stream_selection',
+                            :is   => 'stf',
                           },
-                          {
-                            :label => _("Non-SSL"),
-                            :value => "non-ssl"
-                          }
-                        ]
-                      },
-                      {
-                        :component  => "text-field",
-                        :id         => "endpoints.default.hostname",
-                        :name       => "endpoints.default.hostname",
-                        :label      => _("Hostname (or IPv4 or IPv6 address)"),
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                      {
-                        :component    => "text-field",
-                        :id           => "endpoints.default.port",
-                        :name         => "endpoints.default.port",
-                        :label        => _("API Port"),
-                        :type         => "number",
-                        :initialValue => 13_000,
-                        :isRequired   => true,
-                        :validate     => [{:type => "required"}],
-                      },
-                      {
-                        :component  => "text-field",
-                        :id         => "authentications.default.userid",
-                        :name       => "authentications.default.userid",
-                        :label      => "Username",
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                      {
-                        :component  => "password-field",
-                        :id         => "authentications.default.password",
-                        :name       => "authentications.default.password",
-                        :label      => "Password",
-                        :type       => "password",
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                    ]
-                  },
-                ]
-              },
-              {
-                :component => 'tab-item',
-                :id        => 'events-tab',
-                :name      => 'events-tab',
-                :title     => _('Events'),
+                          :fields                 => [
+                            {
+                              :component    => "select",
+                              :id           => "endpoints.stf.security_protocol",
+                              :name         => "endpoints.stf.security_protocol",
+                              :label        => _("Security Protocol"),
+                              :isRequired   => true,
+                              :initialValue => 'ssl-with-validation',
+                              :validate     => [{:type => "required"}],
+                              :options      => [
+                                {
+                                  :label => _("SSL without validation"),
+                                  :value => "ssl-no-validation"
+                                },
+                                {
+                                  :label => _("SSL"),
+                                  :value => "ssl-with-validation"
+                                },
+                                {
+                                  :label => _("Non-SSL"),
+                                  :value => "non-ssl"
+                                }
+                              ]
+                            },
+                            {
+                              :component  => "text-field",
+                              :id         => "endpoints.stf.hostname",
+                              :name       => "endpoints.stf.hostname",
+                              :label      => _("Hostname (or IPv4 or IPv6 address)"),
+                              :isRequired => true,
+                              :validate   => [{:type => "required"}],
+                            },
+                            {
+                              :component    => "text-field",
+                              :id           => "endpoints.stf.port",
+                              :name         => "endpoints.stf.port",
+                              :label        => _("API Port"),
+                              :type         => "number",
+                              :isRequired   => true,
+                              :initialValue => 5666,
+                              :validate     => [{:type => "required"}],
+                            },
+                          ]
+                        }
+                      ],
+                    },
+                  ]
+                },
+              ]
+            },
+            {
+              :component => 'sub-form',
+              :id        => 'ssh_keypair-tab',
+              :name      => 'ssh_keypair-tab',
+              :title     => _('RSA key pair'),
+              :fields    => [
+                :component => 'provider-credentials',
+                :id        => 'endpoints.ssh_keypair.valid',
+                :name      => 'endpoints.ssh_keypair.valid',
                 :fields    => [
-                  {
-                    :component    => 'protocol-selector',
-                    :id           => 'event_stream_selection',
-                    :name         => 'event_stream_selection',
-                    :skipSubmit   => true,
-                    :initialValue => 'ceilometer',
-                    :label        => _('Type'),
-                    :options      => [
-                      {
-                        :label => _('Ceilometer'),
-                        :value => 'ceilometer',
-                      },
-                      {
-                        :label => _('STF'),
-                        :value => 'stf',
-                        :pivot => 'endpoints.stf.hostname',
-                      },
-                      {
-                        :label => _('AMQP'),
-                        :value => 'amqp',
-                        :pivot => 'endpoints.amqp.hostname',
-                      },
-                    ],
-                  },
                   {
                     :component    => 'text-field',
                     :hideField    => true,
-                    :label        => 'ceilometer',
-                    :id           => 'endpoints.ceilometer',
-                    :name         => 'endpoints.ceilometer',
+                    :label        => 'ssh_keypair',
+                    :id           => 'endpoints.ssh_keypair',
+                    :name         => 'endpoints.ssh_keypair',
                     :initialValue => '',
                     :condition    => {
-                      :when => 'event_stream_selection',
-                      :is   => 'ceilometer',
+                      :when       => 'authentications.ssh_keypair.userid',
+                      :isNotEmpty => true,
                     },
                   },
                   {
-                    :component              => 'validate-provider-credentials',
-                    :id                     => 'endpoints.amqp.valid',
-                    :name                   => 'endpoints.amqp.valid',
-                    :skipSubmit             => true,
-                    :isRequired             => true,
-                    :validationDependencies => %w[type event_stream_selection],
-                    :condition              => {
-                      :when => 'event_stream_selection',
-                      :is   => 'amqp',
-                    },
-                    :fields                 => [
-                      {
-                        :component  => "text-field",
-                        :id         => "endpoints.amqp.hostname",
-                        :name       => "endpoints.amqp.hostname",
-                        :label      => _("Hostname (or IPv4 or IPv6 address)"),
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                      {
-                        :component    => "text-field",
-                        :id           => "endpoints.amqp.port",
-                        :name         => "endpoints.amqp.port",
-                        :label        => _("API Port"),
-                        :type         => "number",
-                        :isRequired   => true,
-                        :initialValue => 5672,
-                        :validate     => [{:type => "required"}],
-                      },
-                      {
-                        :component  => "text-field",
-                        :id         => "authentications.amqp.userid",
-                        :name       => "authentications.amqp.userid",
-                        :label      => "Username",
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                      {
-                        :component  => "password-field",
-                        :id         => "authentications.amqp.password",
-                        :name       => "authentications.amqp.password",
-                        :label      => "Password",
-                        :type       => "password",
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                    ],
+                    :component => "text-field",
+                    :id        => "authentications.ssh_keypair.userid",
+                    :name      => "authentications.ssh_keypair.userid",
+                    :label     => _("Username"),
                   },
                   {
-                    :component              => 'validate-provider-credentials',
-                    :id                     => 'endpoints.stf.valid',
-                    :name                   => 'endpoints.stf.valid',
-                    :skipSubmit             => true,
-                    :isRequired             => true,
-                    :validationDependencies => %w[type event_stream_selection],
-                    :condition              => {
-                      :when => 'event_stream_selection',
-                      :is   => 'stf',
-                    },
-                    :fields                 => [
-                      {
-                        :component    => "select",
-                        :id           => "endpoints.stf.security_protocol",
-                        :name         => "endpoints.stf.security_protocol",
-                        :label        => _("Security Protocol"),
-                        :isRequired   => true,
-                        :initialValue => 'ssl-with-validation',
-                        :validate     => [{:type => "required"}],
-                        :options      => [
-                          {
-                            :label => _("SSL without validation"),
-                            :value => "ssl-no-validation"
-                          },
-                          {
-                            :label => _("SSL"),
-                            :value => "ssl-with-validation"
-                          },
-                          {
-                            :label => _("Non-SSL"),
-                            :value => "non-ssl"
-                          }
-                        ]
-                      },
-                      {
-                        :component  => "text-field",
-                        :id         => "endpoints.stf.hostname",
-                        :name       => "endpoints.stf.hostname",
-                        :label      => _("Hostname (or IPv4 or IPv6 address)"),
-                        :isRequired => true,
-                        :validate   => [{:type => "required"}],
-                      },
-                      {
-                        :component    => "text-field",
-                        :id           => "endpoints.stf.port",
-                        :name         => "endpoints.stf.port",
-                        :label        => _("API Port"),
-                        :type         => "number",
-                        :isRequired   => true,
-                        :initialValue => 5666,
-                        :validate     => [{:type => "required"}],
-                      },
-                    ]
-                  }
+                    :component      => "password-field",
+                    :id             => "authentications.ssh_keypair.auth_key",
+                    :name           => "authentications.ssh_keypair.auth_key",
+                    :componentClass => 'textarea',
+                    :rows           => 10,
+                    :label          => _("Private Key"),
+                  },
                 ],
-              },
-              {
-                :component => 'tab-item',
-                :id        => 'ssh_keypair-tab',
-                :name      => 'ssh_keypair-tab',
-                :title     => _('RSA key pair'),
-                :fields    => [
-                  :component => 'provider-credentials',
-                  :id        => 'endpoints.ssh_keypair.valid',
-                  :name      => 'endpoints.ssh_keypair.valid',
-                  :fields    => [
-                    {
-                      :component    => 'text-field',
-                      :hideField    => true,
-                      :label        => 'ssh_keypair',
-                      :id           => 'endpoints.ssh_keypair',
-                      :name         => 'endpoints.ssh_keypair',
-                      :initialValue => '',
-                      :condition    => {
-                        :when       => 'authentications.ssh_keypair.userid',
-                        :isNotEmpty => true,
-                      },
-                    },
-                    {
-                      :component => "text-field",
-                      :id        => "authentications.ssh_keypair.userid",
-                      :name      => "authentications.ssh_keypair.userid",
-                      :label     => _("Username"),
-                    },
-                    {
-                      :component      => "password-field",
-                      :id             => "authentications.ssh_keypair.auth_key",
-                      :name           => "authentications.ssh_keypair.auth_key",
-                      :componentClass => 'textarea',
-                      :rows           => 10,
-                      :label          => _("Private Key"),
-                    },
-                  ],
-                ],
-              },
-            ],
+              ],
+            },
           ],
         },
       ]

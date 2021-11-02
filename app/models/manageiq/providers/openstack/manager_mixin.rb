@@ -15,10 +15,10 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     def amqp_available?(password, params)
       require 'manageiq/providers/openstack/legacy/events/openstack_rabbit_event_monitor'
       OpenstackRabbitEventMonitor.available?(
-        :hostname => params[:amqp_hostname],
-        :username => params[:amqp_userid],
+        :hostname => params[:hostname],
+        :username => params[:userid],
         :password => ManageIQ::Password.try_decrypt(password),
-        :port     => params[:amqp_api_port] || params[:amqp_port].to_s
+        :port     => params[:api_port] || params[:port].to_s
       )
     end
     private :amqp_available?
@@ -26,22 +26,27 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     def stf_available?(_password, params)
       require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
       OpenstackStfEventMonitor.available?(
-        :hostname          => params[:stf_hostname],
-        :port              => params[:stf_api_port] || params[:stf_port].to_s,
-        :security_protocol => params[:stf_security_protocol]
+        :hostname          => params[:hostname],
+        :port              => params[:api_port] || params[:port].to_s,
+        :security_protocol => params[:security_protocol]
       )
     end
     private :stf_available?
+
+    def ceilometer_available?(password, params)
+      ems_connect?(password, params, "Event")
+    end
+    private :ceilometer_available?
 
     def ems_connect?(password, params, service)
       ems = new
       ems.name                   = params[:name].strip
       ems.provider_region        = params[:provider_region]
       ems.api_version            = params[:api_version].strip
-      ems.security_protocol      = params[:default_security_protocol].strip
+      ems.security_protocol      = params[:security_protocol].strip
       ems.keystone_v3_domain_id  = params[:uid_ems]
 
-      user, hostname, port = params[:default_userid], params[:default_hostname].strip, params[:default_port].try(:strip)
+      user, hostname, port = params[:userid], params[:hostname].strip, params[:port].try(:strip)
 
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       authentication = {:userid => user, :password => ManageIQ::Password.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
@@ -93,25 +98,35 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     #   }
     # }
     def verify_credentials(args)
-      endpoint_name = args.dig("endpoints").keys.first
-      endpoint = args.dig("endpoints", endpoint_name)
-      authentication = args.dig("authentications", endpoint_name)
+      endpoints = args["endpoints"] || {}
+      authentications = args["authentications"]
 
-      userid, password = authentication&.values_at('userid', 'password')
-      password = ManageIQ::Password.try_decrypt(password)
-      password ||= find(args["id"]).authentication_password(endpoint_name) if args["id"]
-
-      params = %w[hostname port security_protocol].reduce(
-        [endpoint_name, 'userid'].join('_')   => userid,
-        [endpoint_name, 'password'].join('_') => password
-      ) do |obj, item|
-        obj.merge([endpoint_name, item].join('_') => endpoint.try(:[], item))
+      # ceilometer has no additional endpoint info other than what is in the default endpoint
+      # but has to be verified separately
+      if args["event_stream_selection"] == "ceilometer"
+        endpoints["ceilometer"] = endpoints["default"]
+        authentications["ceilometer"] = authentications["default"]
       end
 
-      params.merge!(args.slice('name', 'provider_region', 'api_version', 'uid_ems'))
-      params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name != 'default'
+      endpoints.each do |endpoint_name, endpoint|
+        authentication = authentications[endpoint_name]
 
-      !!raw_connect(password, params.symbolize_keys)
+        userid, password = authentication&.values_at('userid', 'password')
+        password = ManageIQ::Password.try_decrypt(password)
+        password ||= find(args["id"]).authentication_password(endpoint_name) if args["id"]
+
+        endpoint_params = endpoint.slice("hostname", "port", "security_protocol")
+        args_params     = args.slice('name', 'provider_region', 'api_version', 'uid_ems')
+
+        params = {
+          "userid"   => userid,
+          "password" => password
+        }.merge(endpoint_params).merge(args_params)
+
+        params['event_stream_selection'] = args['event_stream_selection'] if endpoint_name != 'default'
+
+        raise unless !!raw_connect(password, params.symbolize_keys)
+      end
     end
 
     def raw_connect(password, params, service = "Compute")
@@ -122,6 +137,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
         amqp_available?(password, params)
       when "stf"
         stf_available?(password, params)
+      when "ceilometer"
+        ceilometer_available?(password, params)
       else
         ems_connect?(password, params, service)
       end
