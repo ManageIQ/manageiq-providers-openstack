@@ -291,104 +291,112 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     hosts = related_infra_ems.try(:hosts)
 
     collector.vms.each do |s|
-      if hosts && !s.os_ext_srv_attr_host.blank?
-        parent_host = hosts.find_by('lower(hypervisor_hostname) = ? OR lower(hypervisor_hostname) = ?', s.os_ext_srv_attr_host.split('.').first.downcase, s.os_ext_srv_attr_host.downcase)
-        parent_cluster = parent_host.try(:ems_cluster)
-      else
-        parent_host = nil
-        parent_cluster = nil
-      end
-
-      availability_zone = s.availability_zone.blank? ? "null_az" : s.availability_zone
-      miq_template_lazy = persister.miq_templates.lazy_find(s.image["id"])
-
-      server = persister.vms.find_or_build(s.id.to_s)
-      server.uid_ems = s.id
-      server.name = s.name
-      server.raw_power_state = s.state || "UNKNOWN"
-      server.connection_state = "connected"
-      server.location = "unknown"
-      server.host = parent_host
-      server.ems_cluster = parent_cluster
-      server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
-      server.key_pairs = [persister.auth_key_pairs.lazy_find(s.key_name)].compact
-      server.cloud_tenant = persister.cloud_tenants.lazy_find(s.tenant_id.to_s)
-      server.genealogy_parent = miq_template_lazy unless s.image["id"].nil?
-
-      # to populate the hardware, we need some fields from the flavor object
-      # that we don't already have from the flavor field on the server details
-      # returned from the openstack api. It's possible that no such flavor was found
-      # due to some intermittent network issue or etc, so we use try to not break.
-      flavor = collector.find_flavor(s.flavor["id"].to_s)
-      make_flavor(flavor) unless flavor.nil?
-      server.flavor = persister.flavors.lazy_find(s.flavor["id"].to_s)
-
-      hardware = persister.hardwares.find_or_build(server)
-      hardware.vm_or_template = server
-      hardware.cpu_sockets = flavor.try(:vcpus)
-      hardware.cpu_cores_per_socket = 1
-      hardware.cpu_total_cores = flavor.try(:vcpus)
-      hardware.cpu_speed = parent_host.try(:hardware).try(:cpu_speed)
-      hardware.memory_mb = flavor.try(:ram)
-      hardware.disk_capacity = (
-        flavor.try(:disk).to_i.gigabytes + flavor.try(:swap).to_i.megabytes + flavor.try(:ephemeral).to_i.gigabytes
-      )
-      hardware.guest_os = persister.hardwares.lazy_find(miq_template_lazy, :key => :guest_os)
-
-      operating_system = persister.operating_systems.find_or_build(server)
-      operating_system.vm_or_template = server
-      operating_system.product_name = persister.operating_systems.lazy_find(miq_template_lazy, :key => :product_name)
-      operating_system.distribution = persister.operating_systems.lazy_find(miq_template_lazy, :key => :distribution)
-      operating_system.version = persister.operating_systems.lazy_find(miq_template_lazy, :key => :version)
-
-      attachment_names = {'vda' => 'Root disk'}
-      disk_location = "vda"
-      if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
-        root_size = 1.gigabytes
-      end
-      make_instance_disk(hardware, root_size, disk_location.dup, attachment_names[disk_location])
-      ephemeral_size = flavor.try(:ephemeral).to_i.gigabytes
-      unless ephemeral_size.zero?
-        disk_location = "vdb"
-        attachment_names[disk_location] = "Ephemeral disk"
-        make_instance_disk(hardware, ephemeral_size, disk_location, attachment_names[disk_location])
-      end
-      swap_size = flavor.try(:swap).to_i.megabytes
-      unless swap_size.zero?
-        disk_location = disk_location.succ
-        attachment_names[disk_location] = "Swap disk"
-        make_instance_disk(hardware, swap_size, disk_location, attachment_names[disk_location])
-      end
-
-      # Make disks in the inventory for each of this server's volume attachments.
-      # Start by checking the raw attributes from fog to see whether whether this
-      # server has any attachments. If it does, then use the fog object's
-      # volume_attachments method to inflate them and get the device names.
-      # Checking the attribute first avoids making an expensive api call for
-      # every server when they may not all have attachments.
-      # Don't worry about filling in the volume, since the volume service refresh
-      # will take care of that.
-      if s.attributes.fetch("os-extended-volumes:volumes_attached", []).length > 0
-        s.volume_attachments.each do |attachment|
-          # Skip Volume mounts without mount point
-          next if attachment['device'].blank?
-
-          dev = File.basename(attachment['device'])
-          persister.disks.find_or_build_by(
-            :hardware    => hardware,
-            # reuse the device names from above in the event that this is an
-            # instance that was booted from a volume
-            :device_name => attachment_names.fetch(dev, dev)
-          ).assign_attributes(
-            :location        => dev,
-            :device_type     => "disk",
-            :controller_type => "openstack"
-          )
-        end
-      end
-      vm_and_template_labels(server, s.metadata || [])
-      vm_and_template_taggings(server, map_labels("VmOpenstack", s.metadata || []))
+      parse_vm(s, hosts)
     end
+  end
+
+  def get_flavor(vm)
+    collector.find_flavor(vm.flavor["id"].to_s)
+  end
+
+  def parse_vm(vm, hosts)
+    if hosts && vm.os_ext_srv_attr_host.present?
+      parent_host = hosts.find_by('lower(hypervisor_hostname) = ? OR lower(hypervisor_hostname) = ?', vm.os_ext_srv_attr_host.split('.').first.downcase, vm.os_ext_srv_attr_host.downcase)
+      parent_cluster = parent_host.try(:ems_cluster)
+    else
+      parent_host = nil
+      parent_cluster = nil
+    end
+
+    availability_zone = vm.availability_zone.blank? ? "null_az" : vm.availability_zone
+    miq_template_lazy = persister.miq_templates.lazy_find(vm.image["id"])
+
+    server = persister.vms.find_or_build(vm.id.to_s)
+    server.uid_ems = vm.id
+    server.name = vm.name
+    server.raw_power_state = vm.state || "UNKNOWN"
+    server.connection_state = "connected"
+    server.location = "unknown"
+    server.host = parent_host
+    server.ems_cluster = parent_cluster
+    server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
+    server.key_pairs = [persister.auth_key_pairs.lazy_find(vm.key_name)].compact
+    server.cloud_tenant = persister.cloud_tenants.lazy_find(vm.tenant_id.to_s)
+    server.genealogy_parent = miq_template_lazy unless vm.image["id"].nil?
+
+    # to populate the hardware, we need some fields from the flavor object
+    # that we don't already have from the flavor field on the server details
+    # returned from the openstack api. It's possible that no such flavor was found
+    # due to some intermittent network issue or etc, so we use try to not break.
+    flavor = get_flavor(vm)
+    make_flavor(flavor) unless flavor.nil?
+    server.flavor = persister.flavors.lazy_find(vm.flavor["id"].to_s)
+
+    hardware = persister.hardwares.find_or_build(server)
+    hardware.vm_or_template = server
+    hardware.cpu_sockets = flavor.try(:vcpus)
+    hardware.cpu_cores_per_socket = 1
+    hardware.cpu_total_cores = flavor.try(:vcpus)
+    hardware.cpu_speed = parent_host.try(:hardware).try(:cpu_speed)
+    hardware.memory_mb = flavor.try(:ram)
+    hardware.disk_capacity = (
+      flavor.try(:disk).to_i.gigabytes + flavor.try(:swap).to_i.megabytes + flavor.try(:ephemeral).to_i.gigabytes
+    )
+    hardware.guest_os = persister.hardwares.lazy_find(miq_template_lazy, :key => :guest_os)
+
+    operating_system = persister.operating_systems.find_or_build(server)
+    operating_system.vm_or_template = server
+    operating_system.product_name = persister.operating_systems.lazy_find(miq_template_lazy, :key => :product_name)
+    operating_system.distribution = persister.operating_systems.lazy_find(miq_template_lazy, :key => :distribution)
+    operating_system.version = persister.operating_systems.lazy_find(miq_template_lazy, :key => :version)
+
+    attachment_names = {'vda' => 'Root disk'}
+    disk_location = "vda"
+    if (root_size = flavor.try(:disk).to_i.gigabytes).zero?
+      root_size = 1.gigabytes
+    end
+    make_instance_disk(hardware, root_size, disk_location.dup, attachment_names[disk_location])
+    ephemeral_size = flavor.try(:ephemeral).to_i.gigabytes
+    unless ephemeral_size.zero?
+      disk_location = "vdb"
+      attachment_names[disk_location] = "Ephemeral disk"
+      make_instance_disk(hardware, ephemeral_size, disk_location, attachment_names[disk_location])
+    end
+    swap_size = flavor.try(:swap).to_i.megabytes
+    unless swap_size.zero?
+      disk_location = disk_location.succ
+      attachment_names[disk_location] = "Swap disk"
+      make_instance_disk(hardware, swap_size, disk_location, attachment_names[disk_location])
+    end
+
+    # Make disks in the inventory for each of this server's volume attachments.
+    # Start by checking the raw attributes from fog to see whether whether this
+    # server has any attachments. If it does, then use the fog object's
+    # volume_attachments method to inflate them and get the device names.
+    # Checking the attribute first avoids making an expensive api call for
+    # every server when they may not all have attachments.
+    # Don't worry about filling in the volume, since the volume service refresh
+    # will take care of that.
+    if !vm.attributes.fetch("os-extended-volumes:volumes_attached", []).empty?
+      vm.volume_attachments.each do |attachment|
+        # Skip Volume mounts without mount point
+        next if attachment['device'].blank?
+
+        dev = File.basename(attachment['device'])
+        persister.disks.find_or_build_by(
+          :hardware    => hardware,
+          # reuse the device names from above in the event that this is an
+          # instance that was booted from a volume
+          :device_name => attachment_names.fetch(dev, dev)
+        ).assign_attributes(
+          :location        => dev,
+          :device_type     => "disk",
+          :controller_type => "openstack"
+        )
+      end
+    end
+    vm_and_template_labels(server, vm.metadata || [])
+    vm_and_template_taggings(server, map_labels("VmOpenstack", vm.metadata || []))
   end
 
   def vm_and_template_labels(resource, tags)
