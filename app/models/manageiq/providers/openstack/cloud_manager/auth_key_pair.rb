@@ -1,6 +1,7 @@
 class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Providers::CloudManager::AuthKeyPair
   include ManageIQ::Providers::Openstack::HelperMethods
 
+  supports :create
   supports :delete
 
   def self.raw_create_key_pair(ext_management_system, create_options)

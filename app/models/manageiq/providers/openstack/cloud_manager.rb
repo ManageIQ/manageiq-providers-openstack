@@ -32,7 +32,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
-  supports :auth_key_pair_create
   supports :catalog
   supports :provisioning
   supports :cloud_tenants
@@ -45,7 +44,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     end
   end
   supports :create_flavor
-  supports :create_host_aggregate
   supports :label_mapping
   supports :metrics
   supports :storage_manager

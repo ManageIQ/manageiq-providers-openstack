@@ -41,7 +41,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair do
 
   describe 'validations' do
     it 'ems supports auth_key_pair_create' do
-      expect(ems.supports?(:auth_key_pair_create)).to eq(true)
+      expect(ems.class_by_ems("AuthKeyPair").supports?(:create)).to be_truthy
     end
   end
 end
