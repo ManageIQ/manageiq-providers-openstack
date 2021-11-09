@@ -1,8 +1,9 @@
 class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggregate
   include ManageIQ::Providers::Openstack::HelperMethods
 
-  supports :update_aggregate
-  supports :delete_aggregate
+  supports :create
+  supports :update
+  supports :delete
   supports :add_host
   supports :remove_host
 
