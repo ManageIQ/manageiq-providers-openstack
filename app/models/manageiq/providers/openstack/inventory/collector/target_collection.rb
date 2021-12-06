@@ -11,16 +11,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     target.manager_refs_by_association_reset
   end
 
-  def references(collection)
-    target.manager_refs_by_association.try(:[], collection).try(:[], :ems_ref).try(:to_a) || []
-  end
-
   def targets_by_association(association)
     target.targets.select { |x| x.kind_of?(InventoryRefresh::Target) && x.association == association }.uniq { |x| x.manager_ref[:ems_ref] }
-  end
-
-  def name_references(collection)
-    target.manager_refs_by_association.try(:[], collection).try(:[], :name).try(:to_a) || []
   end
 
   def availability_zones
@@ -276,21 +268,15 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     target.targets.each do |t|
       case t
       when Vm
-        add_simple_target!(:vms, t.ems_ref)
+        add_target!(:vms, t.ems_ref)
       when CloudTenant
-        add_simple_target!(:cloud_tenants, t.ems_ref)
+        add_target!(:cloud_tenants, t.ems_ref)
       when OrchestrationStack
-        add_simple_target!(:orchestration_stacks, t.ems_ref)
+        add_target!(:orchestration_stacks, t.ems_ref)
       when CloudVolume
-        add_simple_target!(:cloud_volumes, t.ems_ref)
+        add_target!(:cloud_volumes, t.ems_ref)
       end
     end
-  end
-
-  def add_simple_target!(association, ems_ref, options = {})
-    return if ems_ref.blank?
-
-    target.add_target(:association => association, :manager_ref => {:ems_ref => ems_ref}, :options => options)
   end
 
   def infer_related_ems_refs!
@@ -319,8 +305,8 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def infer_related_orchestration_stacks_ems_refs_db!
     changed_stacks = manager.orchestration_stacks.where(:ems_ref => references(:orchestration_stacks))
     changed_stacks.each do |stack|
-      add_simple_target!(:cloud_tenants, stack.cloud_tenant.ems_ref) unless stack.cloud_tenant.nil?
-      add_simple_target!(:orchestration_stacks, stack.parent.ems_ref, :tenant_id => stack.parent.cloud_tenant.ems_ref) unless stack.parent.nil?
+      add_target!(:cloud_tenants, stack.cloud_tenant.ems_ref) unless stack.cloud_tenant.nil?
+      add_target!(:orchestration_stacks, stack.parent.ems_ref, :tenant_id => stack.parent.cloud_tenant.ems_ref) unless stack.parent.nil?
     end
   end
 
@@ -331,7 +317,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       orchestration_resources(stack).each do |resource|
         case resource.resource_type
         when "OS::Nova::Server"
-          add_simple_target!(:vms, resource.physical_resource_id)
+          add_target!(:vms, resource.physical_resource_id)
         end
       end
 
@@ -340,31 +326,31 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       counter       = 0
       current_stack = stack
       while counter < max_depth && current_stack && current_stack.parent
-        add_simple_target!(:orchestration_stacks, current_stack.parent, :tenant_id => current_stack.service.current_tenant["id"])
+        add_target!(:orchestration_stacks, current_stack.parent, :tenant_id => current_stack.service.current_tenant["id"])
         counter += 1
         current_stack = get_orchestration_stack(current_stack.parent)
       end
 
-      add_simple_target!(:cloud_tenants, stack.service.current_tenant["id"]) unless stack.service.current_tenant["id"].blank?
+      add_target!(:cloud_tenants, stack.service.current_tenant["id"]) unless stack.service.current_tenant["id"].blank?
     end
   end
 
   def infer_related_cloud_volumes_ems_refs_db!
     changed_volumes = manager.cloud_volumes.where(:ems_ref => references(:cloud_volumes))
     changed_volumes.each do |volume|
-      add_simple_target!(:cloud_tenants, volume.cloud_tenant.ems_ref) unless volume.cloud_tenant.nil?
+      add_target!(:cloud_tenants, volume.cloud_tenant.ems_ref) unless volume.cloud_tenant.nil?
       volume.vms.each do |vm|
-        add_simple_target!(:vms, vm.ems_ref, :tenant_id => vm.cloud_tenant.try(:ems_ref))
+        add_target!(:vms, vm.ems_ref, :tenant_id => vm.cloud_tenant.try(:ems_ref))
       end
     end
   end
 
   def infer_related_cloud_volumes_ems_refs_api!
     cloud_volumes.each do |volume|
-      add_simple_target!(:cloud_tenants, volume.tenant_id)
+      add_target!(:cloud_tenants, volume.tenant_id)
       volume.attachments.each do |attachment|
         unless attachment['server_id'].blank?
-          add_simple_target!(:vms, attachment['server_id'], :tenant_id => volume.tenant_id)
+          add_target!(:vms, attachment['server_id'], :tenant_id => volume.tenant_id)
         end
       end
     end
@@ -373,7 +359,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   def infer_related_cloud_tenant_ems_refs_db!
     changed_tenants = manager.cloud_tenants.where(:ems_ref => references(:cloud_tenants))
     changed_tenants.each do |tenant|
-      add_simple_target!(:cloud_tenants, tenant.parent.ems_ref) unless tenant.parent.nil?
+      add_target!(:cloud_tenants, tenant.parent.ems_ref) unless tenant.parent.nil?
     end
   end
 
@@ -382,7 +368,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     # previous infer methods get picked up
     target.manager_refs_by_association_reset
     tenants.each do |tenant|
-      add_simple_target!(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
+      add_target!(:cloud_tenants, tenant.try(:parent_id)) unless tenant.try(:parent_id).blank?
     end
   end
 
@@ -393,50 +379,50 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
       stack      = vm.orchestration_stack
       all_stacks = ([stack] + (stack.try(:ancestors) || [])).compact
 
-      all_stacks.each { |s| add_simple_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.ems_ref) }
-      vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:cloud_networks, ems_ref) }
-      vm.floating_ips.collect(&:ems_ref).compact.each { |ems_ref| add_simple_target!(:floating_ips, ems_ref) }
+      all_stacks.each { |s| add_target!(:orchestration_stacks, s.ems_ref, :tenant_id => s.cloud_tenant.ems_ref) }
+      vm.cloud_networks.collect(&:ems_ref).compact.each { |ems_ref| add_target!(:cloud_networks, ems_ref) }
+      vm.floating_ips.collect(&:ems_ref).compact.each { |ems_ref| add_target!(:floating_ips, ems_ref) }
       vm.network_ports.collect(&:ems_ref).compact.each do |ems_ref|
-        add_simple_target!(:network_ports, ems_ref)
+        add_target!(:network_ports, ems_ref)
       end
       vm.key_pairs.collect(&:name).compact.each do |name|
-        add_simple_target!(:key_pairs, name)
+        add_target!(:key_pairs, name)
       end
       vm.cloud_volumes.collect(&:ems_ref).compact.each do |ems_ref|
-        add_simple_target!(:cloud_volumes, ems_ref, :tenant_id => vm.cloud_tenant.ems_ref)
+        add_target!(:cloud_volumes, ems_ref, :tenant_id => vm.cloud_tenant.ems_ref)
       end
-      add_simple_target!(:images, vm.parent.ems_ref) if vm.parent
-      add_simple_target!(:cloud_tenants, vm.cloud_tenant.ems_ref) if vm.cloud_tenant
+      add_target!(:images, vm.parent.ems_ref) if vm.parent
+      add_target!(:cloud_tenants, vm.cloud_tenant.ems_ref) if vm.cloud_tenant
     end
   end
 
   def infer_related_vm_ems_refs_api!
     vms.each do |vm|
-      add_simple_target!(:images, vm.image["id"])
-      add_simple_target!(:availability_zones, vm.availability_zone)
-      add_simple_target!(:key_pairs, vm.key_name) if vm.key_name
-      add_simple_target!(:cloud_tenants, vm.tenant_id)
-      add_simple_target!(:flavors, vm.flavor["id"])
+      add_target!(:images, vm.image["id"])
+      add_target!(:availability_zones, vm.availability_zone)
+      add_target!(:key_pairs, vm.key_name) if vm.key_name
+      add_target!(:cloud_tenants, vm.tenant_id)
+      add_target!(:flavors, vm.flavor["id"])
 
       # pull the attachments from the raw attribute to avoid Fog making an unnecessary call
       # to inflate the volumes before we need them
       vm.attributes.fetch('os-extended-volumes:volumes_attached', []).each do |attachment|
-        add_simple_target!(:cloud_volumes, attachment["id"], :tenant_id => vm.tenant_id)
+        add_target!(:cloud_volumes, attachment["id"], :tenant_id => vm.tenant_id)
       end
       vm.os_interfaces.each do |iface|
-        add_simple_target!(:network_ports, iface.port_id)
-        add_simple_target!(:cloud_networks, iface.net_id)
+        add_target!(:network_ports, iface.port_id)
+        add_target!(:cloud_networks, iface.net_id)
       end
       vm.security_groups.each do |sg|
-        add_simple_target!(:security_groups, sg.id)
+        add_target!(:security_groups, sg.id)
       end
-      add_simple_target!(:floating_ips_by_address, vm.public_ip_address) if vm.public_ip_address.present?
+      add_target!(:floating_ips_by_address, vm.public_ip_address) if vm.public_ip_address.present?
     end
     target.manager_refs_by_association_reset
     floating_ips.each do |floating_ip|
-      add_simple_target!(:network_routers, floating_ip.router_id)
-      add_simple_target!(:network_ports, floating_ip.port_id)
-      add_simple_target!(:cloud_networks, floating_ip.floating_network_id)
+      add_target!(:network_routers, floating_ip.router_id)
+      add_target!(:network_ports, floating_ip.port_id)
+      add_target!(:cloud_networks, floating_ip.floating_network_id)
     end
   end
 end
