@@ -16,6 +16,8 @@ class ManageIQ::Providers::Openstack::Provider < ::Provider
 
   validates :name, :presence => true, :uniqueness => true
 
+  supports :create
+
   def destroy
     # Bypass the superclass orchestrated destroy for this Provider.
     #   In the OpenStack provider, the Provider instance is only tightly coupled
