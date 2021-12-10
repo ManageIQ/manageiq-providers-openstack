@@ -33,6 +33,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   include ManageIQ::Providers::Openstack::IdentitySyncMixin
 
   supports :catalog
+  supports :create
   supports :provisioning
   supports :cloud_tenants
   supports :cloud_tenant_mapping do
