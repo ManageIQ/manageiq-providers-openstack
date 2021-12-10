@@ -146,7 +146,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
           end,
           :includeEmpty    => true,
           :clearOnUnmount  => true,
-         },
+        },
         {
           :component => 'sub-form',
           :title     => _('Association Information'),
@@ -159,7 +159,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
               :name            => 'address',
               :validateOnMount => true,
               :label           => _('Floating IP Address (optional)'),
-              :isDisabled      => id,
             },
             {
               :component       => 'text-field',
@@ -167,7 +166,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
               :name            => 'fixed_ip_address',
               :validateOnMount => true,
               :label           => _('Fixed IP Address'),
-              :isDisabled      => id,
             },
             {
               :component       => 'text-field',
