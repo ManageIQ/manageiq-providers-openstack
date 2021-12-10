@@ -25,52 +25,45 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     {
       :fields => [
         {
-          :component => 'sub-form',
-          :id        => 'network-manager',
-          :name      => 'network-manager',
-          :fields    => [
+          :component       => 'select',
+          :id              => 'cloud_network_id',
+          :name            => 'cloud_network_id',
+          :label           => _('External Network'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :options         => ems.public_networks.map do |ct|
             {
-              :component       => 'select',
-              :id              => 'cloud_network_id',
-              :name            => 'cloud_network_id',
-              :label           => _('External Network'),
-              :placeholder     => "<#{_('Choose')}>",
-              :validateOnMount => true,
-              :validate        => [{
-                :type    => 'required',
-                :message => _('Required'),
-              }],
-              :options         => ems.public_networks.map do |ct|
-                {
-                  :label => ct.name,
-                  :value => ct.id.to_s,
-                }
-              end,
-              :includeEmpty    => true,
-              :clearOnUnmount  => true,
-            },
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
+        },
+        {
+          :component       => 'select',
+          :id              => 'cloud_tenant_id',
+          :name            => 'cloud_tenant_id',
+          :key             => "id-#{ems.id}",
+          :label           => _('Cloud Tenant Placement'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :options         => ems.cloud_tenants.map do |ct|
             {
-              :component       => 'select',
-              :id              => 'cloud_tenant_id',
-              :name            => 'cloud_tenant_id',
-              :key             => "id-#{ems.id}",
-              :label           => _('Cloud Tenant Placement'),
-              :placeholder     => "<#{_('Choose')}>",
-              :validateOnMount => true,
-              :validate        => [{
-                :type    => 'required',
-                :message => _('Required'),
-              }],
-              :options         => ems.cloud_tenants.map do |ct|
-                {
-                  :label => ct.name,
-                  :value => ct.id.to_s,
-                }
-              end,
-              :includeEmpty    => true,
-              :clearOnUnmount  => true,
-            },
-          ]
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
         },
         {
           :component => 'sub-form',
@@ -107,57 +100,53 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
 
   def params_for_update
     {
-      :fields => [
+      :component => 'sub-form',
+      :id        => 'placement',
+      :name      => 'placement',
+      :fields    => [
         {
-          :component => 'sub-form',
-          :id        => 'placement',
-          :name      => 'placement',
-          :fields    => [
+          :component       => 'select',
+          :id              => 'cloud_network_id',
+          :name            => 'cloud_network_id',
+          :label           => _('External Network'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :isDisabled      => !!id,
+          :options         => ext_management_system.public_networks.map do |ct|
             {
-              :component       => 'select',
-              :id              => 'cloud_network_id',
-              :name            => 'cloud_network_id',
-              :label           => _('External Network'),
-              :placeholder     => "<#{_('Choose')}>",
-              :validateOnMount => true,
-              :validate        => [{
-                :type    => 'required',
-                :message => _('Required'),
-              }],
-              :isDisabled      => !!id,
-              :options         => ext_management_system.public_networks.map do |ct|
-                {
-                  :label => ct.name,
-                  :value => ct.id.to_s,
-                }
-              end,
-              :includeEmpty    => true,
-              :clearOnUnmount  => true,
-            },
-            {
-              :component       => 'select',
-              :id              => 'cloud_tenant_id',
-              :name            => 'cloud_tenant_id',
-              :key             => "id-#{ems_id}",
-              :label           => _('Cloud Tenant Placement'),
-              :placeholder     => "<#{_('Choose')}>",
-              :validateOnMount => true,
-              :validate        => [{
-                :type    => 'required',
-                :message => _('Required'),
-              }],
-              :isDisabled      => !!id,
-              :options         => ext_management_system.cloud_tenants.map do |ct|
-                {
-                  :label => ct.name,
-                  :value => ct.id.to_s,
-                }
-              end,
-              :includeEmpty    => true,
-              :clearOnUnmount  => true,
-            },
-          ]
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
         },
+        {
+          :component       => 'select',
+          :id              => 'cloud_tenant_id',
+          :name            => 'cloud_tenant_id',
+          :key             => "id-#{ems_id}",
+          :label           => _('Cloud Tenant Placement'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :isDisabled      => !!id,
+          :options         => ext_management_system.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
+         },
         {
           :component => 'sub-form',
           :title     => _('Association Information'),
