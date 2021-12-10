@@ -21,6 +21,178 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
     end
   end
 
+  def self.params_for_create(ems)
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :id        => 'network-manager',
+          :name      => 'network-manager',
+          :fields    => [
+            {
+              :component       => 'select',
+              :id              => 'cloud_network_id',
+              :name            => 'cloud_network_id',
+              :label           => _('External Network'),
+              :placeholder     => "<#{_('Choose')}>",
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :options         => ems.public_networks.map do |ct|
+                {
+                  :label => ct.name,
+                  :value => ct.id.to_s,
+                }
+              end,
+              :includeEmpty    => true,
+              :clearOnUnmount  => true,
+            },
+            {
+              :component       => 'select',
+              :id              => 'cloud_tenant_id',
+              :name            => 'cloud_tenant_id',
+              :key             => "id-#{ems.id}",
+              :label           => _('Cloud Tenant Placement'),
+              :placeholder     => "<#{_('Choose')}>",
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :options         => ems.cloud_tenants.map do |ct|
+                {
+                  :label => ct.name,
+                  :value => ct.id.to_s,
+                }
+              end,
+              :includeEmpty    => true,
+              :clearOnUnmount  => true,
+            },
+          ]
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('Association Information'),
+          :id        => 'assocation-information',
+          :name      => 'assocation-information',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'address',
+              :name            => 'address',
+              :validateOnMount => true,
+              :label           => _('Floating IP Address (optional)'),
+            },
+            {
+              :component       => 'text-field',
+              :id              => 'fixed_ip_address',
+              :name            => 'fixed_ip_address',
+              :validateOnMount => true,
+              :label           => _('Fixed IP Address'),
+            },
+            {
+              :component       => 'text-field',
+              :id              => 'network_port_ems_ref',
+              :name            => 'network_port_ems_ref',
+              :validateOnMount => true,
+              :label           => _('Associated Port ID (blank to disassociate)'),
+            }
+          ]
+        },
+      ]
+    }
+  end
+
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :id        => 'placement',
+          :name      => 'placement',
+          :fields    => [
+            {
+              :component       => 'select',
+              :id              => 'cloud_network_id',
+              :name            => 'cloud_network_id',
+              :label           => _('External Network'),
+              :placeholder     => "<#{_('Choose')}>",
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isDisabled      => !!id,
+              :options         => ext_management_system.public_networks.map do |ct|
+                {
+                  :label => ct.name,
+                  :value => ct.id.to_s,
+                }
+              end,
+              :includeEmpty    => true,
+              :clearOnUnmount  => true,
+            },
+            {
+              :component       => 'select',
+              :id              => 'cloud_tenant_id',
+              :name            => 'cloud_tenant_id',
+              :key             => "id-#{ems_id}",
+              :label           => _('Cloud Tenant Placement'),
+              :placeholder     => "<#{_('Choose')}>",
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isDisabled      => !!id,
+              :options         => ext_management_system.cloud_tenants.map do |ct|
+                {
+                  :label => ct.name,
+                  :value => ct.id.to_s,
+                }
+              end,
+              :includeEmpty    => true,
+              :clearOnUnmount  => true,
+            },
+          ]
+        },
+        {
+          :component => 'sub-form',
+          :title     => _('Association Information'),
+          :id        => 'assocation-information',
+          :name      => 'assocation-information',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'address',
+              :name            => 'address',
+              :validateOnMount => true,
+              :label           => _('Floating IP Address (optional)'),
+              :isDisabled      => id,
+            },
+            {
+              :component       => 'text-field',
+              :id              => 'fixed_ip_address',
+              :name            => 'fixed_ip_address',
+              :validateOnMount => true,
+              :label           => _('Fixed IP Address'),
+              :isDisabled      => id,
+            },
+            {
+              :component       => 'text-field',
+              :id              => 'network_port_ems_ref',
+              :name            => 'network_port_ems_ref',
+              :validateOnMount => true,
+              :label           => _('Associated Port ID (blank to disassociate)'),
+            }
+          ]
+        },
+      ]
+    }
+  end
+
   def self.raw_create_floating_ip(ext_management_system, options)
     cloud_tenant = options.delete(:cloud_tenant)
     floating_ip = nil
