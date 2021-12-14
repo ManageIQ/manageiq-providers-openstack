@@ -71,9 +71,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
   # model_class defined due to ovirt dependency
   def add_cloud_tenants
-    add_collection_with_ems_param(cloud, :cloud_tenants) do |builder|
-      builder.add_properties(:model_class => ManageIQ::Providers::Openstack::CloudManager::CloudTenant)
-    end
+    add_collection_with_ems_param(cloud, :cloud_tenants)
   end
 
   # model_class defined due to ovirt dependency
