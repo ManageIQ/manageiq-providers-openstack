@@ -19,6 +19,232 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
     end
   end
 
+  def self.params_for_create(ems)
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :title     => _('Security Group Information'),
+          :id        => 'security_group_information',
+          :name      => 'security_group_information',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'security_group_name',
+              :name            => 'name',
+              :label           => _('Security Group Name'),
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isRequired      => true,
+              :clearOnUnmount  => true,
+            },
+            {
+              :component => 'text-field',
+              :id        => 'security_group_description',
+              :name      => 'description',
+              :label     => _('Security Group Description'),
+            },
+          ]
+        },
+        {
+          :component       => 'select',
+          :id              => 'cloud_tenant_id',
+          :name            => 'cloud_tenant_id',
+          :key             => "id-#{ems.id}",
+          :label           => _('Cloud Tenant Placement'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :isRequired      => true,
+          :options         => ems.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
+        }
+      ]
+    }
+  end
+
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :title     => _('Security Group Information'),
+          :id        => 'security_group_information',
+          :name      => 'security_group_information',
+          :fields    => [
+            {
+              :component       => 'text-field',
+              :id              => 'security_group_name',
+              :name            => 'name',
+              :label           => _('Security Group Name'),
+              :validateOnMount => true,
+              :validate        => [{
+                :type    => 'required',
+                :message => _('Required'),
+              }],
+              :isRequired      => true,
+              :clearOnUnmount  => true,
+            },
+            {
+              :component => 'text-field',
+              :id        => 'security_group_description',
+              :name      => 'description',
+              :label     => _('Security Group Description'),
+            },
+          ]
+        },
+        {
+          :component       => 'select',
+          :id              => 'cloud_tenant.id',
+          :name            => 'cloud_tenant.id',
+          :key             => "id-#{ext_management_system.id}",
+          :label           => _('Cloud Tenant Placement'),
+          :placeholder     => "<#{_('Choose')}>",
+          :validateOnMount => true,
+          :isDisabled      => !!id,
+          :validate        => [{
+            :type    => 'required',
+            :message => _('Required'),
+          }],
+          :isRequired      => true,
+          :options         => ext_management_system.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id.to_s,
+            }
+          end,
+          :includeEmpty    => true,
+          :clearOnUnmount  => true,
+        },
+        {
+          :component => 'sub-form',
+          :id        => 'firewall_rules',
+          :name      => 'firewall_rules',
+          :fields    => [
+            {
+              :component         => 'field-array',
+              :name              => 'firewall_rules',
+              :id                => 'firewall_rules',
+              :class_name        => 'firewall',
+              :label             => _('Firewall Rules'),
+              :noItemsMessage    => _('None'),
+              :buttonLabels      => {
+                :add    => _('Add a Firewall Rule'),
+                :remove => _('Delete'),
+              },
+              :AddButtonProps    => {
+                :size => 'small',
+              },
+              :RemoveButtonProps => {
+                :size => 'small',
+              },
+              :fields            => [
+                {
+                  :component    => 'select',
+                  :name         => 'direction',
+                  :id           => 'direction',
+                  :label        => _('Direction'),
+                  :includeEmpty => true,
+                  :options      => [
+                    {
+                      :label => _('inbound'),
+                      :value => 'inbound',
+                    },
+                    {
+                      :label => _('outbound'),
+                      :value => 'outbound',
+                    }
+                  ]
+                },
+                {
+                  :component    => 'select',
+                  :name         => 'network_protocol',
+                  :id           => 'network_protocol',
+                  :label        => _('Network Protocol'),
+                  :includeEmpty => true,
+                  :options      => [
+                    {
+                      :label => _('IPV4'),
+                      :value => 'IPV4',
+                    },
+                    {
+                      :label => _('IPV6'),
+                      :value => 'IPV6',
+                    }
+                  ]
+                },
+                {
+                  :component    => 'select',
+                  :name         => 'host_protocol',
+                  :id           => 'host_protocol',
+                  :label        => _('Host Protocol'),
+                  :includeEmpty => true,
+                  :options      => [
+                    {
+                      :label => _('TCP'),
+                      :value => 'TCP',
+                    },
+                    {
+                      :label => _('UDP'),
+                      :value => 'UDP',
+                    },
+                    {
+                      :label => _('ICMP'),
+                      :value => 'ICMP',
+                    },
+                  ]
+                },
+                {
+                  :component    => 'select',
+                  :name         => 'source_security_group_id',
+                  :id           => 'source_security_group_id',
+                  :label        => _('Remote Security Group (name - ref)'),
+                  :includeEmpty => true,
+                  :options      => ext_management_system.security_groups.map do |sg|
+                    {
+                      :label => "#{sg.name} - #{sg.ems_ref}",
+                      :value => sg.id.to_s,
+                    }
+                  end
+                },
+                {
+                  :component => 'text-field',
+                  :name      => 'source_ip_range',
+                  :id        => 'source_ip_range',
+                  :label     => _('IP Range'),
+                },
+                {
+                  :component => 'text-field',
+                  :name      => 'port',
+                  :id        => 'port',
+                  :label     => _('Port'),
+                },
+                {
+                  :component => 'text-field',
+                  :name      => 'end_port',
+                  :id        => 'end_port',
+                  :label     => _('End Port'),
+                }
+              ],
+            },
+          ]
+        },
+      ]
+    }
+  end
+
   def self.parse_security_group_rule(rule)
     if rule["source_security_group_id"] && !rule["source_security_group_id"].empty?
       sg = SecurityGroup.find(rule["source_security_group_id"])
