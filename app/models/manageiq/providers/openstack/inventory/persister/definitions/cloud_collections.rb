@@ -28,18 +28,18 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
 
     add_orchestration_stack_collections
 
-    %i(hardwares
-       operating_systems
-       disks
-       networks).each do |name|
-
+    %i[
+      hardwares
+      operating_systems
+      disks
+      snapshots
+      networks
+    ].each do |name|
       add_collection(cloud, name)
     end
 
     # Custom processing of Ancestry
     add_collection(cloud, :vm_and_miq_template_ancestry)
-
-    add_snapshots
 
     add_vm_and_template_labels
     add_vm_and_template_taggings
@@ -111,14 +111,6 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
         builder.add_properties(:targeted => false)
       end
       builder.add_default_values(:resource => manager)
-    end
-  end
-
-  def add_snapshots
-    add_collection(cloud, :snapshots) do |builder|
-      builder.add_properties(:model_class => ::Snapshot)
-      builder.add_properties(:parent_inventory_collections => %i[vms miq_templates])
-      builder.add_properties(:complete => !targeted?)
     end
   end
 
