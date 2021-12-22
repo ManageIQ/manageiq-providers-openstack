@@ -211,14 +211,12 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       operating_system.version = i.try(:os_version)
 
       if snapshot?(i) && parent_server_uid
-        snapshot = persister.snapshots.find_or_build(i.id)
+        snapshot = persister.snapshots.find_or_build_by(:uid => i.id, :vm_or_template => persister.vms.lazy_find(parent_server_uid))
         snapshot.name = i.name
-        snapshot.uid  = i.id
         snapshot.uid_ems = i.id
         snapshot.ems_ref = i.id
         snapshot.create_time = i.created_at
         snapshot.description = i.attributes[:description]
-        snapshot.vm_or_template = persister.vms.lazy_find(parent_server_uid)
       end
     end
   end
