@@ -1,9 +1,6 @@
 module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudCollections
   extend ActiveSupport::Concern
 
-  include ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::OrchestrationStackCollections
-
-  # used also in ovirt, so automatic model_classes are not possible in many cases
   def initialize_cloud_inventory_collections
     add_vms
     add_miq_templates
@@ -60,6 +57,18 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
       builder.add_properties(:model_class => ManageIQ::Providers::CloudManager::OrchestrationStack)
 
       yield builder if block_given?
+    end
+  end
+
+  def add_orchestration_templates
+    add_collection(cloud, :orchestration_templates) do |builder|
+      builder.add_properties(:model_class => ::OrchestrationTemplate)
+    end
+  end
+
+  def add_orchestration_stack_ancestry
+    add_collection(cloud, :orchestration_stack_ancestry) do |builder|
+      builder.remove_dependency_attributes(:orchestration_stacks_resources) unless targeted?
     end
   end
 
