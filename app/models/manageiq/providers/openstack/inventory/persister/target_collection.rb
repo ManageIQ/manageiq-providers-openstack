@@ -11,6 +11,6 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::TargetCollection < M
     initialize_tag_mapper
     initialize_cloud_inventory_collections
     initialize_network_inventory_collections
-    initialize_storage_inventory_collections
+    initialize_cinder_inventory_collections
   end
 end
