@@ -122,18 +122,18 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet do
     end
 
     def setup_mocked_collector
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:cloud_services).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:vms).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:tenants).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:orchestration_stacks).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:cloud_networks).and_return(mocked_cloud_networks)
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:cloud_subnets).and_return(mocked_cloud_subnets)
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:floating_ips).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_ports).and_return(mocked_network_ports)
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:network_routers).and_return(mocked_network_routers)
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:security_groups).and_return([])
-      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager).to receive(:firewall_rules).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:availability_zones).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:cloud_services).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:vms).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:tenants).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:orchestration_stacks).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:cloud_networks).and_return(mocked_cloud_networks)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:cloud_subnets).and_return(mocked_cloud_subnets)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:floating_ips).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:network_ports).and_return(mocked_network_ports)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:network_routers).and_return(mocked_network_routers)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:security_groups).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::FullCollection).to receive(:firewall_rules).and_return([])
     end
 
     def setup_mocked_targeted_collector

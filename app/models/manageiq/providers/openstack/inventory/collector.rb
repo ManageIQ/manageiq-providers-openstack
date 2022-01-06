@@ -3,6 +3,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
   include Vmdb::Logging
 
   require_nested :CloudManager
+  require_nested :FullCollection
   require_nested :NetworkManager
   require_nested :StorageManager
   require_nested :TargetCollection
@@ -36,6 +37,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     super
 
     initialize_inventory_sources
+    validate_required_services
   end
 
   def initialize_inventory_sources
@@ -74,6 +76,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     @hosts                      = []
   end
 
+  def validate_required_services
+    # Override in child collector if some services are required
+  end
+
   def connection
     @os_handle ||= manager.openstack_handle
     @connection ||= manager.connect
@@ -105,6 +111,18 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
 
   def orchestration_service
     @orchestration_service ||= manager.openstack_handle.detect_orchestration_service
+  end
+
+  def swift_service
+    @swift_service ||= manager.swift_service
+  end
+
+  def baremetal_service
+    @baremetal_service ||= manager.openstack_handle.detect_baremetal_service
+  end
+
+  def introspection_service
+    @introspection_service ||= manager.openstack_handle.detect_introspection_service
   end
 
   def orchestration_stacks
