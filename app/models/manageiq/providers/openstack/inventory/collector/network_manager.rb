@@ -3,31 +3,37 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
 
   def floating_ips
     return @floating_ips if @floating_ips.any?
+
     @floating_ips = network_service.handled_list(:floating_ips, {}, openstack_network_admin?)
   end
 
   def cloud_networks
     return @cloud_networks if @cloud_networks.any?
+
     @cloud_networks = safe_list { network_service.list_networks.body["networks"] }
   end
 
   def cloud_subnets
     return @cloud_subnets if @cloud_subnets.any?
+
     @cloud_subnets = network_service.handled_list(:subnets, {}, openstack_network_admin?)
   end
 
   def network_ports
     return @network_ports if @network_ports.any?
+
     @network_ports = network_service.handled_list(:ports, {}, openstack_network_admin?)
   end
 
   def network_routers
     return @network_routers if @network_routers.any?
+
     @network_routers = network_service.handled_list(:routers, {}, openstack_network_admin?)
   end
 
   def security_groups
     return @security_groups if @security_groups.any?
+
     @security_groups = network_service.handled_list(:security_groups, {}, openstack_network_admin?)
   end
 
@@ -47,11 +53,12 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::NetworkManager < Man
     # https://review.openstack.org/#/c/35034/, but never documented in API reference, so right now we
     # can't get list of detailed stacks in one API call.
     return @orchestration_stacks unless @orchestration_stacks.nil?
+
     @orchestration_stacks = if openstack_heat_global_admin?
-                                orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
-                              else
-                                orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
-                              end
+                              orchestration_service.handled_list(:stacks, {:show_nested => true, :global_tenant => true}, true).collect(&:details)
+                            else
+                              orchestration_service.handled_list(:stacks, :show_nested => true).collect(&:details)
+                            end
   rescue Excon::Errors::Forbidden
     # Orchestration service is detected but not open to the user
     $log.warn("Skip refreshing stacks because the user cannot access the orchestration service")
