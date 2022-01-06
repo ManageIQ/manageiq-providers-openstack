@@ -24,4 +24,8 @@ class ManageIQ::Providers::Openstack::Inventory::Persister < ManageIQ::Providers
   def cinder_manager
     manager.kind_of?(ManageIQ::Providers::Openstack::StorageManager::CinderManager) ? manager : manager.cinder_manager
   end
+
+  def swift_manager
+    manager.kind_of?(ManageIQ::Providers::Openstack::StorageManager::SwiftManager) ? manager : manager.swift_manager
+  end
 end
