@@ -17,7 +17,7 @@ class ManageIQ::Providers::Openstack::Inventory::Persister::NetworkManager < Man
        availability_zones
        cloud_tenants).each do |name|
 
-      add_collection(cloud, name, shared_cloud_properties)
+      add_collection(cloud, name, shared_cloud_properties, {:without_sti => true})
     end
 
     add_orchestration_stacks(shared_cloud_properties)
