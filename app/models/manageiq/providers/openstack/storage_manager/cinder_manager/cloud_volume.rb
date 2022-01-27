@@ -85,15 +85,14 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   end
 
   def self.raw_create_volume(ext_management_system, options)
+    options = options.symbolize_keys
+
     cloud_tenant = options.delete(:cloud_tenant)
     volume = nil
 
     # provide display_name for Cinder V1
     options[:display_name] |= options[:name]
-    with_notification(:cloud_volume_create,
-                      :options => {
-                        :volume_name => options[:name],
-                      }) do
+    with_notification(:cloud_volume_create, :options => {:volume_name => options[:name]}) do
       ext_management_system.with_provider_connection(cinder_connection_options(cloud_tenant)) do |service|
         volume = service.volumes.new(options)
         volume.save
@@ -106,10 +105,9 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   end
 
   def raw_update_volume(options)
-    with_notification(:cloud_volume_update,
-                      :options => {
-                        :subject => self,
-                      }) do
+    options = options.symbolize_keys
+
+    with_notification(:cloud_volume_update, :options => {:subject => self}) do
       with_provider_object do |volume|
         size = options.delete(:size)
         volume.attributes.merge!(options)
