@@ -33,10 +33,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :isRequired   => true,
           :includeEmpty => true,
           :validate     => [{:type => 'required'}],
-          :condition    => {
-            :when => 'edit',
-            :is   => false,
-          },
           :options      => ems.cloud_tenants.map do |ct|
             {
               :label => ct.name,
@@ -50,10 +46,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :id           => 'availability_zone_id',
           :label        => _('Availability Zone'),
           :includeEmpty => true,
-          :condition    => {
-            :when => 'edit',
-            :is   => false,
-          },
           :options      => ems.volume_availability_zones.map do |az|
             {
               :label => az.name,
@@ -67,10 +59,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :id           => 'volume_type',
           :label        => _('Cloud Volume Type'),
           :includeEmpty => true,
-          :condition    => {
-            :when => 'edit',
-            :is   => false,
-          },
           :options      => ems.cloud_volume_types.map do |cvt|
             {
               :label => cvt.name,
