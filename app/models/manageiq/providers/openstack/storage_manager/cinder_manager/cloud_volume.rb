@@ -72,6 +72,66 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     }
   end
 
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component  => 'text-field',
+          :name       => 'size',
+          :id         => 'size',
+          :label      => _('Size (in bytes)'),
+          :type       => 'number',
+          :step       => 1.gigabytes,
+          :isRequired => true,
+          :validate   => [{:type => 'required'}, {:type => 'min-number-value', :value => 0, :message => _('Size must be greater than or equal to 0')}],
+        },
+        {
+          :component  => 'select',
+          :name       => 'cloud_tenant_id',
+          :id         => 'cloud_tenant_id',
+          :label      => _('Cloud Tenant'),
+          :isRequired => true,
+          :validate   => [{:type => 'required'}],
+          :isDisabled => !!id,
+          :options    => ext_management_system.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id,
+            }
+          end,
+        },
+        {
+          :component    => 'select',
+          :name         => 'availability_zone_id',
+          :id           => 'availability_zone_id',
+          :label        => _('Availability Zone'),
+          :includeEmpty => true,
+          :isDisabled   => !!id,
+          :options      => ext_management_system.volume_availability_zones.map do |az|
+            {
+              :label => az.name,
+              :value => az.id,
+            }
+          end,
+        },
+        {
+          :component    => 'select',
+          :name         => 'volume_type',
+          :id           => 'volume_type',
+          :label        => _('Cloud Volume Type'),
+          :includeEmpty => true,
+          :isDisabled   => !!id,
+          :options      => ext_management_system.cloud_volume_types.map do |cvt|
+            {
+              :label => cvt.name,
+              :value => cvt.name,
+            }
+          end,
+        },
+      ]
+    }
+  end
+
   def self.raw_create_volume(ext_management_system, options)
     options = options.symbolize_keys
 
