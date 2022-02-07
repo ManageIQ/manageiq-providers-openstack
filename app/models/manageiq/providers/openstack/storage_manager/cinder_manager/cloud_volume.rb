@@ -25,7 +25,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :type       => 'number',
           :step       => 1.gigabytes,
           :isRequired => true,
-          :validate   => [{:type => 'required'}, {:type => 'min-number-value', :value => 0, :message => _('Size must be greater than or equal to 0')}],
+          :validate   => [{:type => 'required'}, {:type => 'min-number-value', :value => 1, :message => _('Size must be greater than or equal to 1')}],
         },
         {
           :component    => 'select',
@@ -83,7 +83,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :type       => 'number',
           :step       => 1.gigabytes,
           :isRequired => true,
-          :validate   => [{:type => 'required'}, {:type => 'min-number-value', :value => 0, :message => _('Size must be greater than or equal to 0')}],
+          :validate   => [{:type => 'required'}, {:type => 'min-number-value', :value => 1, :message => _('Size must be greater than or equal to 1')}],
         },
         {
           :component  => 'select',
