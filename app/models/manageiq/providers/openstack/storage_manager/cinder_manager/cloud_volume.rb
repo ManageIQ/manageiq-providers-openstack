@@ -137,7 +137,8 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
   def self.raw_create_volume(ext_management_system, options)
     options = options.symbolize_keys
 
-    cloud_tenant = options.delete(:cloud_tenant)
+    cloud_tenant_id = options.delete(:cloud_tenant_id)
+    cloud_tenant    = CloudTenant.find_by(:id => cloud_tenant_id) if cloud_tenant_id
     volume = nil
 
     # provide display_name for Cinder V1
