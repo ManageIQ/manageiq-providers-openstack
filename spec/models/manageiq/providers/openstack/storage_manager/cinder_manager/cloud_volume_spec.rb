@@ -38,7 +38,7 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
   describe 'volume actions' do
     context ".create_volume" do
       let(:the_new_volume) { double }
-      let(:volume_options) { {:cloud_tenant => tenant, :name => "new_name", :size => 2} }
+      let(:volume_options) { {"cloud_tenant_id" => tenant.id, "name" => "new_name", "size" => 2} }
 
       before do
         NotificationType.seed
