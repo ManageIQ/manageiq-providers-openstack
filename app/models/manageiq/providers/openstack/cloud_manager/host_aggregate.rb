@@ -14,22 +14,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     AvailabilityZone.find_by(:ems_ref => availability_zone, :ems_id => ems_id)
   end
 
-  def self.create_aggregate_queue(userid, ext_management_system, options = {})
-    task_opts = {
-      :action => "creating Host Aggregate for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => "ManageIQ::Providers::Openstack::CloudManager::HostAggregate",
-      :method_name => 'create_aggregate',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => [ext_management_system.id, options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def self.create_aggregate(ems_id, options)
     raise ArgumentError, _("ems cannot be nil") if ems_id.nil?
     ext_management_system = ExtManagementSystem.find(ems_id)
@@ -65,23 +49,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     end
   end
 
-  def update_aggregate_queue(userid, options = {})
-    task_opts = {
-      :action => "updating Host Aggregate for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'update_aggregate',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def update_aggregate(options)
     unless options[:name].blank?
       rename_aggregate(options[:name])
@@ -115,23 +82,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     raise MiqException::MiqHostAggregateUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def delete_aggregate_queue(userid)
-    task_opts = {
-      :action => "deleting Host Aggregate for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'delete_aggregate',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => []
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def delete_aggregate
     external_aggregate.destroy
   rescue => e
@@ -151,23 +101,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
     end.try(:host_name)
   end
 
-  def add_host_queue(userid, new_host)
-    task_opts = {
-      :action => "Adding Host to Host Aggregate for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'add_host',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => [new_host.id]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def add_host(host_id)
     raise ArgumentError, _("Host ID cannot be nil") if host_id.nil?
     new_host = Host.find(host_id)
@@ -179,23 +112,6 @@ class ManageIQ::Providers::Openstack::CloudManager::HostAggregate < ::HostAggreg
   rescue => e
     _log.error "host_aggregate=[#{name}], error: #{e}"
     raise MiqException::MiqHostAggregateAddHostError, parse_error_message_from_fog_response(e), e.backtrace
-  end
-
-  def remove_host_queue(userid, old_host)
-    task_opts = {
-      :action => "Removing Host from Host Aggregate for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'remove_host',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => [old_host.id]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
 
   def remove_host(host_id)
