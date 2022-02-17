@@ -12,7 +12,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   include ManageIQ::Providers::Openstack::ManagerMixin
   include SupportsFeatureMixin
 
-  supports :create
   supports :create_network_router
   supports :cloud_subnet_create
 
