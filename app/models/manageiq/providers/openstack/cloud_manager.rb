@@ -21,6 +21,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   require_nested :Template
   require_nested :Vm
 
+  has_one :network_manager,
+          :foreign_key => :parent_ems_id,
+          :class_name  => "ManageIQ::Providers::Openstack::NetworkManager",
+          :autosave    => true,
+          :dependent   => :destroy
   has_many :storage_managers,
            :foreign_key => :parent_ems_id,
            :class_name  => "ManageIQ::Providers::StorageManager",
@@ -442,19 +447,15 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
 
   def ensure_network_manager
-    build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
+    build_network_manager unless network_manager
   end
 
   def ensure_cinder_manager
-    return false if cinder_manager
-    build_cinder_manager
-    true
+    build_cinder_manager unless cinder_manager
   end
 
   def ensure_swift_manager
-    return false if swift_manager
-    build_swift_manager
-    true
+    build_swift_manager unless swift_manager
   end
 
   after_save :save_on_other_managers
