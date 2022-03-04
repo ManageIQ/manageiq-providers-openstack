@@ -7,7 +7,9 @@ class ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair < ManageIQ::Prov
   def self.raw_create_key_pair(ext_management_system, create_options)
     connection_options = {:service => 'Compute'}
     ext_management_system.with_provider_connection(connection_options) do |service|
-      service.key_pairs.create(create_options)
+      kp = service.key_pairs.create(create_options)
+
+      {:name => kp.name, :fingerprint => kp.fingerprint, :auth_key => kp.private_key}
     end
   rescue => err
     _log.error "keypair=[#{name}], error: #{err}"
