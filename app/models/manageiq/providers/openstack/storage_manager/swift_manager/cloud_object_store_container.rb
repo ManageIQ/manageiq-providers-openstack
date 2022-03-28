@@ -35,7 +35,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
     project_id = ''
 
     options[:key] = options["name"]
-    with_notification(:cloud_container_create, :options => {:key => options["name"]}) do
+    with_notification(:cloud_container_create, :options => {:cloud_container_name => options["name"]}) do
       ext_management_system.with_provider_connection(swift_connection_options(cloud_tenant)) do |service|
         project_id = service.get_current_tenant.id
         directory = service.directories.new(options)
@@ -48,7 +48,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
   rescue => e
     _log.error("container=[#{options[:name]}], error: #{e}")
     parsed_error = parse_error_message_from_neutron_response(e)
-    raise MiqException::MiqCloudObjectStoreContainerCreateError, parsed_error, e.backtrace
+    raise MiqException::Error, parsed_error, e.backtrace
   end
 
   def self.swift_connection_options(cloud_tenant = nil)
