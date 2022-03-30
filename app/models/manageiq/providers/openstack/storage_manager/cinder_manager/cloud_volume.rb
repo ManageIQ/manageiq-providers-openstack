@@ -244,11 +244,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot.create_snapshot(self, options)
   end
 
-  def create_volume_snapshot_queue(userid, options)
-    ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot
-      .create_snapshot_queue(userid, self, options)
-  end
-
   def available_vms
     cloud_tenant.vms.where.not(:id => vms.select(&:id))
   end
