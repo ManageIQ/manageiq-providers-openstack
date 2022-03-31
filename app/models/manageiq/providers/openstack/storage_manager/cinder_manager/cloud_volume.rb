@@ -240,10 +240,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
 
-  def create_volume_snapshot(options)
-    ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot.create_snapshot(self, options)
-  end
-
   def available_vms
     cloud_tenant.vms.where.not(:id => vms.select(&:id))
   end

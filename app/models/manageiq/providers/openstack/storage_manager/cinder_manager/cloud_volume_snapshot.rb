@@ -46,26 +46,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     raise MiqException::MiqVolumeSnapshotCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def update_snapshot_queue(userid = "system", options = {})
-    task_opts = {
-      :action => "updating volume snapshot #{inspect} in #{ext_management_system.inspect} with #{options.inspect}",
-      :userid => userid
-    }
-
-    queue_opts = {
-      :class_name  => self.class.name,
-      :instance_id => id,
-      :method_name => 'update_snapshot',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
-  def update_snapshot(options = {})
+  def raw_update_snapshot(options = {})
     with_provider_object do |snapshot|
       if snapshot
         snapshot.update(options)
