@@ -59,26 +59,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     raise MiqException::MiqVolumeSnapshotUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def delete_snapshot_queue(userid = "system", _options = {})
-    task_opts = {
-      :action => "deleting volume snapshot #{inspect} in #{ext_management_system.inspect}",
-      :userid => userid
-    }
-
-    queue_opts = {
-      :class_name  => self.class.name,
-      :instance_id => id,
-      :method_name => 'delete_snapshot',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => []
-    }
-
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
-  def delete_snapshot(_options = {})
+  def raw_delete_snapshot(_options = {})
     with_notification(:cloud_volume_snapshot_delete,
                       :options => {
                         :subject       => self,
