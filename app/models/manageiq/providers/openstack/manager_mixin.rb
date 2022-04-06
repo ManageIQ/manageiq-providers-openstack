@@ -154,7 +154,9 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       when Excon::Errors::Timeout
         MiqException::MiqUnreachableError.new("Login attempt timed out")
       when Excon::Errors::SocketError
-        MiqException::MiqHostError.new("Socket error: #{err.message}")
+        MiqException::MiqHostError.new("Socket error: #{err.socket_error}")
+      when Excon::Error::BadRequest
+        MiqException::MiqHostError.new("Bad request: #{err.response.body}")
       when MiqException::MiqInvalidCredentialsError, MiqException::MiqHostError, MiqException::ServiceNotAvailable
         err
       else
