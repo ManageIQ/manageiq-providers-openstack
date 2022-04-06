@@ -25,8 +25,10 @@ module ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolum
     end
   rescue => e
     volume_name = name.presence || ems_ref
-    _log.error("volume=[#{volume_name}], error: #{e}")
-    raise MiqException::MiqVolumeAttachError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume=[#{volume_name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeAttachError, parsed_error, e.backtrace
   end
 
   def raw_detach_volume(server_ems_ref)
@@ -41,7 +43,9 @@ module ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolum
     end
   rescue => e
     volume_name = name.presence || ems_ref
-    _log.error("volume=[#{volume_name}], error: #{e}")
-    raise MiqException::MiqVolumeDetachError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume=[#{volume_name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeDetachError, parsed_error, e.backtrace
   end
 end

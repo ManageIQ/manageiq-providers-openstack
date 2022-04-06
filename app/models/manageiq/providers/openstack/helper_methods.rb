@@ -24,8 +24,8 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def parse_error_message_from_fog_response(exception)
-      exception_string = exception.to_s
-      matched_message = exception_string.match(/message\\\": \\\"(.*)\\\", /)
+      exception_string = exception.respond_to?(:response) ? exception.response&.body : exception.to_s
+      matched_message = exception_string.match(/"message": "(.*)"/)
       matched_message ? matched_message[1] : exception_string
     end
 
@@ -68,7 +68,7 @@ module ManageIQ::Providers::Openstack::HelperMethods
         yield
       rescue => ex
         # Fog specific
-        error_message = parse_error_message_from_fog_response(ex.to_s)
+        error_message = parse_error_message_from_fog_response(ex)
         Notification.create(:type => "#{type}_error".to_sym, :options => error_options.merge(:error_message => error_message), **named_options)
         raise
       else

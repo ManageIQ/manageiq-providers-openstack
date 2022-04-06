@@ -149,8 +149,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     end
     {:ems_ref => volume.id, :status => volume.status, :name => options[:name]}
   rescue => e
-    _log.error "volume=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqVolumeCreateError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume=[#{options[:name]}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeCreateError, parsed_error, e.backtrace
   end
 
   def raw_update_volume(options)
@@ -165,8 +167,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error "volume=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeUpdateError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeUpdateError, parsed_error, e.backtrace
   end
 
   def raw_delete_volume
@@ -194,8 +198,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error "backup=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeBackupCreateError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("backup=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeBackupCreateError, parsed_error, e.backtrace
   end
 
   def backup_create_queue(userid, options = {})
@@ -220,8 +226,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       backup.restore(ems_ref)
     end
   rescue => e
-    _log.error "volume=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeBackupRestoreError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeBackupRestoreError, parsed_error, e.backtrace
   end
 
   def backup_restore_queue(userid, backup_id)
