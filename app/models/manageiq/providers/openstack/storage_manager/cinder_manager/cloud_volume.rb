@@ -38,7 +38,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :options      => ems.cloud_tenants.map do |ct|
             {
               :label => ct.name,
-              :value => ct.id,
+              :value => ct.id.to_s,
             }
           end,
         },
@@ -96,7 +96,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
           :options    => ext_management_system.cloud_tenants.map do |ct|
             {
               :label => ct.name,
-              :value => ct.id,
+              :value => ct.id.to_s,
             }
           end,
         },
