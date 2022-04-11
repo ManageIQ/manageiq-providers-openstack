@@ -26,7 +26,7 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager::CloudObjectS
           :includeEmpty => true,
           :validate     => [{:type => 'required'}],
           :options      => cloud_tenants.map do |ct|
-            {:label => ct.name, :value => ct.id}
+            {:label => ct.name, :value => ct.id.to_s}
           end
         }
       ]
