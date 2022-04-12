@@ -38,7 +38,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :options      => ems.cloud_tenants.map do |ct|
             {
               :label => ct.name,
-              :value => ct.id,
+              :value => ct.id.to_s,
             }
           end,
         },
@@ -51,6 +51,109 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :includeEmpty => true,
           :validate     => [{:type => 'required'}],
           :options      => ems.cloud_networks.map do |cvt|
+            {
+              :label => cvt.name,
+              :value => cvt.id.to_s,
+            }
+          end
+        },
+        {
+          :component => 'text-field',
+          :id        => 'gateway',
+          :name      => 'gateway',
+          :label     => _('Gateway'),
+        },
+        {
+          :component => 'switch',
+          :id        => 'dhcp_enabled',
+          :name      => 'dhcp_enabled',
+          :label     => _('DHCP'),
+          :onText    => 'Enabled',
+          :offText   => 'Disabled',
+        },
+        {
+          :component => 'select',
+          :name      => 'extra_attributes.ip_version',
+          :id        => 'extra_attributes.ip_version',
+          :label     => _('IP Version'),
+          :options   => [
+            {
+              :label => 'ipv4',
+              :value => 4,
+            },
+            {
+              :label => 'ipv6',
+              :value => 6,
+            }
+          ]
+        },
+        {
+          :component         => 'field-array',
+          :id                => 'extra_attributes.allocation_pools',
+          :name              => 'extra_attributes.allocation_pools',
+          :label             => _('Allocation Pools'),
+          :fields            => [
+            {:component => 'text-field', :id => 'start', :name => 'start', :label => _('Start')},
+            {:component => 'text-field', :id => 'end', :name => 'end', :label => _('End')}
+          ],
+          :noItemsMessage    => _('None'),
+          :buttonLabels      => {
+            :add    => _('Add'),
+            :remove => _('Remove'),
+          },
+          :AddButtonProps    => {:size => 'small'},
+          :RemoveButtonProps => {:size => 'small'},
+        },
+        {
+          :component         => 'field-array',
+          :id                => 'extra_attributes.host_routes',
+          :name              => 'extra_attributes.host_routes',
+          :label             => _('Host Routes'),
+          :fields            => [
+            {:component => 'text-field', :id => 'nexthop', :name => 'nexthop', :label => _('Nexthop')},
+            {:component => 'text-field', :id => 'destination', :name => 'destination', :label => _('Destination')}
+          ],
+          :noItemsMessage    => _('None'),
+          :buttonLabels      => {
+            :add    => _('Add'),
+            :remove => _('Remove'),
+          },
+          :AddButtonProps    => {:size => 'small'},
+          :RemoveButtonProps => {:size => 'small'},
+        },
+      ]
+    }
+  end
+
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component    => 'select',
+          :name         => 'cloud_tenant_id',
+          :id           => 'cloud_tenant_id',
+          :label        => _('Cloud Tenant Placement'),
+          :validate     => [{:type => 'required'}],
+          :includeEmpty => true,
+          :isRequired   => true,
+          :isDisabled   => true,
+          :options      => ext_management_system.cloud_tenants.map do |ct|
+            {
+              :label => ct.name,
+              :value => ct.id,
+            }
+          end,
+        },
+        {
+          :component    => 'select',
+          :name         => 'cloud_network_id',
+          :id           => 'cloud_network_id',
+          :label        => _('Network'),
+          :isRequired   => true,
+          :includeEmpty => true,
+          :isDisabled   => true,
+          :validate     => [{:type => 'required'}],
+          :options      => ext_management_system.cloud_networks.map do |cvt|
             {
               :label => cvt.name,
               :value => cvt.id,
@@ -72,11 +175,12 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet < ::CloudSubne
           :offText   => 'Disabled',
         },
         {
-          :component    => 'select',
-          :name         => 'extra_attributes.ip_version',
-          :id           => 'extra_attributes.ip_version',
-          :label        => _('IP Version'),
-          :options      => [
+          :component  => 'select',
+          :name       => 'extra_attributes.ip_version',
+          :id         => 'extra_attributes.ip_version',
+          :label      => _('IP Version'),
+          :isDisabled => true,
+          :options    => [
             {
               :label => 'ipv4',
               :value => 4,
