@@ -14,27 +14,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     super(connection_options)
   end
 
-  def self.create_snapshot_queue(userid, cloud_volume, options = {})
-    ext_management_system = cloud_volume.try(:ext_management_system)
-    task_opts = {
-      :action => "creating volume snapshot in #{ext_management_system.inspect} for #{cloud_volume.inspect} with #{options.inspect}",
-      :userid => userid
-    }
-
-    queue_opts = {
-      :class_name  => cloud_volume.class.name,
-      :instance_id => cloud_volume.id,
-      :method_name => 'create_volume_snapshot',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone(ext_management_system),
-      :args        => [options]
-    }
-
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
-  def self.create_snapshot(cloud_volume, options = {})
+  def self.raw_create_snapshot(cloud_volume, options = {})
     raise ArgumentError, _("cloud_volume cannot be nil") if cloud_volume.nil?
     ext_management_system = cloud_volume.try(:ext_management_system)
     raise ArgumentError, _("ext_management_system cannot be nil") if ext_management_system.nil?
@@ -66,26 +46,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     raise MiqException::MiqVolumeSnapshotCreateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def update_snapshot_queue(userid = "system", options = {})
-    task_opts = {
-      :action => "updating volume snapshot #{inspect} in #{ext_management_system.inspect} with #{options.inspect}",
-      :userid => userid
-    }
-
-    queue_opts = {
-      :class_name  => self.class.name,
-      :instance_id => id,
-      :method_name => 'update_snapshot',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => [options]
-    }
-
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
-  def update_snapshot(options = {})
+  def raw_update_snapshot(options = {})
     with_provider_object do |snapshot|
       if snapshot
         snapshot.update(options)
@@ -98,26 +59,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     raise MiqException::MiqVolumeSnapshotUpdateError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def delete_snapshot_queue(userid = "system", _options = {})
-    task_opts = {
-      :action => "deleting volume snapshot #{inspect} in #{ext_management_system.inspect}",
-      :userid => userid
-    }
-
-    queue_opts = {
-      :class_name  => self.class.name,
-      :instance_id => id,
-      :method_name => 'delete_snapshot',
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => my_zone,
-      :args        => []
-    }
-
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
-  def delete_snapshot(_options = {})
+  def raw_delete_snapshot(_options = {})
     with_notification(:cloud_volume_snapshot_delete,
                       :options => {
                         :subject       => self,

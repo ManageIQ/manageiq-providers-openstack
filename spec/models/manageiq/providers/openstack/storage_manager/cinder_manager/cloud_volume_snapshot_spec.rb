@@ -80,7 +80,7 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
     context "#delete_snapshot" do
       it 'deletes the snapshot' do
         expect(the_raw_snapshot).to receive(:destroy)
-        cloud_volume_snapshot.delete_snapshot({})
+        cloud_volume_snapshot.delete_snapshot
       end
     end
   end
