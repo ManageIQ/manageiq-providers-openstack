@@ -24,9 +24,24 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def parse_error_message_from_fog_response(exception)
-      exception_string = exception.to_s
-      matched_message = exception_string.match(/message\\\": \\\"(.*)\\\", /)
-      matched_message ? matched_message[1] : exception_string
+      exception_string = exception.respond_to?(:response) ? exception.response&.body : exception.to_s
+
+      error_message = nil
+
+      begin
+        parsed_exception = JSON.parse(exception_string)
+
+        # See if the message is at the root
+        error_message = parsed_exception["message"]
+        # Otherwise, see if the message is in a nested hash
+        error_message ||= parsed_exception.values.detect { |v| v.include?("message") }.try(:[], "message")
+      rescue JSON::ParserError
+        # Otherwise, just use the raw exception
+        error_message = exception_string.match(/"message": "(.*)"/)&.captures&.first
+      end
+
+      # If nothing matches return the original exception_string
+      error_message || exception_string
     end
 
     def parse_error_message_from_neutron_response(exception)
@@ -68,7 +83,7 @@ module ManageIQ::Providers::Openstack::HelperMethods
         yield
       rescue => ex
         # Fog specific
-        error_message = parse_error_message_from_fog_response(ex.to_s)
+        error_message = parse_error_message_from_fog_response(ex)
         Notification.create(:type => "#{type}_error".to_sym, :options => error_options.merge(:error_message => error_message), **named_options)
         raise
       else

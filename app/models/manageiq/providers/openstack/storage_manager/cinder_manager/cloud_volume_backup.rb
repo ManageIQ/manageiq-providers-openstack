@@ -16,8 +16,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error("backup=[#{name}], error: #{e}")
-    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("backup=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqOpenstackApiRequestError, parsed_error, e.backtrace
   end
 
   def raw_delete
@@ -31,8 +33,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error("volume backup=[#{name}], error: #{e}")
-    raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("volume backup=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqOpenstackApiRequestError, parsed_error, e.backtrace
   end
 
   def with_provider_object

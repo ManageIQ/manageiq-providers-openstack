@@ -42,8 +42,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       :ext_management_system => ext_management_system,
     )
   rescue => e
-    _log.error "snapshot=[#{options[:name]}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotCreateError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("snapshot=[#{options[:name]}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeSnapshotCreateError, parsed_error, e.backtrace
   end
 
   def raw_update_snapshot(options = {})
@@ -55,8 +57,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error "snapshot=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotUpdateError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("snapshot=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeSnapshotUpdateError, parsed_error, e.backtrace
   end
 
   def raw_delete_snapshot(_options = {})
@@ -74,8 +78,10 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
       end
     end
   rescue => e
-    _log.error "snapshot=[#{name}], error: #{e}"
-    raise MiqException::MiqVolumeSnapshotDeleteError, parse_error_message_from_fog_response(e), e.backtrace
+    parsed_error = parse_error_message_from_fog_response(e)
+
+    _log.error("snapshot=[#{name}], error: #{parsed_error}")
+    raise MiqException::MiqVolumeSnapshotDeleteError, parsed_error, e.backtrace
   end
 
   def self.connection_options(cloud_tenant = nil)
