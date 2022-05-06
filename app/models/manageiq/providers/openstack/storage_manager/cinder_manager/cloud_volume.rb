@@ -132,6 +132,19 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume
     }
   end
 
+  def params_for_attach
+    {
+      :fields => [
+        {
+          :component => 'text-field',
+          :name      => 'device_mountpoint',
+          :id        => 'device_mountpoint',
+          :label     => _('Device Mountpoint')
+        }
+      ]
+    }
+  end
+
   def self.raw_create_volume(ext_management_system, options)
     options = options.symbolize_keys
 
