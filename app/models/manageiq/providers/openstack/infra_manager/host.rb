@@ -22,6 +22,12 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   supports :refresh_network_interfaces
   supports :set_node_maintenance
   supports :unset_node_maintenance
+  supports :start do
+    unsupported_reason_add(:start, _("Cannot start. Already on.")) unless state.casecmp("off") == 0
+  end
+  supports :stop do
+    unsupported_reason_add(:stop, _("Cannot stop. Already off.")) unless state.casecmp("on") == 0
+  end
 
   # TODO(lsmola) for some reason UI can't handle joined table cause there is hardcoded somewhere that it selects
   # DISTINCT id, with joined tables, id needs to be prefixed with table name. When this is figured out, replace
@@ -319,24 +325,8 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     raise MiqException::MiqOpenstackInfraHostProvideError, parse_error_message_from_fog_response(e), e.backtrace
   end
 
-  def validate_start
-    if state.casecmp("off") == 0
-      {:available => true,   :message => nil}
-    else
-      {:available => false,  :message => _("Cannot start. Already on.")}
-    end
-  end
-
   def start(userid = "system")
     ironic_set_power_state_queue(userid, "power on")
-  end
-
-  def validate_stop
-    if state.casecmp("on") == 0
-      {:available => true,   :message => nil}
-    else
-      {:available => false,  :message => _("Cannot stop. Already off.")}
-    end
   end
 
   def stop(userid = "system")
