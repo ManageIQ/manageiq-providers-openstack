@@ -61,7 +61,7 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
         allow(raw_snapshots).to receive(:create).and_return(the_new_snapshot)
 
         snapshot = ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolumeSnapshot
-                   .create_snapshot(cloud_volume, snapshot_options)
+                   .create_snapshot(cloud_volume.id, snapshot_options)
         expect(snapshot.class).to        eq described_class
         expect(snapshot.name).to         eq 'new_name'
         expect(snapshot.ems_ref).to      eq 'new_id'
