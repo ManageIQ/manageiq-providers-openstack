@@ -344,10 +344,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     %w(userid password auth_key)
   end
 
-  def supports_authentication?(authtype)
-    supported_auth_types.include?(authtype.to_s)
-  end
-
   def self.catalog_types
     {"openstack" => N_("OpenStack")}
   end
