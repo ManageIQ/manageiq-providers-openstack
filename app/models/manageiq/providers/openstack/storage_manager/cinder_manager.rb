@@ -73,10 +73,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     %w(default amqp)
   end
 
-  def supports_authentication?(authtype)
-    supported_auth_types.include?(authtype.to_s)
-  end
-
   def self.event_monitor_class
     ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher
   end

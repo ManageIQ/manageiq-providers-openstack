@@ -531,10 +531,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     {"openstack" => N_("OpenStack")}
   end
 
-  def supports_authentication?(authtype)
-    supported_auth_types.include?(authtype.to_s)
-  end
-
   def required_credential_fields(type)
     case type.to_s
     when 'ssh_keypair' then [:userid, :auth_key]
