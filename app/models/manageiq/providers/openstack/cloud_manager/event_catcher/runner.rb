@@ -1,5 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::EventCatcher::Runner < ManageIQ::Providers::BaseManager::EventCatcher::Runner
-  include ManageIQ::Providers::Openstack::EventCatcherMixin
+  include ManageIQ::Providers::Openstack::EventCatcherRunnerMixin
 
   def add_openstack_queue(event)
     event_hash = ManageIQ::Providers::Openstack::CloudManager::EventParser.event_to_hash(event, @cfg[:ems_id])
