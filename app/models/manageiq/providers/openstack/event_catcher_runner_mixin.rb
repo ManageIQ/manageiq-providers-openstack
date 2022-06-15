@@ -26,8 +26,8 @@ module ManageIQ::Providers::Openstack::EventCatcherRunnerMixin
   end
 
   def stop_event_monitor
-    @event_monitor_handle.stop unless @event_monitor_handle.nil?
-  rescue Exception => err
+    @event_monitor_handle&.stop
+  rescue => err
     _log.warn("#{log_prefix} Event Monitor Stop errored because [#{err.message}]")
     _log.warn("#{log_prefix} Error details: [#{err.details}]")
     _log.log_backtrace(err)
@@ -39,9 +39,9 @@ module ManageIQ::Providers::Openstack::EventCatcherRunnerMixin
     event_monitor_handle.start
     event_monitor_running
     event_monitor_handle.each_batch do |events|
-      if events && !events.empty?
+      if events.present?
         _log.debug("#{log_prefix} Received events #{events.collect { |e| e.payload["event_type"] }}") if _log.debug?
-        @queue.enq events
+        @queue.enq(events)
       end
       sleep_poll_normal
     end
@@ -52,16 +52,16 @@ module ManageIQ::Providers::Openstack::EventCatcherRunnerMixin
   end
 
   def queue_event(event)
-    _log.info "#{log_prefix} Caught event [#{event.payload["event_type"]}]"
+    _log.info("#{log_prefix} Caught event [#{event.payload["event_type"]}]")
 
     event_hash = {}
     # copy content
     content = event.payload
-    event_hash[:content] = content.reject { |k, _v| k.start_with? "_context_" }
+    event_hash[:content] = content.reject { |k, _v| k.start_with?("_context_") }
 
     # copy context
     event_hash[:context] = {}
-    content.select { |k, _v| k.start_with? "_context_" }.each_pair do |k, v|
+    content.select { |k, _v| k.start_with?("_context_") }.each_pair do |k, v|
       event_hash[:context][k] = v
     end
 
