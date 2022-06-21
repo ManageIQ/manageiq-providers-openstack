@@ -35,6 +35,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
            :endpoints,
            :cloud_tenants,
            :volume_availability_zones,
+           :supports_events?,
            :to        => :parent_manager,
            :allow_nil => true
 

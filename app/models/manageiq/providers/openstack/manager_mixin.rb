@@ -314,19 +314,23 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     OpenstackEventMonitor.available?(event_monitor_options)
   rescue => err
     miq_exception = translate_exception(err)
-    raise unless miq_exception
-
-    _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
-    raise miq_exception
+    raise miq_exception || err
   end
 
   def verify_credentials(auth_type = nil, options = {})
-    verify_api_credentials
+    case auth_type
+    when :default
+      verify_api_credentials
+    when :amqp
+      verify_amqp_credentials
+    else
+      verify_api_credentials
 
-    capabilities["events"] = !!event_monitor_available?
-    save! if changed?
+      capabilities["events"] = !!event_monitor_available?
+      save! if changed?
 
-    true
+      true
+    end
   end
 
   def required_credential_fields(_type)

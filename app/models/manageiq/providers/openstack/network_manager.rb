@@ -36,6 +36,7 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
            :hostname,
            :default_endpoint,
            :endpoints,
+           :supports_events?,
            :to        => :parent_manager,
            :allow_nil => true
 
