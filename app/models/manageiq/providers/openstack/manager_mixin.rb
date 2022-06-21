@@ -256,8 +256,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def event_monitor_available?
-    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
-    OpenstackEventMonitor.available?(event_monitor_options)
+    verify_event_monitor
   rescue => e
     _log.error("Exception trying to find openstack event monitor for #{name}(#{hostname}). #{e.message}")
     _log.error(e.backtrace.join("\n"))
@@ -310,17 +309,24 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
   private :verify_amqp_credentials
 
+  def verify_event_monitor(_options = {})
+    require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
+    OpenstackEventMonitor.available?(event_monitor_options)
+  rescue => err
+    miq_exception = translate_exception(err)
+    raise unless miq_exception
+
+    _log.error("Error Class=#{err.class.name}, Message=#{err.message}")
+    raise miq_exception
+  end
+
   def verify_credentials(auth_type = nil, options = {})
-    auth_type ||= 'default'
+    verify_api_credentials
 
-    raise MiqException::MiqHostError, "No credentials defined" if self.missing_credentials?(auth_type)
+    capabilities["events"] = !!event_monitor_available?
+    save! if changed?
 
-    options[:auth_type] = auth_type
-    case auth_type.to_s
-    when 'default' then verify_api_credentials(options)
-    when 'amqp' then    verify_amqp_credentials(options)
-    else;           raise "Invalid OpenStack Authentication Type: #{auth_type.inspect}"
-    end
+    true
   end
 
   def required_credential_fields(_type)

@@ -51,6 +51,9 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
   supports :create_flavor
   supports :label_mapping
+  supports :events do
+    unsupported_reason_add(:events, _("Events are not supported")) unless capabilities["events"]
+  end
   supports :metrics
   supports :storage_manager
 
