@@ -31,6 +31,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
   attr_reader :cloud_volume_types
   attr_reader :servers
   attr_reader :hosts
+  attr_reader :server_groups
 
   def initialize(_manager, _target)
     super
@@ -47,6 +48,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     @flavors                    = []
     @host_aggregates            = []
     @key_pairs                  = []
+    @server_groups              = []
     @images                     = []
     @orchestration_stacks       = nil
     @quotas                     = []

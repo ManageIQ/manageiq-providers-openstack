@@ -8,6 +8,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     miq_templates
     auth_key_pairs
     orchestration_stacks
+    placement_groups
     quotas
     vms
     cloud_tenants
@@ -144,6 +145,43 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       host_aggregate.metadata = ha.metadata
       host_aggregate.hosts = hosts.compact.uniq
     end
+  end
+
+  def placement_group_by_vm_id
+    @placement_group_by_vm_id ||= collector.placement_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+  end
+
+  def placement_groups
+    collector.placement_groups.each do |spgrp|
+      pgrp         = persister.placement_groups.find_or_build(spgrp.name)
+      pgrp.name    = spgrp.name
+      pgrp.ems_ref = spgrp.id
+      pgrp.policy  = spgrp.policies[0]
+
+      # right now not filling in pgrp.availability_zone.
+      # we are not getting any ems_ref from the webapi. We are getting
+      #
+      #
+      # For instance collector.placement_groups() returns
+      # [ <Fog::Compute::OpenStack::ServerGroup
+      #    id="a31f76c9-5ed6-43b4-86ae-7e2cbcf68302",
+      #    name="Kuldip-VM-Affinity-Rule",
+      #    policies=["affinity"],
+      #    members=["2b5fb204-34ff-445b-aea4-a903d4b6143e"]
+      #  >,
+      #   <Fog::Compute::OpenStack::ServerGroup
+      #    id="1734c483-803b-4dcf-94e3-de058a6ddb87",
+      #    name="jay-collection-rule",
+      #    policies=["anti-affinity"],
+      #    members=[]
+      #  >]
+      #
+      # however like
+      # https://github.com/ManageIQ/manageiq-providers-ibm_cloud/blob/master/app/models/manageiq/providers/ibm_cloud/inventory/parser/power_virtual_servers.rb#L183
+      # we are getting persister.cloud_manager.uid_ems as "default", which is not correctr.
+      # pgrp.availability_zone = persister.availability_zones.lazy_find(persister.cloud_manager.uid_ems),
+    end
+    placement_group_by_vm_id
   end
 
   def auth_key_pairs

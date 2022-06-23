@@ -19,6 +19,7 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     add_cloud_collection(:flavors)
     add_cloud_collection(:hardwares)
     add_cloud_collection(:operating_systems)
+    add_cloud_collection(:placement_groups)
     add_cloud_collection(:disks)
     add_cloud_collection(:snapshots)
     add_cloud_collection(:networks)

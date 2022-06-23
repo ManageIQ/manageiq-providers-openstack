@@ -55,6 +55,22 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager < Manag
     @host_aggregates = safe_list { compute_service.aggregates.all }
   end
 
+  def placement_group_by_vm_id
+    @placement_group_by_vm_id ||= placement_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+  end
+
+  def placement_groups
+    return @placement_groups if @placement_group && @placement_groups.any?
+
+    @placement_groups = compute_service.handled_list(:server_groups, {}, openstack_admin?)
+  end
+
+  def server_group_by_vm_id
+    return @server_group_by_vm_id if @server_group_by_vm_id && @server_group_by_vm_id.any?
+
+    @server_group_by_vm_id ||= server_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+  end
+
   def key_pairs
     return @key_pairs if @key_pairs.any?
     @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
