@@ -228,7 +228,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                           :component    => 'protocol-selector',
                           :id           => 'event_stream_selection',
                           :name         => 'event_stream_selection',
-                          :skipSubmit   => true,
                           :initialValue => 'none',
                           :label        => _('Type'),
                           :options      => [
@@ -239,6 +238,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
                             {
                               :label => _('Ceilometer'),
                               :value => 'ceilometer',
+                              :pivot => 'endpoints.ceilometer.hostname'
                             },
                             {
                               :label => _('STF'),
@@ -401,6 +401,25 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
         },
       ]
     }
+  end
+
+  def self.build_ceilometer_endpoint!(params, endpoints, _authentications)
+    if params.delete("event_stream_selection") == "ceilometer"
+      default_endpoint = endpoints.detect { |ep| ep["role"] == "default" }
+      endpoints << {"role" => "ceilometer", "hostname" => default_endpoint["hostname"]}
+    end
+  end
+
+  def self.create_from_params(params, endpoints, authentications)
+    build_ceilometer_endpoint!(params, endpoints, authentications)
+
+    super
+  end
+
+  def edit_with_params(params, endpoints, authentications)
+    self.class.build_ceilometer_endpoint!(params, endpoints, authentications)
+
+    super
   end
 
   def hostname_required?
