@@ -24,6 +24,9 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   supports :create
   supports :catalog
   supports :metrics
+  supports :events do
+    unsupported_reason_add(:events, _("Events are not supported")) unless capabilities["events"]
+  end
 
   def self.params_for_create
     @params_for_create ||= {
