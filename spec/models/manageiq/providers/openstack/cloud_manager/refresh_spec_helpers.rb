@@ -59,7 +59,7 @@ module Openstack
     end
 
     def setup_ems(hostname, password, port = 5000, userid = "admin", version = "v2", keystone_v3_domain_id = nil)
-      _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+      zone = EvmSpecHelper.local_miq_server.zone
       @ems = FactoryBot.create(:ems_openstack,
                                 :zone                   => zone,
                                 :tenant_mapping_enabled => true,
