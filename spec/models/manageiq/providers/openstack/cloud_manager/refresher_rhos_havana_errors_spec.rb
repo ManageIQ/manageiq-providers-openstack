@@ -2,7 +2,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   before(:each) do
     EmsRefresh.debug_failures = false
 
-    _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+    zone = EvmSpecHelper.local_miq_server.zone
     @ems = FactoryBot.create(
       :ems_openstack,
       :zone      => zone,

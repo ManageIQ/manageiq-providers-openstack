@@ -242,7 +242,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Host do
 
   describe "Overriden auth methods for ssh fleecing," do
     let(:ext_management_system) do
-      _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+      zone = EvmSpecHelper.local_miq_server.zone
       FactoryBot.create(:ems_openstack_infra, :zone => zone).tap do |ems|
         ems.authentications << FactoryBot.create(:authentication_ssh_keypair)
         ems.authentications << FactoryBot.create(:authentication)

@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
   before :each do
-    _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+    zone = EvmSpecHelper.local_miq_server.zone
     @ems                 = FactoryBot.create(:ems_openstack, :zone => zone)
 
     allow_any_instance_of(EmsEvent).to receive(:handle_event)

@@ -1,6 +1,6 @@
 describe ManageIQ::Providers::Openstack::CloudManager::EventCatcher do
   before do
-    _, _, zone = EvmSpecHelper.create_guid_miq_server_zone
+    zone = EvmSpecHelper.local_miq_server.zone
     @ems = FactoryBot.create(:ems_openstack, :with_authentication, :zone => zone, :capabilities => {"events" => events_supported})
     allow(ManageIQ::Providers::Openstack::CloudManager::EventCatcher).to receive(:all_ems_in_zone).and_return([@ems])
   end

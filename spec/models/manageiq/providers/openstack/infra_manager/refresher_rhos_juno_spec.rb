@@ -4,7 +4,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   include Spec::Support::EmsRefreshHelper
 
   before(:each) do
-    _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
+    zone = EvmSpecHelper.local_miq_server.zone
     @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
                               :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
                               :security_protocol => 'no-ssl')

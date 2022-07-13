@@ -1,8 +1,8 @@
 describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventTargetParser do
   before :each do
-    _guid, _server, zone = EvmSpecHelper.create_guid_miq_server_zone
-    @ems                 = FactoryBot.create(:ems_openstack, :zone => zone)
-    @manager             = @ems.cinder_manager
+    zone     = EvmSpecHelper.local_miq_server.zone
+    @ems     = FactoryBot.create(:ems_openstack, :zone => zone)
+    @manager = @ems.cinder_manager
 
     allow_any_instance_of(EmsEvent).to receive(:handle_event)
     allow(EmsEvent).to receive(:create_completed_event)

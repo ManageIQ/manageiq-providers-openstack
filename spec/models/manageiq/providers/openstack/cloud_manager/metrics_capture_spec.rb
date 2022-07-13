@@ -2,7 +2,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::MetricsCapture do
   require ManageIQ::Providers::Openstack::Engine.root.join('spec/tools/openstack_data/openstack_data_test_helper').to_s
 
   before :each do
-    _guid, _server, @zone = EvmSpecHelper.create_guid_miq_server_zone
+    @zone = EvmSpecHelper.local_miq_server.zone
 
     @mock_meter_list = OpenstackMeterListData.new
     @mock_stats_data = OpenstackMetricStatsData.new

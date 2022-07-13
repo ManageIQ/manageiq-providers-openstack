@@ -3,7 +3,7 @@ describe Metric::CiMixin::Capture do
                                      %w(.. .. .. tools openstack_data openstack_data_test_helper)))
 
   before :each do
-    _guid, _server, @zone = EvmSpecHelper.create_guid_miq_server_zone
+    @zone = EvmSpecHelper.local_miq_server.zone
 
     @mock_meter_list = OpenstackMeterListData.new
     @mock_stats_data = OpenstackMetricStatsData.new
