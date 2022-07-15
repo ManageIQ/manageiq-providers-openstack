@@ -98,7 +98,8 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           :name        => "provider_id",
           :label       => _("Openstack Infra Provider"),
           :isClearable => true,
-          :options     => provider_id_options
+          :simpleValue => true,
+          :options     => provider_id_options,
         },
         {
           :component    => "select",
