@@ -27,6 +27,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   supports :events do
     unsupported_reason_add(:events, _("Events are not supported")) unless capabilities["events"]
   end
+  supports_not :shutdown
 
   def self.params_for_create
     @params_for_create ||= {
@@ -415,11 +416,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     connection.create_execution("tripleo.baremetal.v1.configure_manageable_nodes")
 
     [state, response.body.to_s]
-  end
-
-  # unsupported Host operations, validate is called in hosts_center view
-  def validate_shutdown
-    {:available => false,   :message => nil}
   end
 
   def self.display_name(number = 1)
