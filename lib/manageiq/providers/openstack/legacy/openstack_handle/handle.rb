@@ -1,5 +1,6 @@
 require 'active_support/inflector'
 require 'util/miq-exception'
+require 'parallel'
 
 module OpenstackHandle
   class Handle
@@ -371,7 +372,7 @@ module OpenstackHandle
       services = []
       all_tenants = tenants
       all_tenants.delete("services")
-      Parallel.each(all_tenants, :in_threads => thread_limit) do |tenant|
+      ::Parallel.each(all_tenants, :in_threads => thread_limit) do |tenant|
         service = detect_service(service_name, tenant.name)
         if service
           services << [service, tenant]
@@ -386,7 +387,7 @@ module OpenstackHandle
     def accessor_for_accessible_tenants(service, accessor, unique_id, array_accessor = true)
       results = []
       not_found_error = Fog.const_get(service)::OpenStack::NotFound
-      Parallel.each(service_for_each_accessible_tenant(service), :in_threads => thread_limit) do |svc, project|
+      ::Parallel.each(service_for_each_accessible_tenant(service), :in_threads => thread_limit) do |svc, project|
 
         response = begin
           if accessor.kind_of?(Proc)
