@@ -26,7 +26,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   supports :metrics
 
   def self.params_for_create
-    @params_for_create ||= {
+    {
       :fields => [
         {
           :component    => "select",
