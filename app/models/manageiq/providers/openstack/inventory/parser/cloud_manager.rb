@@ -8,8 +8,8 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     miq_templates
     auth_key_pairs
     orchestration_stacks
-    placement_groups
     quotas
+    placement_groups
     vms
     cloud_tenants
     vnfs
@@ -147,13 +147,15 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     end
   end
 
-  def placement_group_by_vm_id
-    @placement_group_by_vm_id ||= collector.placement_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+
+  def server_group_by_vm_id
+    return @server_group_by_vm_id if @server_group_by_vm_id && @server_group_by_vm_id.any?
+    @server_group_by_vm_id ||= collector.placement_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
   end
 
   def placement_groups
     collector.placement_groups.each do |spgrp|
-      pgrp         = persister.placement_groups.find_or_build(spgrp.name)
+      pgrp         = persister.placement_groups.find_or_build(spgrp.id)
       pgrp.name    = spgrp.name
       pgrp.ems_ref = spgrp.id
       pgrp.policy  = spgrp.policies[0]
@@ -181,7 +183,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       # we are getting persister.cloud_manager.uid_ems as "default", which is not correctr.
       # pgrp.availability_zone = persister.availability_zones.lazy_find(persister.cloud_manager.uid_ems),
     end
-    placement_group_by_vm_id
+    server_group_by_vm_id
   end
 
   def auth_key_pairs
@@ -345,6 +347,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     end
 
     availability_zone = vm.availability_zone.blank? ? "null_az" : vm.availability_zone
+    placement_group   = @server_group_by_vm_id[vm.id]
     miq_template_lazy = persister.miq_templates.lazy_find(vm.image["id"])
 
     server = persister.vms.find_or_build(vm.id.to_s)
@@ -356,6 +359,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     server.host = parent_host
     server.ems_cluster = parent_cluster
     server.availability_zone = persister.availability_zones.lazy_find(availability_zone)
+    server.placement_group = persister.placement_groups.lazy_find(placement_group.id) if placement_group
     server.key_pairs = [persister.auth_key_pairs.lazy_find(vm.key_name)].compact
     server.cloud_tenant = persister.cloud_tenants.lazy_find(vm.tenant_id.to_s)
     server.genealogy_parent = miq_template_lazy unless vm.image["id"].nil?
