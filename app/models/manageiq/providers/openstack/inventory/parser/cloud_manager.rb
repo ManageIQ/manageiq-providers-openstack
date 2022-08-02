@@ -150,11 +150,11 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
 
   def server_group_by_vm_id
     return @server_group_by_vm_id if @server_group_by_vm_id && @server_group_by_vm_id.any?
-    @server_group_by_vm_id ||= collector.placement_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+    @server_group_by_vm_id ||= collector.server_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
   end
 
   def placement_groups
-    collector.placement_groups.each do |spgrp|
+    collector.server_groups.each do |spgrp|
       pgrp         = persister.placement_groups.find_or_build(spgrp.id)
       pgrp.name    = spgrp.name
       pgrp.ems_ref = spgrp.id
@@ -347,7 +347,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     end
 
     availability_zone = vm.availability_zone.blank? ? "null_az" : vm.availability_zone
-    placement_group   = @server_group_by_vm_id[vm.id]
+    placement_group   = collector.server_group_by_vm_id[vm.id]
     miq_template_lazy = persister.miq_templates.lazy_find(vm.image["id"])
 
     server = persister.vms.find_or_build(vm.id.to_s)
