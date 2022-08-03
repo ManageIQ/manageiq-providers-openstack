@@ -90,6 +90,10 @@ module OpenstackStubs
     mocked_flavors
   end
 
+  def mocked_server_groups
+    []
+  end
+
   def mocked_host_aggregates
     mocked_host_aggregates = []
     test_counts[:host_aggregates_count].times do |i|
