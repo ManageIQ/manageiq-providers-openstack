@@ -48,7 +48,7 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
     @flavors                    = []
     @host_aggregates            = []
     @key_pairs                  = []
-    @server_groups              = []
+    @server_groups              = nil
     @images                     = []
     @orchestration_stacks       = nil
     @quotas                     = []

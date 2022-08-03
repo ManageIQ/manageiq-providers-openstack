@@ -167,14 +167,10 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
   end
 
   def server_groups
-    return @server_groups if @server_groups&.any?
-
-    @server_groups = compute_service.handled_list(:server_groups, {}, openstack_admin?)
+    @server_groups ||= compute_service.handled_list(:server_groups, {}, openstack_admin?)
   end
 
   def server_group_by_vm_id
-    return @server_group_by_vm_id if @server_group_by_vm_id&.any?
-
     @server_group_by_vm_id ||= server_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
   end
 

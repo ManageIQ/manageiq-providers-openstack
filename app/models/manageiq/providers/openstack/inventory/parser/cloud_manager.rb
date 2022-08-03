@@ -147,12 +147,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     end
   end
 
-
-  def server_group_by_vm_id
-    return @server_group_by_vm_id if @server_group_by_vm_id && @server_group_by_vm_id.any?
-    @server_group_by_vm_id ||= collector.server_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
-  end
-
   def placement_groups
     collector.server_groups.each do |spgrp|
       pgrp         = persister.placement_groups.find_or_build(spgrp.id)
@@ -183,7 +177,6 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       # we are getting persister.cloud_manager.uid_ems as "default", which is not correctr.
       # pgrp.availability_zone = persister.availability_zones.lazy_find(persister.cloud_manager.uid_ems),
     end
-    server_group_by_vm_id
   end
 
   def auth_key_pairs
