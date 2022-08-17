@@ -18,6 +18,8 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
     end
   end
 
+  supports :delete_image
+
   def provider_object(connection = nil)
     connection ||= ext_management_system.connect
     connection.images.get(ems_ref)
@@ -104,10 +106,6 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   rescue => err
     _log.error("image=[#{name}], error: #{err}")
     raise MiqException::MiqOpenstackApiRequestError, parse_error_message_from_fog_response(err), err.backtrace
-  end
-
-  def validate_delete_image
-    {:available => true, :message => nil}
   end
 
   def delete_image
