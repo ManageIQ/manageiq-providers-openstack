@@ -24,12 +24,14 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     inventory = nil
     2.times do # Run twice to verify that a second run with existing data does not change anything
       with_vcr do
+        @ems.reset_openstack_handle
+
+        require "fog/openstack"
+        Fog::OpenStack.instance_variable_set(:@version, nil)
+
         @ems.refresh
-
         @ems.network_manager.refresh
-
         @ems.cinder_manager.refresh
-
         @ems.swift_manager.refresh
       end
 
@@ -77,13 +79,13 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
   def assert_specific_cloud_network
     cn = @ems.cloud_networks.find_by(:name => "test-network")
     expect(cn.name).to eq("test-network")
-    expect(cn.type).to eq("ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork")
+    expect(cn.type).to eq("ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private")
   end
 
   def assert_specific_cloud_subnet
     cs = @ems.cloud_subnets.find_by(:name => "test-subnet")
     expect(cs.name).to eq("test-subnet")
-    expect(cs.cidr).to eq("10.0.0.0/21")
+    expect(cs.cidr).to eq("192.168.222.0/24")
     expect(cs.network_protocol).to eq("ipv4")
     expect(cs.type).to eq("ManageIQ::Providers::Openstack::NetworkManager::CloudSubnet")
   end

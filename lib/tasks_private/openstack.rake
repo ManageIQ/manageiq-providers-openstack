@@ -23,7 +23,7 @@ namespace :vcr do
 
     Rake::Task['vcr:cassettes:delete'].invoke
 
-    compute = Fog::Compute.new(
+    fog_connect_opts = {
       :provider               => "OpenStack",
       :openstack_auth_url     => "https://#{host}:#{port}/v3/",
       :openstack_username     => username,
@@ -31,17 +31,10 @@ namespace :vcr do
       :openstack_project_name => "admin",
       :openstack_domain_id    => "default",
       :connection_options     => {:ssl_verify_peer => false}
-    )
+    }
 
-    network = Fog::Network.new(
-      :provider               => "OpenStack",
-      :openstack_auth_url     => "https://#{host}:#{port}/v3/",
-      :openstack_username     => username,
-      :openstack_api_key      => password,
-      :openstack_project_name => "admin",
-      :openstack_domain_id    => "default",
-      :connection_options     => {:ssl_verify_peer => false}
-    )
+    compute = Fog::Compute.new(fog_connect_opts)
+    network = Fog::Network.new(fog_connect_opts)
 
     begin
       puts "Creating resources..."
