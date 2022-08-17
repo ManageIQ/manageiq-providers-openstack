@@ -160,7 +160,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     end
   end
 
-  context "#is_available?" do
+  context "#supports?" do
     let(:ems) { FactoryBot.create(:ems_openstack) }
     let(:vm)  { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
     let(:power_state_on)        { "ACTIVE" }
