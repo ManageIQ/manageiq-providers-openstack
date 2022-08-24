@@ -9,13 +9,15 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     let(:zone) { EvmSpecHelper.local_miq_server.zone }
     let(:api_version) { "v3" }
     let(:keystone_domain) { "default" }
+    let(:tenant_mapping) { true }
     let(:ems) do
       host = Rails.application.secrets.openstack[:hostname]
       port = Rails.application.secrets.openstack[:port]
 
       FactoryBot.create(:ems_openstack, :zone => zone, :hostname => host,
                         :ipaddress => host, :port => port, :api_version => api_version,
-                        :security_protocol => 'ssl-no-validation', :uid_ems => keystone_domain).tap do |ems|
+                        :security_protocol => 'ssl-no-validation', :uid_ems => keystone_domain,
+                        :tenant_mapping_enabled => tenant_mapping).tap do |ems|
         username = Rails.application.secrets.openstack[:userid]
         password = Rails.application.secrets.openstack[:password]
         ems.authentications << FactoryBot.create(:authentication, {:userid => username, :password => password})
@@ -230,6 +232,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       assert_specific_network_router
       assert_specific_network_port
       assert_specific_cloud_tenant
+      assert_sync_cloud_tenants
     end
 
     def assert_specific_vm
@@ -300,6 +303,12 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       expect(ct.name).to eq("manageiq-spec-project")
       expect(ct.description).to eq("test description")
       expect(ct.type).to eq("ManageIQ::Providers::Openstack::CloudManager::CloudTenant")
+    end
+
+    def assert_sync_cloud_tenants
+      sync_cloud_tenant = MiqQueue.last
+      expect(sync_cloud_tenant.method_name).to eq("sync_cloud_tenants_with_tenants")
+      expect(sync_cloud_tenant.state).to eq(MiqQueue::STATE_READY)
     end
   end
 end
