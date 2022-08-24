@@ -29,6 +29,21 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       end
     end
 
+    context "with an unsupported version" do
+      before do
+        EmsRefresh.debug_failures = false
+
+        allow_any_instance_of(ManageIQ::Providers::Openstack::CloudManager::Refresher)
+          .to receive(:refresh_targets_for_ems).and_raise(Excon::Errors::BadRequest.new("Bad Request"))
+      end
+
+      it "will record an error" do
+        expect { EmsRefresh.refresh(ems) }.to raise_error(ems.refresher::PartialRefreshError)
+        expect(ems.last_refresh_status).to eq("error")
+        expect(ems.last_refresh_error).to  eq("Bad Request")
+      end
+    end
+
     context "when using an admin account for fast refresh" do
       before do
         stub_settings_merge(
