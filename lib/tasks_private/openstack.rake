@@ -3,8 +3,7 @@ namespace :vcr do
     desc 'Deletes VCR cassettes for OpenStack Cloud Provider'
     task :delete => :environment do
       vcr_dir = ManageIQ::Providers::Openstack::Engine.root.join("spec/vcr_cassettes/manageiq/providers/openstack/cloud_manager")
-      Dir.glob(vcr_dir.join("refresher*.yml")).each { |f| File.delete(f) }
-      Dir.glob(vcr_dir.join("refresher/*.yml")).each { |f| File.delete(f) }
+      Dir.glob(vcr_dir.join("**/refresher*.yml")).each { |f| File.delete(f) }
     end
   end
 
@@ -50,6 +49,13 @@ namespace :vcr do
       end
     end
 
+    def identity_client
+      @identity_client ||= begin
+        require 'fog/openstack'
+        Fog::Identity.new(fog_connect_opts)
+      end
+    end
+
     def with_retry(retry_count: 10, retry_sleep: 10)
       retry_count.times do
         yield
@@ -67,6 +73,7 @@ namespace :vcr do
       tenant_id = cn["tenant_id"]
       network_client.subnets.create(:network_id => cn_id, :cidr => "10.0.0.0/21", :ip_version => 4)
       network_client.create_router("manageiq-spec-router")
+      network_client.create_port(cn_id, :name => "manageiq-spec-port")
       network_client.create_security_group(:name => "manageiq-spec-sg", :description => "test description", :tenant_id => tenant_id)
 
       image = compute_client.images.first
@@ -75,6 +82,11 @@ namespace :vcr do
       compute_client.create_key_pair("manageiq-spec-key")
       compute_client.create_volume("manageiq-spec-vol", "test description", 1)
       compute_client.create_aggregate("manageiq-spec-aggregate")
+
+      project = identity_client.create_project(:name => 'manageiq-spec-project', :description => "test description").body["project"]
+      role = identity_client.list_roles.body["roles"].find { |roles| roles["name"] == "admin" }
+      user = identity_client.list_users.body["users"].find { |users| users["name"] == "admin" }
+      identity_client.grant_project_user_role(project["id"], user["id"], role["id"])
     rescue => err
       puts err
     end
@@ -88,7 +100,9 @@ namespace :vcr do
       cn = network_client.list_networks.body["networks"].find { |cns| cns["name"] == "manageiq-spec-network" }
       cs = network_client.list_subnets.body["subnets"].find { |subnets| subnets["network_id"] == cn["id"] }
       router = network_client.list_routers.body["routers"].find { |routers| routers["name"] == "manageiq-spec-router" }
+      port = network_client.list_ports.body["ports"].find { |ports| ports["name"] == "manageiq-spec-port" }
       sg = network_client.list_security_groups.body["security_groups"].find { |sgs| sgs["name"] == "manageiq-spec-sg" }
+      tenant = identity_client.list_projects.body["projects"].find { |tenants| tenants["name"] == "manageiq-spec-project" }
 
       puts "Cleaning up resources..."
       compute_client.delete_server(vm["id"]) unless vm.nil?
@@ -98,10 +112,13 @@ namespace :vcr do
 
       with_retry { compute_client.get_server_details(vm["id"]) } unless vm.nil?
 
+      network_client.delete_port(port["id"]) unless port.nil?
       network_client.delete_subnet(cs["id"]) unless cs.nil?
       network_client.delete_network(cn["id"]) unless cn.nil?
       network_client.delete_security_group(sg["id"]) unless sg.nil?
       network_client.delete_router(router["id"]) unless router.nil?
+
+      identity_client.delete_project(tenant["id"]) unless tenant.nil?
     end
   end
 

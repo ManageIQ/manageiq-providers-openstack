@@ -52,6 +52,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       assert_specific_cloud_subnet
       assert_specific_security_group
       assert_specific_network_router
+      assert_specific_network_port
+      assert_specific_cloud_tenant
     end
 
     def assert_specific_vm
@@ -110,6 +112,20 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       expect(nr.type).to eq("ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter")
     end
 
+    def assert_specific_network_port
+      np = @ems.network_ports.find_by(:name => "manageiq-spec-port")
+      expect(np.name).to eq("manageiq-spec-port")
+      expect(np.admin_state_up).to eq(true)
+      expect(np.type).to eq("ManageIQ::Providers::Openstack::NetworkManager::NetworkPort")
+    end
+
+    def assert_specific_cloud_tenant
+      ct = @ems.cloud_tenants.find_by(:name => "manageiq-spec-project")
+      expect(ct.name).to eq("manageiq-spec-project")
+      expect(ct.description).to eq("test description")
+      expect(ct.type).to eq("ManageIQ::Providers::Openstack::CloudManager::CloudTenant")
+    end
+
     it "will perform a full refresh" do
       2.times do # Run twice to verify that a second run with existing data does not change anything
         refresh_inventory
@@ -139,14 +155,133 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       before { refresh_inventory }
 
       context "targeted refresh for VM" do
-        let(:target) { @ems.vms.find_by(:name => "manageiq-spec-server") }
+        let(:vm) { @ems.vms.find_by(:name => "manageiq-spec-server") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :vms,
+            :manager_ref => {:ems_ref => vm.ems_ref}
+          )
+        end
 
         it "will perform a targeted VM refresh" do
-          with_vcr("vm_target") do
+          2.times do
+            with_vcr("refresher_vm_target") do
+              reset_cache
+              EmsRefresh.refresh(target)
+            end
+            assert_specific_vm
+          end
+        end
+      end
+
+      context "targeted refresh for network router" do
+        let(:network_router) { @ems.network_routers.find_by(:name => "manageiq-spec-router") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :network_routers,
+            :manager_ref => {:ems_ref => network_router.ems_ref}
+          )
+        end
+
+        it "will perform a targeted network router refresh" do
+          2.times do
+            with_vcr("refresher_router_target") do
+              reset_cache
+              EmsRefresh.refresh(target)
+            end
+            assert_specific_network_router
+          end
+        end
+      end
+
+      context "targeted refresh for network port" do
+        let(:network_port) { @ems.network_ports.find_by(:name => "manageiq-spec-port") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :network_ports,
+            :manager_ref => {:ems_ref => network_port.ems_ref}
+          )
+        end
+
+        it "will perform a targeted network port refresh" do
+          2.times do
+            with_vcr("refresher_port_target") do
+              reset_cache
+              EmsRefresh.refresh(target)
+            end
+            assert_specific_network_port
+          end
+        end
+      end
+
+      context "targeted refresh for cloud volume" do
+        let(:cloud_volume) { @ems.cloud_volumes.find_by(:name => "manageiq-spec-vol") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :cloud_volumes,
+            :manager_ref => {:ems_ref => cloud_volume.ems_ref}
+          )
+        end
+
+        it "will perform a targeted cloud volume refresh" do
+          2.times do
+            with_vcr("refresher_volume_target") do
+              reset_cache
+              EmsRefresh.refresh(target)
+            end
+            assert_specific_cloud_volume
+          end
+        end
+      end
+
+      context "targeted refresh for cloud tenant" do
+        let(:cloud_tenant) { @ems.cloud_tenants.find_by(:name => "manageiq-spec-project") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :cloud_tenants,
+            :manager_ref => {:ems_ref => cloud_tenant.ems_ref}
+          )
+        end
+
+        it "will perform a targeted cloud tenant refresh" do
+          2.times do
+            with_vcr("refresher_tenant_target") do
+              reset_cache
+              EmsRefresh.refresh(target)
+            end
+            assert_specific_cloud_tenant
+          end
+        end
+      end
+
+      context "targeted refresh for cloud network" do
+        let(:cloud_network) { @ems.cloud_networks.find_by(:name => "manageiq-spec-network") }
+        let(:target) do
+          InventoryRefresh::Target.new(
+            :manager     => @ems,
+            :association => :cloud_networks,
+            :manager_ref => {:ems_ref => cloud_network.ems_ref}
+          )
+        end
+
+        it "will not wipe out subnet relationships when performing a targeted network refresh" do
+          with_vcr("refresher_network_target") do
+            @ems.cloud_subnets.each do |subnet|
+              expect(subnet.cloud_network_id).to_not be(nil)
+            end
+
             reset_cache
             EmsRefresh.refresh(target)
+
+            @ems.cloud_subnets.each do |subnet|
+              expect(subnet.cloud_network_id).to_not be(nil)
+            end
           end
-          assert_specific_vm
         end
       end
     end
