@@ -499,23 +499,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     raise MiqException::MiqNetworkDeleteError, parse_error_message_from_neutron_response(e), e.backtrace
   end
 
-  def delete_cloud_network_queue(userid)
-    task_opts = {
-      :action => "deleting Cloud Network for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'raw_delete_cloud_network',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => []
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
-  end
-
   def raw_update_cloud_network(options)
     ext_management_system.with_provider_connection(connection_options(cloud_tenant)) do |service|
       service.update_network(ems_ref, options)
@@ -523,23 +506,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
   rescue => e
     _log.error "network=[#{name}], error: #{e}"
     raise MiqException::MiqNetworkUpdateError, parse_error_message_from_neutron_response(e), e.backtrace
-  end
-
-  def update_cloud_network_queue(userid, options = {})
-    task_opts = {
-      :action => "updating Cloud Network for user #{userid}",
-      :userid => userid
-    }
-    queue_opts = {
-      :class_name  => self.class.name,
-      :method_name => 'raw_update_cloud_network',
-      :instance_id => id,
-      :priority    => MiqQueue::HIGH_PRIORITY,
-      :role        => 'ems_operations',
-      :zone        => ext_management_system.my_zone,
-      :args        => [options]
-    }
-    MiqTask.generic_action_with_callback(task_opts, queue_opts)
   end
 
   def self.connection_options(cloud_tenant = nil)
