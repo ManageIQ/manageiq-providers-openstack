@@ -7,7 +7,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
   context 'when raw_create_flavor' do
     before do
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-      allow(ems).to receive(:with_provider_connection).with(:service => 'Compute').and_yield(service)
+      allow(ems).to receive(:with_provider_connection).with({:service => 'Compute'}).and_yield(service)
       allow(service).to receive(:flavors).and_return(flavors)
     end
 
@@ -54,7 +54,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Flavor do
   context 'when raw_delete_flavor' do
     before do
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-      allow(ems).to receive(:with_provider_connection).with(:service => 'Compute').and_yield(service)
+      allow(ems).to receive(:with_provider_connection).with({:service => 'Compute'}).and_yield(service)
     end
 
     subject { flavor_openstack }

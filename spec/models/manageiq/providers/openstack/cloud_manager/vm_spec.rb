@@ -13,7 +13,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
 
   let(:handle) do
     double.tap do |handle|
-      allow(ems).to receive(:connect).with(:service => 'Compute', :tenant_name => tenant.name).and_return(handle)
+      allow(ems).to receive(:connect).with({:service => 'Compute', :tenant_name => tenant.name}).and_return(handle)
     end
   end
 
@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     end
     let(:other_handle) do
       double.tap do |other_handle|
-        allow(ems).to receive(:connect).with(:service => 'Compute', :tenant_name => other_tenant.name).and_return(other_handle)
+        allow(ems).to receive(:connect).with({:service => 'Compute', :tenant_name => other_tenant.name}).and_return(other_handle)
       end
     end
 

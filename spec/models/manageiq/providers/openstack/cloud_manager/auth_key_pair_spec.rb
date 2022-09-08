@@ -22,7 +22,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair do
       service = double
       key_pairs = double
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
-      allow(ems).to receive(:connect).with(:service => 'Compute').and_return(service)
+      allow(ems).to receive(:connect).with({:service => 'Compute'}).and_return(service)
       allow(service).to receive(:key_pairs).and_return(key_pairs)
       allow(key_pairs).to receive(:create).with(key_pair_attributes).and_return(
         the_raw_key_pair)
@@ -33,7 +33,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::AuthKeyPair do
       service = double
       subject.name = 'key1'
       subject.resource = ems
-      allow(ems).to receive(:connect).with(:service => 'Compute').and_return(service)
+      allow(ems).to receive(:connect).with({:service => 'Compute'}).and_return(service)
       allow(service).to receive(:delete_key_pair).with('key1')
       subject.delete_key_pair
     end
