@@ -18,6 +18,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   require_nested :ProvisionWorkflow
   require_nested :Refresher
   require_nested :RefreshWorker
+  require_nested :Snapshot
   require_nested :Template
   require_nested :Vm
 
