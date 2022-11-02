@@ -1,0 +1,1069 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4765'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCchHsW8pgaXArMKGAOFz_-8JP6sVg43HLUS3OKewIfs-sebqI7MacVTw8hMmAvLArnRcdr6v1WwcSQZV_GHpXLG1qZL7EABFuJF8_cssdKB0pIE2Sq9-6RvYuC-PC-xIs21JOq8A5Ie9GpX8A7QyyAJf8BK1wB0naJFHArKmsLXCQ
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-e612854c-62a0-4931-8e8c-19a156fe9ef7
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["nPb5PGIOQay7SarmvLsH7w"], "expires_at":
+        "2022-08-29T19:08:28.000000Z", "issued_at": "2022-08-29T18:08:28.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2d6cfa796cb049c78498b0125c865df7",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:28 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:8774/
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCchHsW8pgaXArMKGAOFz_-8JP6sVg43HLUS3OKewIfs-sebqI7MacVTw8hMmAvLArnRcdr6v1WwcSQZV_GHpXLG1qZL7EABFuJF8_cssdKB0pIE2Sq9-6RvYuC-PC-xIs21JOq8A5Ie9GpX8A7QyyAJf8BK1wB0naJFHArKmsLXCQ
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '367'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"versions": [{"id": "v2.0", "status": "SUPPORTED", "version": "",
+        "min_version": "", "updated": "2011-01-21T11:33:21Z", "links": [{"rel": "self",
+        "href": "http://127.0.0.1:8764/v2/"}]}, {"id": "v2.1", "status": "CURRENT",
+        "version": "2.87", "min_version": "2.1", "updated": "2013-07-23T11:33:21Z",
+        "links": [{"rel": "self", "href": "http://127.0.0.1:8764/v2.1/"}]}]}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:28 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:28 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4765'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCcMjLP_EfOsP_r8h6lj3Cero_DYUt3pfa7rbICqI7PheIRdzshVDUEhE6ZTLXNuBdmBd3dny0RsvHvB7yJSPPS3iuoHMSUCjjBcRnQ-rRPYZkZTbkrQQ8KuqKZqXYwgBLR0oiv6okOen3QqCiJntHuXrwvXI7w4Tt9w0trvKpEIfY
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-aac07f59-1332-4579-90da-08764e944ffa
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["vRTAOWt1TUSHoytfyNIxJg"], "expires_at":
+        "2022-08-29T19:08:28.000000Z", "issued_at": "2022-08-29T18:08:28.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2d6cfa796cb049c78498b0125c865df7",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:28 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:29 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4765'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCd9l_u4GzH4S8e_zmUJ67IDfcSRqeFjtz03taJdZ2YTMeHhAJ9jxcf56q_HeZJMuabJwyiLWLJ4vwjv9K_-7O4sReUSjfgxHx0YHo_SKSuh2on4WhCOCNp3aFHfSXVq5p31d18K-9M5w6U3Lx17YJm34GUl1EzQHKskonXnbKES0c
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-72cc4136-3deb-4408-92cf-32731ce3be86
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["KPLYq_NpSLuzA62NdLfLvg"], "expires_at":
+        "2022-08-29T19:08:29.000000Z", "issued_at": "2022-08-29T18:08:29.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2d6cfa796cb049c78498b0125c865df7",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:29 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '312'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCe0AQMfYB7KL2ENYUCloauaxiqMYWY20UhlX05AxDo0CAI_rHX8UcrWt7fby7I21GYc3mTfLjolac7BTSI3djZb92jQyDk7WE7zd3Myq663PkVLRMNdNjJOAfQGHND82KgBQAtZndBHyrbngT4bxra8A
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-02ccd4fa-0c33-4655-aa38-456b69791226
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["CDVEgzbVQSmTigsepQM4zQ"], "expires_at":
+        "2022-08-29T19:08:30.000000Z", "issued_at": "2022-08-29T18:08:30.000000Z"}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:30 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:5000/v3/users/c152ef4680e046adba3d27d84995693e/projects?domain_id=default
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCe0AQMfYB7KL2ENYUCloauaxiqMYWY20UhlX05AxDo0CAI_rHX8UcrWt7fby7I21GYc3mTfLjolac7BTSI3djZb92jQyDk7WE7zd3Myq663PkVLRMNdNjJOAfQGHND82KgBQAtZndBHyrbngT4bxra8A
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '802'
+      Connection:
+      - keep-alive
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-d28b8df6-454b-40a1-8deb-5881396121af
+    body:
+      encoding: ASCII-8BIT
+      string: '{"projects": [{"id": "2ae41c961536440db58e67b231b85e6e", "name": "manageiq-spec-project",
+        "domain_id": "default", "description": "test description", "enabled": true,
+        "parent_id": "default", "is_domain": false, "tags": [], "options": {}, "links":
+        {"self": "https://11.22.33.44:5000/v3/projects/2ae41c961536440db58e67b231b85e6e"}},
+        {"id": "2d6cfa796cb049c78498b0125c865df7", "name": "admin", "domain_id": "default",
+        "description": "Bootstrap project for initializing the cloud.", "enabled":
+        true, "parent_id": "default", "is_domain": false, "tags": [], "options": {},
+        "links": {"self": "https://11.22.33.44:5000/v3/projects/2d6cfa796cb049c78498b0125c865df7"}}],
+        "links": {"next": null, "self": "https://11.22.33.44:5000/v3/users/c152ef4680e046adba3d27d84995693e/projects?domain_id=default",
+        "previous": null}}
+
+        '
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:30 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"manageiq-spec-project","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4781'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCes9XQlV0vSJxqRe1HqsUj1U_GuFkisxeyQgtFyWSXKlRzobw2GfvmX9luPgFAnBcHoCjPQTwV38mcwZ7e-WFI-URHq_0hg1SC7YMo0iotH5CKUEHS23gRptyCn39YzKC2ZXLz6WLc_EPIrzMr32N3lZFwQnxe02pnfvnkAYdysm4
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-bd73f42d-5ced-4087-aa68-3df09d6c1bf7
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["sArjs4LUTQep_FNUl9DBDg"], "expires_at":
+        "2022-08-29T19:08:30.000000Z", "issued_at": "2022-08-29T18:08:30.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2ae41c961536440db58e67b231b85e6e",
+        "name": "manageiq-spec-project"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:30 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:8774/v2.1/os-server-groups?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCes9XQlV0vSJxqRe1HqsUj1U_GuFkisxeyQgtFyWSXKlRzobw2GfvmX9luPgFAnBcHoCjPQTwV38mcwZ7e-WFI-URHq_0hg1SC7YMo0iotH5CKUEHS23gRptyCn39YzKC2ZXLz6WLc_EPIrzMr32N3lZFwQnxe02pnfvnkAYdysm4
+      X-Openstack-Nova-Api-Version:
+      - '2.15'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '21'
+      Connection:
+      - keep-alive
+      Openstack-Api-Version:
+      - compute 2.15
+      X-Openstack-Nova-Api-Version:
+      - '2.15'
+      Vary:
+      - OpenStack-API-Version, X-OpenStack-Nova-API-Version
+      X-Openstack-Request-Id:
+      - req-d2b8ea62-e225-4b19-8572-5c70602bfdb7
+      X-Compute-Request-Id:
+      - req-d2b8ea62-e225-4b19-8572-5c70602bfdb7
+    body:
+      encoding: ASCII-8BIT
+      string: '{"server_groups": []}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:31 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:8774/v2.1/os-server-groups?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCchHsW8pgaXArMKGAOFz_-8JP6sVg43HLUS3OKewIfs-sebqI7MacVTw8hMmAvLArnRcdr6v1WwcSQZV_GHpXLG1qZL7EABFuJF8_cssdKB0pIE2Sq9-6RvYuC-PC-xIs21JOq8A5Ie9GpX8A7QyyAJf8BK1wB0naJFHArKmsLXCQ
+      X-Openstack-Nova-Api-Version:
+      - '2.15'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '21'
+      Connection:
+      - keep-alive
+      Openstack-Api-Version:
+      - compute 2.15
+      X-Openstack-Nova-Api-Version:
+      - '2.15'
+      Vary:
+      - OpenStack-API-Version, X-OpenStack-Nova-API-Version
+      X-Openstack-Request-Id:
+      - req-97826384-04f8-4448-b1a6-648445c2c6bc
+      X-Compute-Request-Id:
+      - req-97826384-04f8-4448-b1a6-648445c2c6bc
+    body:
+      encoding: ASCII-8BIT
+      string: '{"server_groups": []}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:31 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4765'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCgnPr311PzLZEqEZG7PfnFY5K0VheEBM43bRGJLUeZugyY3haTJ_ISJ7WG2kpq-L_IDA5m-1NuPs7ogxAEa4gky7D649DMHAkS5pPWXG9BmBOsEC-FfC2o9z9XdjAAOEyyUmcfH6pEoCiDt14nateLpEuCO6jN16j92p6pv6dafMI
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-a71bf536-3434-4a64-ab7f-d1be5322dedb
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["dSc6SNCiTPOYzx0d6SblUg"], "expires_at":
+        "2022-08-29T19:08:32.000000Z", "issued_at": "2022-08-29T18:08:32.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2d6cfa796cb049c78498b0125c865df7",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:32 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"manageiq-spec-project","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4781'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCg2r-gfONYRPrcYZQdzzEcr1JfL3ItGK8Y4CgTiQ0SoMrXURk1PbEk-fkbsSkeNMigCfily_IXoMRDM6mpe1DXY0VhErhjMtycD1Lh0fwns8EtWQINiuFWPxuewDkxj7VfI9bVFeQcM0KGw3LLFq1iFqT0NmuGaEyiosJgN67ePrc
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-02917a8e-e462-4c83-9ae9-61f67efce708
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["QfWi8rGTTCC_wsiP2v2ESQ"], "expires_at":
+        "2022-08-29T19:08:32.000000Z", "issued_at": "2022-08-29T18:08:32.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2ae41c961536440db58e67b231b85e6e",
+        "name": "manageiq-spec-project"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2ae41c961536440db58e67b231b85e6e",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:32 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:9696/v2.0/subnets?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCg2r-gfONYRPrcYZQdzzEcr1JfL3ItGK8Y4CgTiQ0SoMrXURk1PbEk-fkbsSkeNMigCfily_IXoMRDM6mpe1DXY0VhErhjMtycD1Lh0fwns8EtWQINiuFWPxuewDkxj7VfI9bVFeQcM0KGw3LLFq1iFqT0NmuGaEyiosJgN67ePrc
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1977'
+      Connection:
+      - keep-alive
+      X-Openstack-Request-Id:
+      - req-4561637f-d9a2-4c0d-9fcd-cbad3b5b67dd
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets":[{"id":"a580f021-1024-4304-8f11-4d07f9ea8ec8","name":"test-subnet","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"3dc48262-be01-41bb-b6c3-ee85f94d7341","ip_version":4,"subnetpool_id":null,"enable_dhcp":true,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"192.168.222.1","cidr":"192.168.222.0/24","allocation_pools":[{"start":"192.168.222.2","end":"192.168.222.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-16T18:15:49Z","updated_at":"2022-08-16T18:15:49Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"},{"id":"b026db5a-41fc-4181-b833-024203aed72f","name":"","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"30302562-c9f5-4211-8957-44ad1e1fb08b","ip_version":4,"subnetpool_id":null,"enable_dhcp":true,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"10.0.0.1","cidr":"10.0.0.0/21","allocation_pools":[{"start":"10.0.0.2","end":"10.0.7.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-29T18:06:02Z","updated_at":"2022-08-29T18:06:02Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"},{"id":"bf6662a5-dae5-4069-9fcd-f78277322225","name":"external-subnet","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"926c07b4-09f5-4cdd-aba8-65b9786d6302","ip_version":4,"subnetpool_id":null,"enable_dhcp":false,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"10.20.20.1","cidr":"10.20.20.0/24","allocation_pools":[{"start":"10.20.20.2","end":"10.20.20.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-16T18:16:12Z","updated_at":"2022-08-16T18:16:12Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"}],"subnets_links":[{"rel":"previous","href":"http://127.0.0.1:9686/v2.0/subnets?limit=1000&marker=a580f021-1024-4304-8f11-4d07f9ea8ec8&page_reverse=True"}]}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:33 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:9696/v2.0/subnets?limit=1000&marker=bf6662a5-dae5-4069-9fcd-f78277322225
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCg2r-gfONYRPrcYZQdzzEcr1JfL3ItGK8Y4CgTiQ0SoMrXURk1PbEk-fkbsSkeNMigCfily_IXoMRDM6mpe1DXY0VhErhjMtycD1Lh0fwns8EtWQINiuFWPxuewDkxj7VfI9bVFeQcM0KGw3LLFq1iFqT0NmuGaEyiosJgN67ePrc
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '124'
+      Connection:
+      - keep-alive
+      X-Openstack-Request-Id:
+      - req-953eec44-9ab0-4f84-8dfe-ed1a4dde83ad
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets":[],"subnets_links":[{"rel":"previous","href":"http://127.0.0.1:9686/v2.0/subnets?limit=1000&page_reverse=True"}]}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:33 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:9696/v2.0/subnets?limit=1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCgnPr311PzLZEqEZG7PfnFY5K0VheEBM43bRGJLUeZugyY3haTJ_ISJ7WG2kpq-L_IDA5m-1NuPs7ogxAEa4gky7D649DMHAkS5pPWXG9BmBOsEC-FfC2o9z9XdjAAOEyyUmcfH6pEoCiDt14nateLpEuCO6jN16j92p6pv6dafMI
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:33 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1977'
+      Connection:
+      - keep-alive
+      X-Openstack-Request-Id:
+      - req-8526cf15-1e85-48be-8817-a58086e9d2f8
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets":[{"id":"a580f021-1024-4304-8f11-4d07f9ea8ec8","name":"test-subnet","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"3dc48262-be01-41bb-b6c3-ee85f94d7341","ip_version":4,"subnetpool_id":null,"enable_dhcp":true,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"192.168.222.1","cidr":"192.168.222.0/24","allocation_pools":[{"start":"192.168.222.2","end":"192.168.222.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-16T18:15:49Z","updated_at":"2022-08-16T18:15:49Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"},{"id":"b026db5a-41fc-4181-b833-024203aed72f","name":"","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"30302562-c9f5-4211-8957-44ad1e1fb08b","ip_version":4,"subnetpool_id":null,"enable_dhcp":true,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"10.0.0.1","cidr":"10.0.0.0/21","allocation_pools":[{"start":"10.0.0.2","end":"10.0.7.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-29T18:06:02Z","updated_at":"2022-08-29T18:06:02Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"},{"id":"bf6662a5-dae5-4069-9fcd-f78277322225","name":"external-subnet","tenant_id":"2d6cfa796cb049c78498b0125c865df7","network_id":"926c07b4-09f5-4cdd-aba8-65b9786d6302","ip_version":4,"subnetpool_id":null,"enable_dhcp":false,"ipv6_ra_mode":null,"ipv6_address_mode":null,"gateway_ip":"10.20.20.1","cidr":"10.20.20.0/24","allocation_pools":[{"start":"10.20.20.2","end":"10.20.20.254"}],"host_routes":[],"dns_nameservers":[],"description":"","service_types":[],"tags":[],"created_at":"2022-08-16T18:16:12Z","updated_at":"2022-08-16T18:16:12Z","revision_number":0,"project_id":"2d6cfa796cb049c78498b0125c865df7"}],"subnets_links":[{"rel":"previous","href":"http://127.0.0.1:9686/v2.0/subnets?limit=1000&marker=a580f021-1024-4304-8f11-4d07f9ea8ec8&page_reverse=True"}]}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:33 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:9696/v2.0/subnets?limit=1000&marker=bf6662a5-dae5-4069-9fcd-f78277322225
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCgnPr311PzLZEqEZG7PfnFY5K0VheEBM43bRGJLUeZugyY3haTJ_ISJ7WG2kpq-L_IDA5m-1NuPs7ogxAEa4gky7D649DMHAkS5pPWXG9BmBOsEC-FfC2o9z9XdjAAOEyyUmcfH6pEoCiDt14nateLpEuCO6jN16j92p6pv6dafMI
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '124'
+      Connection:
+      - keep-alive
+      X-Openstack-Request-Id:
+      - req-790f2782-4df4-4a4f-b658-5cf3fcddf9dc
+    body:
+      encoding: ASCII-8BIT
+      string: '{"subnets":[],"subnets_links":[{"rel":"previous","href":"http://127.0.0.1:9686/v2.0/subnets?limit=1000&page_reverse=True"}]}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:34 GMT
+- request:
+    method: get
+    uri: https://11.22.33.44:9696/v2.0/ports/f6fd5422-99ca-451a-9bcc-71c91e2c1864
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token:
+      - gAAAAABjDQCgnPr311PzLZEqEZG7PfnFY5K0VheEBM43bRGJLUeZugyY3haTJ_ISJ7WG2kpq-L_IDA5m-1NuPs7ogxAEa4gky7D649DMHAkS5pPWXG9BmBOsEC-FfC2o9z9XdjAAOEyyUmcfH6pEoCiDt14nateLpEuCO6jN16j92p6pv6dafMI
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '807'
+      Connection:
+      - keep-alive
+      X-Openstack-Request-Id:
+      - req-6b2a8b96-f4b0-4f21-bedf-567c588a61d4
+    body:
+      encoding: ASCII-8BIT
+      string: '{"port":{"id":"f6fd5422-99ca-451a-9bcc-71c91e2c1864","name":"manageiq-spec-port","network_id":"30302562-c9f5-4211-8957-44ad1e1fb08b","tenant_id":"2d6cfa796cb049c78498b0125c865df7","mac_address":"fa:16:3e:0a:62:01","admin_state_up":true,"status":"DOWN","device_id":"","device_owner":"","fixed_ips":[{"subnet_id":"b026db5a-41fc-4181-b833-024203aed72f","ip_address":"10.0.3.175"}],"allowed_address_pairs":[],"extra_dhcp_opts":[],"security_groups":["a60d4c6f-0c3f-4760-b21d-c76944ea083f"],"description":"","binding:vnic_type":"normal","binding:profile":{},"binding:host_id":"","binding:vif_type":"unbound","binding:vif_details":{},"port_security_enabled":true,"tags":[],"created_at":"2022-08-29T18:06:04Z","updated_at":"2022-08-29T18:06:04Z","revision_number":1,"project_id":"2d6cfa796cb049c78498b0125c865df7"}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:34 GMT
+- request:
+    method: post
+    uri: https://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.1.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.19.0
+      Date:
+      - Mon, 29 Aug 2022 18:08:34 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4765'
+      Connection:
+      - keep-alive
+      X-Subject-Token:
+      - gAAAAABjDQCi73EigifpKbuMN5q_FqJO87pafxeeiMUo7CZm8-I3DMh4YSL6Qj3d5fNB8gGfDb0ibFSS2EIAww1UAS-EW5fFRkNYYxbahKnj-7u3oawkWtYROvzP1ft-3_WPuQomq2JN1FpXZ9bixy6nK2N-5Zcm29JqHtI7DyuyesSchLlrl8s
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-d519aa5e-4b2d-44e9-906e-499d61f144aa
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "c152ef4680e046adba3d27d84995693e", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["RzzcRHRTTUifzBL-OndWAQ"], "expires_at":
+        "2022-08-29T19:08:34.000000Z", "issued_at": "2022-08-29T18:08:34.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "2d6cfa796cb049c78498b0125c865df7",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "f036044d9cad4ef79ca5ddebf51ec1d3",
+        "name": "reader"}, {"id": "11bf6c76364949b59cab21c7ca60f90f", "name": "admin"},
+        {"id": "3f6bffd9ad314dedbcab1275705aa081", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "46d7f1839b474019881a8ced6d6c8ea9", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "70edd08ccdb14c729718f590986589c6", "interface": "public", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"},
+        {"id": "bfa2fe7d39ea4e748eeda8946f6294e0", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9292", "region": "microstack"}],
+        "id": "16b2300ccc0e468eb7b1f608075a53c8", "type": "image", "name": "glance"},
+        {"endpoints": [{"id": "19577e5394ce499cbfbdd1d6b4d11846", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "902ad65b9b5a460b9adddce873226118", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}, {"id": "c23269dd347d47bc8802d4d617f3391e", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:8774/v2.1", "region":
+        "microstack"}], "id": "1ecd68ad768b417d856b17225bef0215", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "169571a6ce5a44388573e85b981606ea",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "8071be47f64449a7a1c495a781ab1ba2", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "80f3fedb8dbd4224b0185fe8b3a0c070", "interface":
+        "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v2/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "240773bb7c884240b24452fa5a312d81", "type":
+        "volumev2", "name": "cinderv2"}, {"endpoints": [{"id": "19afa18d1c3a4d42a02888bc75476b89",
+        "interface": "internal", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "7f01af8ba31a4199b9999c506f651627", "interface":
+        "public", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}, {"id": "90750638a7d848ee8752bafbcfa6804c", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8776/v3/2d6cfa796cb049c78498b0125c865df7",
+        "region": "microstack"}], "id": "254a03b147a8462fa0d87c3d0049ad6c", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "036928fad9d74b8a94ce0432e65848b5",
+        "interface": "public", "region_id": "microstack", "url": "https://11.22.33.44:8778",
+        "region": "microstack"}, {"id": "6178a6d44cc54cb5b5a622a9fd3e2f70", "interface":
+        "admin", "region_id": "microstack", "url": "https://11.22.33.44:8778", "region":
+        "microstack"}, {"id": "8c4dfd0eac814d829a19ed09e39e601f", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:8778", "region": "microstack"}],
+        "id": "383d8f540e3f486ab999ad708a206e34", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "023b9a70e7324be0aec671013299ea71", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "a2daa8feb17a4037b384f62b24c2ee08", "interface": "admin", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"},
+        {"id": "fd861bb01fae4c3fb898ea36749637d6", "interface": "internal", "region_id":
+        "microstack", "url": "https://11.22.33.44:9696", "region": "microstack"}],
+        "id": "71508b3f34364a0886e75f34e2e25f96", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "0f1adc13a44e41e38eba7ed8729db17b", "interface": "public",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "2650353cd8b74725942ef58278340b73", "interface": "internal",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}, {"id": "8de99ecd62154e7480a5f625f38f723a", "interface": "admin",
+        "region_id": "microstack", "url": "https://11.22.33.44:5000/v3/", "region":
+        "microstack"}], "id": "f749ea0ccbd94eea952219e90573e553", "type": "identity",
+        "name": "keystone"}]}}'
+    http_version:
+  recorded_at: Mon, 29 Aug 2022 18:08:34 GMT
+recorded_with: VCR 5.1.0

@@ -61,10 +61,12 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_tenant               => "admin",
-        :openstack_identity_api_version => 'v2.0',
-        :openstack_region               => nil,
-        :connection_options             => {:ssl_verify_peer => false}
+        {
+          :openstack_tenant               => "admin",
+          :openstack_identity_api_version => 'v2.0',
+          :openstack_region               => nil,
+          :connection_options             => {:ssl_verify_peer => false}
+        }
       ).once do |_, _, address|
         expect(address).to eq(auth_url)
         fog
@@ -82,10 +84,12 @@ describe OpenstackHandle::Handle do
         "dummy",
         "http://address:5000",
         "Compute",
-        :openstack_tenant               => "admin",
-        :openstack_identity_api_version => 'v2.0',
-        :openstack_region               => nil,
-        :connection_options             => {}
+        {
+          :openstack_tenant               => "admin",
+          :openstack_identity_api_version => 'v2.0',
+          :openstack_region               => nil,
+          :connection_options             => {}
+        }
       ).once do |_, _, address|
         expect(address).to eq(auth_url)
         fog
@@ -103,10 +107,12 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_tenant               => "admin",
-        :openstack_identity_api_version => 'v2.0',
-        :openstack_region               => nil,
-        :connection_options             => {:ssl_verify_peer => false}
+        {
+          :openstack_tenant               => "admin",
+          :openstack_identity_api_version => 'v2.0',
+          :openstack_region               => nil,
+          :connection_options             => {:ssl_verify_peer => false}
+        }
       ) do |_, _, address|
         expect(address).to eq(auth_url_ssl)
         fog
@@ -125,10 +131,12 @@ describe OpenstackHandle::Handle do
         "dummy",
         "https://address:5000",
         "Compute",
-        :openstack_tenant               => "admin",
-        :openstack_identity_api_version => 'v2.0',
-        :openstack_region               => nil,
-        :connection_options             => {:ssl_verify_peer => true}
+        {
+          :openstack_tenant               => "admin",
+          :openstack_identity_api_version => 'v2.0',
+          :openstack_region               => nil,
+          :connection_options             => {:ssl_verify_peer => true}
+        }
       ) do |_, _, address|
         expect(address).to eq(auth_url_ssl)
         fog
@@ -186,10 +194,12 @@ describe OpenstackHandle::Handle do
         "dummy",
         "http://address:5000",
         "Compute",
-        :openstack_tenant               => "admin",
-        :openstack_identity_api_version => 'v2.0',
-        :openstack_region               => 'RegionOne',
-        :connection_options             => {}
+        {
+          :openstack_tenant               => "admin",
+          :openstack_identity_api_version => 'v2.0',
+          :openstack_region               => 'RegionOne',
+          :connection_options             => {}
+        }
       ).once do |_, _, address|
         expect(address).to eq(auth_url)
         fog

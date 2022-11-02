@@ -179,6 +179,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:availability_zones_volume).and_return(mocked_availability_zones)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:cloud_services).and_return(mocked_cloud_services)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:flavors).and_return(mocked_flavors)
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:server_groups).and_return(mocked_server_groups)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:host_aggregates).and_return(mocked_host_aggregates)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:images).and_return(mocked_miq_templates)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::CloudManager).to receive(:key_pairs).and_return(mocked_key_pairs)
@@ -200,6 +201,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_volume_backups).and_return(mocked_cloud_volume_backups)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:key_pairs).and_return(mocked_key_pairs)
       allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:cloud_subnets).and_return([])
+      allow_any_instance_of(ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection).to receive(:server_groups).and_return([])
     end
 
     def assert_ems

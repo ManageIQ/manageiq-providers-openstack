@@ -13,7 +13,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
 
   let(:handle) do
     double.tap do |handle|
-      allow(ems).to receive(:connect).with(:service => 'Compute', :tenant_name => tenant.name).and_return(handle)
+      allow(ems).to receive(:connect).with({:service => 'Compute', :tenant_name => tenant.name}).and_return(handle)
     end
   end
 
@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     end
     let(:other_handle) do
       double.tap do |other_handle|
-        allow(ems).to receive(:connect).with(:service => 'Compute', :tenant_name => other_tenant.name).and_return(other_handle)
+        allow(ems).to receive(:connect).with({:service => 'Compute', :tenant_name => other_tenant.name}).and_return(other_handle)
       end
     end
 
@@ -160,7 +160,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
     end
   end
 
-  context "#is_available?" do
+  context "#supports?" do
     let(:ems) { FactoryBot.create(:ems_openstack) }
     let(:vm)  { FactoryBot.create(:vm_openstack, :ext_management_system => ems) }
     let(:power_state_on)        { "ACTIVE" }
@@ -237,7 +237,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::Vm do
       expect(vm.validate_resize_confirm).to be false
       expect(service).to receive(:resize_server).with(vm.ems_ref, flavor.ems_ref)
       expect(MiqQueue).to receive(:put)
-      vm.resize(flavor.id)
+      vm.resize({"flavor"=>flavor.ems_ref})
     end
 
     it 'confirm resize' do

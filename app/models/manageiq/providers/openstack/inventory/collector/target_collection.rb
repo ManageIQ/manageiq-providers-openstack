@@ -166,6 +166,14 @@ class ManageIQ::Providers::Openstack::Inventory::Collector::TargetCollection < M
     @key_pairs = compute_service.handled_list(:key_pairs, {}, openstack_admin?)
   end
 
+  def server_groups
+    @server_groups ||= compute_service.handled_list(:server_groups, {}, openstack_admin?)
+  end
+
+  def server_group_by_vm_id
+    @server_group_by_vm_id ||= server_groups.each_with_object({}) { |sg, result| sg.members.each { |vm_id| result[vm_id] = sg } }
+  end
+
   def flavors_by_id
     @flavors_by_id ||= {}
   end
