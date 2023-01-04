@@ -19,6 +19,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   include_concern 'Operations'
 
+  supports :capture
   supports :refresh_network_interfaces
   supports :set_node_maintenance
   supports :unset_node_maintenance
