@@ -46,7 +46,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
       ems.security_protocol      = params[:security_protocol].strip
       ems.keystone_v3_domain_id  = params[:uid_ems]
 
-      user, hostname, port = params[:userid], params[:hostname].strip, params[:port].try(:strip)
+      user, hostname, port = params[:userid], params[:hostname].strip, params[:port]
 
       endpoint = {:role => :default, :hostname => hostname, :port => port, :security_protocol => ems.security_protocol}
       authentication = {:userid => user, :password => ManageIQ::Password.try_decrypt(password), :save => false, :role => 'default', :authtype => 'default'}
