@@ -83,21 +83,6 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
     end
   end
 
-  def verify_credentials(auth_type = nil, options = {})
-    raise MiqException::MiqHostError, "No credentials defined" if missing_credentials?(auth_type)
-    raise MiqException::MiqHostError, "Logon to platform [#{os_image_name}] not supported" if auth_type.to_s != 'ipmi' && os_image_name !~ /linux_*/
-
-    case auth_type.to_s
-    when 'remote', 'default', 'ssh_keypair' then verify_credentials_with_ssh(auth_type, options)
-    when 'ws'                               then verify_credentials_with_ws(auth_type)
-    when 'ipmi'                             then verify_credentials_with_ipmi(auth_type)
-    else
-      verify_credentials_with_ws(auth_type)
-    end
-
-    true
-  end
-
   def update_ssh_auth_status!
     # Creating just Auth status placeholder, the credentials are stored in parent or this auth, parent is
     # EmsOpenstackInfra in this case. We will create Auth per Host where we will store state, if it not exists
