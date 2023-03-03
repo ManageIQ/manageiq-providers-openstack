@@ -117,8 +117,9 @@ class ManageIQ::Providers::Openstack::CloudManager::ProvisionWorkflow < ::MiqPro
 
   private
 
-  def dialog_name_from_automate(message = 'get_dialog_name')
-    super(message, {'platform' => 'openstack'})
+  def dialog_name_from_automate(message = 'get_dialog_name', extra_attrs = {})
+    extra_attrs['platform'] ||= 'openstack'
+    super(message, extra_attrs)
   end
 
   def filter_cloud_networks(networks)
