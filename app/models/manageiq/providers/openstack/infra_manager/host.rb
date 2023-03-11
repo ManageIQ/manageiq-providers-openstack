@@ -20,6 +20,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   include_concern 'Operations'
 
   supports :capture
+  supports :update
   supports :refresh_network_interfaces
   supports :set_node_maintenance
   supports :unset_node_maintenance
@@ -81,6 +82,163 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
       # If credentials are not on host's auth, we use host's ssh_keypair as a placeholder for status
       authentication_type(:ssh_keypair).try(:status) || "None"
     end
+  end
+
+  def params_for_update
+    {
+      :fields => [
+        {
+          :component => 'sub-form',
+          :id        => 'endpoints-subform',
+          :name      => 'endpoints-subform',
+          :title     => _("Endpoints"),
+          :fields    => [
+            :component => 'tabs',
+            :name      => 'tabs',
+            :fields    => [
+              {
+                :component => 'tab-item',
+                :id        => 'default-tab',
+                :name      => 'default-tab',
+                :title     => _('Default'),
+                :fields    => [
+                  {
+                    :component  => 'validate-host-credentials',
+                    :id         => 'endpoints.default.valid',
+                    :name       => 'endpoints.default.valid',
+                    :skipSubmit => true,
+                    :isRequired => true,
+                    :fields     => [
+                      {
+                        :component  => "text-field",
+                        :id         => "authentications.default.userid",
+                        :name       => "authentications.default.userid",
+                        :label      => _("Username"),
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                      {
+                        :component  => "password-field",
+                        :id         => "authentications.default.password",
+                        :name       => "authentications.default.password",
+                        :label      => _("Password"),
+                        :type       => "password",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                :component => 'tab-item',
+                :id        => 'remote-tab',
+                :name      => 'remote-tab',
+                :title     => _('Remote Login'),
+                :fields    => [
+                  {
+                    :component  => 'validate-host-credentials',
+                    :id         => 'endpoints.remote.valid',
+                    :name       => 'endpoints.remote.valid',
+                    :skipSubmit => true,
+                    :isRequired => true,
+                    :fields     => [
+                      {
+                        :component  => "text-field",
+                        :id         => "authentications.remote.userid",
+                        :name       => "authentications.remote.userid",
+                        :label      => _("Username"),
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                      {
+                        :component  => "password-field",
+                        :id         => "authentications.remote.password",
+                        :name       => "authentications.remote.password",
+                        :label      => _("Password"),
+                        :type       => "password",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                        :helperText => _('Required if SSH login is disabled for the Default account.')
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                :component => 'tab-item',
+                :id        => 'ssh_keypair-tab',
+                :name      => 'ssh_keypair-tab',
+                :title     => _('SSH Keypair'),
+                :fields    => [
+                  {
+                    :component  => 'validate-host-credentials',
+                    :id         => 'endpoints.ssh_keypair.valid',
+                    :name       => 'endpoints.ssh_keypair.valid',
+                    :skipSubmit => true,
+                    :isRequired => true,
+                    :fields     => [
+                      {
+                        :component  => "text-field",
+                        :id         => "authentications.ssh_keypair.userid",
+                        :name       => "authentications.ssh_keypair.userid",
+                        :label      => _("Username"),
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                      {
+                        :component  => "password-field",
+                        :id         => "authentications.ssh_keypair.password",
+                        :name       => "authentications.ssh_keypair.password",
+                        :label      => _("Password"),
+                        :type       => "password",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                :component => 'tab-item',
+                :id        => 'ws-tab',
+                :name      => 'ws-tab',
+                :title     => _('Web Service'),
+                :fields    => [
+                  {
+                    :component  => 'validate-host-credentials',
+                    :id         => 'endpoints.ws.valid',
+                    :name       => 'endpoints.ws.valid',
+                    :skipSubmit => true,
+                    :isRequired => true,
+                    :fields     => [
+                      {
+                        :component  => "text-field",
+                        :id         => "authentications.ws.userid",
+                        :name       => "authentications.ws.userid",
+                        :label      => _("Username"),
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                      },
+                      {
+                        :component  => "password-field",
+                        :id         => "authentications.ws.password",
+                        :name       => "authentications.ws.password",
+                        :label      => _("Password"),
+                        :type       => "password",
+                        :isRequired => true,
+                        :validate   => [{:type => "required"}],
+                        :helperText => _('Used for access to Web Services.')
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]
+          ]
+        },
+      ]
+    }
   end
 
   def update_ssh_auth_status!
