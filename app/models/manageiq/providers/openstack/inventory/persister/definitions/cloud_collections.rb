@@ -21,7 +21,9 @@ module ManageIQ::Providers::Openstack::Inventory::Persister::Definitions::CloudC
     add_cloud_collection(:operating_systems)
     add_cloud_collection(:placement_groups)
     add_cloud_collection(:disks)
-    add_cloud_collection(:snapshots)
+    add_cloud_collection(:snapshots) do |builder|
+      builder.add_properties(:manager_ref_allowed_nil => %i[vm_or_template])
+    end
     add_cloud_collection(:networks)
 
     unless targeted?
