@@ -285,7 +285,6 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def verify_api_credentials(options = {})
-    options[:service] = "Compute"
     with_provider_connection(options) {}
     true
   rescue => err
@@ -318,18 +317,16 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   end
 
   def verify_credentials(auth_type = nil, options = {})
-    case auth_type
-    when :default
-      verify_api_credentials
-    when :amqp
-      verify_amqp_credentials
-    else
-      verify_api_credentials
+    auth_type ||= 'default'
 
-      capabilities["events"] = !!event_monitor_available?
-      save! if changed?
+    raise MiqException::MiqHostError, "No credentials defined" if missing_credentials?(auth_type)
 
-      true
+    options[:auth_type] = auth_type
+    case auth_type.to_s
+    when 'default'     then verify_api_credentials(options)
+    when 'amqp'        then verify_amqp_credentials(options)
+    when 'ssh_keypair' then verify_ssh_keypair_credentials(options)
+    else               raise "Invalid OpenStack Authentication Type: #{auth_type.inspect}"
     end
   end
 
