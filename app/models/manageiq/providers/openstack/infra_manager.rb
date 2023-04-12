@@ -414,10 +414,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     n_('Infrastructure Provider (OpenStack)', 'Infrastructure Providers (OpenStack)', number)
   end
 
-  def verify_credentials?(args)
-    !!verify_credentials(args) && !!verify_credentials(args.merge(:service =>"BareMetal"))
-  end
-
   private
 
   def authentication_class(attributes)
