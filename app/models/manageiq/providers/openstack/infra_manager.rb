@@ -357,7 +357,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   end
 
   def verify_credentials(auth_type = nil, options = {})
-    options[:service] ||= "BareMetal"
+    options[:service] ||= "Baremetal"
 
     super
   end
