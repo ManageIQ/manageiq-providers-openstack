@@ -5,11 +5,12 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
 
   before(:each) do
     zone = EvmSpecHelper.local_miq_server.zone
-    @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => "192.168.24.1",
-                              :ipaddress => "192.168.24.1", :port => 5000, :api_version => 'v2',
+    credentials = Rails.application.secrets.openstack
+    @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => credentials[:hostname],
+                              :ipaddress => credentials[:hostname], :port => credentials[:port].to_i, :api_version => 'v3',
                               :security_protocol => 'no-ssl')
     @ems.update_authentication(
-      :default => {:userid => "admin", :password => "1fb03e3ec17f5840a5448ef2115a7ec7d645c982"})
+      :default => {:userid => credentials[:userid], :password => credentials[:password]})
   end
 
   it "will perform a full refresh" do
@@ -37,7 +38,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       EmsRefresh.refresh(@ems.network_manager)
       @ems.reload
 
-      @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.order(:ems_ref).detect { |x| x.name.include?('(NovaCompute)') }
+      @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.find { |host| host.vmm_vendor == "redhat"}
 
       expect(@host.maintenance).to eq(false)
       expect(@host.maintenance_reason).to be nil
