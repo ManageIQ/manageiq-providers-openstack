@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -17,97 +17,96 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:08 GMT
+      - Wed, 03 May 2023 20:24:25 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrCghR2AQWZTVGqYycYoSJnF13eCLsgsyoyWxjO8dYRqHN8oF389RsNbwTrk7pXwshY8rrM08wJd1PNswXdCC-63ADZiumL3TsFV5f2LJF7agnCOoFCD00uI04LzkZxVNY8FxiF0H66XB-U0G--T3-Uwlp-dE-ly2gHoIG8xlRdJitM
+      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-75f4e6f6-81c8-49fb-b134-606d404a0556
+      - req-2e790a73-6288-41fc-8c16-d858f9f08a8e
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["U3mhvJutTTyGVTvQmT0jpw"], "expires_at":
-        "2023-05-03T20:06:08.000000Z", "issued_at": "2023-05-03T19:06:08.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["3ivm0XUdRa6X8iYngyDnEQ"], "expires_at":
+        "2023-05-03T21:24:26.000000Z", "issued_at": "2023-05-03T20:24:26.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
-        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
+        "name": "admin"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"},
         {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:08 GMT
+  recorded_at: Wed, 03 May 2023 20:24:26 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:8774/
+    uri: http://11.22.33.44:8774/
     body:
       encoding: US-ASCII
       string: ''
@@ -119,7 +118,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCghR2AQWZTVGqYycYoSJnF13eCLsgsyoyWxjO8dYRqHN8oF389RsNbwTrk7pXwshY8rrM08wJd1PNswXdCC-63ADZiumL3TsFV5f2LJF7agnCOoFCD00uI04LzkZxVNY8FxiF0H66XB-U0G--T3-Uwlp-dE-ly2gHoIG8xlRdJitM
+      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
   response:
     status:
       code: 200
@@ -130,22 +129,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 May 2023 19:06:09 GMT
+      - Wed, 03 May 2023 20:24:26 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"id": "v2.0", "status": "SUPPORTED", "version": "",
         "min_version": "", "updated": "2011-01-21T11:33:21Z", "links": [{"rel": "self",
-        "href": "http://OPENSTACK_HOST:8774/v2/"}]}, {"id": "v2.1", "status": "CURRENT",
+        "href": "http://11.22.33.44:8774/v2/"}]}, {"id": "v2.1", "status": "CURRENT",
         "version": "2.95", "min_version": "2.1", "updated": "2013-07-23T11:33:21Z",
-        "links": [{"rel": "self", "href": "http://OPENSTACK_HOST:8774/v2.1/"}]}]}'
+        "links": [{"rel": "self", "href": "http://11.22.33.44:8774/v2.1/"}]}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:08 GMT
+  recorded_at: Wed, 03 May 2023 20:24:26 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -157,310 +156,99 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:09 GMT
+      - Wed, 03 May 2023 20:24:26 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrChG9JVyC3A_0OZw6_wYQEWwqgsyK1O44U9uyuGlHk9PJhw2hhO51oK-pU_EUigWLWzZNg958SYjfg5R2w-51TC4e1_jynCvyvABFK9wV-iuZhm0qyrZGD3EkQmSi00HnhhBKedzOJeLhko9-qGnPJvFFr6vA-bhWyLDy0SsnlXczI
+      - gAAAAABkUsL6v9OvB2p4ayopFLKfNNNum3qIsfM9416rNW_ctX7XnllMMmPhGR0EY6Hs5rrX4pvVUEN9nqaMxKczW88p5EqpvdPL4tD3MJe7B5y4hk79Cd1D4nDwzph76I9jEIzatyTz99_FNHUzaB0TgS8Popm8q4FLI3EgUzEzBCtwO-AAfhU
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-8642eb61-70c3-4b6f-bc52-1cf697003b43
+      - req-d1c68461-29d1-467a-acd6-c3c093e19960
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["ufb2ZCCYQWOSnT_LPNUW2A"], "expires_at":
-        "2023-05-03T20:06:09.000000Z", "issued_at": "2023-05-03T19:06:09.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["DtDtH3ijQYSEVpyP_wdKVA"], "expires_at":
+        "2023-05-03T21:24:26.000000Z", "issued_at": "2023-05-03T20:24:26.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "7ee3364f86f24e7ca9bfc120dc30e299",
-        "name": "reader"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
-        {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"}], "catalog":
-        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
-        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
-        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
-        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
-        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
-        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
-        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
-        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
-        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
-        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
-        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
-        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
-    http_version:
-  recorded_at: Wed, 03 May 2023 19:06:09 GMT
-- request:
-    method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
-    headers:
-      User-Agent:
-      - fog-core/2.2.4
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Date:
-      - Wed, 03 May 2023 19:06:09 GMT
-      Server:
-      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
-      Content-Length:
-      - '5707'
-      X-Subject-Token:
-      - gAAAAABkUrCijPQLOdc4LjyLaxE49leYG2u-5Hq20GiNdKE0FgpuYPYRI75E-tnCDbJRNge8pGD0nxz1hx9Yw33_lNW96GYl0lDYS1RpyKw0ryyJL0bxMGdQg76keA6Jz1SxFknfmWjBJHY4F37M-BmHG8EYTigKsA5CnYUMYOSgmMbbMi0slic
-      Vary:
-      - X-Auth-Token
-      X-Openstack-Request-Id:
-      - req-7431e504-b6ef-46c9-a3fc-77c1717f73db
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["g4TnYiyoQVCh600nZTIvkg"], "expires_at":
-        "2023-05-03T20:06:10.000000Z", "issued_at": "2023-05-03T19:06:10.000000Z",
-        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
-        "name": "OPENSTACK_USER"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name":
-        "member"}, {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}],
-        "catalog": [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region":
-        "RegionOne"}, {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
-        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
-        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
-        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
-        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
-        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
-        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
-        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
-        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
-        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
-        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
-        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
-    http_version:
-  recorded_at: Wed, 03 May 2023 19:06:10 GMT
-- request:
-    method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
-    headers:
-      User-Agent:
-      - fog-core/2.2.4
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Date:
-      - Wed, 03 May 2023 19:06:10 GMT
-      Server:
-      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
-      Content-Length:
-      - '5707'
-      X-Subject-Token:
-      - gAAAAABkUrCiOMJoF2j-l-ASvMCrLT2vmHZrX1WjWQrhHbSi2wQe6mDszdEXN9qSQeLb-OHXzOB-XdqiJXLW87_C2wLrbkL3A6DxfZVSXL1QNgPbhxglZAhrvRKGbGFCeVXXW1poruJRwZV7iTEWxWb69irqplGSoGah-9vU3BQL5U_47YFhJiA
-      Vary:
-      - X-Auth-Token
-      X-Openstack-Request-Id:
-      - req-a971a1c0-9df0-4009-924f-39feb1954c6b
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["XGR1LZ1bQXeyi4eyPGS-8A"], "expires_at":
-        "2023-05-03T20:06:10.000000Z", "issued_at": "2023-05-03T19:06:10.000000Z",
-        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
-        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
         {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:10 GMT
+  recorded_at: Wed, 03 May 2023 20:24:26 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -472,30 +260,238 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:12 GMT
+      - Wed, 03 May 2023 20:24:27 GMT
+      Server:
+      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
+      Content-Length:
+      - '5707'
+      X-Subject-Token:
+      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-e51f8ba0-d3c3-4f5c-8d36-975d297700ea
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["k1Sbt_iTRt25SlerMSzZnw"], "expires_at":
+        "2023-05-03T21:24:27.000000Z", "issued_at": "2023-05-03T20:24:27.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
+        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
+        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
+        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
+        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
+        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
+        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
+        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
+        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
+        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+    http_version:
+  recorded_at: Wed, 03 May 2023 20:24:27 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Wed, 03 May 2023 20:24:27 GMT
+      Server:
+      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
+      Content-Length:
+      - '5707'
+      X-Subject-Token:
+      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-6dd6c90e-987c-4103-92a3-4eb05dce5a7f
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["oG5rQ2YrRruVpIv1tJiNNQ"], "expires_at":
+        "2023-05-03T21:24:28.000000Z", "issued_at": "2023-05-03T20:24:28.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "7ee3364f86f24e7ca9bfc120dc30e299",
+        "name": "reader"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"}], "catalog":
+        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
+        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
+        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
+        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
+        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
+        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
+        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
+        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
+        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+    http_version:
+  recorded_at: Wed, 03 May 2023 20:24:28 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Wed, 03 May 2023 20:24:28 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '312'
       X-Subject-Token:
-      - gAAAAABkUrCktvkfwfwI_D-a21iOFzTEygeanjVJ7M_pwncjDTkY8Atd8GF2-3FRtsOwxDKJOoYspWXiOVBNKwqJeMQw638Ec3uXZMpspY9MhAfPZZ9lYvaojRKfiklrVOTrJn8Ud84GknXXPZhURuu_Y_c9odloHg
+      - gAAAAABkUsL8OS9NGCgDClK427NTURR-Afghf7TGwSqfciSPSbJH5QTqZs-IOARuARJ-WgQhfnoTp7ApBOXE5DvMGrBcbE1Rd-XmdqOSApL2eCdFdyAjfw_Y4QE3GhNhuQf0bm37giAsv8-6GONfZrvZ_ryEYIjwSA
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-3dab6ad9-92e4-4e7e-9ce4-16e20006f4b9
+      - req-4441cb9f-b2c0-4c7f-a543-67ff508dcf74
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["oOSyfZV3Tk-dBQR0b2rJ2A"], "expires_at":
-        "2023-05-03T20:06:12.000000Z", "issued_at": "2023-05-03T19:06:12.000000Z"}}'
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["jH2DY71-TX2JDhyGhZgHHQ"], "expires_at":
+        "2023-05-03T21:24:28.000000Z", "issued_at": "2023-05-03T20:24:28.000000Z"}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:12 GMT
+  recorded_at: Wed, 03 May 2023 20:24:28 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
+    uri: http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
     body:
       encoding: US-ASCII
       string: ''
@@ -507,14 +503,14 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCktvkfwfwI_D-a21iOFzTEygeanjVJ7M_pwncjDTkY8Atd8GF2-3FRtsOwxDKJOoYspWXiOVBNKwqJeMQw638Ec3uXZMpspY9MhAfPZZ9lYvaojRKfiklrVOTrJn8Ud84GknXXPZhURuu_Y_c9odloHg
+      - gAAAAABkUsL8OS9NGCgDClK427NTURR-Afghf7TGwSqfciSPSbJH5QTqZs-IOARuARJ-WgQhfnoTp7ApBOXE5DvMGrBcbE1Rd-XmdqOSApL2eCdFdyAjfw_Y4QE3GhNhuQf0bm37giAsv8-6GONfZrvZ_ryEYIjwSA
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:12 GMT
+      - Wed, 03 May 2023 20:24:29 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
@@ -522,24 +518,24 @@ http_interactions:
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-872511a1-c5a0-40a6-89f0-b6520d43ba83
+      - req-26228d6a-1ee0-4442-8102-c3f7972d285d
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"projects": [{"id": "690d3936f0494522b3f7ad6d17103312", "name": "OPENSTACK_USER",
+      string: '{"projects": [{"id": "690d3936f0494522b3f7ad6d17103312", "name": "admin",
         "domain_id": "default", "description": "Bootstrap project for initializing
         the cloud.", "enabled": true, "parent_id": "default", "is_domain": false,
-        "tags": [], "options": {}, "links": {"self": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/projects/690d3936f0494522b3f7ad6d17103312"}}],
-        "links": {"next": null, "self": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default",
+        "tags": [], "options": {}, "links": {"self": "http://11.22.33.44:5000/v3/projects/690d3936f0494522b3f7ad6d17103312"}}],
+        "links": {"next": null, "self": "http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default",
         "previous": null}}
 
         '
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:12 GMT
+  recorded_at: Wed, 03 May 2023 20:24:29 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9292/v2/images?limit=1000
+    uri: http://11.22.33.44:9292/v2/images?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -551,7 +547,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCijPQLOdc4LjyLaxE49leYG2u-5Hq20GiNdKE0FgpuYPYRI75E-tnCDbJRNge8pGD0nxz1hx9Yw33_lNW96GYl0lDYS1RpyKw0ryyJL0bxMGdQg76keA6Jz1SxFknfmWjBJHY4F37M-BmHG8EYTigKsA5CnYUMYOSgmMbbMi0slic
+      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
   response:
     status:
       code: 200
@@ -562,9 +558,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Openstack-Request-Id:
-      - req-7af3e61c-af39-4a1b-8666-dfe0259fabe1
+      - req-967070b2-27a9-4809-9953-e8e69ba905bf
       Date:
-      - Wed, 03 May 2023 19:06:13 GMT
+      - Wed, 03 May 2023 20:24:30 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"images": [{"name": "cirros", "disk_format": "qcow2", "container_format":
@@ -577,10 +573,10 @@ http_interactions:
         "file": "/v2/images/ee2382ae-3591-4400-ae0f-b2f596ba77b3/file", "schema":
         "/v2/schemas/image"}], "first": "/v2/images?limit=1000", "schema": "/v2/schemas/images"}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:12 GMT
+  recorded_at: Wed, 03 May 2023 20:24:30 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9292/v2/images?limit=1000&marker=ee2382ae-3591-4400-ae0f-b2f596ba77b3
+    uri: http://11.22.33.44:9292/v2/images?limit=1000&marker=ee2382ae-3591-4400-ae0f-b2f596ba77b3
     body:
       encoding: US-ASCII
       string: ''
@@ -592,7 +588,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCijPQLOdc4LjyLaxE49leYG2u-5Hq20GiNdKE0FgpuYPYRI75E-tnCDbJRNge8pGD0nxz1hx9Yw33_lNW96GYl0lDYS1RpyKw0ryyJL0bxMGdQg76keA6Jz1SxFknfmWjBJHY4F37M-BmHG8EYTigKsA5CnYUMYOSgmMbbMi0slic
+      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
   response:
     status:
       code: 200
@@ -603,17 +599,17 @@ http_interactions:
       Content-Type:
       - application/json
       X-Openstack-Request-Id:
-      - req-78c4e24f-25a8-4c49-be34-16a74eb6d5a1
+      - req-56cdc625-8376-4fae-ae05-85c0f9fb0663
       Date:
-      - Wed, 03 May 2023 19:06:13 GMT
+      - Wed, 03 May 2023 20:24:30 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"images": [], "first": "/v2/images?limit=1000", "schema": "/v2/schemas/images"}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:13 GMT
+  recorded_at: Wed, 03 May 2023 20:24:30 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:6385/nodes/detail?limit=1000
+    uri: http://11.22.33.44:6385/nodes/detail?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -625,7 +621,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCiOMJoF2j-l-ASvMCrLT2vmHZrX1WjWQrhHbSi2wQe6mDszdEXN9qSQeLb-OHXzOB-XdqiJXLW87_C2wLrbkL3A6DxfZVSXL1QNgPbhxglZAhrvRKGbGFCeVXXW1poruJRwZV7iTEWxWb69irqplGSoGah-9vU3BQL5U_47YFhJiA
+      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
   response:
     status:
       code: 200
@@ -642,27 +638,27 @@ http_interactions:
       Content-Type:
       - application/json
       Openstack-Request-Id:
-      - req-d417ffc3-4861-4430-b618-d5abd6dbabd6
+      - req-7e24491b-3b1c-4de4-b861-ccf6b2c9749a
       Date:
-      - Wed, 03 May 2023 19:06:13 GMT
+      - Wed, 03 May 2023 20:24:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"nodes": [{"uuid": "20a246c7-0bd5-4dc9-8985-490c848f0c9a", "created_at":
-        "2023-05-03T14:23:40+00:00", "updated_at": "2023-05-03T18:45:15+00:00", "console_enabled":
+        "2023-05-03T14:23:40+00:00", "updated_at": "2023-05-03T20:20:05+00:00", "console_enabled":
         false, "driver": "ipmi", "driver_info": {}, "extra": {}, "instance_info":
         {}, "instance_uuid": null, "last_error": null, "maintenance": false, "maintenance_reason":
         null, "power_state": null, "properties": {}, "provision_state": "enroll",
         "provision_updated_at": null, "reservation": null, "target_power_state": null,
-        "target_provision_state": null, "links": [{"href": "http://OPENSTACK_HOST:6385/v1/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a",
-        "rel": "self"}, {"href": "http://OPENSTACK_HOST:6385/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a",
-        "rel": "bookmark"}], "chassis_uuid": null, "ports": [{"href": "http://OPENSTACK_HOST:6385/v1/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a/ports",
-        "rel": "self"}, {"href": "http://OPENSTACK_HOST:6385/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a/ports",
+        "target_provision_state": null, "links": [{"href": "http://11.22.33.44:6385/v1/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a",
+        "rel": "self"}, {"href": "http://11.22.33.44:6385/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a",
+        "rel": "bookmark"}], "chassis_uuid": null, "ports": [{"href": "http://11.22.33.44:6385/v1/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a/ports",
+        "rel": "self"}, {"href": "http://11.22.33.44:6385/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a/ports",
         "rel": "bookmark"}]}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:13 GMT
+  recorded_at: Wed, 03 May 2023 20:24:31 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:6385/nodes/detail?limit=1000&marker=20a246c7-0bd5-4dc9-8985-490c848f0c9a
+    uri: http://11.22.33.44:6385/nodes/detail?limit=1000&marker=20a246c7-0bd5-4dc9-8985-490c848f0c9a
     body:
       encoding: US-ASCII
       string: ''
@@ -674,7 +670,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCiOMJoF2j-l-ASvMCrLT2vmHZrX1WjWQrhHbSi2wQe6mDszdEXN9qSQeLb-OHXzOB-XdqiJXLW87_C2wLrbkL3A6DxfZVSXL1QNgPbhxglZAhrvRKGbGFCeVXXW1poruJRwZV7iTEWxWb69irqplGSoGah-9vU3BQL5U_47YFhJiA
+      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
   response:
     status:
       code: 200
@@ -691,20 +687,20 @@ http_interactions:
       Content-Type:
       - application/json
       Openstack-Request-Id:
-      - req-4cef89d2-9c01-4f0e-ba12-0f77d4440f3c
+      - req-b50ade50-9846-4eb1-a16d-14bb985a5d71
       Date:
-      - Wed, 03 May 2023 19:06:13 GMT
+      - Wed, 03 May 2023 20:24:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"nodes": []}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:13 GMT
+  recorded_at: Wed, 03 May 2023 20:24:31 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -716,97 +712,96 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:13 GMT
+      - Wed, 03 May 2023 20:24:31 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrCmGfDsF_yLYX-uvUjfm70tD2WD4Su5C7MNXxHcO5B4TmWUHbk4h4Vorc7KmdkH6C7R0Gu-N_htvQZZMcOROpGgQt2063Vm79o2XjWenQJbfkHW45f1btvlaOmFFFh864ZAdCMrv51xmbfueDa2Q0gfUc31_cN6lHhmJlq8z0YhbQA
+      - gAAAAABkUsL_d1k10pIatNLGPoqf8W3Xv31KQcrYVCFYpqiFXAa3gWl6kn2tvaBzD2qw2jz3fbHi9xLhzmjiPLfeqXkMLCIym2OZARIgLsTQKVyoD2cIyMKFoU1lKTKpRNj1pq3hFbBEKFxvm3olfoAueHACqSQgwmpks-edOntQMLExSwldSjg
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-5d5fbd82-b5b9-4cf8-abe6-d0da9d1f01b6
+      - req-75dd25fe-5078-40dd-94ac-5dfcbfefcbad
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["5ZTGf-eXSkC031amEFESZQ"], "expires_at":
-        "2023-05-03T20:06:14.000000Z", "issued_at": "2023-05-03T19:06:14.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["2qvGRZIyQXW9IVS9KWQmpQ"], "expires_at":
+        "2023-05-03T21:24:31.000000Z", "issued_at": "2023-05-03T20:24:31.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
-        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
         {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:14 GMT
+  recorded_at: Wed, 03 May 2023 20:24:31 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:8774/v2.1/servers/detail?limit=1000
+    uri: http://11.22.33.44:8774/v2.1/servers/detail?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -818,7 +813,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCghR2AQWZTVGqYycYoSJnF13eCLsgsyoyWxjO8dYRqHN8oF389RsNbwTrk7pXwshY8rrM08wJd1PNswXdCC-63ADZiumL3TsFV5f2LJF7agnCOoFCD00uI04LzkZxVNY8FxiF0H66XB-U0G--T3-Uwlp-dE-ly2gHoIG8xlRdJitM
+      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
       X-Openstack-Nova-Api-Version:
       - '2.15'
   response:
@@ -837,23 +832,23 @@ http_interactions:
       Vary:
       - OpenStack-API-Version, X-OpenStack-Nova-API-Version
       X-Openstack-Request-Id:
-      - req-c9f6f382-932c-4a80-a2bf-c8c47005d72b
+      - req-b0ec4a85-f802-474d-9306-8c4efb45fc7a
       X-Compute-Request-Id:
-      - req-c9f6f382-932c-4a80-a2bf-c8c47005d72b
+      - req-b0ec4a85-f802-474d-9306-8c4efb45fc7a
       Date:
-      - Wed, 03 May 2023 19:06:14 GMT
+      - Wed, 03 May 2023 20:24:33 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"servers": [{"id": "e5098791-2224-4e9c-b255-d3919a2834b0", "name":
         "vm-inst0001", "status": "ACTIVE", "tenant_id": "690d3936f0494522b3f7ad6d17103312",
         "user_id": "dfcabf97bf1c43bea67e2d5a7be4c430", "metadata": {}, "hostId": "4c2755350f8a3a4364bad38c6db7492a3e4c6cfdc508e2e4ab699846",
         "image": {"id": "ee2382ae-3591-4400-ae0f-b2f596ba77b3", "links": [{"rel":
-        "bookmark", "href": "http://OPENSTACK_HOST:8774/images/ee2382ae-3591-4400-ae0f-b2f596ba77b3"}]},
-        "flavor": {"id": "auto", "links": [{"rel": "bookmark", "href": "http://OPENSTACK_HOST:8774/flavors/auto"}]},
+        "bookmark", "href": "http://11.22.33.44:8774/images/ee2382ae-3591-4400-ae0f-b2f596ba77b3"}]},
+        "flavor": {"id": "auto", "links": [{"rel": "bookmark", "href": "http://11.22.33.44:8774/flavors/auto"}]},
         "created": "2023-05-01T20:28:14Z", "updated": "2023-05-01T20:31:25Z", "addresses":
         {}, "accessIPv4": "", "accessIPv6": "", "links": [{"rel": "self", "href":
-        "http://OPENSTACK_HOST:8774/v2.1/servers/e5098791-2224-4e9c-b255-d3919a2834b0"},
-        {"rel": "bookmark", "href": "http://OPENSTACK_HOST:8774/servers/e5098791-2224-4e9c-b255-d3919a2834b0"}],
+        "http://11.22.33.44:8774/v2.1/servers/e5098791-2224-4e9c-b255-d3919a2834b0"},
+        {"rel": "bookmark", "href": "http://11.22.33.44:8774/servers/e5098791-2224-4e9c-b255-d3919a2834b0"}],
         "OS-DCF:diskConfig": "MANUAL", "progress": 0, "OS-EXT-AZ:availability_zone":
         "nova", "config_drive": "", "key_name": null, "OS-SRV-USG:launched_at": "2023-05-01T20:31:21.000000",
         "OS-SRV-USG:terminated_at": null, "OS-EXT-SRV-ATTR:host": "localhost.localdomain",
@@ -865,10 +860,10 @@ http_interactions:
         "OS-EXT-STS:vm_state": "active", "OS-EXT-STS:power_state": 1, "os-extended-volumes:volumes_attached":
         [], "locked": false}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:14 GMT
+  recorded_at: Wed, 03 May 2023 20:24:33 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:8774/v2.1/servers/detail?limit=1000&marker=e5098791-2224-4e9c-b255-d3919a2834b0
+    uri: http://11.22.33.44:8774/v2.1/servers/detail?limit=1000&marker=e5098791-2224-4e9c-b255-d3919a2834b0
     body:
       encoding: US-ASCII
       string: ''
@@ -880,7 +875,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCghR2AQWZTVGqYycYoSJnF13eCLsgsyoyWxjO8dYRqHN8oF389RsNbwTrk7pXwshY8rrM08wJd1PNswXdCC-63ADZiumL3TsFV5f2LJF7agnCOoFCD00uI04LzkZxVNY8FxiF0H66XB-U0G--T3-Uwlp-dE-ly2gHoIG8xlRdJitM
+      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
       X-Openstack-Nova-Api-Version:
       - '2.15'
   response:
@@ -899,22 +894,22 @@ http_interactions:
       Vary:
       - OpenStack-API-Version, X-OpenStack-Nova-API-Version
       X-Openstack-Request-Id:
-      - req-c95b4baf-693c-4c54-b7fb-6a7e445b9be1
+      - req-36457606-0baf-47bc-a76f-6518bcb3faa2
       X-Compute-Request-Id:
-      - req-c95b4baf-693c-4c54-b7fb-6a7e445b9be1
+      - req-36457606-0baf-47bc-a76f-6518bcb3faa2
       Date:
-      - Wed, 03 May 2023 19:06:14 GMT
+      - Wed, 03 May 2023 20:24:33 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"servers": []}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:14 GMT
+  recorded_at: Wed, 03 May 2023 20:24:33 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -926,100 +921,99 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:15 GMT
+      - Wed, 03 May 2023 20:24:33 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrCnNhhTqF8wNveWUp6KIQavRr7cqi-MB3CU_QIXkjSq16o52pHqFh7PBp7782pPqGbuIfiMXYGNQVoRjSa_iO-1bmk6KfeyBMH4qnx8tiyQHqhoDymKOtunsxynAegT0eA5QCowa00dRsTZ54fIZvq51r2kMXSxltmSxk0cWoMAmYM
+      - gAAAAABkUsMCCB-xX5sCagmqP6KFFhQMx94Bj5tdoacoaus1IeJ0fuIwP4AExPCZc93pvIiQqoKrwrIgMioeLcEIfMxsEtAyvETQlw3LMDDqgNJriZU12N4HVDhyEL8kZM_kahulLtBC53MVmdQQHKmkHyroPEUnpg2grKB17ZYjdD-CWMy4dBo
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-4a4745ea-1032-4c70-9462-0bfde0bfb234
+      - req-84b0321e-1ce2-4d7d-83b0-9494a29abd0e
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["_Pp8ObFvRJqEoC21qudn6g"], "expires_at":
-        "2023-05-03T20:06:15.000000Z", "issued_at": "2023-05-03T19:06:15.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["XYjRMf--R_KLw82KHMqo8w"], "expires_at":
+        "2023-05-03T21:24:34.000000Z", "issued_at": "2023-05-03T20:24:34.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
-        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
+        "name": "admin"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"},
         {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:15 GMT
+  recorded_at: Wed, 03 May 2023 20:24:34 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -1031,307 +1025,304 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:15 GMT
+      - Wed, 03 May 2023 20:24:34 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrCo2e_hGqPoZZ3LGI-tuuGA2uHTduiW8MvfxpJAsd5B4hTA8MPpLKfsOmhh6zK45Nh7fdze5XlBil9TPY6FP-WIhPAyp2DWSCuSlU5fy8v11xtJ_tdybVKNB6o1PuaOeujSiFaiZEaPbHJiaynshc7LHsZGbnyaS1POwL2Qcblkz3I
+      - gAAAAABkUsMChw0s42M9j31h6sp6NA8dhzzNnkEvIEcGFA-jsVnGrfd414YdQpHAt6sirBiSUVuhhFyEJypVtdzmHSDGTHzGMBFuQt44AAjTcI2e_nn7_3sRO9Et63VOM5gaoeH778LmN4CMTOW6E7lp4-u3h-jnFSOPq68JdMOWgWwgcrDphXw
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-2c52acf3-31c8-420e-bf8f-45b34eb842c5
+      - req-bf1c52a0-7499-4107-a065-b451ebcd8527
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["9nQDhPK3RsOSNVvWeDl9eg"], "expires_at":
-        "2023-05-03T20:06:16.000000Z", "issued_at": "2023-05-03T19:06:16.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["oQbt2_HTRBC7gaoT1vWDMQ"], "expires_at":
+        "2023-05-03T21:24:34.000000Z", "issued_at": "2023-05-03T20:24:34.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "7ee3364f86f24e7ca9bfc120dc30e299",
-        "name": "reader"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
-        {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"}], "catalog":
-        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
-        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
-        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
-        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
-        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
-        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
-        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
-        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
-        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
-        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
-        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
-        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
-    http_version:
-  recorded_at: Wed, 03 May 2023 19:06:16 GMT
-- request:
-    method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
-    headers:
-      User-Agent:
-      - fog-core/2.2.4
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Date:
-      - Wed, 03 May 2023 19:06:17 GMT
-      Server:
-      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
-      Content-Length:
-      - '5707'
-      X-Subject-Token:
-      - gAAAAABkUrCp3wtfH_XxPBK_aghE_6k7PimTdtrp473bRqOpRcqUphNi5uZeYS15XkQzfnYHcDqbasyq9IWrUY9-9WF_NNrze2TSFNdj-NiPycW6SzYvOIaZ6R7qH6cYuLRxNIuHx8-yD44UaQjckfHrfKcl3-Ce2lmdIWd474delC-eXADMh-E
-      Vary:
-      - X-Auth-Token
-      X-Openstack-Request-Id:
-      - req-12d59e45-fc6e-4d03-a6bb-00a4c68705d2
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["0WswhlNaTp-_ikJw2-TC5A"], "expires_at":
-        "2023-05-03T20:06:17.000000Z", "issued_at": "2023-05-03T19:06:17.000000Z",
-        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
-        "name": "OPENSTACK_USER"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name":
-        "member"}, {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}],
-        "catalog": [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region":
-        "RegionOne"}, {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
-        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
-        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
-        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
-        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
-        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
-        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
-        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
-        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
-        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
-        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
-        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
-        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
-    http_version:
-  recorded_at: Wed, 03 May 2023 19:06:17 GMT
-- request:
-    method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
-    body:
-      encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
-    headers:
-      User-Agent:
-      - fog-core/2.2.4
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 201
-      message: CREATED
-    headers:
-      Date:
-      - Wed, 03 May 2023 19:06:17 GMT
-      Server:
-      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
-      Content-Length:
-      - '5707'
-      X-Subject-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
-      Vary:
-      - X-Auth-Token
-      X-Openstack-Request-Id:
-      - req-da74d263-a980-470c-a469-e144e72a9dfe
-      Content-Type:
-      - application/json
-    body:
-      encoding: ASCII-8BIT
-      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["9t3lAooFQYG8ZjFdcRj8mQ"], "expires_at":
-        "2023-05-03T20:06:18.000000Z", "issued_at": "2023-05-03T19:06:18.000000Z",
-        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
-        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "OPENSTACK_USER"},
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
         {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:18 GMT
+  recorded_at: Wed, 03 May 2023 20:24:34 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Wed, 03 May 2023 20:24:35 GMT
+      Server:
+      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
+      Content-Length:
+      - '5707'
+      X-Subject-Token:
+      - gAAAAABkUsMDC2MhAeick50gCoOW2X8AgJrriz79_uz5IrtkcQLCYjBj2bwBZ31RfNtQ3Tygg3hzPnlrhMtPOS_mbuudautTrQ_1_ro9MGwbOp3tNxwFCvv4nCitJnvgcjThPhXEenD7pGvwvMDHYx5aFR91ANbq8ZlNKLsjMxB-UIOVXj6o3wU
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-03d19f14-04ff-4585-b365-5a1c8bc42286
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["eS48gMTdSUyx-cYfBcYZxQ"], "expires_at":
+        "2023-05-03T21:24:35.000000Z", "issued_at": "2023-05-03T20:24:35.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
+        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
+        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
+        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
+        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
+        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
+        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
+        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
+        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
+        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+    http_version:
+  recorded_at: Wed, 03 May 2023 20:24:35 GMT
+- request:
+    method: post
+    uri: http://11.22.33.44:5000/v3/auth/tokens
+    body:
+      encoding: UTF-8
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
+    headers:
+      User-Agent:
+      - fog-core/2.2.4
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Wed, 03 May 2023 20:24:36 GMT
+      Server:
+      - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
+      Content-Length:
+      - '5707'
+      X-Subject-Token:
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      Vary:
+      - X-Auth-Token
+      X-Openstack-Request-Id:
+      - req-f9091ea2-1949-4026-9468-25c13d127515
+      Content-Type:
+      - application/json
+    body:
+      encoding: ASCII-8BIT
+      string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["t0vXxrmuTiq6YQhuW5PFpQ"], "expires_at":
+        "2023-05-03T21:24:36.000000Z", "issued_at": "2023-05-03T20:24:36.000000Z",
+        "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
+        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
+        "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
+        {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
+        "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
+        "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
+        "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
+        "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
+        {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
+        "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
+        "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
+        "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
+        "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
+        {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+    http_version:
+  recorded_at: Wed, 03 May 2023 20:24:36 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/networks
+    uri: http://11.22.33.44:9696/v2.0/networks
     body:
       encoding: US-ASCII
       string: ''
@@ -1343,7 +1334,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1354,20 +1345,20 @@ http_interactions:
       Content-Length:
       - '15'
       X-Openstack-Request-Id:
-      - req-0fb68c0c-a367-471a-9592-c0393064a973
+      - req-cb232b4d-78f7-4c4a-8bf2-a3045b2f02c3
       Date:
-      - Wed, 03 May 2023 19:06:18 GMT
+      - Wed, 03 May 2023 20:24:37 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"networks":[]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:18 GMT
+  recorded_at: Wed, 03 May 2023 20:24:37 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -1379,30 +1370,30 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:18 GMT
+      - Wed, 03 May 2023 20:24:37 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '312'
       X-Subject-Token:
-      - gAAAAABkUrCrliDNpzblz_NSTprdjt1ScwjKelfK3s2RtHCdqU_hk7mV_XeDisGsXvvu9hICdx2t9ZvByV1UDDa_A5GYtxMBsde0O3t-bWfEx-VXFLKz8bui_1j0qRDYK4BEM9LBxETmVVuXhXurqOH01mZFS7OWKw
+      - gAAAAABkUsMGodU7pEe9zp-5UpFni3pmVC-h8WBDmWN3qloCml_CQUgeNxXdOhSPw2UmjlEcM-g67-bGrC6jbmum4VLIhCiHOfpmC0lgZPCgcFjh0nLNrfayhZZ270E7fMow4r6xfwLIJ3Z55S0cDMOMnl4CBDaCfg
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-46f5b164-ea5d-40ae-ad14-a777f84d7f58
+      - req-3eadc6e2-bef7-48ad-8e15-afbc58bd3807
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["fjn0bFfmT_CxhiWeC2GyRw"], "expires_at":
-        "2023-05-03T20:06:19.000000Z", "issued_at": "2023-05-03T19:06:19.000000Z"}}'
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["j_XsQkhuTVCDDwiqQ0-nHA"], "expires_at":
+        "2023-05-03T21:24:38.000000Z", "issued_at": "2023-05-03T20:24:38.000000Z"}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:37 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
+    uri: http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
     body:
       encoding: US-ASCII
       string: ''
@@ -1414,14 +1405,14 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCrliDNpzblz_NSTprdjt1ScwjKelfK3s2RtHCdqU_hk7mV_XeDisGsXvvu9hICdx2t9ZvByV1UDDa_A5GYtxMBsde0O3t-bWfEx-VXFLKz8bui_1j0qRDYK4BEM9LBxETmVVuXhXurqOH01mZFS7OWKw
+      - gAAAAABkUsMGodU7pEe9zp-5UpFni3pmVC-h8WBDmWN3qloCml_CQUgeNxXdOhSPw2UmjlEcM-g67-bGrC6jbmum4VLIhCiHOfpmC0lgZPCgcFjh0nLNrfayhZZ270E7fMow4r6xfwLIJ3Z55S0cDMOMnl4CBDaCfg
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:19 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
@@ -1429,24 +1420,24 @@ http_interactions:
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-fe377d38-32e3-4ef0-abc7-c2e8a8da3664
+      - req-936bcdef-c0cc-41d9-99c1-60f9ffb1c901
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
-      string: '{"projects": [{"id": "690d3936f0494522b3f7ad6d17103312", "name": "OPENSTACK_USER",
+      string: '{"projects": [{"id": "690d3936f0494522b3f7ad6d17103312", "name": "admin",
         "domain_id": "default", "description": "Bootstrap project for initializing
         the cloud.", "enabled": true, "parent_id": "default", "is_domain": false,
-        "tags": [], "options": {}, "links": {"self": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/projects/690d3936f0494522b3f7ad6d17103312"}}],
-        "links": {"next": null, "self": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default",
+        "tags": [], "options": {}, "links": {"self": "http://11.22.33.44:5000/v3/projects/690d3936f0494522b3f7ad6d17103312"}}],
+        "links": {"next": null, "self": "http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default",
         "previous": null}}
 
         '
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/subnets?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/subnets?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1458,7 +1449,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1469,17 +1460,17 @@ http_interactions:
       Content-Length:
       - '125'
       X-Openstack-Request-Id:
-      - req-3ad28892-7d73-407d-a9c5-0828fba1a15c
+      - req-579f7e62-606e-45b2-af59-5a393444b474
       Date:
-      - Wed, 03 May 2023 19:06:19 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"subnets":[],"subnets_links":[{"rel":"previous","href":"http://OPENSTACK_HOST:9696/v2.0/subnets?limit=1000&page_reverse=True"}]}'
+      string: '{"subnets":[],"subnets_links":[{"rel":"previous","href":"http://11.22.33.44:9696/v2.0/subnets?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/floatingips?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/floatingips?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1491,7 +1482,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1502,18 +1493,18 @@ http_interactions:
       Content-Length:
       - '143'
       X-Openstack-Request-Id:
-      - req-9b44ed83-391d-41c7-ab0a-9a0a86152572
+      - req-a1d19cbf-ce8f-40fc-9ad7-0ee2e49cff28
       Date:
-      - Wed, 03 May 2023 19:06:19 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": [], "floatingips_links": [{"rel": "previous", "href":
-        "http://OPENSTACK_HOST:9696/v2.0/floatingips?limit=1000&page_reverse=True"}]}'
+        "http://11.22.33.44:9696/v2.0/floatingips?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/ports?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/ports?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1525,7 +1516,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1536,17 +1527,17 @@ http_interactions:
       Content-Length:
       - '119'
       X-Openstack-Request-Id:
-      - req-b5071a69-f79f-483a-880c-1edd350a22e7
+      - req-164ff31c-5e62-4756-9e55-fe16168eeed6
       Date:
-      - Wed, 03 May 2023 19:06:19 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"ports":[],"ports_links":[{"rel":"previous","href":"http://OPENSTACK_HOST:9696/v2.0/ports?limit=1000&page_reverse=True"}]}'
+      string: '{"ports":[],"ports_links":[{"rel":"previous","href":"http://11.22.33.44:9696/v2.0/ports?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/routers?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/routers?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1558,7 +1549,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1569,17 +1560,17 @@ http_interactions:
       Content-Length:
       - '131'
       X-Openstack-Request-Id:
-      - req-3dab7659-4b35-4225-bab9-8d06bfa17ac5
+      - req-5973fc2d-8e65-4038-a6b3-7e3bdd0cbd63
       Date:
-      - Wed, 03 May 2023 19:06:19 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"routers": [], "routers_links": [{"rel": "previous", "href": "http://OPENSTACK_HOST:9696/v2.0/routers?limit=1000&page_reverse=True"}]}'
+      string: '{"routers": [], "routers_links": [{"rel": "previous", "href": "http://11.22.33.44:9696/v2.0/routers?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/security-groups?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/security-groups?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1591,7 +1582,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1602,9 +1593,9 @@ http_interactions:
       Content-Length:
       - '2969'
       X-Openstack-Request-Id:
-      - req-420608e6-4798-4133-bc14-be0cd55c062c
+      - req-ee3d5f3e-32af-483f-9a55-2582411d186a
       Date:
-      - Wed, 03 May 2023 19:06:20 GMT
+      - Wed, 03 May 2023 20:24:38 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": [{"id": "bfa55b5e-8d71-497c-813c-4202b0578588",
@@ -1641,12 +1632,12 @@ http_interactions:
         "690d3936f0494522b3f7ad6d17103312"}], "tags": [], "created_at": "2023-05-01T18:39:51Z",
         "updated_at": "2023-05-01T18:39:53Z", "revision_number": 1, "project_id":
         "690d3936f0494522b3f7ad6d17103312"}], "security_groups_links": [{"rel": "previous",
-        "href": "http://OPENSTACK_HOST:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588&page_reverse=True"}]}'
+        "href": "http://11.22.33.44:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:19 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588
+    uri: http://11.22.33.44:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588
     body:
       encoding: US-ASCII
       string: ''
@@ -1658,7 +1649,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1669,21 +1660,21 @@ http_interactions:
       Content-Length:
       - '155'
       X-Openstack-Request-Id:
-      - req-304d70af-4ebf-4045-b86f-452f6020c94b
+      - req-977f722f-a97e-48a1-be1e-5e910064c3c8
       Date:
-      - Wed, 03 May 2023 19:06:20 GMT
+      - Wed, 03 May 2023 20:24:39 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": [], "security_groups_links": [{"rel": "previous",
-        "href": "http://OPENSTACK_HOST:9696/v2.0/security-groups?limit=1000&page_reverse=True"}]}'
+        "href": "http://11.22.33.44:9696/v2.0/security-groups?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:20 GMT
+  recorded_at: Wed, 03 May 2023 20:24:38 GMT
 - request:
     method: post
-    uri: http://OPENSTACK_HOST:OPENSTACK_PORT/v3/auth/tokens
+    uri: http://11.22.33.44:5000/v3/auth/tokens
     body:
       encoding: UTF-8
-      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"OPENSTACK_USER","domain":{"id":"default"},"password":"OPENSTACK_PASSWORD"}}},"scope":{"project":{"name":"OPENSTACK_USER","domain":{"id":"default"}}}}}'
+      string: '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"admin","domain":{"id":"default"},"password":"password_2WpEraURh"}}},"scope":{"project":{"name":"admin","domain":{"id":"default"}}}}}'
     headers:
       User-Agent:
       - fog-core/2.2.4
@@ -1695,97 +1686,96 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 19:06:20 GMT
+      - Wed, 03 May 2023 20:24:39 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUrCsDAxw-GLrWjH3Jwtze1_p4P_NBrEDqTJOh6183thG_jqZgfHZRHEczpcUjhsq7NgmZZclMHaZO3ABbBYAG0wwqGn4Moq35ilWpbChHHSh4m3p9VIK9zKrvAhepIOF2ZLhorqY0SAWVukoKcqRQNyv7V4I-AcGqk0_56ZeqZnPAEw
+      - gAAAAABkUsMHHuf1iintIo4uusG1RDDpgi7nkIUJx0-aL9SW5kESJPx7G7Pm5jpMiMoXjXH-eUqiCqMxTtjM19m3yGpnlIT29eDNpM2rMfi9GBCt2Ub69TCBZYzBZ35lNMlSAbhuLb-2flCgggnd7aAZ_xdp7zeROGBQJcN8BjM2cgOoFDo9nUg
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-03ad1af0-3670-4273-b95c-f7d0b830c382
+      - req-ebf2d9d6-e26b-4b6f-bcdf-7732b6667c47
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
-        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "OPENSTACK_USER",
-        "password_expires_at": null}, "audit_ids": ["qWFzMVdkSG2CUN2us6dqow"], "expires_at":
-        "2023-05-03T20:06:20.000000Z", "issued_at": "2023-05-03T19:06:20.000000Z",
+        "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
+        "password_expires_at": null}, "audit_ids": ["X4bjmCAjTQm-PybFKvAUxg"], "expires_at":
+        "2023-05-03T21:24:39.000000Z", "issued_at": "2023-05-03T20:24:39.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "OPENSTACK_USER"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
-        "name": "OPENSTACK_USER"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name":
-        "member"}, {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}],
-        "catalog": [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region":
-        "RegionOne"}, {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"},
-        {"id": "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:9292", "region": "RegionOne"}],
-        "id": "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"},
-        {"endpoints": [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"},
-        {"id": "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8777", "region": "RegionOne"}],
-        "id": "110f522e00ab493fa8c07887a9265f7d", "type": "metering", "name": "ceilometer"},
-        {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "4e23b3fd868443d2a3404a290a7da402", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"},
-        {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8778", "region": "RegionOne"}],
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
+        [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
+        {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}, {"id":
+        "fadbc075caa34967bf25972bb2c8dbee", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"}], "id":
+        "0416f29545e4442e9dcb0a830d3494c2", "type": "image", "name": "glance"}, {"endpoints":
+        [{"id": "653d4a6b961a472aac125003679c24a7", "interface": "admin", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "746341a1b59d4ba39b264a0bb9bd17b2", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8777", "region": "RegionOne"}, {"id":
+        "f5570ee79bf84f438392983ff8794680", "interface": "public", "region_id": "RegionOne",
+        "url": "http://11.22.33.44:8777", "region": "RegionOne"}], "id": "110f522e00ab493fa8c07887a9265f7d",
+        "type": "metering", "name": "ceilometer"}, {"endpoints": [{"id": "3ba0a475a98c4b6aae29788c17d1a499",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8778",
+        "region": "RegionOne"}, {"id": "4e23b3fd868443d2a3404a290a7da402", "interface":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region":
+        "RegionOne"}, {"id": "f8dbc0d72a87453082b3f6a586dddbab", "interface": "internal",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8778", "region": "RegionOne"}],
         "id": "114db3e45e4d4ced9351fd1b7c20f9b9", "type": "placement", "name": "placement"},
         {"endpoints": [{"id": "2af46bd6bbe14e0abc32860fce5c11db", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}, {"id": "3674363abe1b4799ac4ce79f7b90944b", "interface": "public",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
-        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8774/v2.1", "region":
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
+        "RegionOne"}, {"id": "5bb4094f6e154c1e8df6f1594c2d740b", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8774/v2.1", "region":
         "RegionOne"}], "id": "317a88eecb1c4c77998c3e55a2942552", "type": "compute",
         "name": "nova"}, {"endpoints": [{"id": "0ef76e57dffc4dfcae1687a0ec1e1deb",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:9696",
         "region": "RegionOne"}, {"id": "8326f971917d4039af3c4bf67f3e5c17", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region":
         "RegionOne"}, {"id": "f6d2a76bb04a46b5a6de0595cbe8d9be", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:9696", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:9696", "region": "RegionOne"}],
         "id": "8233686617934f71ab0e47b1a7bb3be6", "type": "network", "name": "neutron"},
         {"endpoints": [{"id": "518542b86f0048db903be2407f5f0097", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:OPENSTACK_PORT/v3/",
-        "region": "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type":
-        "identity", "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
-        "interface": "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "aefc5e685f234e8390d536ee1efcf7ad", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}, {"id": "f461e738a8b945bd8cbd63cd2fdc4662", "interface": "public",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:5000/v3/", "region":
+        "RegionOne"}], "id": "90922324462c4df1ab1183bf17c964f8", "type": "identity",
+        "name": "keystone"}, {"endpoints": [{"id": "29df576cc4df4b57afbec1358d11f7e5",
+        "interface": "public", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "45dae1c24211448e8d15b9649695d9e6", "interface":
-        "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}, {"id": "7fbe53fc8b574f6194ab07041f790dee", "interface":
-        "internal", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8776/v3/690d3936f0494522b3f7ad6d17103312",
+        "internal", "region_id": "RegionOne", "url": "http://11.22.33.44:8776/v3/690d3936f0494522b3f7ad6d17103312",
         "region": "RegionOne"}], "id": "b0ce3a5faef1485daae355b0f7608a99", "type":
         "volumev3", "name": "cinderv3"}, {"endpoints": [{"id": "32596ce7f3034055823353ac8391301c",
-        "interface": "OPENSTACK_USER", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385",
+        "interface": "admin", "region_id": "RegionOne", "url": "http://11.22.33.44:6385",
         "region": "RegionOne"}, {"id": "a922ccf845df404da19058e973307779", "interface":
-        "public", "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region":
+        "public", "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region":
         "RegionOne"}, {"id": "c4b6a875aa5e4e9c8c1386c49b83d4ff", "interface": "internal",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:6385", "region": "RegionOne"}],
+        "region_id": "RegionOne", "url": "http://11.22.33.44:6385", "region": "RegionOne"}],
         "id": "bc3513f887ee4374b0cb2619bdb25f46", "type": "baremetal", "name": "ironic"},
-        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "OPENSTACK_USER",
-        "region_id": "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
+        {"endpoints": [{"id": "42faf3513a4b4664b42f94554c0f2fe8", "interface": "admin",
+        "region_id": "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"},
         {"id": "87de4cf96e684a458c4d91cb7ba5502f", "interface": "public", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"},
-        {"id": "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
-        "RegionOne", "url": "http://OPENSTACK_HOST:8041", "region": "RegionOne"}],
-        "id": "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}, {"id":
+        "b0a701502a2843c49394a768135fdd3e", "interface": "internal", "region_id":
+        "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
+        "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:20 GMT
+  recorded_at: Wed, 03 May 2023 20:24:39 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/security-group-rules?limit=1000
+    uri: http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000
     body:
       encoding: US-ASCII
       string: ''
@@ -1797,7 +1787,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1808,9 +1798,9 @@ http_interactions:
       Content-Length:
       - '2466'
       X-Openstack-Request-Id:
-      - req-46de502e-c689-4f74-8484-cb3b30bc2081
+      - req-432d0852-a54a-45a0-ba6a-554d3d55830a
       Date:
-      - Wed, 03 May 2023 19:06:20 GMT
+      - Wed, 03 May 2023 20:24:39 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group_rules": [{"id": "46193871-e62d-4308-9345-4ba85ff3d48e",
@@ -1840,12 +1830,12 @@ http_interactions:
         null, "normalized_cidr": null, "remote_group_id": "bfa55b5e-8d71-497c-813c-4202b0578588",
         "description": null, "created_at": "2023-05-01T18:39:53Z", "updated_at": "2023-05-01T18:39:53Z",
         "revision_number": 0, "project_id": "690d3936f0494522b3f7ad6d17103312"}],
-        "security_group_rules_links": [{"rel": "previous", "href": "http://OPENSTACK_HOST:9696/v2.0/security-group-rules?limit=1000&marker=46193871-e62d-4308-9345-4ba85ff3d48e&page_reverse=True"}]}'
+        "security_group_rules_links": [{"rel": "previous", "href": "http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&marker=46193871-e62d-4308-9345-4ba85ff3d48e&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:20 GMT
+  recorded_at: Wed, 03 May 2023 20:24:39 GMT
 - request:
     method: get
-    uri: http://OPENSTACK_HOST:9696/v2.0/security-group-rules?limit=1000&marker=c9fab83b-430d-43d5-b720-568628a97e41
+    uri: http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&marker=c9fab83b-430d-43d5-b720-568628a97e41
     body:
       encoding: US-ASCII
       string: ''
@@ -1857,7 +1847,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUrCqfU4OYbOk06o0XIAHFD3q1oNOz_sMihFcDW0cfVn6POpm1KoEqSw_jWktFP6LiUwpCnHy7kTWahCGHzgWpkxEvZlbbJ87umbyOlFfjJ8bBi5DpV1NYfrnuo-Cw2GT-kWsYZu1Bda1L4biQw39l9OFxLnfSowm3yvlq5XFm6OeEH0
+      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
   response:
     status:
       code: 200
@@ -1868,13 +1858,13 @@ http_interactions:
       Content-Length:
       - '170'
       X-Openstack-Request-Id:
-      - req-1bb83ba5-7a5d-41d4-a1ce-2b3f15c003fd
+      - req-77cf9d31-7528-42f7-b8d5-c1abfdf54b2e
       Date:
-      - Wed, 03 May 2023 19:06:21 GMT
+      - Wed, 03 May 2023 20:24:40 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group_rules": [], "security_group_rules_links": [{"rel":
-        "previous", "href": "http://OPENSTACK_HOST:9696/v2.0/security-group-rules?limit=1000&page_reverse=True"}]}'
+        "previous", "href": "http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 19:06:20 GMT
+  recorded_at: Wed, 03 May 2023 20:24:39 GMT
 recorded_with: VCR 5.1.0

@@ -8,7 +8,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     credentials = Rails.application.secrets.openstack
     @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => credentials[:hostname],
                               :ipaddress => credentials[:hostname], :port => credentials[:port].to_i, :api_version => 'v3',
-                              :security_protocol => 'no-ssl')
+                              :security_protocol => 'no-ssl', :uid_ems => "default")
     @ems.update_authentication(
       :default => {:userid => credentials[:userid], :password => credentials[:password]})
   end
@@ -20,7 +20,6 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       assert_table_counts
       assert_ems
       assert_specific_host
-      assert_mapped_stacks
       assert_specific_public_template
     end
   end
@@ -80,20 +79,20 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
 
   def assert_table_counts
     expect(ExtManagementSystem.count).to         eq 2
-    expect(EmsCluster.count).to                  eq 2
-    expect(Host.count).to                        eq 2
-    expect(OrchestrationStack.count).to          eq 301
-    expect(OrchestrationStackParameter.count).to eq 2773
-    expect(OrchestrationStackResource.count).to  eq 459
-    expect(OrchestrationStackOutput.count).to    eq 398
-    expect(OrchestrationTemplate.count).to       eq 151
-    expect(CloudNetwork.count).to                eq 6
-    expect(CloudSubnet.count).to                 eq 6
-    expect(NetworkPort.count).to                 eq 17
-    expect(VmOrTemplate.count).to                eq 5
-    expect(OperatingSystem.count).to             eq 7
-    expect(Hardware.count).to                    eq 7
-    expect(Disk.count).to                        eq 2
+    expect(EmsCluster.count).to                  eq 0
+    expect(Host.count).to                        eq 1
+    expect(OrchestrationStack.count).to          eq 0
+    expect(OrchestrationStackParameter.count).to eq 0
+    expect(OrchestrationStackResource.count).to  eq 0
+    expect(OrchestrationStackOutput.count).to    eq 0
+    expect(OrchestrationTemplate.count).to       eq 0
+    expect(CloudNetwork.count).to                eq 0
+    expect(CloudSubnet.count).to                 eq 0
+    expect(NetworkPort.count).to                 eq 0
+    expect(VmOrTemplate.count).to                eq 1
+    expect(OperatingSystem.count).to             eq 2
+    expect(Hardware.count).to                    eq 2
+    expect(Disk.count).to                        eq 0
     expect(ResourcePool.count).to                eq 0
     expect(Vm.count).to                          eq 0
     expect(CustomAttribute.count).to             eq 0
@@ -110,17 +109,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
 
   def assert_ems
     expect(@ems).to have_attributes(
-      :api_version       => 'v2',
+      :api_version       => 'v3',
       :security_protocol => 'no-ssl',
-      :uid_ems           => nil
+      :uid_ems           => 'default'
     )
 
-    expect(@ems.ems_clusters.size).to                eq 2
-    expect(@ems.hosts.size).to                       eq 2
-    expect(@ems.orchestration_stacks.size).to        eq 301
-    expect(@ems.direct_orchestration_stacks.size).to eq 1
-    expect(@ems.vms_and_templates.size).to           eq 5
-    expect(@ems.miq_templates.size).to               eq 5
+    expect(@ems.ems_clusters.size).to                eq 0
+    expect(@ems.hosts.size).to                       eq 1
+    expect(@ems.orchestration_stacks.size).to        eq 0
+    expect(@ems.direct_orchestration_stacks.size).to eq 0
+    expect(@ems.vms_and_templates.size).to           eq 1
+    expect(@ems.miq_templates.size).to               eq 1
     expect(@ems.customization_specs.size).to         eq 0
     expect(@ems.resource_pools.size).to              eq 0
     expect(@ems.storages.size).to                    eq 0
@@ -129,54 +128,24 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   end
 
   def assert_specific_host
-    @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.detect { |x| x.name.include?('(Controller)') }
+    @host = ManageIQ::Providers::Openstack::InfraManager::Host.all.find { |host| host.vmm_vendor == "redhat"}
 
     expect(@host.ems_ref).not_to be nil
-    expect(@host.uid_ems).not_to be nil
-    expect(@host.mac_address).not_to be nil
-    expect(@host.ipaddress).not_to be nil
-    expect(@host.ems_cluster).not_to be nil
 
     expect(@host).to have_attributes(
       :ipmi_address       => nil,
       :vmm_vendor         => "redhat",
       :vmm_version        => nil,
-      :vmm_product        => "rhel (No hypervisor, Host Type is Controller)",
-      :power_state        => "on",
-      :connection_state   => "connected",
+      :vmm_product        => nil,
+      :power_state        => "unknown",
+      :connection_state   => "disconnected",
       :service_tag        => nil,
       :maintenance        => false,
       :maintenance_reason => nil,
     )
 
-    expect(@host.private_networks.count).to be > 0
-    expect(@host.private_networks.first).to be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Private)
-    expect(@host.network_ports.count).to    be > 0
-    expect(@host.network_ports.first).to    be_kind_of(ManageIQ::Providers::Openstack::NetworkManager::NetworkPort)
-
     expect(@host.operating_system).to have_attributes(
       :product_name     => "linux"
-    )
-
-    expect(@host.hardware).to have_attributes(
-      # TODO(tzumainn) Introspection no longer finds these attributes, may be
-      # an OpenStack issue?
-      #:cpu_speed            => 3392,
-      #:cpu_type             => "RHEL 7.2.0 PC (i440FX + PIIX, 1996)",
-      #:manufacturer         => "Red Hat",
-      #:model                => "KVM",
-      #:bios                 => "seabios-1.7.5-11.el7",
-      :memory_mb            => 32768,
-      :memory_console       => nil,
-      :disk_capacity        => 29,
-      :cpu_sockets          => 8,
-      :cpu_total_cores      => 8,
-      :cpu_cores_per_socket => 1,
-      :guest_os             => nil,
-      :guest_os_full_name   => nil,
-      :cpu_usage            => nil,
-      :memory_usage         => nil,
-      :number_of_nics       => 3,
     )
 
     # TODO(tzumainn) Introspection no longer finds disk attributes, may be
@@ -198,7 +167,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
   end
 
   def assert_specific_public_template
-    assert_specific_template("overcloud-full-vmlinuz", true)
+    assert_specific_template("cirros", true)
   end
 
   def assert_specific_template(name, is_public = false)
@@ -234,29 +203,5 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
     expect(template.hardware).not_to               be_nil
     expect(template.parent).to                     be_nil
     template
-  end
-
-  def assert_mapped_stacks
-    expect(CloudNetwork.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
-      match_array(
-        %w(
-          external___overcloud-Networks-m2cvlqpcz5b2-ExternalNetwork-5uey56mcytii
-          tenant___overcloud-Networks-m2cvlqpcz5b2-TenantNetwork-dar2ol7zf72w
-          storage_mgmt___overcloud-Networks-m2cvlqpcz5b2-StorageMgmtNetwork-vbtdttrp6xbl
-          internal_api___overcloud-Networks-m2cvlqpcz5b2-InternalNetwork-j3tyhpmhfonl
-          storage___overcloud-Networks-m2cvlqpcz5b2-StorageNetwork-qyh4atckxw3a
-          ctlplane___
-        )
-      )
-    )
-
-    expect(SecurityGroup.all.map { |x| "#{x.name}___#{x.orchestration_stack.try(:name)}" }).to(
-      match_array(
-        %w(
-          default___
-          default___
-        )
-      )
-    )
   end
 end
