@@ -13,6 +13,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::InfraManager < ManageIQ
   end
 
   def hosts
+    # byebug
     collector.hosts.each { |host| parse_host(host) }
   end
 
