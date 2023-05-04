@@ -9,6 +9,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -17,25 +19,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:25 GMT
+      - Thu, 04 May 2023 16:35:21 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
+      - gAAAAABkU97KEKYmQme6Aunlf-i43FcAa-trfLa-mmGNfGBhhkm7lIiR3Fqp1Jo41b-yhXjaLY0Kr3nC-axPldy7bSoEuxqS9bCna4-WIBrB4PB5hP_TQT6DXNrUw0FKbt4iF57N37G0euaYPZQmcqa1DEtN9Rfbc1z-4TStF9kAvf_Yw0hreBw
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-2e790a73-6288-41fc-8c16-d858f9f08a8e
+      - req-6bffe6d7-6b1b-4567-af55-0fb3878f3f18
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["3ivm0XUdRa6X8iYngyDnEQ"], "expires_at":
-        "2023-05-03T21:24:26.000000Z", "issued_at": "2023-05-03T20:24:26.000000Z",
+        "password_expires_at": null}, "audit_ids": ["T8Nv3VdzRVOtoeTBRyEuDg"], "expires_at":
+        "2023-05-04T17:35:22.000000Z", "issued_at": "2023-05-04T16:35:22.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
         "name": "admin"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"},
@@ -103,7 +105,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:26 GMT
+  recorded_at: Thu, 04 May 2023 16:35:22 GMT
 - request:
     method: get
     uri: http://11.22.33.44:8774/
@@ -118,7 +120,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
+      - gAAAAABkU97KEKYmQme6Aunlf-i43FcAa-trfLa-mmGNfGBhhkm7lIiR3Fqp1Jo41b-yhXjaLY0Kr3nC-axPldy7bSoEuxqS9bCna4-WIBrB4PB5hP_TQT6DXNrUw0FKbt4iF57N37G0euaYPZQmcqa1DEtN9Rfbc1z-4TStF9kAvf_Yw0hreBw
   response:
     status:
       code: 200
@@ -129,7 +131,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 03 May 2023 20:24:26 GMT
+      - Thu, 04 May 2023 16:35:22 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"versions": [{"id": "v2.0", "status": "SUPPORTED", "version": "",
@@ -138,7 +140,7 @@ http_interactions:
         "version": "2.95", "min_version": "2.1", "updated": "2013-07-23T11:33:21Z",
         "links": [{"rel": "self", "href": "http://11.22.33.44:8774/v2.1/"}]}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:26 GMT
+  recorded_at: Thu, 04 May 2023 16:35:22 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -148,6 +150,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -156,25 +160,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:26 GMT
+      - Thu, 04 May 2023 16:35:22 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsL6v9OvB2p4ayopFLKfNNNum3qIsfM9416rNW_ctX7XnllMMmPhGR0EY6Hs5rrX4pvVUEN9nqaMxKczW88p5EqpvdPL4tD3MJe7B5y4hk79Cd1D4nDwzph76I9jEIzatyTz99_FNHUzaB0TgS8Popm8q4FLI3EgUzEzBCtwO-AAfhU
+      - gAAAAABkU97KvJXsrSVCqa-ppF8ktBI8vFMkLVspLNH3vUy3qyA7RkBdHk6qbuRuwya1igMDNyLiI6r08kQJF7TfqCGs7Gyirmchk-rbLWPE3dKcCnv3Nyi7JP6TlkReO6CyYEKs9-aVXQIrWiqzYX2pexIIjj_i84VQeW9iJi6UnlVFYmSXXLY
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-d1c68461-29d1-467a-acd6-c3c093e19960
+      - req-31e11211-7e22-428e-8b8e-5d57cd9d2ce5
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["DtDtH3ijQYSEVpyP_wdKVA"], "expires_at":
-        "2023-05-03T21:24:26.000000Z", "issued_at": "2023-05-03T20:24:26.000000Z",
+        "password_expires_at": null}, "audit_ids": ["SpOHRHk-TV2t4mnTEF232A"], "expires_at":
+        "2023-05-04T17:35:22.000000Z", "issued_at": "2023-05-04T16:35:22.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -242,7 +246,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:26 GMT
+  recorded_at: Thu, 04 May 2023 16:35:22 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -252,6 +256,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -260,25 +266,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:27 GMT
+      - Thu, 04 May 2023 16:35:22 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
+      - gAAAAABkU97L-AAx8KJqqAiT1CCoXw7dC-blKm8Kv9KND0yR2j-JKgOCtxZSkvYiFihzjaIP_p3vjd4MjZkE_ikDh6vtNZ86gO4TlzFU0c_nkPnJfcv6oxxnQsTAYrmSlclMxovT-3FLgBMEmewUJqk3VNXR6iHA2O30RkMrLKsi2lVBjdS9DFg
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-e51f8ba0-d3c3-4f5c-8d36-975d297700ea
+      - req-9a4afc68-17ca-4d56-a9f7-caa4674c29a7
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["k1Sbt_iTRt25SlerMSzZnw"], "expires_at":
-        "2023-05-03T21:24:27.000000Z", "issued_at": "2023-05-03T20:24:27.000000Z",
+        "password_expires_at": null}, "audit_ids": ["WIWBwAWETgaIX5z_Q4IbFw"], "expires_at":
+        "2023-05-04T17:35:23.000000Z", "issued_at": "2023-05-04T16:35:23.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -346,7 +352,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:27 GMT
+  recorded_at: Thu, 04 May 2023 16:35:23 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -356,6 +362,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -364,29 +372,29 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:27 GMT
+      - Thu, 04 May 2023 16:35:23 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
+      - gAAAAABkU97Lwre2P0viVfqHR95WpvcsNUV31QkvZCtIdVe3RJqbGg36F4F2OaEATYgpwtdw509r1wsFFdXg9o3X6JYySy1SlFsxaLzMVqd5Q4QWqHs7eIHzwXzzV6GBRHzM8VQmrp7VRBL6iVwEYho56ldFJmk9bKnfHnaBakBsagfSUyW1BNI
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-6dd6c90e-987c-4103-92a3-4eb05dce5a7f
+      - req-4880f10d-afc3-47af-adf0-321223340269
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["oG5rQ2YrRruVpIv1tJiNNQ"], "expires_at":
-        "2023-05-03T21:24:28.000000Z", "issued_at": "2023-05-03T20:24:28.000000Z",
+        "password_expires_at": null}, "audit_ids": ["rI30spy-S_m6DjLF0fao5g"], "expires_at":
+        "2023-05-04T17:35:23.000000Z", "issued_at": "2023-05-04T16:35:23.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
-        "name": "admin"}, "is_domain": false, "roles": [{"id": "7ee3364f86f24e7ca9bfc120dc30e299",
-        "name": "reader"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
-        {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"}], "catalog":
+        "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
+        "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
+        {"id": "7ee3364f86f24e7ca9bfc120dc30e299", "name": "reader"}], "catalog":
         [{"endpoints": [{"id": "4510c582f716471b91675e74b705bde2", "interface": "public",
         "region_id": "RegionOne", "url": "http://11.22.33.44:9292", "region": "RegionOne"},
         {"id": "f62f0ea0875b4c2eabfbb4782a56fafb", "interface": "admin", "region_id":
@@ -450,7 +458,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:28 GMT
+  recorded_at: Thu, 04 May 2023 16:35:23 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -460,6 +468,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -468,27 +478,27 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:28 GMT
+      - Thu, 04 May 2023 16:35:24 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '312'
       X-Subject-Token:
-      - gAAAAABkUsL8OS9NGCgDClK427NTURR-Afghf7TGwSqfciSPSbJH5QTqZs-IOARuARJ-WgQhfnoTp7ApBOXE5DvMGrBcbE1Rd-XmdqOSApL2eCdFdyAjfw_Y4QE3GhNhuQf0bm37giAsv8-6GONfZrvZ_ryEYIjwSA
+      - gAAAAABkU97NORx5eBUQlexRWXL5MyRuXN7ZfdDYrEOWqYx0E_kUYcbZNjVWgBgyPdyXEP0f8UhsOtwaiG25o-iiPv_7Q6aP2UjDAaW_5JQrn8wDnIQZ16hsxs971HXKzeq63PaaSqdZBXGVW7L2WEOJkD_X1bq53Q
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-4441cb9f-b2c0-4c7f-a543-67ff508dcf74
+      - req-8b981e72-f42e-4804-b09b-03ddfadf3b23
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["jH2DY71-TX2JDhyGhZgHHQ"], "expires_at":
-        "2023-05-03T21:24:28.000000Z", "issued_at": "2023-05-03T20:24:28.000000Z"}}'
+        "password_expires_at": null}, "audit_ids": ["GLNltoJJSkek_apid-kwCg"], "expires_at":
+        "2023-05-04T17:35:25.000000Z", "issued_at": "2023-05-04T16:35:25.000000Z"}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:28 GMT
+  recorded_at: Thu, 04 May 2023 16:35:25 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
@@ -503,14 +513,14 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL8OS9NGCgDClK427NTURR-Afghf7TGwSqfciSPSbJH5QTqZs-IOARuARJ-WgQhfnoTp7ApBOXE5DvMGrBcbE1Rd-XmdqOSApL2eCdFdyAjfw_Y4QE3GhNhuQf0bm37giAsv8-6GONfZrvZ_ryEYIjwSA
+      - gAAAAABkU97NORx5eBUQlexRWXL5MyRuXN7ZfdDYrEOWqYx0E_kUYcbZNjVWgBgyPdyXEP0f8UhsOtwaiG25o-iiPv_7Q6aP2UjDAaW_5JQrn8wDnIQZ16hsxs971HXKzeq63PaaSqdZBXGVW7L2WEOJkD_X1bq53Q
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:29 GMT
+      - Thu, 04 May 2023 16:35:25 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
@@ -518,7 +528,7 @@ http_interactions:
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-26228d6a-1ee0-4442-8102-c3f7972d285d
+      - req-bbba5e8f-5d87-4fb4-9a7b-7aa75b85ecc7
       Content-Type:
       - application/json
     body:
@@ -532,7 +542,7 @@ http_interactions:
 
         '
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:29 GMT
+  recorded_at: Thu, 04 May 2023 16:35:25 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9292/v2/images?limit=1000
@@ -547,7 +557,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
+      - gAAAAABkU97L-AAx8KJqqAiT1CCoXw7dC-blKm8Kv9KND0yR2j-JKgOCtxZSkvYiFihzjaIP_p3vjd4MjZkE_ikDh6vtNZ86gO4TlzFU0c_nkPnJfcv6oxxnQsTAYrmSlclMxovT-3FLgBMEmewUJqk3VNXR6iHA2O30RkMrLKsi2lVBjdS9DFg
   response:
     status:
       code: 200
@@ -558,9 +568,9 @@ http_interactions:
       Content-Type:
       - application/json
       X-Openstack-Request-Id:
-      - req-967070b2-27a9-4809-9953-e8e69ba905bf
+      - req-c883c3ee-e596-46d5-a786-5d6c2d9bf0ef
       Date:
-      - Wed, 03 May 2023 20:24:30 GMT
+      - Thu, 04 May 2023 16:35:25 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"images": [{"name": "cirros", "disk_format": "qcow2", "container_format":
@@ -573,7 +583,7 @@ http_interactions:
         "file": "/v2/images/ee2382ae-3591-4400-ae0f-b2f596ba77b3/file", "schema":
         "/v2/schemas/image"}], "first": "/v2/images?limit=1000", "schema": "/v2/schemas/images"}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:30 GMT
+  recorded_at: Thu, 04 May 2023 16:35:25 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9292/v2/images?limit=1000&marker=ee2382ae-3591-4400-ae0f-b2f596ba77b3
@@ -588,7 +598,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL71XWvKfDBMBg4Msleict61a5_RtSn2FeN_Jn-o67pSfF7mEDeBb-yzPXFm1n6GhTzXXfylUuLc5IL8_WOFOMCpI5cbrJulxnedouxEAX_Xc4kzMmnfsC0Ipi6_aaXvFkdZVwVd4jXvziWAaPraw6MzaxyLbrC4imeYipyyBOPXsE
+      - gAAAAABkU97L-AAx8KJqqAiT1CCoXw7dC-blKm8Kv9KND0yR2j-JKgOCtxZSkvYiFihzjaIP_p3vjd4MjZkE_ikDh6vtNZ86gO4TlzFU0c_nkPnJfcv6oxxnQsTAYrmSlclMxovT-3FLgBMEmewUJqk3VNXR6iHA2O30RkMrLKsi2lVBjdS9DFg
   response:
     status:
       code: 200
@@ -599,14 +609,14 @@ http_interactions:
       Content-Type:
       - application/json
       X-Openstack-Request-Id:
-      - req-56cdc625-8376-4fae-ae05-85c0f9fb0663
+      - req-3abc4061-71c7-4bfb-894f-4dc3f74d0c21
       Date:
-      - Wed, 03 May 2023 20:24:30 GMT
+      - Thu, 04 May 2023 16:35:25 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"images": [], "first": "/v2/images?limit=1000", "schema": "/v2/schemas/images"}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:30 GMT
+  recorded_at: Thu, 04 May 2023 16:35:25 GMT
 - request:
     method: get
     uri: http://11.22.33.44:6385/nodes/detail?limit=1000
@@ -621,7 +631,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
+      - gAAAAABkU97Lwre2P0viVfqHR95WpvcsNUV31QkvZCtIdVe3RJqbGg36F4F2OaEATYgpwtdw509r1wsFFdXg9o3X6JYySy1SlFsxaLzMVqd5Q4QWqHs7eIHzwXzzV6GBRHzM8VQmrp7VRBL6iVwEYho56ldFJmk9bKnfHnaBakBsagfSUyW1BNI
   response:
     status:
       code: 200
@@ -638,13 +648,13 @@ http_interactions:
       Content-Type:
       - application/json
       Openstack-Request-Id:
-      - req-7e24491b-3b1c-4de4-b861-ccf6b2c9749a
+      - req-a7329082-caf8-494e-b83c-40f6ad9d63ee
       Date:
-      - Wed, 03 May 2023 20:24:31 GMT
+      - Thu, 04 May 2023 16:35:25 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"nodes": [{"uuid": "20a246c7-0bd5-4dc9-8985-490c848f0c9a", "created_at":
-        "2023-05-03T14:23:40+00:00", "updated_at": "2023-05-03T20:20:05+00:00", "console_enabled":
+        "2023-05-03T14:23:40+00:00", "updated_at": "2023-05-04T16:34:55+00:00", "console_enabled":
         false, "driver": "ipmi", "driver_info": {}, "extra": {}, "instance_info":
         {}, "instance_uuid": null, "last_error": null, "maintenance": false, "maintenance_reason":
         null, "power_state": null, "properties": {}, "provision_state": "enroll",
@@ -655,7 +665,7 @@ http_interactions:
         "rel": "self"}, {"href": "http://11.22.33.44:6385/nodes/20a246c7-0bd5-4dc9-8985-490c848f0c9a/ports",
         "rel": "bookmark"}]}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:31 GMT
+  recorded_at: Thu, 04 May 2023 16:35:25 GMT
 - request:
     method: get
     uri: http://11.22.33.44:6385/nodes/detail?limit=1000&marker=20a246c7-0bd5-4dc9-8985-490c848f0c9a
@@ -670,7 +680,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL8lDNXFP4-4meZ26GVGZKCuD5Ch9XIorAZmBps1jLwO0FRSq2aS_K3RtCu96VTtL8AX_08pdB73d7tQi-_6_7vCVvOFlgiWY_s7IJVRvHOiVk-kmmYTXl4E2PPcpevbSTEX0jUhDYs9ZKVzgfVwr7AyQxlNJUviWlSiVFdk6RC914
+      - gAAAAABkU97Lwre2P0viVfqHR95WpvcsNUV31QkvZCtIdVe3RJqbGg36F4F2OaEATYgpwtdw509r1wsFFdXg9o3X6JYySy1SlFsxaLzMVqd5Q4QWqHs7eIHzwXzzV6GBRHzM8VQmrp7VRBL6iVwEYho56ldFJmk9bKnfHnaBakBsagfSUyW1BNI
   response:
     status:
       code: 200
@@ -687,14 +697,14 @@ http_interactions:
       Content-Type:
       - application/json
       Openstack-Request-Id:
-      - req-b50ade50-9846-4eb1-a16d-14bb985a5d71
+      - req-639011fa-7c5d-4053-8000-21d50698aff1
       Date:
-      - Wed, 03 May 2023 20:24:31 GMT
+      - Thu, 04 May 2023 16:35:26 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"nodes": []}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:31 GMT
+  recorded_at: Thu, 04 May 2023 16:35:26 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -704,6 +714,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -712,25 +724,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:31 GMT
+      - Thu, 04 May 2023 16:35:26 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsL_d1k10pIatNLGPoqf8W3Xv31KQcrYVCFYpqiFXAa3gWl6kn2tvaBzD2qw2jz3fbHi9xLhzmjiPLfeqXkMLCIym2OZARIgLsTQKVyoD2cIyMKFoU1lKTKpRNj1pq3hFbBEKFxvm3olfoAueHACqSQgwmpks-edOntQMLExSwldSjg
+      - gAAAAABkU97O4nOe6UvmktjnVy2tAtbOGSh-v08H6deETKJHaNj5bJWTRinvrjg-yXY-D1tHC9U0o_ovP2gEOlbhgKszo6oCPBcoDV5ZE2-mw9ewX78B-_147EVPECDD7iaRUDoOTlrb3qCQPCChC3EHhrU51rmi5RzQAcLsTWc7wOrMhbbNZYw
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-75dd25fe-5078-40dd-94ac-5dfcbfefcbad
+      - req-ee1ba18a-30df-47c9-ad7b-0ef2d78676ea
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["2qvGRZIyQXW9IVS9KWQmpQ"], "expires_at":
-        "2023-05-03T21:24:31.000000Z", "issued_at": "2023-05-03T20:24:31.000000Z",
+        "password_expires_at": null}, "audit_ids": ["3TT8UlaqQg6jYiZnr37mKQ"], "expires_at":
+        "2023-05-04T17:35:26.000000Z", "issued_at": "2023-05-04T16:35:26.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -798,7 +810,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:31 GMT
+  recorded_at: Thu, 04 May 2023 16:35:26 GMT
 - request:
     method: get
     uri: http://11.22.33.44:8774/v2.1/servers/detail?limit=1000
@@ -813,7 +825,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
+      - gAAAAABkU97KEKYmQme6Aunlf-i43FcAa-trfLa-mmGNfGBhhkm7lIiR3Fqp1Jo41b-yhXjaLY0Kr3nC-axPldy7bSoEuxqS9bCna4-WIBrB4PB5hP_TQT6DXNrUw0FKbt4iF57N37G0euaYPZQmcqa1DEtN9Rfbc1z-4TStF9kAvf_Yw0hreBw
       X-Openstack-Nova-Api-Version:
       - '2.15'
   response:
@@ -832,11 +844,11 @@ http_interactions:
       Vary:
       - OpenStack-API-Version, X-OpenStack-Nova-API-Version
       X-Openstack-Request-Id:
-      - req-b0ec4a85-f802-474d-9306-8c4efb45fc7a
+      - req-d3d52505-ee5e-41b0-a8ad-562d2317f0e3
       X-Compute-Request-Id:
-      - req-b0ec4a85-f802-474d-9306-8c4efb45fc7a
+      - req-d3d52505-ee5e-41b0-a8ad-562d2317f0e3
       Date:
-      - Wed, 03 May 2023 20:24:33 GMT
+      - Thu, 04 May 2023 16:35:27 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"servers": [{"id": "e5098791-2224-4e9c-b255-d3919a2834b0", "name":
@@ -860,7 +872,7 @@ http_interactions:
         "OS-EXT-STS:vm_state": "active", "OS-EXT-STS:power_state": 1, "os-extended-volumes:volumes_attached":
         [], "locked": false}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:33 GMT
+  recorded_at: Thu, 04 May 2023 16:35:27 GMT
 - request:
     method: get
     uri: http://11.22.33.44:8774/v2.1/servers/detail?limit=1000&marker=e5098791-2224-4e9c-b255-d3919a2834b0
@@ -875,7 +887,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsL6FBhqEGCXo2ZRWHil0FLrLnXARC03f4jXrSMW8AEz3fFjLyguwNVuJp120uCOvuoU_hxP2RRMNnJhMN6_Id25VpyDWnAR_S_oJYrzjOngfJg67WK4GyCKS4ZRr-WY0T5ZDnTrJSExvO0lp63I3bi2UFY9Yu03KOJVS_uz70aAG0I
+      - gAAAAABkU97KEKYmQme6Aunlf-i43FcAa-trfLa-mmGNfGBhhkm7lIiR3Fqp1Jo41b-yhXjaLY0Kr3nC-axPldy7bSoEuxqS9bCna4-WIBrB4PB5hP_TQT6DXNrUw0FKbt4iF57N37G0euaYPZQmcqa1DEtN9Rfbc1z-4TStF9kAvf_Yw0hreBw
       X-Openstack-Nova-Api-Version:
       - '2.15'
   response:
@@ -894,16 +906,16 @@ http_interactions:
       Vary:
       - OpenStack-API-Version, X-OpenStack-Nova-API-Version
       X-Openstack-Request-Id:
-      - req-36457606-0baf-47bc-a76f-6518bcb3faa2
+      - req-3cbc6e17-1dff-4043-ab81-7889426308fe
       X-Compute-Request-Id:
-      - req-36457606-0baf-47bc-a76f-6518bcb3faa2
+      - req-3cbc6e17-1dff-4043-ab81-7889426308fe
       Date:
-      - Wed, 03 May 2023 20:24:33 GMT
+      - Thu, 04 May 2023 16:35:27 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"servers": []}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:33 GMT
+  recorded_at: Thu, 04 May 2023 16:35:27 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -913,6 +925,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -921,25 +935,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:33 GMT
+      - Thu, 04 May 2023 16:35:27 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsMCCB-xX5sCagmqP6KFFhQMx94Bj5tdoacoaus1IeJ0fuIwP4AExPCZc93pvIiQqoKrwrIgMioeLcEIfMxsEtAyvETQlw3LMDDqgNJriZU12N4HVDhyEL8kZM_kahulLtBC53MVmdQQHKmkHyroPEUnpg2grKB17ZYjdD-CWMy4dBo
+      - gAAAAABkU97Q3p6dEqt-YIZ4Y8ubfvLpZVKVrd8xmStdIBo8Qgz895k8V92Pl-fNHZl4GdBjFIOFi6pJ56s3Ad_1WkPcOVKsRCgujFmxksdZGP_rXXAqb3U3j1d_sEDjV9OBWYf6KUoTC6sQNlxmbQAltLdpV66kErcBfo2COHvCEpaVR2dXyfo
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-84b0321e-1ce2-4d7d-83b0-9494a29abd0e
+      - req-83766092-7c2c-4548-891e-1d30178daead
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["XYjRMf--R_KLw82KHMqo8w"], "expires_at":
-        "2023-05-03T21:24:34.000000Z", "issued_at": "2023-05-03T20:24:34.000000Z",
+        "password_expires_at": null}, "audit_ids": ["NDMs4ASMTJKZyBAcm1Yr5A"], "expires_at":
+        "2023-05-04T17:35:28.000000Z", "issued_at": "2023-05-04T16:35:28.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "7ac3cfb1cbe64a6ea080352b62def1e6",
         "name": "admin"}, {"id": "56fa4ed5e8dc4ac88403d8693b45d755", "name": "member"},
@@ -1007,7 +1021,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:34 GMT
+  recorded_at: Thu, 04 May 2023 16:35:28 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -1017,6 +1031,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -1025,25 +1041,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:34 GMT
+      - Thu, 04 May 2023 16:35:28 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsMChw0s42M9j31h6sp6NA8dhzzNnkEvIEcGFA-jsVnGrfd414YdQpHAt6sirBiSUVuhhFyEJypVtdzmHSDGTHzGMBFuQt44AAjTcI2e_nn7_3sRO9Et63VOM5gaoeH778LmN4CMTOW6E7lp4-u3h-jnFSOPq68JdMOWgWwgcrDphXw
+      - gAAAAABkU97Qxdh6ZDqL8EFnvtNEw_HQnu30f4hqlCUlBujWkIAViRfC6db2YYApTbwolThk9AzzzzRj6dQ-tivNRBviq3zRsxE3A0nlBFhJgNQ8livqePv3l9PPA9pcKwfU5I8BtyTxWkhFVEWSy1KwwVFsZxuPURQJnb6axQeUKgYAhk1KDY4
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-bf1c52a0-7499-4107-a065-b451ebcd8527
+      - req-adf5769e-f822-4dd0-bc34-0f90e98b3748
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["oQbt2_HTRBC7gaoT1vWDMQ"], "expires_at":
-        "2023-05-03T21:24:34.000000Z", "issued_at": "2023-05-03T20:24:34.000000Z",
+        "password_expires_at": null}, "audit_ids": ["Ywhinz65SDq1MFEAmaQu4Q"], "expires_at":
+        "2023-05-04T17:35:28.000000Z", "issued_at": "2023-05-04T16:35:28.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -1111,7 +1127,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:34 GMT
+  recorded_at: Thu, 04 May 2023 16:35:28 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -1121,6 +1137,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -1129,25 +1147,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:35 GMT
+      - Thu, 04 May 2023 16:35:29 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsMDC2MhAeick50gCoOW2X8AgJrriz79_uz5IrtkcQLCYjBj2bwBZ31RfNtQ3Tygg3hzPnlrhMtPOS_mbuudautTrQ_1_ro9MGwbOp3tNxwFCvv4nCitJnvgcjThPhXEenD7pGvwvMDHYx5aFR91ANbq8ZlNKLsjMxB-UIOVXj6o3wU
+      - gAAAAABkU97RdLzcD5Bb6Z2FD52BusdFOMuPQ7hA2-ATds69G-LxkYwfwvangrsag1ocrLFik0gpXH76u8ZprifF0tyM4lg2p1AWpOawrUq1VDOamGIHU7KR1iqn5WW0VED6NsXmLzs2lpLH2V6HKCQyZ_ajAtBZzbffA_gpyKAK7lw-0o-58_4
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-03d19f14-04ff-4585-b365-5a1c8bc42286
+      - req-3bdbe117-03cf-46a2-976c-10fefac9bd6c
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["eS48gMTdSUyx-cYfBcYZxQ"], "expires_at":
-        "2023-05-03T21:24:35.000000Z", "issued_at": "2023-05-03T20:24:35.000000Z",
+        "password_expires_at": null}, "audit_ids": ["PB0qy4L9Q12BC4ORNeFCnA"], "expires_at":
+        "2023-05-04T17:35:29.000000Z", "issued_at": "2023-05-04T16:35:29.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -1215,7 +1233,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:35 GMT
+  recorded_at: Thu, 04 May 2023 16:35:29 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -1225,6 +1243,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -1233,25 +1253,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:36 GMT
+      - Thu, 04 May 2023 16:35:29 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-f9091ea2-1949-4026-9468-25c13d127515
+      - req-8451c617-511b-4def-8b3c-ec7702f6dc98
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["t0vXxrmuTiq6YQhuW5PFpQ"], "expires_at":
-        "2023-05-03T21:24:36.000000Z", "issued_at": "2023-05-03T20:24:36.000000Z",
+        "password_expires_at": null}, "audit_ids": ["brfOb9mzS_W-1SBauDczlA"], "expires_at":
+        "2023-05-04T17:35:30.000000Z", "issued_at": "2023-05-04T16:35:30.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -1319,7 +1339,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:36 GMT
+  recorded_at: Thu, 04 May 2023 16:35:30 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/networks
@@ -1334,7 +1354,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1345,14 +1365,14 @@ http_interactions:
       Content-Length:
       - '15'
       X-Openstack-Request-Id:
-      - req-cb232b4d-78f7-4c4a-8bf2-a3045b2f02c3
+      - req-91eaf9e8-924a-42fb-b862-43d26bfe28ef
       Date:
-      - Wed, 03 May 2023 20:24:37 GMT
+      - Thu, 04 May 2023 16:35:30 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"networks":[]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:37 GMT
+  recorded_at: Thu, 04 May 2023 16:35:30 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -1362,6 +1382,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -1370,27 +1392,27 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:37 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '312'
       X-Subject-Token:
-      - gAAAAABkUsMGodU7pEe9zp-5UpFni3pmVC-h8WBDmWN3qloCml_CQUgeNxXdOhSPw2UmjlEcM-g67-bGrC6jbmum4VLIhCiHOfpmC0lgZPCgcFjh0nLNrfayhZZ270E7fMow4r6xfwLIJ3Z55S0cDMOMnl4CBDaCfg
+      - gAAAAABkU97TpTXbb4w2DiCsSKSSZKGnBme88nBg7OmXgIHi_b7SfnaWGu-MXU5u595hPKkqv5KEYMN3YlNizCmSsvSDQvZlEZ9peakpHgWNTfBLau3ClhKCZn6YWFsM6xN6CK0JR3PiyX6lHZ9NvLoi0B7lGJLCyA
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-3eadc6e2-bef7-48ad-8e15-afbc58bd3807
+      - req-67c7c60b-aa12-470b-ba41-d2352749ac87
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["j_XsQkhuTVCDDwiqQ0-nHA"], "expires_at":
-        "2023-05-03T21:24:38.000000Z", "issued_at": "2023-05-03T20:24:38.000000Z"}}'
+        "password_expires_at": null}, "audit_ids": ["Tq_uA_uUTuOfnRDYwfGykw"], "expires_at":
+        "2023-05-04T17:35:31.000000Z", "issued_at": "2023-05-04T16:35:31.000000Z"}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:37 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:5000/v3/users/dfcabf97bf1c43bea67e2d5a7be4c430/projects?domain_id=default
@@ -1405,14 +1427,14 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMGodU7pEe9zp-5UpFni3pmVC-h8WBDmWN3qloCml_CQUgeNxXdOhSPw2UmjlEcM-g67-bGrC6jbmum4VLIhCiHOfpmC0lgZPCgcFjh0nLNrfayhZZ270E7fMow4r6xfwLIJ3Z55S0cDMOMnl4CBDaCfg
+      - gAAAAABkU97TpTXbb4w2DiCsSKSSZKGnBme88nBg7OmXgIHi_b7SfnaWGu-MXU5u595hPKkqv5KEYMN3YlNizCmSsvSDQvZlEZ9peakpHgWNTfBLau3ClhKCZn6YWFsM6xN6CK0JR3PiyX6lHZ9NvLoi0B7lGJLCyA
   response:
     status:
       code: 200
       message: OK
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
@@ -1420,7 +1442,7 @@ http_interactions:
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-936bcdef-c0cc-41d9-99c1-60f9ffb1c901
+      - req-b6f82c24-9af3-42de-b642-1abf03bb4c9c
       Content-Type:
       - application/json
     body:
@@ -1434,7 +1456,7 @@ http_interactions:
 
         '
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/subnets?limit=1000
@@ -1449,7 +1471,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1460,14 +1482,14 @@ http_interactions:
       Content-Length:
       - '125'
       X-Openstack-Request-Id:
-      - req-579f7e62-606e-45b2-af59-5a393444b474
+      - req-6d2e10fc-28ca-4157-bcb5-b3d9028bcc6c
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"subnets":[],"subnets_links":[{"rel":"previous","href":"http://11.22.33.44:9696/v2.0/subnets?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/floatingips?limit=1000
@@ -1482,7 +1504,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1493,15 +1515,15 @@ http_interactions:
       Content-Length:
       - '143'
       X-Openstack-Request-Id:
-      - req-a1d19cbf-ce8f-40fc-9ad7-0ee2e49cff28
+      - req-bc95e731-8f9f-49ed-9ad7-ed60cd6c1565
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"floatingips": [], "floatingips_links": [{"rel": "previous", "href":
         "http://11.22.33.44:9696/v2.0/floatingips?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/ports?limit=1000
@@ -1516,7 +1538,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1527,14 +1549,14 @@ http_interactions:
       Content-Length:
       - '119'
       X-Openstack-Request-Id:
-      - req-164ff31c-5e62-4756-9e55-fe16168eeed6
+      - req-730e4cfe-3994-493a-9d79-bb1bca47005c
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"ports":[],"ports_links":[{"rel":"previous","href":"http://11.22.33.44:9696/v2.0/ports?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/routers?limit=1000
@@ -1549,7 +1571,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1560,14 +1582,14 @@ http_interactions:
       Content-Length:
       - '131'
       X-Openstack-Request-Id:
-      - req-5973fc2d-8e65-4038-a6b3-7e3bdd0cbd63
+      - req-59e82501-cc9a-4827-adc8-73767f21665c
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"routers": [], "routers_links": [{"rel": "previous", "href": "http://11.22.33.44:9696/v2.0/routers?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/security-groups?limit=1000
@@ -1582,7 +1604,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1593,9 +1615,9 @@ http_interactions:
       Content-Length:
       - '2969'
       X-Openstack-Request-Id:
-      - req-ee3d5f3e-32af-483f-9a55-2582411d186a
+      - req-adc7ac62-0eb3-4de6-ad60-94bd3d9cf8f1
       Date:
-      - Wed, 03 May 2023 20:24:38 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": [{"id": "bfa55b5e-8d71-497c-813c-4202b0578588",
@@ -1634,7 +1656,7 @@ http_interactions:
         "690d3936f0494522b3f7ad6d17103312"}], "security_groups_links": [{"rel": "previous",
         "href": "http://11.22.33.44:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:31 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/security-groups?limit=1000&marker=bfa55b5e-8d71-497c-813c-4202b0578588
@@ -1649,7 +1671,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1660,15 +1682,15 @@ http_interactions:
       Content-Length:
       - '155'
       X-Openstack-Request-Id:
-      - req-977f722f-a97e-48a1-be1e-5e910064c3c8
+      - req-0d993b02-d7b7-42b8-9663-fb6c0f959191
       Date:
-      - Wed, 03 May 2023 20:24:39 GMT
+      - Thu, 04 May 2023 16:35:31 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_groups": [], "security_groups_links": [{"rel": "previous",
         "href": "http://11.22.33.44:9696/v2.0/security-groups?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:38 GMT
+  recorded_at: Thu, 04 May 2023 16:35:32 GMT
 - request:
     method: post
     uri: http://11.22.33.44:5000/v3/auth/tokens
@@ -1678,6 +1700,8 @@ http_interactions:
     headers:
       User-Agent:
       - fog-core/2.2.4
+      Accept:
+      - application/json
       Content-Type:
       - application/json
   response:
@@ -1686,25 +1710,25 @@ http_interactions:
       message: CREATED
     headers:
       Date:
-      - Wed, 03 May 2023 20:24:39 GMT
+      - Thu, 04 May 2023 16:35:32 GMT
       Server:
       - Apache/2.4.51 (Red Hat Enterprise Linux) mod_wsgi/4.7.1 Python/3.9
       Content-Length:
       - '5707'
       X-Subject-Token:
-      - gAAAAABkUsMHHuf1iintIo4uusG1RDDpgi7nkIUJx0-aL9SW5kESJPx7G7Pm5jpMiMoXjXH-eUqiCqMxTtjM19m3yGpnlIT29eDNpM2rMfi9GBCt2Ub69TCBZYzBZ35lNMlSAbhuLb-2flCgggnd7aAZ_xdp7zeROGBQJcN8BjM2cgOoFDo9nUg
+      - gAAAAABkU97U6YvtrK8-2_K5Od_eO5XXe-2OPVOrqDFKfDp8yvWLk9AH097Eod9Ch78MDomXYMgY-UnN-hjSqvlLrC5eYGgC75dLNYEh-HvwBTSUjY4vc0IlreE7jSzMBB60u9bjHsE_wW_7vSLwuTBL67Mjufcgy1v3RJpYrNX42AcgMRoyMkI
       Vary:
       - X-Auth-Token
       X-Openstack-Request-Id:
-      - req-ebf2d9d6-e26b-4b6f-bcdf-7732b6667c47
+      - req-098dd72b-a155-4101-a859-9e722d2e588b
       Content-Type:
       - application/json
     body:
       encoding: ASCII-8BIT
       string: '{"token": {"methods": ["password"], "user": {"domain": {"id": "default",
         "name": "Default"}, "id": "dfcabf97bf1c43bea67e2d5a7be4c430", "name": "admin",
-        "password_expires_at": null}, "audit_ids": ["X4bjmCAjTQm-PybFKvAUxg"], "expires_at":
-        "2023-05-03T21:24:39.000000Z", "issued_at": "2023-05-03T20:24:39.000000Z",
+        "password_expires_at": null}, "audit_ids": ["BqxbulBkTwCKM-HPJKJNsQ"], "expires_at":
+        "2023-05-04T17:35:32.000000Z", "issued_at": "2023-05-04T16:35:32.000000Z",
         "project": {"domain": {"id": "default", "name": "Default"}, "id": "690d3936f0494522b3f7ad6d17103312",
         "name": "admin"}, "is_domain": false, "roles": [{"id": "56fa4ed5e8dc4ac88403d8693b45d755",
         "name": "member"}, {"id": "7ac3cfb1cbe64a6ea080352b62def1e6", "name": "admin"},
@@ -1772,7 +1796,7 @@ http_interactions:
         "RegionOne", "url": "http://11.22.33.44:8041", "region": "RegionOne"}], "id":
         "fa199c7700de4643b86c308d5a038cf9", "type": "metric", "name": "gnocchi"}]}}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:39 GMT
+  recorded_at: Thu, 04 May 2023 16:35:32 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000
@@ -1787,7 +1811,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1798,9 +1822,9 @@ http_interactions:
       Content-Length:
       - '2466'
       X-Openstack-Request-Id:
-      - req-432d0852-a54a-45a0-ba6a-554d3d55830a
+      - req-9e45f693-e294-4a3c-b658-fa2033e42754
       Date:
-      - Wed, 03 May 2023 20:24:39 GMT
+      - Thu, 04 May 2023 16:35:32 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group_rules": [{"id": "46193871-e62d-4308-9345-4ba85ff3d48e",
@@ -1832,7 +1856,7 @@ http_interactions:
         "revision_number": 0, "project_id": "690d3936f0494522b3f7ad6d17103312"}],
         "security_group_rules_links": [{"rel": "previous", "href": "http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&marker=46193871-e62d-4308-9345-4ba85ff3d48e&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:39 GMT
+  recorded_at: Thu, 04 May 2023 16:35:32 GMT
 - request:
     method: get
     uri: http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&marker=c9fab83b-430d-43d5-b720-568628a97e41
@@ -1847,7 +1871,7 @@ http_interactions:
       Accept:
       - application/json
       X-Auth-Token:
-      - gAAAAABkUsMEtZZS0XaPKXELq1P0pvqZBs2STD-16DS_MruqfTK6ZToGvbAV_WBbrsggl0pGemp4WVVJk7UtVfjxmgqDPY1FLTY98Kku0KbYv1A0fuNJsBMOcvNS4UQveSL-OFiNYRQFLk83PYEk28ocsxF-zuOWkiR-vufAROojQtN_AdAGJ6g
+      - gAAAAABkU97SeilCIufqJi6xS5ajFh1OA7QjXuQEf2qMsr_nGLKkZnGAkUi8VjW5R8q9XPTKqXSK35M3LiVlUk9G_KfVtJjAvB1Sl7tBe8a4EEDEIS9TQmKb1jiSGk4P46ygYF5gottIk8BTu37vwNzG-8L-6FF5A9Ap5Z64-eYXMNMhq-XZOjQ
   response:
     status:
       code: 200
@@ -1858,13 +1882,13 @@ http_interactions:
       Content-Length:
       - '170'
       X-Openstack-Request-Id:
-      - req-77cf9d31-7528-42f7-b8d5-c1abfdf54b2e
+      - req-cc6d47bd-c388-47a1-847f-c779b120764e
       Date:
-      - Wed, 03 May 2023 20:24:40 GMT
+      - Thu, 04 May 2023 16:35:32 GMT
     body:
       encoding: ASCII-8BIT
       string: '{"security_group_rules": [], "security_group_rules_links": [{"rel":
         "previous", "href": "http://11.22.33.44:9696/v2.0/security-group-rules?limit=1000&page_reverse=True"}]}'
     http_version:
-  recorded_at: Wed, 03 May 2023 20:24:39 GMT
+  recorded_at: Thu, 04 May 2023 16:35:32 GMT
 recorded_with: VCR 5.1.0
