@@ -50,7 +50,6 @@ module OpenstackHandle
 
     def self.raw_connect(username, password, auth_url, service = "Compute", extra_opts = nil)
       opts = {
-        :provider                => 'OpenStack',
         :openstack_auth_url      => auth_url,
         :openstack_username      => username,
         :openstack_api_key       => password,
@@ -69,17 +68,15 @@ module OpenstackHandle
       end
 
       if service == "Planning"
-        # Special behaviour for Planning service Tuskar, since it is OpenStack specific service, there is no
-        # Fog::Planning module, only Fog::OpenStack::Planning
-        Fog::Openstack.const_get(service).new(opts)
+        Fog::OpenStack::Planning.new(opts)
       elsif service == "Workflow"
-        Fog::Workflow::OpenStack.new(opts)
+        Fog::OpenStack::Workflow.new(opts)
       elsif service == "Metric"
-        Fog::Metric::OpenStack.new(opts)
+        Fog::OpenStack::Metric.new(opts)
       elsif service == "Event"
-        Fog::Event::OpenStack.new(opts)
+        Fog::OpenStack::Event.new(opts)
       else
-        Fog.const_get(service).new(opts)
+        Fog::OpenStack.const_get(service).new(opts)
       end
     rescue Fog::OpenStack::Auth::Catalog::ServiceTypeError, Fog::Service::NotFound
       $fog_log.warn("MIQ(#{self.class.name}##{__method__}) "\
@@ -386,7 +383,7 @@ module OpenstackHandle
 
     def accessor_for_accessible_tenants(service, accessor, unique_id, array_accessor = true)
       results = []
-      not_found_error = Fog.const_get(service)::OpenStack::NotFound
+      not_found_error = Fog::OpenStack.const_get(service)::NotFound
       ::Parallel.each(service_for_each_accessible_tenant(service), :in_threads => thread_limit) do |svc, project|
 
         response = begin

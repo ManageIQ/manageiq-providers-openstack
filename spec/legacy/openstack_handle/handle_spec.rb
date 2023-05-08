@@ -25,7 +25,7 @@ describe OpenstackHandle::Handle do
     end
 
     it "ignores 404 errors from services" do
-      expect(@openstack_svc).to receive(:security_groups).and_raise(Fog::Network::OpenStack::NotFound)
+      expect(@openstack_svc).to receive(:security_groups).and_raise(Fog::OpenStack::Network::NotFound)
 
       data = @handle.accessor_for_accessible_tenants("Network", :security_groups, :id)
       expect(data).to be_empty
@@ -33,7 +33,7 @@ describe OpenstackHandle::Handle do
 
     it "ignores 404 errors from services returning arrays" do
       security_groups = double("security_groups").as_null_object
-      expect(security_groups).to receive(:to_a).and_raise(Fog::Network::OpenStack::NotFound)
+      expect(security_groups).to receive(:to_a).and_raise(Fog::OpenStack::Network::NotFound)
 
       expect(@openstack_svc).to receive(:security_groups).and_return(security_groups)
 

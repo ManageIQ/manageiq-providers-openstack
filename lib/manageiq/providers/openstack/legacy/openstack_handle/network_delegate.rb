@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class NetworkDelegate < DelegateClass(Fog::Network::OpenStack)
+  class NetworkDelegate < DelegateClass(Fog::OpenStack::Network)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

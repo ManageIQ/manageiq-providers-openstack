@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class IdentityDelegate < DelegateClass(Fog::Identity::OpenStack)
+  class IdentityDelegate < DelegateClass(Fog::OpenStack::Identity)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 
@@ -47,7 +47,7 @@ module OpenstackHandle
         )
       end
       body = Fog::JSON.decode(response.body)
-      vtenants = Fog::Identity::OpenStack::V2::Tenants.new
+      vtenants = Fog::OpenStack::Identity::V2::Tenants.new
       vtenants.load(body['tenants'])
       vtenants
     end
