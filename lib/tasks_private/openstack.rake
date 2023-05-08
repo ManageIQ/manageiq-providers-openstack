@@ -25,7 +25,6 @@ namespace :vcr do
       host, port, username, password = secrets_yml.values_at("hostname", "port", "userid", "password")
 
       {
-        :provider               => "OpenStack",
         :openstack_auth_url     => "https://#{host}:#{port}/v3/",
         :openstack_username     => username,
         :openstack_api_key      => password,
@@ -38,21 +37,21 @@ namespace :vcr do
     def compute_client
       @compute_client ||= begin
         require 'fog/openstack'
-        Fog::Compute.new(fog_connect_opts)
+        Fog::OpenStack::Compute.new(fog_connect_opts)
       end
     end
 
     def network_client
       @network_client ||= begin
         require 'fog/openstack'
-        Fog::Network.new(fog_connect_opts)
+        Fog::OpenStack::Network.new(fog_connect_opts)
       end
     end
 
     def identity_client
       @identity_client ||= begin
         require 'fog/openstack'
-        Fog::Identity.new(fog_connect_opts)
+        Fog::OpenStack::Identity.new(fog_connect_opts)
       end
     end
 

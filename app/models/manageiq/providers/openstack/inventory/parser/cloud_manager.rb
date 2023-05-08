@@ -159,13 +159,13 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       #
       #
       # For instance collector.placement_groups() returns
-      # [ <Fog::Compute::OpenStack::ServerGroup
+      # [ <Fog::OpenStack::Compute::ServerGroup
       #    id="a31f76c9-5ed6-43b4-86ae-7e2cbcf68302",
       #    name="Kuldip-VM-Affinity-Rule",
       #    policies=["affinity"],
       #    members=["2b5fb204-34ff-445b-aea4-a903d4b6143e"]
       #  >,
-      #   <Fog::Compute::OpenStack::ServerGroup
+      #   <Fog::OpenStack::Compute::ServerGroup
       #    id="1734c483-803b-4dcf-94e3-de058a6ddb87",
       #    name="jay-collection-rule",
       #    policies=["anti-affinity"],
