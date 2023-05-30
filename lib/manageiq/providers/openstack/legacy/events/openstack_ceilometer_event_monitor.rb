@@ -133,9 +133,9 @@ class OpenstackCeilometerEventMonitor < OpenstackEventMonitor
   def list_events(query_options)
     provider_connection.list_events(query_options).body.map do |event_hash|
       begin
-        Fog::Event::OpenStack::Event.new(event_hash)
+        Fog::OpenStack::Event::Event.new(event_hash)
       rescue NameError
-        Fog::Metering::OpenStack::Event.new(event_hash)
+        Fog::OpenStack::Metering::Event.new(event_hash)
       end
     end
   end

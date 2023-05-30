@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class MetricDelegate < DelegateClass(Fog::Metric::OpenStack)
+  class MetricDelegate < DelegateClass(Fog::OpenStack::Metric)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

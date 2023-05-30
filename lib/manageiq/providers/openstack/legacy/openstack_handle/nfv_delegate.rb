@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class NFVDelegate < DelegateClass(Fog::NFV::OpenStack)
+  class NFVDelegate < DelegateClass(Fog::OpenStack::NFV)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class StorageDelegate < DelegateClass(Fog::Storage::OpenStack)
+  class StorageDelegate < DelegateClass(Fog::OpenStack::Storage)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

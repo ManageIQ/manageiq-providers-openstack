@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class ComputeDelegate < DelegateClass(Fog::Compute::OpenStack)
+  class ComputeDelegate < DelegateClass(Fog::OpenStack::Compute)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

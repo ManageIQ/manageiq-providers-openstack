@@ -503,6 +503,17 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     vs&.name == :swift ? vs : nil
   end
 
+  def verify_credentials(auth_type = nil, options = {})
+    options[:service] ||= "Compute"
+    ret = super
+    return ret unless auth_type.nil?
+
+    capabilities["events"] = !!event_monitor_available?
+    save! if changed?
+
+    true
+  end
+
   def self.ems_type
     @ems_type ||= "openstack".freeze
   end

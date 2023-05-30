@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class MeteringDelegate < DelegateClass(Fog::Metering::OpenStack)
+  class MeteringDelegate < DelegateClass(Fog::OpenStack::Metering)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

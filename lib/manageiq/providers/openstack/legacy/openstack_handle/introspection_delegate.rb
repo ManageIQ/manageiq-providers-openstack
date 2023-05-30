@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class IntrospectionDelegate < DelegateClass(Fog::Introspection::OpenStack)
+  class IntrospectionDelegate < DelegateClass(Fog::OpenStack::Introspection)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 

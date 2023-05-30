@@ -1,5 +1,5 @@
 module ManageIQ::Providers::Openstack::InfraManager::Host::Operations
-  include ActiveSupport::Concern
+  extend ActiveSupport::Concern
 
   def ironic_fog_node
     connection_options = {:service => "Baremetal"}

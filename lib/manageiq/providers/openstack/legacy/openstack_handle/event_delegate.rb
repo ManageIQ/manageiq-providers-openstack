@@ -1,5 +1,5 @@
 module OpenstackHandle
-  class EventDelegate < DelegateClass(Fog::Event::OpenStack)
+  class EventDelegate < DelegateClass(Fog::OpenStack::Event)
     include OpenstackHandle::HandledList
     include Vmdb::Logging
 
