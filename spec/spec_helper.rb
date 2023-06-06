@@ -16,9 +16,7 @@ VCR.configure do |config|
   config.ignore_hosts 'codeclimate.com' if ENV['CI']
   config.cassette_library_dir = File.join(ManageIQ::Providers::Openstack::Engine.root, 'spec/vcr_cassettes')
 
-  config.before_record do |interaction|
-    fix_token_expires_at(interaction) if interaction.request.uri.end_with?("v3/auth/tokens")
-  end
+  fix_token_expires_at(config)
 
   secrets = Rails.application.secrets
   secrets.openstack.each_key do |secret|
