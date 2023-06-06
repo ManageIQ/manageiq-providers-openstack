@@ -12,12 +12,6 @@ RSpec.configure do |config|
   config.filter_run_excluding(:qpid_proton) unless ENV['CI'] || Gem.loaded_specs.key?(:qpid_proton)
 end
 
-def fix_token_expires_at(interaction)
-  data = JSON.parse(interaction.response.body)
-  data["token"]["expires_at"] = "9999-12-31T23:59:59.999999Z"
-  interaction.response.body = data.to_json.force_encoding('ASCII-8BIT')
-end
-
 VCR.configure do |config|
   config.ignore_hosts 'codeclimate.com' if ENV['CI']
   config.cassette_library_dir = File.join(ManageIQ::Providers::Openstack::Engine.root, 'spec/vcr_cassettes')
