@@ -485,7 +485,7 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     raise MiqException::MiqNetworkCreateError, parsed_error, e.backtrace
   end
 
-  def raw_delete_cloud_network
+  def raw_delete_cloud_network(_options = {})
     with_notification(:cloud_network_delete,
                       :options => {
                         :subject => self,
