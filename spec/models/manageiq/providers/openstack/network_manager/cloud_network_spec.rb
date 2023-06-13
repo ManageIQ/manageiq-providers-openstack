@@ -34,9 +34,9 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork do
     raw_cloud_networks
   end
 
-  describe 'cloud network actions' do
+  describe "cloud network actions" do
     context ".create" do
-      it 'catches errors from provider' do
+      it "catches errors from provider" do
         expect(service).to receive_message_chain(:networks, :new).and_raise(bad_request)
         expect do
           ems_network.create_cloud_network(:cloud_tenant => tenant)
@@ -45,16 +45,30 @@ describe ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork do
     end
 
     context "#update_cloud_network" do
-      it 'catches errors from provider' do
+      it "updates the cloud network" do
+        options = {"name" => "new-name"}
+
+        expect(service).to receive(:update_network).with(cloud_network.ems_ref, options)
+        cloud_network.update_cloud_network(options)
+      end
+
+      it "catches errors from provider" do
         expect(service).to receive(:update_network).and_raise(bad_request)
-        expect { cloud_network.raw_update_cloud_network({}) }.to raise_error(MiqException::MiqNetworkUpdateError)
+        expect { cloud_network.update_cloud_network({}) }.to raise_error(MiqException::MiqNetworkUpdateError)
       end
     end
 
     context "#delete_cloud_network" do
-      it 'catches errors from provider' do
+      before { NotificationType.seed }
+
+      it "deletes the cloud network" do
+        expect(service).to receive(:delete_network).with(cloud_network.ems_ref)
+        cloud_network.delete_cloud_network({})
+      end
+
+      it "catches errors from provider" do
         expect(service).to receive(:delete_network).and_raise(bad_request)
-        expect { cloud_network.raw_delete_cloud_network }.to raise_error(MiqException::MiqNetworkDeleteError)
+        expect { cloud_network.delete_cloud_network({}) }.to raise_error(MiqException::MiqNetworkDeleteError)
       end
     end
   end
