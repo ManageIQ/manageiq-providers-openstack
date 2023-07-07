@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ManageIQ::Providers::Openstack::CloudManager::CloudVolume do
+describe ManageIQ::Providers::Openstack::CloudManager::HostAggregate do
   let(:ems) { FactoryBot.create(:ems_openstack) }
   let(:zone) { FactoryBot.create(:availability_zone_openstack,
                                   :ext_management_system => ems) }
