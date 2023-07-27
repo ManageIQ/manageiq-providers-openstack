@@ -27,13 +27,17 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
           :foreign_key => :parent_ems_id,
           :class_name  => "ManageIQ::Providers::Openstack::NetworkManager",
           :autosave    => true,
-          :dependent   => :destroy
+          :dependent   => :destroy,
+          :inverse_of  => :parent_manager
   has_many :storage_managers,
            :foreign_key => :parent_ems_id,
-           :class_name  => "ManageIQ::Providers::StorageManager",
+           :class_name  => "ManageIQ::Providers::Openstack::StorageManager",
            :autosave    => true,
-           :dependent   => :destroy
+           :dependent   => :destroy,
+           :auto_save   => true,
+           :inverse_of  => :parent_manager
   has_many :snapshots, :through => :vms_and_templates
+
   include ManageIQ::Providers::Openstack::CinderManagerMixin
   include ManageIQ::Providers::Openstack::SwiftManagerMixin
   include ManageIQ::Providers::Openstack::ManagerMixin
@@ -67,9 +71,12 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     unsupported_reason_add(:swift_service, "Swift service unavailable") unless openstack_handle.detect_volume_service.name == :swift
   end
 
+  # TODO: move to after_initialization
   before_create :ensure_managers
 
+  # TODO: move to before_validation
   before_update :ensure_managers_zone_and_provider_region
+  # TODO: after fixing inverse_of, this may go away
   after_save :refresh_parent_infra_manager
 
   private_class_method def self.provider_id_options
@@ -445,51 +452,19 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     ensure_network_manager
     ensure_cinder_manager
     ensure_swift_manager
+    # TODO: remove when this moves to before_initialization
     ensure_managers_zone_and_provider_region
   end
 
+  # sigh, methods like this always start out innocent enough
+  def child_manager_references
+    [network_manager, cinder_manager, swift_manager].compact
+  end
+
   def ensure_managers_zone_and_provider_region
-    if network_manager
-      network_manager.enabled         = enabled
-      network_manager.zone_id         = zone_id
-      network_manager.tenant_id       = tenant_id
-      network_manager.provider_region = provider_region
-    end
-
-    if cinder_manager
-      cinder_manager.enabled         = enabled
-      cinder_manager.zone_id         = zone_id
-      cinder_manager.tenant_id       = tenant_id
-      cinder_manager.provider_region = provider_region
-    end
-
-    if swift_manager
-      swift_manager.enabled         = enabled
-      swift_manager.zone_id         = zone_id
-      swift_manager.tenant_id       = tenant_id
-      swift_manager.provider_region = provider_region
-    end
-  end
-
-  def ensure_network_manager
-    build_network_manager unless network_manager
-  end
-
-  def ensure_cinder_manager
-    build_cinder_manager unless cinder_manager
-  end
-
-  def ensure_swift_manager
-    build_swift_manager unless swift_manager
-  end
-
-  after_save :save_on_other_managers
-
-  def save_on_other_managers
-    storage_managers.update_all(:tenant_mapping_enabled => tenant_mapping_enabled)
-    if network_manager
-      network_manager.tenant_mapping_enabled = tenant_mapping_enabled
-      network_manager.save!
+    child_manager_references.each do |child_manager|
+      propagate_child_manager_attributes(child_manager)
+      child_manager.tenant_mapping_enabled = tenant_mapping_enabled
     end
   end
 

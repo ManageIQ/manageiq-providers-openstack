@@ -14,11 +14,17 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
 
   include ManageIQ::Providers::Openstack::ManagerMixin
   include HasManyOrchestrationStackMixin
-  include HasNetworkManagerMixin
+  include HasNetworkManagerMixin # TODO: also included in parent class
+
+  has_one :network_manager,
+          :foreign_key => :parent_ems_id,
+          :class_name  => "ManageIQ::Providers::Openstack::NetworkManager",
+          :autosave    => true,
+          :dependent   => :destroy
 
   before_save :ensure_parent_provider
   before_destroy :destroy_parent_provider
-  before_create :ensure_managers
+  before_create :ensure_managers # defined by HasNetworkManagerMixin
   before_update :ensure_managers_zone_and_provider_region
 
   supports :create
@@ -284,10 +290,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
         },
       ]
     }
-  end
-
-  def ensure_network_manager
-    build_network_manager(:type => 'ManageIQ::Providers::Openstack::NetworkManager') unless network_manager
   end
 
   def allow_targeted_refresh?
