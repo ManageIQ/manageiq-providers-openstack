@@ -1,12 +1,12 @@
 # ManageIQ::Providers::Openstack
 
-[![CI](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml/badge.svg)](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml)
+[![CI](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml/badge.svg?branch=quinteros)](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/test_coverage)
 
 [![Chat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ManageIQ/manageiq-providers-openstack?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Build history for master branch](https://buildstats.info/github/chart/ManageIQ/manageiq-providers-openstack?branch=master&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-providers-openstack/actions?query=branch%3Amaster)
+[![Build history for quinteros branch](https://buildstats.info/github/chart/ManageIQ/manageiq-providers-openstack?branch=quinteros&buildCount=50&includeBuildsFromPullRequest=false&showstats=false)](https://github.com/ManageIQ/manageiq-providers-openstack/actions?query=branch%3Amaster)
 
 ManageIQ plugin for the OpenStack provider.
 
