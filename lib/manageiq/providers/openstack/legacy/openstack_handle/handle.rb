@@ -60,13 +60,6 @@ module OpenstackHandle
       opts[:openstack_service_type] = ["nfv-orchestration"] if service == "NFV"
       opts[:openstack_service_type] = ["workflowv2"] if service == "Workflow"
 
-      # Fog handles just numeric fields as integer which fails for password, making check here until
-      # it get resolved in fog.
-      if password == password.to_i.to_s
-        $log.error("Wrong password format, just numeric passwords are not accepted.")
-        raise MiqException::MiqOpenstackApiRequestError, _("Numeric-only passwords are not accepted")
-      end
-
       if service == "Planning"
         Fog::OpenStack::Planning.new(opts)
       elsif service == "Workflow"
