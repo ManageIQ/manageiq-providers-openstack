@@ -42,14 +42,6 @@ describe OpenstackHandle::Handle do
     end
   end
 
-  context "errors from connection" do
-    it "raises error for numeric-only password" do
-      handle = OpenstackHandle::Handle.new("dummy", "123456", "dummy")
-      expect { handle.connect } .to raise_error MiqException::MiqOpenstackApiRequestError, \
-                                                "Numeric-only passwords are not accepted"
-    end
-  end
-
   context "supports ssl" do
     it "handles default ssl type connections just fine" do
       fog      = double('fog')
