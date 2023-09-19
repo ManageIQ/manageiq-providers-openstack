@@ -4,8 +4,8 @@ if [ -n "$CI" ]; then
   echo "== Installing system packages =="
   sudo apt-get update
   sudo apt-get install -y libcurl4-openssl-dev
-  sudo apt-add-repository --yes 'deb http://us.archive.ubuntu.com/ubuntu kinetic universe'
-  sudo apt-get install -y libqpid-proton11-dev
+  sudo apt-add-repository --yes 'deb http://us.archive.ubuntu.com/ubuntu lunar universe'
+  sudo apt-get install -t lunar -y libqpid-proton11-dev
   echo
 
   # Enable the qpid_proton bundler group
