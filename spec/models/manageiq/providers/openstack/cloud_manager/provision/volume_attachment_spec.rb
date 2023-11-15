@@ -5,6 +5,8 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
     @flavor = FactoryBot.create(:flavor_openstack)
     @volume = FactoryBot.create(:cloud_volume_openstack)
 
+    # We're storing objects in the instance_type, so we must permit loading this class
+    ActiveRecord::Base.yaml_column_permitted_classes = ActiveRecord::Base.yaml_column_permitted_classes | [@flavor.class]
     @task = FactoryBot.create(:miq_provision_openstack,
                                :source  => @template,
                                :state   => 'pending',
