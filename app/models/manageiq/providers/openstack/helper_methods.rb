@@ -64,6 +64,11 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def with_notification(type, options: {})
+      # We're explicitly serializing objects in the options subject key so we should permit yaml loading those classes
+      if options[:subject]
+        ActiveRecord::Base.yaml_column_permitted_classes = ActiveRecord::Base.yaml_column_permitted_classes | [options[:subject].class]
+      end
+
       # extract success and error options from options
       # :success and :error keys respectively
       # with all other keys common for both cases

@@ -105,7 +105,7 @@ class ManageIQ::Providers::Openstack::CloudManager::OrchestrationTemplate < ::Or
 
   def parse
     return JSON.parse(content) if format == 'json'
-    YAML.safe_load(content, [Date])
+    YAML.safe_load(content, :permitted_classes => [Date])
   end
 
   def validate_format_yaml
