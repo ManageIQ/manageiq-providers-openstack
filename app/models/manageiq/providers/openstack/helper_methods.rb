@@ -64,11 +64,6 @@ module ManageIQ::Providers::Openstack::HelperMethods
     end
 
     def with_notification(type, options: {})
-      # We're explicitly serializing objects in the options subject key so we should permit yaml loading those classes
-      if options[:subject]
-        ActiveRecord::Base.yaml_column_permitted_classes = ActiveRecord::Base.yaml_column_permitted_classes | [options[:subject].class]
-      end
-
       # extract success and error options from options
       # :success and :error keys respectively
       # with all other keys common for both cases
@@ -77,12 +72,8 @@ module ManageIQ::Providers::Openstack::HelperMethods
       success_options.merge!(options)
       error_options.merge!(options)
 
-      # copy subject, initiator and cause from options
-      named_options_keys = [:subject, :initiator, :cause]
-      named_options = {}
-      named_options_keys.map do |key|
-        named_options[key] = options.fetch(key, nil)
-      end
+      # extract subject, initiator and cause from options
+      named_options = options.extract!(:subject, :initiator, :cause)
 
       begin
         yield
