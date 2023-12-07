@@ -72,12 +72,8 @@ module ManageIQ::Providers::Openstack::HelperMethods
       success_options.merge!(options)
       error_options.merge!(options)
 
-      # copy subject, initiator and cause from options
-      named_options_keys = [:subject, :initiator, :cause]
-      named_options = {}
-      named_options_keys.map do |key|
-        named_options[key] = options.fetch(key, nil)
-      end
+      # extract subject, initiator and cause from options
+      named_options = options.extract!(:subject, :initiator, :cause)
 
       begin
         yield
