@@ -1,9 +1,4 @@
 class ManageIQ::Providers::Openstack::Inventory::Parser < ManageIQ::Providers::Inventory::Parser
-  require_nested :CloudManager
-  require_nested :InfraManager
-  require_nested :NetworkManager
-  require_nested :StorageManager
-
   def orchestration_stack_parameters(stack, stack_inventory_object)
     collector.orchestration_parameters(stack).each do |param_key, param_val|
       uid = compose_ems_ref(stack.id, param_key)

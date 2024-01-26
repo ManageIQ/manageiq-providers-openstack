@@ -1,17 +1,4 @@
 class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraManager
-  require_nested :AuthKeyPair
-  require_nested :Cluster
-  require_nested :EventCatcher
-  require_nested :EventParser
-  require_nested :Host
-  require_nested :HostServiceGroup
-  require_nested :MetricsCapture
-  require_nested :MetricsCollectorWorker
-  require_nested :OrchestrationStack
-  require_nested :Refresher
-  require_nested :RefreshWorker
-  require_nested :Template
-
   include ManageIQ::Providers::Openstack::ManagerMixin
   include HasManyOrchestrationStackMixin
   include HasNetworkManagerMixin

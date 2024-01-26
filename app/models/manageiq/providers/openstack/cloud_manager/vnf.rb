@@ -1,6 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::Vnf < ManageIQ::Providers::CloudManager::OrchestrationStack
   include ManageIQ::Providers::Openstack::HelperMethods
-  require_nested :Status
 
   def self.raw_create_stack(orchestration_manager, stack_name, template, options = {})
     create_options = {:vnf => {:name => stack_name, :vnfd_id => template.ems_ref}}

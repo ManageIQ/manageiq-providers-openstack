@@ -456,9 +456,6 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
     }
   end
 
-  require_nested :Private
-  require_nested :Public
-
   def self.class_by_ems(ext_management_system, external = false)
     external ? super::Public : super::Private
   end
