@@ -17,7 +17,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   has_many :floating_ips, :through => :network_ports
 
-  include_concern 'Operations'
+  include Operations
 
   supports :capture
   supports :update

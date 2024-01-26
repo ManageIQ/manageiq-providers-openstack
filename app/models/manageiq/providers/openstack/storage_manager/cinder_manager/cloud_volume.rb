@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVolume < ::CloudVolume
   include ManageIQ::Providers::Openstack::HelperMethods
-  include_concern 'Operations'
+  include Operations
 
   supports :backup_create
   supports :backup_restore
