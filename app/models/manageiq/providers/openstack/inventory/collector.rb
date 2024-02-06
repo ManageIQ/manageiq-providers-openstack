@@ -2,11 +2,6 @@ class ManageIQ::Providers::Openstack::Inventory::Collector < ManageIQ::Providers
   include ManageIQ::Providers::Openstack::RefreshParserCommon::HelperMethods
   include Vmdb::Logging
 
-  require_nested :CloudManager
-  require_nested :NetworkManager
-  require_nested :StorageManager
-  require_nested :TargetCollection
-
   attr_reader :availability_zones
   attr_reader :cloud_services
   attr_reader :tenants

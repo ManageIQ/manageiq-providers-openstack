@@ -1,6 +1,5 @@
 class ManageIQ::Providers::Openstack::CloudManager::OrchestrationStack < ManageIQ::Providers::CloudManager::OrchestrationStack
   include ManageIQ::Providers::Openstack::HelperMethods
-  require_nested :Status
 
   def self.raw_create_stack(orchestration_manager, stack_name, template, options = {})
     create_options = {:stack_name => stack_name, :template => template.content}.merge(options).except(:tenant_name)

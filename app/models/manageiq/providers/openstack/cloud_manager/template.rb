@@ -2,7 +2,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
   include ManageIQ::Providers::Openstack::HelperMethods
   belongs_to :cloud_tenant
 
-  include_concern 'ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared'
+  include ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared
 
   has_and_belongs_to_many :cloud_tenants,
                           :foreign_key             => "vm_id",

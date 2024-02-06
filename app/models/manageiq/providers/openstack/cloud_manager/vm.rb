@@ -1,12 +1,10 @@
 class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::CloudManager::Vm
-  include_concern 'ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared'
-
-  include_concern 'Operations'
-  include_concern 'RemoteConsole'
-  include_concern 'Resize'
-  include_concern 'AssociateIp'
-  include_concern 'ManageSecurityGroups'
-
+  include ManageIQ::Providers::Openstack::CloudManager::VmOrTemplateShared
+  include Operations
+  include RemoteConsole
+  include Resize
+  include AssociateIp
+  include ManageSecurityGroups
   include ManageIQ::Providers::Openstack::HelperMethods
 
   supports :capture

@@ -1,11 +1,11 @@
 module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations
   extend ActiveSupport::Concern
 
-  include_concern 'Configuration'
-  include_concern 'Guest'
-  include_concern 'Power'
-  include_concern 'Relocation'
-  include_concern 'Snapshot'
+  include Configuration
+  include Guest
+  include Power
+  include Relocation
+  include Snapshot
 
   included do
     supports :terminate do
