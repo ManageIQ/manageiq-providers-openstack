@@ -12,9 +12,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Template < ManageIQ::Provide
 
   supports :create_image do
     if ext_management_system.nil?
-      msg = _("The Image is not connected to an active %{table}") %
-            {:table => ui_lookup(:table => "ext_management_system")}
-      unsupported_reason_add(:create_image, msg)
+      _("The Image is not connected to an active %{table}") % {:table => ui_lookup(:table => "ext_management_system")}
     end
   end
 

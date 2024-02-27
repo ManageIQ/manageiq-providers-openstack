@@ -2,15 +2,19 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Power
   extend ActiveSupport::Concern
   included do
     supports :shelve do
-      msg = unsupported_reason(:control) unless supports_control?
-      msg ||= _("The VM can't be shelved, current state has to be powered on, off, suspended or paused") unless %w(on off suspended paused).include?(current_state)
-      unsupported_reason_add(:shelve, msg) if msg
+      if %w[on off suspended paused].exclude?(current_state)
+        _("The VM can't be shelved, current state has to be powered on, off, suspended or paused")
+      else
+        unsupported_reason(:control)
+      end
     end
 
     supports :shelve_offload do
-      msg = unsupported_reason(:control) unless supports_control?
-      msg ||= _("The VM can't be shelved offload, current state has to be shelved") unless %w(shelved).include?(current_state)
-      unsupported_reason_add(:shelve_offload, msg) if msg
+      if current_state != "shelved"
+        _("The VM can't be shelved offload, current state has to be shelved")
+      else
+        unsupported_reason(:control)
+      end
     end
   end
 

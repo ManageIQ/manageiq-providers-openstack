@@ -7,17 +7,17 @@ class ManageIQ::Providers::Openstack::NetworkManager::FloatingIp < ::FloatingIp
 
   supports :delete do
     if ext_management_system.nil?
-      unsupported_reason_add(:delete_floating, _("The Floating Ip is not connected to an active %{table}") % {
+      _("The Floating Ip is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 
   supports :update do
     if ext_management_system.nil?
-      unsupported_reason_add(:update_floating_ip, _("The Floating Ip is not connected to an active %{table}") % {
+      _("The Floating Ip is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 

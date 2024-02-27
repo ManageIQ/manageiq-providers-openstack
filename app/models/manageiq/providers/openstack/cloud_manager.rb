@@ -21,26 +21,25 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :cloud_tenants
   supports :cloud_tenant_mapping do
     if defined?(self.class.module_parent::CloudManager::CloudTenant) && !tenant_mapping_enabled?
-      unsupported_reason_add(:cloud_tenant_mapping, _("Tenant mapping is disabled on the Provider"))
+      _("Tenant mapping is disabled on the Provider")
     elsif !defined?(self.class.module_parent::CloudManager::CloudTenant)
-      unsupported_reason_add(:cloud_tenant_mapping, _("Tenant mapping is supported only when CloudTenant exists "\
-                                                      "on the CloudManager"))
+      _("Tenant mapping is supported only when CloudTenant exists on the CloudManager")
     end
   end
   supports :create_flavor
   supports :label_mapping
   supports :events do
-    unsupported_reason_add(:events, _("Events are not supported")) unless capabilities["events"]
+    _("Events are not supported") unless capabilities["events"]
   end
   supports :metrics
   supports :storage_manager
 
   supports :cinder_service do
-    unsupported_reason_add(:cinder_service, "Cinder service unavailable") unless openstack_handle.detect_volume_service.name == :cinder
+    "Cinder service unavailable" unless openstack_handle.detect_volume_service.name == :cinder
   end
 
   supports :swift_service do
-    unsupported_reason_add(:swift_service, "Swift service unavailable") unless openstack_handle.detect_volume_service.name == :swift
+    "Swift service unavailable" unless openstack_handle.detect_volume_service.name == :swift
   end
 
   before_create :ensure_managers

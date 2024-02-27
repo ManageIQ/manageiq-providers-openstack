@@ -5,17 +5,17 @@ class ManageIQ::Providers::Openstack::NetworkManager::SecurityGroup < ::Security
 
   supports :delete do
     if ext_management_system.nil?
-      unsupported_reason_add(:delete_security_group, _("The Security Group is not connected to an active %{table}") % {
+      _("The Security Group is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 
   supports :update do
     if ext_management_system.nil?
-      unsupported_reason_add(:update_security_group, _("The Security Group is not connected to an active %{table}") % {
+      _("The Security Group is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 

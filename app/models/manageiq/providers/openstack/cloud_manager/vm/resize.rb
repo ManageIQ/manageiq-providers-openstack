@@ -3,10 +3,12 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Resize
 
   included do
     supports :resize do
-      unsupported_reason_add(:resize, unsupported_reason(:control)) unless supports?(:control)
-      unsupported_reason_add(:resize, _('The VM is not connected to a provider')) unless ext_management_system
-      unless %w(ACTIVE SHUTOFF).include?(raw_power_state)
-        unsupported_reason_add(:resize, _("The Instance cannot be resized, current state has to be active or shutoff."))
+      if !ext_management_system
+        _('The VM is not connected to a provider')
+      elsif %w[ACTIVE SHUTOFF].exclude?(raw_power_state)
+        _("The Instance cannot be resized, current state has to be active or shutoff.")
+      else
+        unsupported_reason(:control)
       end
     end
   end
