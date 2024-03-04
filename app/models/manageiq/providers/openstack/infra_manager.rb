@@ -12,7 +12,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   supports :catalog
   supports :metrics
   supports :events do
-    unsupported_reason_add(:events, _("Events are not supported")) unless capabilities["events"]
+    _("Events are not supported") unless capabilities["events"]
   end
   supports_not :shutdown
 

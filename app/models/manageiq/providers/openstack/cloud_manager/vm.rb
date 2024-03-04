@@ -9,7 +9,7 @@ class ManageIQ::Providers::Openstack::CloudManager::Vm < ManageIQ::Providers::Cl
 
   supports :capture
   supports :pause do
-    unsupported_reason_add(:pause, _('The VM is not powered on')) unless vm_powered_on?
+    _('The VM is not powered on') unless vm_powered_on?
   end
   supports :snapshots
 

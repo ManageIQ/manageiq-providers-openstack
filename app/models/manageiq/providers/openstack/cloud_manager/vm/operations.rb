@@ -8,9 +8,7 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations
   include Snapshot
 
   included do
-    supports :terminate do
-      unsupported_reason_add(:terminate, unsupported_reason(:control)) unless supports?(:control)
-    end
+    supports(:terminate) { unsupported_reason(:control) }
   end
 
   def raw_destroy

@@ -9,6 +9,14 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   supports :cloud_volume
   supports :cloud_volume_create
 
+  supports :events do
+    if parent_manager
+      parent_manager.unsupported_reason(:events)
+    else
+      _('no parent_manager to ems')
+    end
+  end
+
   # Auth and endpoints delegations, editing of this type of manager must be disabled
   delegate :authentication_check,
            :authentication_status,
@@ -27,7 +35,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
            :endpoints,
            :cloud_tenants,
            :volume_availability_zones,
-           :supports_events?,
            :to        => :parent_manager,
            :allow_nil => true
 
