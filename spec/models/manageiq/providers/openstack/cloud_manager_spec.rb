@@ -266,6 +266,10 @@ describe ManageIQ::Providers::Openstack::CloudManager do
         expect(dup_ems.valid?).to be_falsey
       end
 
+      it "passes uniqueness check for own ems" do
+        expect(ems.valid?).to be_truthy
+      end
+
       it "passes uniqueness check for same hostname with different domain" do
         dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :uid_ems => 'my_domain')
         taken_hostname = ems.endpoints.first.hostname
@@ -286,6 +290,15 @@ describe ManageIQ::Providers::Openstack::CloudManager do
         taken_hostname = ems.endpoints.first.hostname
         dup_ems.endpoints.first.hostname = taken_hostname
         expect(dup_ems.valid?).to be_truthy
+      end
+
+      context "with an InfraManager" do
+        let!(:ems) { FactoryBot.create(:ems_openstack_infra) }
+
+        it "passes uniqueness check with with same hostname domain and region" do
+          new_ems = FactoryBot.build(:ems_openstack_with_authentication, :hostname => ems.hostname, :uid_ems => ems.uid_ems, :provider_region => ems.provider_region)
+          expect(new_ems.valid?).to be_truthy
+        end
       end
     end
   end
