@@ -225,65 +225,81 @@ describe ManageIQ::Providers::Openstack::CloudManager do
   end
 
   context "validation" do
-    before :each do
-      @ems = FactoryBot.create(:ems_openstack_with_authentication)
-      require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
-    end
+    let!(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
 
     it "verifies AMQP credentials" do
       EvmSpecHelper.stub_amqp_support
 
       creds = {}
       creds[:amqp] = {:userid => "amqp_user", :password => "amqp_password"}
-      @ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
-      @ems.update_authentication(creds, :save => false)
-      expect(@ems.verify_credentials(:amqp)).to be_truthy
+      ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
+      ems.update_authentication(creds, :save => false)
+      expect(ems.verify_credentials(:amqp)).to be_truthy
     end
 
-    it "indicates that an event monitor is available" do
-      allow(OpenstackEventMonitor).to receive(:available?).and_return(true)
-      expect(@ems.event_monitor_available?).to be_truthy
+    describe "event_monitor_available?" do
+      require 'manageiq/providers/openstack/legacy/openstack_event_monitor'
+
+      it "indicates that an event monitor is available" do
+        allow(OpenstackEventMonitor).to receive(:available?).and_return(true)
+        expect(ems.event_monitor_available?).to be_truthy
+      end
+
+      it "indicates that an event monitor is not available" do
+        allow(OpenstackEventMonitor).to receive(:available?).and_return(false)
+        expect(ems.event_monitor_available?).to be_falsey
+      end
+
+      it "logs an error and indicates that an event monitor is not available when there's an error checking for an event monitor" do
+        allow(OpenstackEventMonitor).to receive(:available?).and_raise(StandardError)
+        expect($log).to receive(:error).with(/Exception trying to find openstack event monitor./)
+        expect($log).to receive(:error)
+        expect(ems.event_monitor_available?).to be_falsey
+      end
     end
 
-    it "indicates that an event monitor is not available" do
-      allow(OpenstackEventMonitor).to receive(:available?).and_return(false)
-      expect(@ems.event_monitor_available?).to be_falsey
-    end
+    describe "#hostname_uniqueness_valid?" do
+      it "fails uniqueness check for same hostname with same or without domains and regions" do
+        dup_ems = FactoryBot.build(:ems_openstack_with_authentication)
+        taken_hostname = ems.endpoints.first.hostname
+        dup_ems.endpoints.first.hostname = taken_hostname
+        expect(dup_ems.valid?).to be_falsey
+      end
 
-    it "logs an error and indicates that an event monitor is not available when there's an error checking for an event monitor" do
-      allow(OpenstackEventMonitor).to receive(:available?).and_raise(StandardError)
-      expect($log).to receive(:error).with(/Exception trying to find openstack event monitor./)
-      expect($log).to receive(:error)
-      expect(@ems.event_monitor_available?).to be_falsey
-    end
+      it "passes uniqueness check for own ems" do
+        expect(ems.valid?).to be_truthy
+      end
 
-    it "fails uniqueness check for same hostname with same or without domains and regions" do
-      dup_ems = FactoryBot.build(:ems_openstack_with_authentication)
-      taken_hostname = @ems.endpoints.first.hostname
-      dup_ems.endpoints.first.hostname = taken_hostname
-      expect(dup_ems.valid?).to be_falsey
-    end
+      it "passes uniqueness check for same hostname with different domain" do
+        dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :uid_ems => 'my_domain')
+        taken_hostname = ems.endpoints.first.hostname
+        dup_ems.endpoints.first.hostname = taken_hostname
+        expect(dup_ems.valid?).to be_truthy
+      end
 
-    it "passes uniqueness check for same hostname with different domain" do
-      dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :uid_ems => 'my_domain')
-      taken_hostname = @ems.endpoints.first.hostname
-      dup_ems.endpoints.first.hostname = taken_hostname
-      expect(dup_ems.valid?).to be_truthy
-    end
+      it "passes uniqueness check for same hostname with different region" do
+        dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :provider_region => 'RegionTwo')
+        taken_hostname = ems.endpoints.first.hostname
+        dup_ems.endpoints.first.hostname = taken_hostname
+        expect(dup_ems.valid?).to be_truthy
+      end
 
-    it "passes uniqueness check for same hostname with different region" do
-      dup_ems = FactoryBot.build(:ems_openstack_with_authentication, :provider_region => 'RegionTwo')
-      taken_hostname = @ems.endpoints.first.hostname
-      dup_ems.endpoints.first.hostname = taken_hostname
-      expect(dup_ems.valid?).to be_truthy
-    end
+      it "passes uniqueness check for same hostname with different domain and region" do
+        dup_ems = FactoryBot.build(:ems_openstack_with_authentication,
+                                   :uid_ems => 'my_domain', :provider_region => 'RegionTwo')
+        taken_hostname = ems.endpoints.first.hostname
+        dup_ems.endpoints.first.hostname = taken_hostname
+        expect(dup_ems.valid?).to be_truthy
+      end
 
-    it "passes uniqueness check for same hostname with different domain and region" do
-      dup_ems = FactoryBot.build(:ems_openstack_with_authentication,
-                                  :uid_ems => 'my_domain', :provider_region => 'RegionTwo')
-      taken_hostname = @ems.endpoints.first.hostname
-      dup_ems.endpoints.first.hostname = taken_hostname
-      expect(dup_ems.valid?).to be_truthy
+      context "with an InfraManager" do
+        let!(:ems) { FactoryBot.create(:ems_openstack_infra) }
+
+        it "passes uniqueness check with with same hostname domain and region" do
+          new_ems = FactoryBot.build(:ems_openstack_with_authentication, :hostname => ems.hostname, :uid_ems => ems.uid_ems, :provider_region => ems.provider_region)
+          expect(new_ems.valid?).to be_truthy
+        end
+      end
     end
   end
 

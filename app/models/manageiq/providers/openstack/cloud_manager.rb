@@ -518,14 +518,15 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     return unless hostname_required?
     return unless hostname.present? # Presence is checked elsewhere
 
-    existing_providers = Endpoint.where(:hostname => hostname.downcase)
-                                 .where.not(:resource_id => id).includes(:resource)
-                                 .select do |endpoint|
-                                   unless endpoint.resource.nil?
-                                     endpoint.resource.uid_ems == keystone_v3_domain_id &&
-                                       endpoint.resource.provider_region == provider_region
-                                   end
-                                 end
+    existing_providers =
+      self.class
+          .joins(:endpoints)
+          .where.not(:id => id)
+          .where(
+            :endpoints       => {:hostname => hostname.downcase},
+            :uid_ems         => keystone_v3_domain_id,
+            :provider_region => provider_region
+          )
 
     errors.add(:hostname, "has already been taken") if existing_providers.any?
   end
