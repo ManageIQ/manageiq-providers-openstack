@@ -20,13 +20,11 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
 
   let(:raw_volumes) do
     double.tap do |volumes|
-      handle = double
-      allow(handle).to receive(:volumes).and_return(volumes)
       allow(ExtManagementSystem).to receive(:find).with(ems.id).and_return(ems)
       allow(ExtManagementSystem).to receive(:find).with(ems.parent_manager.id).and_return(ems.parent_manager)
       allow(ems.parent_manager).to receive(:connect)
                                .with(hash_including(:service => 'Volume', :tenant_name => tenant.name))
-                               .and_return(handle)
+                               .and_return(double(:volumes => volumes))
       allow(volumes).to receive(:get).with(cloud_volume.ems_ref).and_return(the_raw_volume)
     end
   end
@@ -86,7 +84,7 @@ describe ManageIQ::Providers::Openstack::StorageManager::CinderManager::CloudVol
       end
 
       it "validates the volume update operation when ems is missing" do
-        expect(cloud_volume).to receive(:ext_management_system).and_return(nil)
+        cloud_volume.ext_management_system = nil
         expect(cloud_volume.supports?(:update)).to be_falsy
         expect(cloud_volume.unsupported_reason(:update)).to eq("The Volume is not connected to an active Provider")
       end
