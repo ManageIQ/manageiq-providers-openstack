@@ -9,22 +9,21 @@ class ManageIQ::Providers::Openstack::NetworkManager::NetworkRouter < ::NetworkR
 
   supports :delete do
     if ext_management_system.nil?
-      unsupported_reason_add(:delete, _("The Network Router is not connected to an active %{table}") % {
+      _("The Network Router is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
-    end
-    if network_ports.any?
-      unsupported_reason_add(:delete, _("Unable to delete \"%{name}\" because it has associated ports.") % {
+      }
+    elsif network_ports.any?
+      _("Unable to delete \"%{name}\" because it has associated ports.") % {
         :name => name
-      })
+      }
     end
   end
 
   supports :update do
     if ext_management_system.nil?
-      unsupported_reason_add(:update, _("The Network Router is not connected to an active %{table}") % {
+      _("The Network Router is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 

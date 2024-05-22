@@ -2,15 +2,9 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::Operations::Relocation
   extend ActiveSupport::Concern
 
   included do
-    supports :live_migrate do
-      unsupported_reason_add(:live_migrate, unsupported_reason(:control)) unless supports?(:control)
-    end
-
-    supports_not :migrate, :reason => _("Migrate operation is not supported.")
-
-    supports :evacuate do
-      unsupported_reason_add(:evacuate, unsupported_reason(:control)) unless supports?(:control)
-    end
+    supports(:evacuate) { unsupported_reason(:control) }
+    supports(:live_migrate) { unsupported_reason(:control) }
+    supports_not :migrate
   end
 
   def raw_live_migrate(options = {})

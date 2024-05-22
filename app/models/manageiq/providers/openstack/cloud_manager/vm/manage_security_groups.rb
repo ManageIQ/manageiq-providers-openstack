@@ -4,20 +4,18 @@ module ManageIQ::Providers::Openstack::CloudManager::Vm::ManageSecurityGroups
   included do
     supports :add_security_group do
       if cloud_tenant.nil? || cloud_tenant.security_groups.empty?
-        unsupported_reason_add(:add_security_group,
-                               _("There are no %{security_groups} available to this %{instance}.") % {
-                                 :security_groups => ui_lookup(:tables => "security_group"),
-                                 :instance        => ui_lookup(:table => "vm_cloud")
-                               })
+        _("There are no %{security_groups} available to this %{instance}.") % {
+          :security_groups => ui_lookup(:tables => "security_group"),
+          :instance        => ui_lookup(:table => "vm_cloud")
+        }
       end
     end
     supports :remove_security_group do
       if security_groups.empty?
-        unsupported_reason_add(:remove_security_group,
-                               _("This %{instance} does not have any associated %{security_groups}") % {
-                                 :instance        => ui_lookup(:table => 'vm_cloud'),
-                                 :security_groups => ui_lookup(:tables => 'security_group')
-                               })
+        _("This %{instance} does not have any associated %{security_groups}") % {
+          :instance        => ui_lookup(:table => 'vm_cloud'),
+          :security_groups => ui_lookup(:tables => 'security_group')
+        }
       end
     end
   end

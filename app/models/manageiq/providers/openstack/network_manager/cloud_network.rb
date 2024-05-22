@@ -9,17 +9,17 @@ class ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork < ::CloudNetw
 
   supports :delete do
     if ext_management_system.nil?
-      unsupported_reason_add(:delete_cloud_network, _("The Cloud Network is not connected to an active %{table}") % {
+      _("The Cloud Network is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 
   supports :update do
     if ext_management_system.nil?
-      unsupported_reason_add(:update_cloud_network, _("The Cloud Network is not connected to an active %{table}") % {
+      _("The Cloud Network is not connected to an active %{table}") % {
         :table => ui_lookup(:table => "ext_management_systems")
-      })
+      }
     end
   end
 

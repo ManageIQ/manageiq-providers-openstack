@@ -25,10 +25,10 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
   supports :set_node_maintenance
   supports :unset_node_maintenance
   supports :start do
-    unsupported_reason_add(:start, _("Cannot start. Already on.")) unless state.casecmp("off") == 0
+    _("Cannot start. Already on.") unless state.casecmp("off") == 0
   end
   supports :stop do
-    unsupported_reason_add(:stop, _("Cannot stop. Already off.")) unless state.casecmp("on") == 0
+    _("Cannot stop. Already off.") unless state.casecmp("on") == 0
   end
 
   # TODO(lsmola) for some reason UI can't handle joined table cause there is hardcoded somewhere that it selects
@@ -542,7 +542,7 @@ class ManageIQ::Providers::Openstack::InfraManager::Host < ::Host
 
   supports :destroy do
     if !archived? && hardware.provision_state == "active"
-      unsupported_reason_add(:destroy, "Cannot remove #{name} because it is in #{hardware.provision_state} state.")
+      "Cannot remove #{name} because it is in #{hardware.provision_state} state."
     end
   end
 

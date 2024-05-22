@@ -5,6 +5,14 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   supports :create_network_router
   supports :cloud_subnet_create
 
+  supports :events do
+    if parent_manager
+      parent_manager.unsupported_reason(:events)
+    else
+      _('no parent_manager to ems')
+    end
+  end
+
   has_many :public_networks,  :foreign_key => :ems_id, :dependent => :destroy,
            :class_name => "ManageIQ::Providers::Openstack::NetworkManager::CloudNetwork::Public"
   has_many :private_networks, :foreign_key => :ems_id, :dependent => :destroy,
@@ -26,7 +34,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
            :hostname,
            :default_endpoint,
            :endpoints,
-           :supports_events?,
            :to        => :parent_manager,
            :allow_nil => true
 
