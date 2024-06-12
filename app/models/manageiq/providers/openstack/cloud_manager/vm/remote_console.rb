@@ -1,7 +1,12 @@
 class ManageIQ::Providers::Openstack::CloudManager::Vm
   module RemoteConsole
-    def console_supported?(type)
-      %w(SPICE VNC).include?(type.upcase)
+    extend ActiveSupport::Concern
+
+    included do
+      supports :console
+      supports :html5_console
+      supports :spice_console
+      supports :vnc_console
     end
 
     def validate_remote_console_acquire_ticket(protocol, options = {})
