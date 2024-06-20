@@ -411,21 +411,25 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     # Don't worry about filling in the volume, since the volume service refresh
     # will take care of that.
     if !vm.attributes.fetch("os-extended-volumes:volumes_attached", []).empty?
-      vm.volume_attachments.each do |attachment|
-        # Skip Volume mounts without mount point
-        next if attachment['device'].blank?
+      begin
+        vm.volume_attachments.each do |attachment|
+          # Skip Volume mounts without mount point
+          next if attachment['device'].blank?
 
-        dev = File.basename(attachment['device'])
-        persister.disks.find_or_build_by(
-          :hardware    => hardware,
-          # reuse the device names from above in the event that this is an
-          # instance that was booted from a volume
-          :device_name => attachment_names.fetch(dev, dev)
-        ).assign_attributes(
-          :location        => dev,
-          :device_type     => "disk",
-          :controller_type => "openstack"
-        )
+          dev = File.basename(attachment['device'])
+          persister.disks.find_or_build_by(
+            :hardware    => hardware,
+            # reuse the device names from above in the event that this is an
+            # instance that was booted from a volume
+            :device_name => attachment_names.fetch(dev, dev)
+          ).assign_attributes(
+            :location        => dev,
+            :device_type     => "disk",
+            :controller_type => "openstack"
+          )
+        end
+      rescue Fog::OpenStack::Compute::NotFound => err
+        _log.warn("Unable to retrieve VM volume attachments name=#{vm.name} id=#{vm.id} state=#{vm.state} err=#{err}")
       end
     end
     vm_and_template_labels(server, vm.metadata || [])
