@@ -1,10 +1,20 @@
 module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
   def create_requested_volumes(requested_volumes)
-    volumes_attrs_list = [default_volume_attributes]
+    volumes_attrs_list = instance_type.root_disk_size > 0 ? [default_volume_attributes] : []
 
     connection_options = {:service => "volume", :tenant_name => cloud_tenant.try(:name)}
     source.ext_management_system.with_provider_connection(connection_options) do |service|
-      requested_volumes.each do |volume_attrs|
+      requested_volumes.each_with_index do |volume_attrs, index|
+        if instance_type.root_disk_size == 0 # Handle root disk logic only when root_disk_size is 0
+          if index == 0  # The first volume should be the root disk, typically assigned to vda
+            volume_attrs[:imageRef] = source.ems_ref # Set the image reference for booting
+            volume_attrs[:bootable] = true
+            volume_attrs[:boot_index] = 0
+          else # Subsequent volumes will be assigned to vdb, vdc, etc.
+            volume_attrs[:boot_index] = -1
+          end
+        end
+
         new_volume_id = service.volumes.create(volume_attrs).id
         new_volume_attrs = volume_attrs.clone
         new_volume_attrs[:uuid]             = new_volume_id
