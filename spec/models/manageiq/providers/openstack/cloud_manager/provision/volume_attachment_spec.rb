@@ -29,6 +29,30 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
 
       expect(task.create_requested_volumes(task.options[:volumes])).to eq([default_volume, requested_volume])
     end
+
+    context "with a flavor that has no root disk" do
+      let(:flavor) { FactoryBot.create(:flavor_openstack, :root_disk_size => 0) }
+
+      it "sets the requested volume as a boot disk" do
+        expected_volume = {:name => "custom_volume_1", :size => 2, :uuid => volume.id, :source_type => "volume",
+                           :destination_type => "volume", :boot_index => 0, :bootable => true, :imageRef => template.ems_ref}
+
+        expect(task.create_requested_volumes(task.options[:volumes])).to eq([expected_volume])
+      end
+
+      context "with multiple requested volumes" do
+        let(:task_volumes) { [{:name => "custom_volume_1", :size => 2}, {:name => "custom_volume_2", :size => 4}] }
+
+        it "sets other volumes as boot_index -1" do
+          expected_volume_1 = {:name => "custom_volume_1", :size => 2, :uuid => volume.id, :source_type => "volume",
+                               :destination_type => "volume", :boot_index => 0, :bootable => true, :imageRef => template.ems_ref}
+          expected_volume_2 = {:name => "custom_volume_2", :size => 4, :uuid => volume.id, :source_type => "volume",
+                               :destination_type => "volume", :boot_index => -1}
+
+          expect(task.create_requested_volumes(task.options[:volumes])).to eq([expected_volume_1, expected_volume_2])
+        end
+      end
+    end
   end
 
   context "#check_volumes" do
