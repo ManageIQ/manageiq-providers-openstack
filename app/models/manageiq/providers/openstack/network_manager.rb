@@ -37,6 +37,10 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
            :to        => :parent_manager,
            :allow_nil => true
 
+  class << self
+    delegate :refresh_ems, :to => ManageIQ::Providers::Openstack::CloudManager
+  end
+
   def self.hostname_required?
     false
   end

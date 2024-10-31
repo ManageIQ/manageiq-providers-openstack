@@ -27,6 +27,10 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::P
     end
   end
 
+  class << self
+    delegate :refresh_ems, :to => ManageIQ::Providers::Openstack::CloudManager
+  end
+
   def self.hostname_required?
     false
   end
