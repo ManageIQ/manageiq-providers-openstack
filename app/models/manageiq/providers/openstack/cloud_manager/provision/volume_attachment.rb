@@ -10,8 +10,6 @@ module ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachment
             volume_attrs[:imageRef] = source.ems_ref # Set the image reference for booting
             volume_attrs[:bootable] = true
             volume_attrs[:boot_index] = 0
-          else # Subsequent volumes will be assigned to vdb, vdc, etc.
-            volume_attrs[:boot_index] = -1
           end
         end
 

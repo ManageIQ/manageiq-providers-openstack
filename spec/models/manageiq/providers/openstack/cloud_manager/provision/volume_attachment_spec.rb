@@ -43,11 +43,11 @@ describe ManageIQ::Providers::Openstack::CloudManager::Provision::VolumeAttachme
       context "with multiple requested volumes" do
         let(:task_volumes) { [{:name => "custom_volume_1", :size => 2}, {:name => "custom_volume_2", :size => 4}] }
 
-        it "sets other volumes as boot_index -1" do
+        it "only sets boot_index for first volumes" do
           expected_volume_1 = {:name => "custom_volume_1", :size => 2, :uuid => volume.id, :source_type => "volume",
                                :destination_type => "volume", :boot_index => 0, :bootable => true, :imageRef => template.ems_ref}
           expected_volume_2 = {:name => "custom_volume_2", :size => 4, :uuid => volume.id, :source_type => "volume",
-                               :destination_type => "volume", :boot_index => -1}
+                               :destination_type => "volume"}
 
           expect(task.create_requested_volumes(task.options[:volumes])).to eq([expected_volume_1, expected_volume_2])
         end
