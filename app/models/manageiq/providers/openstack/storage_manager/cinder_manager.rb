@@ -58,11 +58,11 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   end
 
   def self.description
-    @description ||= "Cinder ".freeze
+    @description ||= "OpenStack Cinder".freeze
   end
 
   def description
-    @description ||= "Cinder ".freeze
+    @description ||= "OpenStack Cinder".freeze
   end
 
   def name
