@@ -223,6 +223,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
       image.cloud_tenants = image_tenants(i)
       image.location = "unknown"
       image.cloud_tenant = persister.cloud_tenants.lazy_find(i.owner) if i.owner
+      _log.info("MiqTemplate ems_ref: [#{i.id}] genealogy_parent: [#{parent_server_uid}]")
       image.genealogy_parent = persister.vms.lazy_find(parent_server_uid) unless parent_server_uid.nil?
 
       guest_os = OperatingSystem.normalize_os_name(i.try(:os_distro) || 'unknown')
@@ -355,6 +356,7 @@ class ManageIQ::Providers::Openstack::Inventory::Parser::CloudManager < ManageIQ
     server.placement_group = persister.placement_groups.lazy_find(placement_group.id) if placement_group
     server.key_pairs = [persister.auth_key_pairs.lazy_find(vm.key_name)].compact
     server.cloud_tenant = persister.cloud_tenants.lazy_find(vm.tenant_id.to_s)
+    _log.info("Vm ems_ref: [#{vm.id}] genealogy_parent: [#{vm.image["id"]}]")
     server.genealogy_parent = miq_template_lazy unless vm.image["id"].nil?
 
     # to populate the hardware, we need some fields from the flavor object
