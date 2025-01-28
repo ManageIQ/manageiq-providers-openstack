@@ -14,11 +14,20 @@
     :is_admin: false
     :refresh_interval: 0
 :ems:
+  :ems_cinder:
+    :blacklisted_event_names:
+    - scheduler.run_instance.end
+    - scheduler.run_instance.scheduled
+    - scheduler.run_instance.start
   :ems_openstack:
     :excon:
       :omit_default_port: true
       :read_timeout: 60
-    :blacklisted_event_names: []
+    :blacklisted_event_names:
+    - identity.authenticate
+    - scheduler.run_instance.start
+    - scheduler.run_instance.scheduled
+    - scheduler.run_instance.end
     :event_handling:
       :event_backread_seconds: 5
       :event_skip_history: false
@@ -122,6 +131,14 @@
           - snapshot.update.end
           - volume.create.end
           - volume.delete.end
+  :ems_openstack_network:
+    :blacklisted_event_names:
+    - scheduler.run_instance.end
+    - scheduler.run_instance.scheduled
+    - scheduler.run_instance.start
+  :ems_openstack_infra:
+    :blacklisted_event_names:
+    - identity.authenticate
 :http_proxy:
   :openstack:
     :host:
