@@ -54,11 +54,7 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
   end
 
   def self.default_blacklisted_event_names
-    %w(
-      scheduler.run_instance.start
-      scheduler.run_instance.scheduled
-      scheduler.run_instance.end
-    )
+    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
   end
 
   def supported_auth_types
