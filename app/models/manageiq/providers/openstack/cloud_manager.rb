@@ -502,12 +502,7 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
 
   def self.default_blacklisted_event_names
-    %w(
-      identity.authenticate
-      scheduler.run_instance.start
-      scheduler.run_instance.scheduled
-      scheduler.run_instance.end
-    )
+    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
   end
 
   def self.api_allowed_attributes

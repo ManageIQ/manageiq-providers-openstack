@@ -322,9 +322,7 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
   end
 
   def self.default_blacklisted_event_names
-    %w(
-      identity.authenticate
-    )
+    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
   end
 
   def supported_auth_types

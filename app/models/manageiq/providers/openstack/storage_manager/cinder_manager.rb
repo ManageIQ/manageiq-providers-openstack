@@ -46,11 +46,7 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
   end
 
   def self.default_blacklisted_event_names
-    %w(
-      scheduler.run_instance.start
-      scheduler.run_instance.scheduled
-      scheduler.run_instance.end
-    )
+    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
   end
 
   def self.hostname_required?
