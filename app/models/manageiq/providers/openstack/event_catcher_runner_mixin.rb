@@ -73,6 +73,6 @@ module ManageIQ::Providers::Openstack::EventCatcherRunnerMixin
   end
 
   def filtered?(event)
-    filtered_events.include?(event.payload["event_type"])
+    @ems.filtered_event_names.include?(event.payload["event_type"])
   end
 end

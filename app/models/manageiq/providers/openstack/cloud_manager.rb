@@ -501,10 +501,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     @vm_vendor ||= "openstack".freeze
   end
 
-  def self.default_blacklisted_event_names
-    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
-  end
-
   def self.api_allowed_attributes
     %w[keystone_v3_domain_id].freeze
   end

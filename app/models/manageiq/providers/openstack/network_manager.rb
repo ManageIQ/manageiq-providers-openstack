@@ -53,10 +53,6 @@ class ManageIQ::Providers::Openstack::NetworkManager < ManageIQ::Providers::Netw
     @description ||= "OpenStack Network".freeze
   end
 
-  def self.default_blacklisted_event_names
-    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
-  end
-
   def supported_auth_types
     %w(default amqp)
   end

@@ -45,10 +45,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     delegate :refresh_ems, :to => ManageIQ::Providers::Openstack::CloudManager
   end
 
-  def self.default_blacklisted_event_names
-    Settings.ems["ems_#{ems_type}"].blacklisted_event_names
-  end
-
   def self.hostname_required?
     false
   end
