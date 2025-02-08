@@ -321,12 +321,6 @@ class ManageIQ::Providers::Openstack::InfraManager < ManageIQ::Providers::InfraM
     @description ||= "OpenStack Platform Director".freeze
   end
 
-  def self.default_blacklisted_event_names
-    %w(
-      identity.authenticate
-    )
-  end
-
   def supported_auth_types
     %w(default amqp ssh_keypair)
   end

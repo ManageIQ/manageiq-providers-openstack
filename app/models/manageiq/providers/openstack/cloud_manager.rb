@@ -501,15 +501,6 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
     @vm_vendor ||= "openstack".freeze
   end
 
-  def self.default_blacklisted_event_names
-    %w(
-      identity.authenticate
-      scheduler.run_instance.start
-      scheduler.run_instance.scheduled
-      scheduler.run_instance.end
-    )
-  end
-
   def self.api_allowed_attributes
     %w[keystone_v3_domain_id].freeze
   end

@@ -45,14 +45,6 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     delegate :refresh_ems, :to => ManageIQ::Providers::Openstack::CloudManager
   end
 
-  def self.default_blacklisted_event_names
-    %w(
-      scheduler.run_instance.start
-      scheduler.run_instance.scheduled
-      scheduler.run_instance.end
-    )
-  end
-
   def self.hostname_required?
     false
   end
