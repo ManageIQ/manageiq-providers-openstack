@@ -5,12 +5,17 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
 
   before(:each) do
     zone = EvmSpecHelper.local_miq_server.zone
-    credentials = Rails.application.secrets.openstack
-    @ems = FactoryBot.create(:ems_openstack_infra, :zone => zone, :hostname => credentials[:hostname],
-                              :ipaddress => credentials[:hostname], :port => credentials[:port].to_i, :api_version => 'v3',
-                              :security_protocol => 'no-ssl', :uid_ems => "default")
+    @ems = FactoryBot.create(:ems_openstack_infra,
+      :zone              => zone,
+      :hostname          => VcrSecrets.openstack.hostname,
+      :ipaddress         => VcrSecrets.openstack.hostname,
+      :port              => VcrSecrets.openstack.port.to_i,
+      :api_version       => 'v3',
+      :security_protocol => 'no-ssl',
+      :uid_ems           => "default"
+    )
     @ems.update_authentication(
-      :default => {:userid => credentials[:userid], :password => credentials[:password]})
+      :default => {:userid => VcrSecrets.openstack.userid, :password => VcrSecrets.openstack.password})
   end
 
   it "will perform a full refresh" do
