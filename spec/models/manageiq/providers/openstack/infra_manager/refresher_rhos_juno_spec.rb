@@ -9,7 +9,7 @@ describe ManageIQ::Providers::Openstack::InfraManager::Refresher do
       :zone              => zone,
       :hostname          => VcrSecrets.openstack.hostname,
       :ipaddress         => VcrSecrets.openstack.hostname,
-      :port              => VcrSecrets.openstack.port.to_i,
+      :port              => VcrSecrets.openstack.port,
       :api_version       => 'v3',
       :security_protocol => 'no-ssl',
       :uid_ems           => "default"
