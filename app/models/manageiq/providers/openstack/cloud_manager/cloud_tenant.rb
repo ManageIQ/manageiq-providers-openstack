@@ -15,9 +15,12 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
   def self.raw_create_cloud_tenant(ext_management_system, options)
     tenant = nil
     ext_management_system.with_provider_connection(connection_options) do |service|
+      parent_id = options.delete("parent_id")
+      options["parent_id"] = ext_management_system.cloud_tenants.find_by(:id => parent_id)&.ems_ref if parent_id
+
       tenant = service.create_tenant(options)
     end
-    {:ems_ref => tenant.id, :name => options[:name]}
+    {:ems_ref => tenant.id, :name => options["name"]}
   rescue => e
     _log.error "tenant=[#{options[:name]}], error: #{e}"
     raise MiqException::MiqCloudTenantCreateError, parse_error_message_from_fog_response(e), e.backtrace
@@ -44,7 +47,7 @@ class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
   end
 
   def self.connection_options
-    connection_options = {:service => "Identity", :openstack_endpoint_type => 'adminURL'}
+    connection_options = {:service => "Identity", :openstack_endpoint_type => 'publicURL'}
     connection_options
   end
 
