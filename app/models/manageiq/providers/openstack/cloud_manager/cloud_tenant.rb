@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::CloudTenant < ::CloudTenant
   virtual_has_one :default_security_group, :uses => :security_groups
-  virtual_delegate :cloud_volume_types, :to => "ext_management_system.cloud_volume_types", :allow_nil => true, :default => []
+  virtual_has_many :cloud_volume_types, :through => :ext_management_system
 
   include ManageIQ::Providers::Openstack::HelperMethods
   has_and_belongs_to_many :miq_templates,

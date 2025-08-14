@@ -11,15 +11,15 @@ describe ManageIQ::Providers::Openstack::CloudManager::Refresher do
     let(:keystone_domain) { "default" }
     let(:tenant_mapping) { true }
     let(:ems) do
-      host = Rails.application.secrets.openstack[:hostname]
-      port = Rails.application.secrets.openstack[:port]
+      host = VcrSecrets.openstack.hostname
+      port = VcrSecrets.openstack.port
 
       FactoryBot.create(:ems_openstack, :zone => zone, :hostname => host,
                         :ipaddress => host, :port => port, :api_version => api_version,
                         :security_protocol => 'ssl-no-validation', :uid_ems => keystone_domain,
                         :tenant_mapping_enabled => tenant_mapping).tap do |ems|
-        username = Rails.application.secrets.openstack[:userid]
-        password = Rails.application.secrets.openstack[:password]
+        username = VcrSecrets.openstack.userid
+        password = VcrSecrets.openstack.password
         ems.authentications << FactoryBot.create(:authentication, {:userid => username, :password => password})
       end
     end
