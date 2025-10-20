@@ -32,7 +32,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::MetricsCapture do
     end
 
     it "treats openstack timestamp as UTC" do
-      ts_as_utc = api_time_as_utc(@mock_stats_data.get_statistics("cpu_util").last)
+      ts_as_utc = api_time_as_utc(@mock_stats_data.get_statistics("cpu").last)
       _counters, values_by_id_and_ts = @vm.perf_collect_metrics("realtime")
       ts = Time.parse(values_by_id_and_ts[@vm.ems_ref].keys.max)
 

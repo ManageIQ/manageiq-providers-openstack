@@ -1,6 +1,6 @@
 class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::Providers::CloudManager::MetricsCapture
   include ManageIQ::Providers::Openstack::BaseMetricsCapture
-  CPU_METERS     = ["cpu_util"]
+  CPU_METERS     = ["cpu"]
   MEMORY_METERS  = ["memory.usage"]
   DISK_METERS    = ["disk.read.bytes", "disk.write.bytes"]
   NETWORK_METERS = ["network.incoming.bytes", "network.outgoing.bytes"]
@@ -8,10 +8,16 @@ class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::P
   # The list of meters that provide "cumulative" meters instead of "gauge"
   # meters from openstack.  The values from these meters will have to be
   # diffed against the previous value in order to grab a discrete value.
-  DIFF_METERS    = DISK_METERS + NETWORK_METERS
+  DIFF_METERS    = CPU_METERS + DISK_METERS + NETWORK_METERS
   def self.diff_meter?(meters)
     meters = [meters] unless meters.kind_of? Array
     meters.all? { |m| DIFF_METERS.include? m }
+  end
+
+  def self.counter_cpu_ns_per_second_calculation(stat, interval)
+    cpu_usage_seconds = stat.to_f / 1_000_000_000.0
+    cpu_usage_avg     = (cpu_usage_seconds / interval.to_f) * 100.0
+    cpu_usage_avg
   end
 
   def self.counter_sum_per_second_calculation(stats, intervals)
@@ -25,7 +31,7 @@ class ManageIQ::Providers::Openstack::CloudManager::MetricsCapture < ManageIQ::P
   COUNTER_INFO   = [
     {
       :openstack_counters    => CPU_METERS,
-      :calculation           => ->(stat, _) { stat },
+      :calculation           => method(:counter_cpu_ns_per_second_calculation).to_proc,
       :vim_style_counter_key => "cpu_usage_rate_average"
     },
 
