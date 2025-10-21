@@ -93,7 +93,7 @@ module ManageIQ::Providers::Openstack::BaseMetricsCapture
   def meter_names(metric_capture_module)
     @meter_names ||= metric_capture_module::COUNTER_NAMES
   end
-  
+
   included do
     cache_with_timeout(:counters_by_vm, 60.minutes) { Hash.new }
   end
