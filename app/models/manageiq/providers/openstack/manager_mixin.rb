@@ -4,6 +4,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
   included do
     after_save :stop_event_monitor_queue_on_change
+    after_save :update_event_capabilities
     before_destroy :stop_event_monitor
   end
 
@@ -262,6 +263,25 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     _log.error(e.backtrace.join("\n"))
     false
   end
+
+  def update_event_capabilities
+    return unless self.class.name.include?("CloudManager")
+    
+    expected_value = begin
+      opts = event_monitor_options
+      opts[:events_monitor].present? ? event_monitor_available? : false
+    rescue => e
+      _log.warn("Could not verify event monitor availability for #{name}: #{e.message}")
+      false
+    end
+
+    # Update only if the value changed
+    if capabilities["events"] != expected_value
+      capabilities["events"] = expected_value
+      save! if changed?
+    end
+  end
+  private :update_event_capabilities
 
   def stop_event_monitor_queue_on_change
     if event_monitor_class && !self.new_record? && (authentications.detect{ |x| x.previous_changes.present? } ||
