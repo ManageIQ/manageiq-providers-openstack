@@ -34,6 +34,8 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
       collect_host_aggregate_references!(target_collection)
     elsif ems_event.event_type.start_with?("keypair")
       collect_key_pair_references!(target_collection)
+    elsif ems_event.event_type.start_with?("identity.project.")
+      collect_identity_project_references!(target_collection)
     end
 
     target_collection.targets
@@ -60,6 +62,11 @@ class ManageIQ::Providers::Openstack::CloudManager::EventTargetParser
 
   def collect_identity_tenant_references!(target_collection)
     tenant_id = event_payload['tenant_id'] || event_payload['project_id'] || event_payload.fetch_path('initiator', 'project_id')
+    add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
+  end
+
+  def collect_identity_project_references!(target_collection)
+    tenant_id = event_payload['resource_info'] || event_payload.fetch_path('target', 'id')
     add_target(target_collection, :cloud_tenants, tenant_id) if tenant_id
   end
 
