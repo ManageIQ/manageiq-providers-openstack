@@ -164,16 +164,27 @@ class OpenstackRabbitEventMonitor < OpenstackEventMonitor
     @queues.each do |exchange, queue|
       queue.subscribe do |delivery_info, metadata, payload|
         begin
-          payload = JSON.parse(payload)
-          event = openstack_event(delivery_info, metadata, payload)
+          parsed_payload = JSON.parse(payload)
+          
+          # Handle Oslo Messaging wrapped format
+          # Oslo.notifications wraps the actual event payload in an "oslo.message" field
+          # which contains a JSON-serialized string that needs to be parsed again
+          if parsed_payload["oslo.message"]
+            parsed_payload = JSON.parse(parsed_payload["oslo.message"])
+          end
+          
+          event = openstack_event(delivery_info, metadata, parsed_payload)
           @events_array_mutex.synchronize do
             @events << event
             $log.debug("MIQ(#{self.class.name}##{__method__}) Received Rabbit (amqp) event"\
-                       " on #{exchange} from #{@options[:hostname]}: #{payload["event_type"]}") if $log
+                      " on #{exchange} from #{@options[:hostname]}: #{parsed_payload["event_type"]}") if $log
           end
-        rescue e
+        rescue JSON::ParserError => e
+          $log.error("MIQ(#{self.class.name}##{__method__}) JSON parsing error receiving Rabbit (amqp)"\
+                    " event on #{exchange} from #{@options[:hostname]}: #{e}") if $log
+        rescue => e
           $log.error("MIQ(#{self.class.name}##{__method__}) Exception receiving Rabbit (amqp)"\
-                     " event on #{exchange} from #{@options[:hostname]}: #{e}") if $log
+                    " event on #{exchange} from #{@options[:hostname]}: #{e}") if $log
         end
       end
     end

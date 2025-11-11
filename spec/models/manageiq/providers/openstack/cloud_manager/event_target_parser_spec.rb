@@ -30,7 +30,7 @@ describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
         )
       end
 
-      it "parses identity.project events #{oslo_message_text}" do
+      it "parses tenant context events #{oslo_message_text}" do
         payload = {"project_id" => "tenant_id_test"}
         ems_event = create_ems_event(@ems, "identity.project.create.end", oslo_message, payload)
 
@@ -40,6 +40,26 @@ describe ManageIQ::Providers::Openstack::CloudManager::EventTargetParser do
           match_array(
             [
               [:cloud_tenants, {:ems_ref => "tenant_id_test"}]
+            ]
+          )
+        )
+      end
+
+      it "parses Keystone identity.project.* resource events #{oslo_message_text}" do
+        payload = {
+          "resource_info" => "resource_tenant_id_test",
+          "target"        => {"id" => "resource_tenant_id_test"},
+          "initiator"     => {"project_id" => "context_tenant_id_test"}
+        }
+        ems_event = create_ems_event(@ems, "identity.project.created", oslo_message, payload)
+
+        parsed_targets = described_class.new(ems_event).parse
+        expect(parsed_targets.size).to eq(2)
+        expect(target_references(parsed_targets)).to(
+          match_array(
+            [
+              [:cloud_tenants, {:ems_ref => "context_tenant_id_test"}],
+              [:cloud_tenants, {:ems_ref => "resource_tenant_id_test"}]
             ]
           )
         )

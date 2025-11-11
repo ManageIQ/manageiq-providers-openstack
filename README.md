@@ -1,6 +1,6 @@
 # ManageIQ::Providers::Openstack
 
-[![CI](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml/badge.svg?branch=spassky)](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml)
+[![CI](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/ManageIQ/manageiq-providers-openstack/actions/workflows/ci.yaml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/maintainability)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/d4ac5021ef2927f3b3a7/test_coverage)](https://codeclimate.com/github/ManageIQ/manageiq-providers-openstack/test_coverage)
 
