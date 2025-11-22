@@ -4,6 +4,7 @@ module ManageIQ::Providers::Openstack::ManagerMixin
 
   included do
     after_save :stop_event_monitor_queue_on_change
+    after_save :update_event_capabilities_on_config_change, if: :event_configuration_changed?
     before_destroy :stop_event_monitor
   end
 
@@ -262,6 +263,31 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     _log.error(e.backtrace.join("\n"))
     false
   end
+
+  def event_configuration_changed?
+    return false unless self.class.name.include?("CloudManager")
+
+    event_roles      = %w[amqp ceilometer stf amqp_fallback1 amqp_fallback2]
+    event_auth_types = %w[amqp ceilometer]
+
+    ep_changed = endpoints.any? { |ep| (ep.saved_changes.present? || ep.destroyed?) && event_roles.include?(ep.role) }
+    auth_changed = authentications.any? { |auth| (auth.saved_changes.present? || auth.destroyed?) && event_auth_types.include?(auth.authtype) }
+    config_inconsistent = capabilities&.fetch("events", false) && event_monitor_options&.fetch(:events_monitor, nil).blank?
+
+    ep_changed || auth_changed || config_inconsistent
+  end
+  private :event_configuration_changed?
+
+  def update_event_capabilities_on_config_change
+    @event_monitor_options = nil
+    events_enabled = event_monitor_options&.fetch(:events_monitor, nil).present?
+
+    capabilities["events"] = events_enabled
+    capabilities["events_available"] &&= events_enabled
+
+    update_columns(:capabilities => capabilities)
+  end
+  private :update_event_capabilities_on_config_change
 
   def stop_event_monitor_queue_on_change
     if event_monitor_class && !self.new_record? && (authentications.detect{ |x| x.previous_changes.present? } ||
