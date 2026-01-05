@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport",        ">=6.0"
-  spec.add_dependency "bunny",                "~> 2.1.0"
+  spec.add_dependency "bunny",                "~> 2.24"
   spec.add_dependency "excon",                "~> 0.71"
   spec.add_dependency "fog-openstack",        "~> 1.1", ">= 1.1.4"
   spec.add_dependency "more_core_extensions", ">= 3.2", "< 5"
