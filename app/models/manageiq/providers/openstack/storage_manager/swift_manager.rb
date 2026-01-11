@@ -36,11 +36,11 @@ class ManageIQ::Providers::Openstack::StorageManager::SwiftManager < ManageIQ::P
   end
 
   def self.description
-    @description ||= "Swift ".freeze
+    @description ||= "OpenStack Swift".freeze
   end
 
   def description
-    @description ||= "Swift ".freeze
+    @description ||= "OpenStack Swift".freeze
   end
 
   def name
