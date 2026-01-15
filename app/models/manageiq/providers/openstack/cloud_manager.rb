@@ -29,7 +29,11 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   supports :create_flavor
   supports :label_mapping
   supports :events do
-    _("Events are not supported") unless capabilities["events"]
+    if capabilities["events"] != true
+      _("Events are not configured")
+    elsif capabilities["events_available"] != true
+      _("Event monitor is not available")
+    end
   end
   supports :metrics
   supports :storage_manager
@@ -481,12 +485,15 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   def verify_credentials(auth_type = nil, options = {})
     options[:service] ||= "Compute"
     ret = super
-    return ret unless auth_type.nil?
 
-    capabilities["events"] = !!event_monitor_available?
-    save! if changed?
+    event_auth_types = %w[amqp stf ceilometer]
 
-    true
+    if event_auth_types.include?(auth_type.to_s) && capabilities["events"].to_s == "true"
+      capabilities["events_available"] = !!event_monitor_available?
+      update_columns(:capabilities => capabilities)
+    end
+
+    ret
   end
 
   def self.ems_type
