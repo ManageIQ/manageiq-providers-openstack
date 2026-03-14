@@ -75,9 +75,8 @@ class ManageIQ::Providers::Openstack::StorageManager::CinderManager < ManageIQ::
     true
   end
 
-  def stop_event_monitor_queue_on_change
-    if !self.new_record? && parent_manager && (authentications.detect{ |x| x.previous_changes.present? } ||
-                                                    endpoints.detect{ |x| x.previous_changes.present? })
+  def stop_event_monitor_queue_on_change(_changes)
+    if !self.new_record? && parent_manager
       _log.info("EMS: [#{name}], Credentials or endpoints have changed, stopping Event Monitor. It will be restarted by the WorkerMonitor.")
       stop_event_monitor_queue
     end
