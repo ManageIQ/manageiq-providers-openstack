@@ -479,11 +479,19 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
   end
 
   def verify_credentials(auth_type = nil, options = {})
+    auth_type         ||= "default"
     options[:service] ||= "Compute"
-    ret = super
-    return ret unless auth_type.nil?
 
-    capabilities["events"] = !!event_monitor_available?
+    return unless super
+
+    # Only check if the event monitor is available if we have an events endpoint
+    # and the auth_type that we're currently checking is being used for events.
+    if events_endpoint.present?
+      capabilities["events"] = !!event_monitor_available? if auth_type_for_events == auth_type.to_s
+    else
+      capabilities["events"] = false
+    end
+
     save! if changed?
 
     true
@@ -548,6 +556,22 @@ class ManageIQ::Providers::Openstack::CloudManager < ManageIQ::Providers::CloudM
 
   def authentications_to_validate
     authentication_for_providers.collect(&:authentication_type) - [:ssh_keypair]
+  end
+
+  EVENTS_ENDPOINT_ROLES = %w[amqp ceilometer stf].freeze
+
+  def events_endpoint
+    endpoints.find_by(:role => EVENTS_ENDPOINT_ROLES)
+  end
+
+  def auth_type_for_events
+    role = events_endpoint&.role
+    case role
+    when "amqp"
+      role
+    when "ceilometer", "stf"
+      "default"
+    end
   end
 
   def volume_availability_zones
