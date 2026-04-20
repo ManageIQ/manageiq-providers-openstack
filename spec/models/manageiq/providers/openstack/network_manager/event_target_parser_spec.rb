@@ -13,7 +13,33 @@ describe ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser do
       oslo_message_text = "with#{"out" unless oslo_message} oslo_message"
 
       it "parses network events #{oslo_message_text}" do
-        payload = {"resource_id" => "network_id_test"}
+        payload = {
+          "network" => {
+            "id"                        => "network_id_test",
+            "name"                      => "network",
+            "tenant_id"                 => "tenant_id_test",
+            "admin_state_up"            => true,
+            "mtu"                       => 1442,
+            "status"                    => "ACTIVE",
+            "subnets"                   => [],
+            "shared"                    => false,
+            "project_id"                => "project_id_test",
+            "port_security_enabled"     => true,
+            "router:external"           => false,
+            "provider:network_type"     => "geneve",
+            "provider:physical_network" => nil,
+            "provider:segmentation_id"  => 1160,
+            "is_default"                => false,
+            "availability_zone_hints"   => [],
+            "availability_zones"        => [],
+            "ipv4_address_scope"        => nil,
+            "ipv6_address_scope"        => nil,
+            "description"               => "",
+            "tags"                      => [],
+            "revision_number"           => 1
+          }
+        }
+
         ems_event = create_ems_event(@manager, "network.create.end", oslo_message, payload)
 
         parsed_targets = described_class.new(ems_event).parse
