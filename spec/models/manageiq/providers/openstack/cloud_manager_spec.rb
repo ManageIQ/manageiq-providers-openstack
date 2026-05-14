@@ -225,16 +225,196 @@ describe ManageIQ::Providers::Openstack::CloudManager do
   end
 
   context "validation" do
-    let!(:ems) { FactoryBot.create(:ems_openstack_with_authentication) }
+    let(:zone) { EvmSpecHelper.local_miq_server.zone }
+    let!(:ems) { FactoryBot.create(:ems_openstack_with_authentication, :zone => zone) }
 
-    it "verifies AMQP credentials" do
-      EvmSpecHelper.stub_amqp_support
+    describe "#verify_credentials" do
+      context "default" do
+        context "with valid credentials" do
+          before { allow(ems).to receive(:verify_api_credentials).and_return(true) }
 
-      creds = {}
-      creds[:amqp] = {:userid => "amqp_user", :password => "amqp_password"}
-      ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
-      ems.update_authentication(creds, :save => false)
-      expect(ems.verify_credentials(:amqp)).to be_truthy
+          it "verifies default credentials" do
+            expect(ems.verify_credentials).to be_truthy
+          end
+
+          it "sets events capability to false if no events endpoint present" do
+            ems.verify_credentials
+            expect(ems.reload.capabilities).to include("events" => false)
+          end
+        end
+
+        context "with invalid credentials" do
+          before do
+            allow(ems).to receive(:with_provider_connection).and_raise(Excon::Errors::Unauthorized, "Unauthorized")
+          end
+
+          it "raises an exception" do
+            expect { ems.verify_credentials }.to raise_error(MiqException::MiqInvalidCredentialsError)
+          end
+        end
+      end
+
+      context "AMQP" do
+        require 'manageiq/providers/openstack/legacy/events/openstack_rabbit_event_monitor'
+
+        before do
+          ems.endpoints << Endpoint.create(:role => 'amqp', :hostname => 'amqp_hostname', :port => '5672')
+          ems.update_authentication({:amqp => {:userid => "amqp_user", :password => "amqp_password"}}, :save => false)
+        end
+
+        context "with valid AMQP credentials" do
+          before do
+            allow(ems).to receive(:verify_amqp_credentials).and_return(true)
+          end
+
+          context "with an available AMQP event monitor" do
+            before do
+              EvmSpecHelper.stub_amqp_support
+            end
+
+            it "verifies AMQP credentials" do
+              expect(ems.verify_credentials(:amqp)).to be_truthy
+            end
+
+            it "sets the events capability when checking amqp auth_type" do
+              ems.verify_credentials(:amqp)
+              expect(ems.reload.capabilities).to include("events" => true)
+            end
+
+            it "doesn't set the events capability when checking default auth_type" do
+              expect(ems).to     receive(:verify_api_credentials).and_return(true)
+              expect(ems).not_to receive(:event_monitor_available?)
+
+              ems.verify_credentials
+
+              expect(ems.reload.capabilities).not_to include("events" => true)
+            end
+          end
+
+          context "with an unavailable AMQP event monitor" do
+            before do
+              allow(OpenstackRabbitEventMonitor).to receive(:available?).and_return(false)
+            end
+
+            it "sets the events capability to false" do
+              ems.verify_credentials(:amqp)
+              expect(ems.reload.capabilities).to include("events" => false)
+            end
+          end
+        end
+
+        context "with invalid AMQP credentials" do
+          before do
+            allow(OpenstackRabbitEventMonitor).to receive(:available?).and_return(false)
+          end
+
+          it "returns false" do
+            expect(ems.verify_credentials(:amqp)).to be_falsey
+          end
+        end
+      end
+
+      context "STF" do
+        require 'manageiq/providers/openstack/legacy/events/openstack_stf_event_monitor'
+
+        before do
+          ems.endpoints << Endpoint.create(:role => 'stf', :hostname => 'stf_hostname', :port => 5_666)
+        end
+
+        context "with valid credentials" do
+          before do
+            allow(ems).to receive(:verify_api_credentials).and_return(true)
+          end
+
+          context "with an available STF event monitor" do
+            before do
+              allow(OpenstackStfEventMonitor).to receive(:available?).and_return(true)
+            end
+
+            it "verifies credentials" do
+              expect(ems.verify_credentials).to be_truthy
+            end
+
+            it "sets the events capability to true" do
+              ems.verify_credentials
+              expect(ems.reload.capabilities).to include("events" => true)
+            end
+          end
+
+          context "with an unavailable STF event monitor" do
+            before do
+              allow(OpenstackStfEventMonitor).to receive(:available?).and_return(false)
+            end
+
+            it "verifies credentials" do
+              expect(ems.verify_credentials).to be_truthy
+            end
+
+            it "sets the events capability to false" do
+              ems.verify_credentials
+              expect(ems.reload.capabilities).to include("events" => false)
+            end
+          end
+        end
+
+        context "with invalid credentials" do
+          before do
+            allow(ems).to receive(:with_provider_connection).and_raise(Excon::Errors::Unauthorized, "Unauthorized")
+          end
+
+          it "raises an exception" do
+            expect { ems.verify_credentials }.to raise_error(MiqException::MiqInvalidCredentialsError)
+          end
+        end
+      end
+
+      context "Ceilometer" do
+        require "manageiq/providers/openstack/legacy/events/openstack_ceilometer_event_monitor"
+
+        before do
+          ems.endpoints << Endpoint.create(:role => "ceilometer", :hostname => "ceilometer_hostname")
+        end
+
+        context "with valid credentials" do
+          before do
+            allow(ems).to receive(:verify_api_credentials).and_return(true)
+          end
+
+          context "with an available Ceilometer event monitor" do
+            before do
+              allow(OpenstackCeilometerEventMonitor).to receive(:available?).and_return(true)
+            end
+
+            it "sets the events capability to true" do
+              ems.verify_credentials
+
+              expect(ems.reload.capabilities).to include("events" => true)
+            end
+          end
+
+          context "with an unavailable Ceilometer event monitor" do
+            before do
+              allow(OpenstackCeilometerEventMonitor).to receive(:available?).and_return(false)
+            end
+
+            it "sets the events capability to false" do
+              ems.verify_credentials
+
+              expect(ems.reload.capabilities).to include("events" => false)
+            end
+          end
+        end
+
+        context "with invalid credentials" do
+          before do
+            allow(ems).to receive(:with_provider_connection).and_raise(Excon::Errors::Unauthorized, "Unauthorized")
+          end
+
+          it "raises an exception" do
+            expect { ems.verify_credentials }.to raise_error(MiqException::MiqInvalidCredentialsError)
+          end
+        end
+      end
     end
 
     describe "event_monitor_available?" do
