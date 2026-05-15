@@ -12,7 +12,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
 
   context "sync_users" do
     it "should create user, groups, and assign user to group" do
-      list_users_data = [{"name" => "project1-admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "project1-admin@localhost", "password_expires_at" => nil}]
+      list_users_data = [{"name" => "project1-admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "project1-admin@localhost.localdomain", "password_expires_at" => nil}]
       allow(ems).to receive(:list_users).and_return(list_users_data)
       user_projects_data = [{"description" => nil, "enabled" => true, "id" => "6f4a2d27d0454ec1a100109b38cbfa09", "name" => "project1"}]
       allow(ems.keystone).to receive(:list_user_projects_tenants).and_return(user_projects_data)
@@ -63,7 +63,7 @@ describe ManageIQ::Providers::Openstack::IdentitySyncMixin do
     end
 
     it "should create realuser, but skip admin and other special cases" do
-      list_users_data = [{"name" => "admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "admin@localhost", "password_expires_at" => nil}, {"name" => "realuser", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "realuser@localhost", "password_expires_at" => nil}]
+      list_users_data = [{"name" => "admin", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "009cfe67e1984e4dae36af5625c2fe92", "email" => "admin@localhost", "password_expires_at" => nil}, {"name" => "realuser", "domain_id" => "default", "enabled" => true, "options" => {}, "id" => "0dab7200c18945f0ad96abdcfcc59716", "email" => "realuser@localhost.localdomain", "password_expires_at" => nil}]
       allow(ems).to receive(:list_users).and_return(list_users_data)
       expect(User.find_by(:userid => "admin")).to be_nil
       expect(User.find_by(:userid => "realuser")).to be_nil
