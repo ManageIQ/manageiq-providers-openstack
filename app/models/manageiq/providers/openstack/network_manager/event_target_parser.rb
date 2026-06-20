@@ -40,21 +40,31 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
                     :firewall_rules
                   end
 
-    resource_id = event_payload['resource_id']
-    if resource_id
-      add_target(target_collection, target_type, resource_id)
+    rid = resource_id
+    if rid
+      add_target(target_collection, target_type, rid)
     elsif target_type == :security_groups
-      # Notifications from Panko about new security groups don't include
-      # the ID of the security group, so we can't trigger a targeted refresh.
-      # Add a dummy reference so that the collector will know that a security
-      # group was updated, and that it should refresh the whole security group
-      # inventory as a workaround. The same for security_group_rules.
       add_target(target_collection, :security_groups, nil)
     elsif target_type == :firewall_rules
       add_target(target_collection, :firewall_rules, nil)
     end
 
     target_collection.targets
+  end
+
+  def resource_id
+    # Fetch resource type name first
+    rtype = resource_type
+
+    @resource_id ||= begin
+      event_payload.dig(rtype, "id") ||
+      event_payload["resource_id"] ||
+      event_payload["#{rtype}_id"]
+    end
+  end
+
+  def resource_type
+    @resource_type ||= ems_event.event_type.split(".").first
   end
 
   def collect_identity_tenant_references!(target_collection)
