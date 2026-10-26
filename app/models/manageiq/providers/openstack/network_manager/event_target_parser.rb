@@ -24,23 +24,23 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
     # there's almost always a tenant id regardless of event type
     collect_identity_tenant_references!(target_collection)
 
-    target_type = if ems_event.event_type.start_with?("floatingip.")
+    target_type = case resource_type
+                  when "floatingip"
                     :floating_ips
-                  elsif ems_event.event_type.start_with?("router.")
+                  when "router"
                     :network_routers
-                  elsif ems_event.event_type.start_with?("port.")
+                  when "port"
                     :network_ports
-                  elsif ems_event.event_type.start_with?("network.")
+                  when "network"
                     :cloud_networks
-                  elsif ems_event.event_type.start_with?("subnet.")
+                  when "subnet"
                     :cloud_subnets
-                  elsif ems_event.event_type.start_with?("security_group.")
+                  when "security_group"
                     :security_groups
-                  elsif ems_event.event_type.start_with?("security_group_rule.")
+                  when "security_group_rule"
                     :firewall_rules
                   end
 
-    resource_id = event_payload['resource_id']
     if resource_id
       add_target(target_collection, target_type, resource_id)
     elsif target_type == :security_groups
@@ -72,5 +72,13 @@ class ManageIQ::Providers::Openstack::NetworkManager::EventTargetParser
 
   def event_payload
     @event_payload ||= ManageIQ::Providers::Openstack::EventParserCommon.message_content(ems_event).fetch('payload', {})
+  end
+
+  def resource_type
+    @resource_type ||= ems_event.event_type.split(".").first
+  end
+
+  def resource_id
+    @resource_id ||= event_payload.dig(resource_type, "id") || event_payload["resource_id"]
   end
 end
