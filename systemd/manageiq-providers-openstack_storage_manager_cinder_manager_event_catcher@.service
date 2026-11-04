@@ -3,7 +3,7 @@ PartOf=manageiq-providers-openstack_storage_manager_cinder_manager_event_catcher
 [Install]
 WantedBy=manageiq-providers-openstack_storage_manager_cinder_manager_event_catcher.target
 [Service]
-WorkingDirectory=/var/www/miq/vmdb
+WorkingDirectory=/usr/lib/manageiq/manageiq
 Environment=BUNDLER_GROUPS=manageiq_default,ui_dependencies
 EnvironmentFile=/etc/default/manageiq*.properties
 ExecStart=/usr/bin/ruby lib/workers/bin/run_single_worker.rb ManageIQ::Providers::Openstack::StorageManager::CinderManager::EventCatcher --heartbeat --guid=%i
