@@ -11,3 +11,20 @@ end
 def fix_token_expires_at(config)
   config.before_record { |interaction| fix_token_expires_at_interaction(interaction) }
 end
+
+def replace_header_values(headers, header_name, value)
+  headers.each do |name, values|
+    next unless name.casecmp?(header_name)
+
+    values.map! { value }
+  end
+end
+
+def filter_subject_token_interaction(interaction)
+  replace_header_values(interaction.response.headers, "X-Subject-Token", "KEYSTONE_TOKEN_ID")
+  replace_header_values(interaction.request.headers, "X-Auth-Token", "KEYSTONE_TOKEN_ID")
+end
+
+def filter_subject_token(config)
+  config.before_record { |interaction| filter_subject_token_interaction(interaction) }
+end
