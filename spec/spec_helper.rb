@@ -17,6 +17,7 @@ VCR.configure do |config|
   config.cassette_library_dir = File.join(ManageIQ::Providers::Openstack::Engine.root, 'spec/vcr_cassettes')
 
   fix_token_expires_at(config)
+  filter_subject_token(config)
 
   VcrSecrets.define_all_cassette_placeholders(config, :openstack)
 end
