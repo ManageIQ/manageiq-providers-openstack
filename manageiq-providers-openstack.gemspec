@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "excon",                "~> 1.5"
   spec.add_dependency "fog-openstack",        "~> 1.1", ">= 1.1.4"
   spec.add_dependency "more_core_extensions", ">= 3.2", "< 5"
-  spec.add_dependency "parallel",             "~> 1.12"
+  spec.add_dependency "parallel",             "~> 2.0"
 
   spec.add_development_dependency "manageiq-style"
   spec.add_development_dependency "simplecov", ">= 0.21.2"
