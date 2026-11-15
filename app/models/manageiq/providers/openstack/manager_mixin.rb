@@ -3,7 +3,6 @@ module ManageIQ::Providers::Openstack::ManagerMixin
   include ManageIQ::Providers::Openstack::HelperMethods
 
   included do
-    after_save :stop_event_monitor_queue_on_change
     before_destroy :stop_event_monitor
   end
 
@@ -263,9 +262,8 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     false
   end
 
-  def stop_event_monitor_queue_on_change
-    if event_monitor_class && !self.new_record? && (authentications.detect{ |x| x.previous_changes.present? } ||
-                                                    endpoints.detect{ |x| x.previous_changes.present? })
+  def stop_event_monitor_queue_on_change(_changes)
+    if event_monitor_class && !new_record?
       _log.info("EMS: [#{name}], Credentials or endpoints have changed, stopping Event Monitor. It will be restarted by the WorkerMonitor.")
       stop_event_monitor_queue
       network_manager.stop_event_monitor_queue if try(:network_manager) && !network_manager.new_record?
@@ -273,11 +271,11 @@ module ManageIQ::Providers::Openstack::ManagerMixin
     end
   end
 
-  def stop_event_monitor_queue_on_credential_change
+  def stop_event_monitor_queue_on_credential_change(changes)
     # TODO(lsmola) this check should not be needed. Right now we are saving each individual authentication and
     # it is breaking the check for changes. We should have it all saved by autosave when saving EMS, so the code
     # for authentications needs to be rewritten.
-    stop_event_monitor_queue_on_change
+    stop_event_monitor_queue_on_change(changes)
   end
 
   def translate_exception(err)
